@@ -32,12 +32,12 @@ if ($images && count($images) > 0) {
     <meta property="og:description" content="Discover and share Rivian referral codes to enjoy special offers. Submit your referral code or use one today!">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://codetoadventure.com">
-    <meta property="og:image" content="https://codetoadventure.com/lightbar-fade.png"> <!-- Replace with actual image URL -->
+    <meta property="og:image" content="https://codetoadventure.com/lightbar-fade.png">
     <meta property="og:site_name" content="Code to Adventure">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Code to Adventure - Random Rivian Referral Codes">
     <meta name="twitter:description" content="Discover and share Rivian referral codes to enjoy special offers. Submit your referral code or use one today!">
-    <meta name="twitter:image" content="https://codetoadventure.com/lightbar-fade.png"> <!-- Replace with actual image URL -->
+    <meta name="twitter:image" content="https://codetoadventure.com/lightbar-fade.png">
     <link rel="canonical" href="https://codetoadventure.com">
     <meta name="robots" content="index, follow">
 
