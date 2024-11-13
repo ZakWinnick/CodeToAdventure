@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'config.php'; // Database connection
+include '../config.php'; // Database connection
 
 // Check if form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
