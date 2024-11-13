@@ -27,6 +27,10 @@ $totalSubmissions = $totalRow['total_submissions'];
     <title>Admin Dashboard - Code to Adventure</title>
     <style>
         /* General styles */
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             background-color: #000;
             color: #E7E7E5;
@@ -40,7 +44,8 @@ $totalSubmissions = $totalRow['total_submissions'];
             padding: 20px;
             text-align: center;
             color: #E7E7E5;
-            font-size: 40px;
+            font-size: 36px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
         nav {
@@ -75,6 +80,7 @@ $totalSubmissions = $totalRow['total_submissions'];
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
+        /* Display the total number of submissions on the right */
         .total-submissions {
             font-size: 24px;
             color: #00acee;
@@ -117,10 +123,18 @@ $totalSubmissions = $totalRow['total_submissions'];
 
         /* Mobile-friendly adjustments */
         @media (max-width: 768px) {
+            header {
+                font-size: 28px;
+                padding: 15px;
+            }
+
+            nav a {
+                padding: 12px 10px;
+                font-size: 16px;
+            }
+
             .main-content {
                 padding: 20px 10px;
-                width: 100%;
-                box-sizing: border-box;
             }
 
             .container {
@@ -128,12 +142,17 @@ $totalSubmissions = $totalRow['total_submissions'];
                 width: 100%;
             }
 
+            .total-submissions {
+                font-size: 20px;
+                text-align: center;
+            }
+
             table {
                 font-size: 14px;
             }
 
-            .total-submissions {
-                font-size: 20px;
+            th, td {
+                padding: 8px;
             }
         }
     </style>
