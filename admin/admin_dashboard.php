@@ -1,16 +1,19 @@
 <?php
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-    exit();
-}
+include '../config.php';  // Include the configuration file to connect to the database
 
-include '../config.php';
+// Query to get the total number of submissions
+$totalQuery = "SELECT COUNT(*) AS total_submissions FROM codes";
+$result = $conn->query($totalQuery);
+$row = $result->fetch_assoc();
+$totalSubmissions = $row['total_submissions'];
 
-// Fetch all referrals from the database
-$sql = "SELECT * FROM codes";
-$result = $conn->query($sql);
+// Fetch other data or referrals for the chart, if necessary
+// Example: Retrieve all submissions (or limit them for pagination purposes)
+$referralQuery = "SELECT * FROM codes ORDER BY id DESC";  // You can modify this query as needed
+$referralResult = $conn->query($referralQuery);
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,21 +21,13 @@ $result = $conn->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Code to Adventure</title>
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
+        /* Include your site's CSS here */
         body {
             background-color: #000;
             color: #E7E7E5;
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 100vh;
-            overflow-x: hidden;
         }
 
         header {
@@ -41,17 +36,12 @@ $result = $conn->query($sql);
             text-align: center;
             color: #E7E7E5;
             font-size: 40px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
         nav {
             background-color: #B4232A;
             padding: 10px;
             text-align: center;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
         }
 
         nav a {
@@ -60,7 +50,7 @@ $result = $conn->query($sql);
             font-size: 18px;
             padding: 10px 20px;
             border-radius: 5px;
-            transition: background-color 0.3s;
+            margin: 0 10px;
         }
 
         nav a:hover {
@@ -68,126 +58,79 @@ $result = $conn->query($sql);
         }
 
         .main-content {
-            flex: 1;
-            max-width: 1200px;
-            width: 100%;
-            padding: 40px 20px;
-            margin: 0 auto;
-            text-align: center;
-            box-sizing: border-box;
+            padding: 20px;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
+        .total-submissions {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
             background-color: #1A1A1A;
-            padding: 30px;
+            padding: 10px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #1A1A1A;
-            color: #00acee;
-        }
-
-        tr:nth-child(even) {
-            background-color: #222;
-        }
-
-        .back-link {
-            display: inline-block;
-            color: #00acee;
-            margin-top: 20px;
-            text-decoration: none;
-            border: 2px solid #00acee;
-            padding: 10px 20px;
-            border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .back-link:hover {
-            background-color: #00acee;
-            color: #000;
         }
 
         footer {
             padding: 20px;
             background-color: #222;
             color: #E7E7E5;
-            width: 100%;
             text-align: center;
-            box-sizing: border-box;
-        }
-
-        footer a {
-            color: #00acee;
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
-<header>Admin Dashboard</header>
+<header>Code to Adventure - Admin Dashboard</header>
 
 <nav>
-    <a href="index.php">Home</a>
+    <a href="../index.php">Home</a>
     <a href="submit.php">Submit Code</a>
     <a href="api-docs.html">API Docs</a>
     <a href="changelog.html">Changelog</a>
 </nav>
 
 <div class="main-content">
-    <div class="container">
-        <h2>Referral Codes</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Username</th>
-                    <th>Referral Code</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($row = $result->fetch_assoc()): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($row['id']); ?></td>
-                        <td><?php echo htmlspecialchars($row['name']); ?></td>
-                        <td><?php echo htmlspecialchars($row['username']); ?></td>
-                        <td><?php echo htmlspecialchars($row['referral_code']); ?></td>
-                        <td>
-                            <a href="edit_referral.php?id=<?php echo $row['id']; ?>">Edit</a>
-                            <a href="delete_referral.php?id=<?php echo $row['id']; ?>">Delete</a>
-                        </td>
-                    </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
-        <a href="logout.php" class="back-link">Logout</a>
+    <!-- Display the total number of submissions -->
+    <div class="total-submissions">
+        <strong>Total Submissions: </strong><?php echo $totalSubmissions; ?>
     </div>
+
+    <!-- Table or chart displaying referral data -->
+    <h2>Referral Code Submissions</h2>
+    <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; margin-bottom: 20px;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Referral Code</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            // Loop through all the fetched referral data and display it
+            while ($referral = $referralResult->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . $referral['id'] . "</td>";
+                echo "<td>" . $referral['name'] . "</td>";
+                echo "<td>" . $referral['username'] . "</td>";
+                echo "<td>" . $referral['referral_code'] . "</td>";
+                echo "</tr>";
+            }
+            ?>
+        </tbody>
+    </table>
+
 </div>
 
 <footer>
-    Created by <a href="https://winnick.is" target="_blank">Zak Winnick</a> | <a href="https://zak.codetoadventure.com" target="_blank">Zak's Referral Code</a> | <a href="mailto:admin@codetoadventure.com">E-mail the admin</a> for any questions or assistance
+    Created by <a href="https://winnick.is" target="_blank">Zak Winnick</a> | <a href="mailto:admin@codetoadventure.com">E-mail the admin</a> for any questions or assistance
 </footer>
 
 </body>
 </html>
+
+<?php
+$conn->close();
+?>
