@@ -7,32 +7,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = htmlspecialchars(trim($_POST['username']));
     $referralCode = htmlspecialchars(trim($_POST['referralCode']));
 
-    // Check for duplicates
-    $stmt = $conn->prepare("SELECT * FROM codes WHERE referral_code = ?");
-    $stmt->bind_param("s", $referralCode);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // Prepare and bind the SQL query to insert the referral data
+    $stmt = $conn->prepare("INSERT INTO codes (name, username, referral_code) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $name, $username, $referralCode);
 
-    if ($result->num_rows > 0) {
-        // Redirect back with an error if duplicate found
-        header("Location: submit.php?error=duplicate");
-        exit();
-    } else {
-        // Prepare and bind for insertion
-        $stmt = $conn->prepare("INSERT INTO codes (name, username, referral_code) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $name, $username, $referralCode);
+    // Execute the statement to insert the data
+    if ($stmt->execute()) {
+        // Send email notification
+        $to = "your-email@example.com";  // Change this to the email address where you want to receive submissions
+        $subject = "New Referral Code Submitted";
+        
+        // Email body message
+        $message = "A new referral code has been submitted:\n\n";
+        $message .= "Name: $name\n";
+        $message .= "Username: $username\n";
+        $message .= "Referral Code: $referralCode\n";
+        
+        // Email headers (optional)
+        $headers = "From: no-reply@yourdomain.com" . "\r\n" .
+                   "Reply-To: no-reply@yourdomain.com" . "\r\n" .
+                   "X-Mailer: PHP/" . phpversion();
 
-        // Execute the statement
-        if ($stmt->execute()) {
-            // Redirect back with a success message
-            header("Location: submit.php?success=1");
-            exit();
+        // Send the email using PHP's mail() function
+        if (mail($to, $subject, $message, $headers)) {
+            // Redirect to index page or show success message
+            header('Location: index.php?status=success');
         } else {
-            echo "Error: " . $stmt->error; // Handle errors in execution
+            // If email fails to send
+            echo "There was an error sending the email.";
         }
-
-        $stmt->close();
+        exit();  // Make sure to exit after redirecting or outputting message
+    } else {
+        echo "Error: " . $stmt->error;
     }
+
+    $stmt->close();
 }
 
 $conn->close();
