@@ -103,7 +103,7 @@
 </div>
 
 <footer>
-    <a href="index.php">Back to Home</a>
+    <a href="../index.php">Back to Home</a>
 </footer>
 
 </body>
