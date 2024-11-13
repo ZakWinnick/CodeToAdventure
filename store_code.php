@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Execute the statement to insert the data
     if ($stmt->execute()) {
         // Send email notification
-        $to = "your-email@example.com";  // Replace this with the email address where you want to receive submissions
+        $to = "admin@codetoadventure.com";  // Replace this with the email address where you want to receive submissions
         $subject = "New Referral Code Submitted";
         
         // Email body message
@@ -36,8 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $message .= "Referral Code: $referralCode\n";
         
         // Email headers (optional)
-        $headers = "From: no-reply@yourdomain.com" . "\r\n" .
-                   "Reply-To: no-reply@yourdomain.com" . "\r\n" .
+        $headers = "From: no-reply@codetoadventure.com" . "\r\n" .
+                   "Reply-To: no-reply@codetoadventure.com" . "\r\n" .
                    "X-Mailer: PHP/" . phpversion();
 
         // Send the email using PHP's mail() function
