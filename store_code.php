@@ -7,6 +7,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = htmlspecialchars(trim($_POST['username']));
     $referralCode = htmlspecialchars(trim($_POST['referralCode']));
 
+    // Check if the referral code already exists in the database
+    $stmt = $conn->prepare("SELECT id FROM codes WHERE referral_code = ?");
+    $stmt->bind_param("s", $referralCode);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // If the referral code already exists, redirect with an error
+    if ($result->num_rows > 0) {
+        header('Location: submit.php?error=duplicate'); // Redirect to submit page with error
+        exit();
+    }
+
     // Prepare and bind the SQL query to insert the referral data
     $stmt = $conn->prepare("INSERT INTO codes (name, username, referral_code) VALUES (?, ?, ?)");
     $stmt->bind_param("sss", $name, $username, $referralCode);
@@ -14,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Execute the statement to insert the data
     if ($stmt->execute()) {
         // Send email notification
-        $to = "your-email@example.com";  // Change this to the email address where you want to receive submissions
+        $to = "your-email@example.com";  // Replace this with the email address where you want to receive submissions
         $subject = "New Referral Code Submitted";
         
         // Email body message
@@ -30,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Send the email using PHP's mail() function
         if (mail($to, $subject, $message, $headers)) {
-            // Redirect to index page or show success message
+            // Redirect to index page (or show success message)
             header('Location: index.php?status=success');
         } else {
             // If email fails to send
