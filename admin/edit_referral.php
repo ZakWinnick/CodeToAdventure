@@ -5,7 +5,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-include 'config.php';
+include '../config.php';
 
 // Get the referral ID from the URL
 if (isset($_GET['id'])) {
