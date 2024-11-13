@@ -5,7 +5,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-include 'config.php';
+include '../config.php';
 
 // Fetch all referrals from the database
 $sql = "SELECT * FROM codes";
