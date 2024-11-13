@@ -1,19 +1,24 @@
 <?php
-include '../config.php';  // Include the configuration file to connect to the database
+session_start(); // Start the session to check if the user is logged in
+
+// If no user is logged in, redirect to the login page
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");  // Redirect to login page
+    exit();  // Ensure no further code is executed
+}
+
+include '../config.php';  // Adjust the path as necessary
+
+// Fetch all referrals from the database
+$sql = "SELECT * FROM codes";
+$result = $conn->query($sql);
 
 // Query to get the total number of submissions
 $totalQuery = "SELECT COUNT(*) AS total_submissions FROM codes";
-$result = $conn->query($totalQuery);
-$row = $result->fetch_assoc();
-$totalSubmissions = $row['total_submissions'];
-
-// Fetch other data or referrals for the chart, if necessary
-// Example: Retrieve all submissions (or limit them for pagination purposes)
-$referralQuery = "SELECT * FROM codes ORDER BY id DESC";  // You can modify this query as needed
-$referralResult = $conn->query($referralQuery);
-
+$totalResult = $conn->query($totalQuery);
+$totalRow = $totalResult->fetch_assoc();
+$totalSubmissions = $totalRow['total_submissions'];
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +26,7 @@ $referralResult = $conn->query($referralQuery);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Code to Adventure</title>
     <style>
-        /* Include your site's CSS here */
+        /* General styles */
         body {
             background-color: #000;
             color: #E7E7E5;
@@ -61,14 +66,37 @@ $referralResult = $conn->query($referralQuery);
             padding: 20px;
         }
 
-        .total-submissions {
-            font-size: 24px;
-            margin-bottom: 20px;
-            text-align: center;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
             background-color: #1A1A1A;
-            padding: 10px;
+            padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .total-submissions {
+            font-size: 24px;
+            color: #00acee;
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #046896;
+            color: #E7E7E5;
         }
 
         footer {
@@ -77,6 +105,37 @@ $referralResult = $conn->query($referralQuery);
             color: #E7E7E5;
             text-align: center;
         }
+
+        footer a {
+            color: #00acee;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mobile-friendly adjustments */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 20px 10px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .container {
+                padding: 20px;
+                width: 100%;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            .total-submissions {
+                font-size: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -84,44 +143,44 @@ $referralResult = $conn->query($referralQuery);
 <header>Code to Adventure - Admin Dashboard</header>
 
 <nav>
-    <a href="../index.php">Home</a>
-    <a href="submit.php">Submit Code</a>
-    <a href="api-docs.html">API Docs</a>
-    <a href="changelog.html">Changelog</a>
+    <a href="admin_dashboard.php">Dashboard</a>
+    <a href="logout.php">Logout</a>
 </nav>
 
 <div class="main-content">
-    <!-- Display the total number of submissions -->
-    <div class="total-submissions">
-        <strong>Total Submissions: </strong><?php echo $totalSubmissions; ?>
+    <div class="container">
+        <!-- Display the total number of submissions at the top right -->
+        <div class="total-submissions">
+            <strong>Total Submissions: </strong><?php echo $totalSubmissions; ?>
+        </div>
+
+        <h2>Referral Codes</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Referral Code</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($row['id']); ?></td>
+                        <td><?php echo htmlspecialchars($row['name']); ?></td>
+                        <td><?php echo htmlspecialchars($row['username']); ?></td>
+                        <td><?php echo htmlspecialchars($row['referral_code']); ?></td>
+                        <td>
+                            <a href="edit_referral.php?id=<?php echo $row['id']; ?>">Edit</a>
+                            <a href="delete_referral.php?id=<?php echo $row['id']; ?>">Delete</a>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
     </div>
-
-    <!-- Table or chart displaying referral data -->
-    <h2>Referral Code Submissions</h2>
-    <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; margin-bottom: 20px;">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Username</th>
-                <th>Referral Code</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            // Loop through all the fetched referral data and display it
-            while ($referral = $referralResult->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td>" . $referral['id'] . "</td>";
-                echo "<td>" . $referral['name'] . "</td>";
-                echo "<td>" . $referral['username'] . "</td>";
-                echo "<td>" . $referral['referral_code'] . "</td>";
-                echo "</tr>";
-            }
-            ?>
-        </tbody>
-    </table>
-
 </div>
 
 <footer>
