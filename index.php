@@ -201,11 +201,8 @@ if ($images && count($images) > 0) {
             text-decoration: underline;
         }
 
-        /* Pi symbol in the bottom right corner */
+        /* Pi symbol in the footer */
         .pi-symbol {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
             font-size: 40px; /* Adjust size of the Pi symbol */
             color: #fff;  /* Pi symbol color (white) */
             background-color: #333;  /* Dark background for contrast */
@@ -213,6 +210,8 @@ if ($images && count($images) > 0) {
             border-radius: 50%;
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
+            display: inline-block;
+            margin-top: 20px; /* Add space between text and the Pi symbol */
         }
 
         .pi-symbol:hover {
@@ -278,10 +277,10 @@ if ($images && count($images) > 0) {
 
 <footer>
     <a href="changelog.html" target="_blank">Version 2024.11.7</a> | Created by <a href="https://winnick.is" target="_blank">Zak Winnick</a> | <a href="https://zak.codetoadventure.com" target="_blank">Zak's Referral Code</a> | <a href="mailto:admin@codetoadventure.com">E-mail the admin</a> for any questions or assistance
+    <span class="pi-symbol">
+        <a href="admin/admin_dashboard.php" style="color: #fff; text-decoration: none;">π</a>
+    </span>
 </footer>
-
-<!-- Pi symbol that links to the admin page -->
-<a href="admin/admin_dashboard.php" class="pi-symbol">π</a>
 
 <?php $conn->close(); ?>
 </body>
