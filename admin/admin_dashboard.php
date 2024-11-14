@@ -247,7 +247,7 @@ $submissionsResult = $conn->query($submissionsSql);
     
     <nav>
         <a href="admin_dashboard.php">Dashboard</a>
-        <a href="https://codetoadventure.com">Home</a> <!-- Link to the main page -->
+        <a href="../index.php">Home</a>
         <a href="logout.php">Logout</a>
     </nav>
 
