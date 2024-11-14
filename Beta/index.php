@@ -89,8 +89,6 @@ if ($images && count($images) > 0) {
             display: flex;
             justify-content: center;
             gap: 20px;
-            flex-wrap: wrap; /* Allow wrapping on mobile */
-            box-sizing: border-box;
         }
 
         nav a {
@@ -218,14 +216,6 @@ if ($images && count($images) > 0) {
             .main-content {
                 padding-bottom: 50px; /* Add space at the bottom to avoid overlap */
             }
-<<<<<<< HEAD
-=======
-
-            nav a {
-                padding: 12px 10px;
-                font-size: 16px;
-            }
->>>>>>> e2a0598347daa7c6b1e16ed4c5003da2f2fc6352
         }
     </style>
 </head>
@@ -240,7 +230,7 @@ if ($images && count($images) > 0) {
     <a href="submit.php">Submit Code</a>
     <a href="api-docs.html">API Docs</a>
     <a href="changelog.html">Changelog</a>
-    <a href="https://codetoadventure.com/admin">Admin Login</a> <!-- Admin Login link -->
+    <a href="admin/">Admin Login</a>
 </nav>
 
 <div class="main-content">

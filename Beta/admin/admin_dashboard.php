@@ -1,33 +1,15 @@
 <?php
 session_start(); // Start the session to check if the user is logged in
 
-<<<<<<< HEAD
-// If no user is logged in, redirect to the login page
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");  // Redirect to login page
-=======
 // No need for admin check; anyone logged in can access this page
 // Just checking if the user is logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");  // Redirect to login page if not logged in
->>>>>>> e2a0598347daa7c6b1e16ed4c5003da2f2fc6352
     exit();  // Ensure no further code is executed
 }
 
 include '../config.php';  // Adjust the path as necessary
 
-<<<<<<< HEAD
-// Fetch all referrals from the database
-$sql = "SELECT * FROM codes";
-$result = $conn->query($sql);
-
-// Query to get the total number of submissions
-$totalSql = "SELECT COUNT(*) as total FROM codes";
-$totalResult = $conn->query($totalSql);
-$totalRow = $totalResult->fetch_assoc();
-$totalSubmissions = $totalRow['total']; // Store the total count
-?>
-=======
 // Query to get the total number of users
 $totalSqlUsers = "SELECT COUNT(*) as total FROM users";
 $totalResultUsers = $conn->query($totalSqlUsers);
@@ -50,27 +32,18 @@ $submissionsSql = "SELECT * FROM codes ORDER BY id ASC"; // Sorted by ID in asce
 $submissionsResult = $conn->query($submissionsSql);
 ?>
 
->>>>>>> e2a0598347daa7c6b1e16ed4c5003da2f2fc6352
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
-    <title>Admin Dashboard - Code to Adventure</title>
-=======
     <title>Code to Adventure - Admin Dashboard</title>
->>>>>>> e2a0598347daa7c6b1e16ed4c5003da2f2fc6352
     <style>
         /* General Styles */
         * {
             margin: 0;
             padding: 0;
-<<<<<<< HEAD
-            box-sizing: border-box; /* Ensure padding and border are included in width and height */
-=======
             box-sizing: border-box;
->>>>>>> e2a0598347daa7c6b1e16ed4c5003da2f2fc6352
         }
 
         html, body {
@@ -83,11 +56,7 @@ $submissionsResult = $conn->query($submissionsSql);
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-<<<<<<< HEAD
-            min-height: 100vh; /* Ensure body takes full viewport height */
-=======
             min-height: 100vh;
->>>>>>> e2a0598347daa7c6b1e16ed4c5003da2f2fc6352
             text-align: center;
         }
 
@@ -98,10 +67,6 @@ $submissionsResult = $conn->query($submissionsSql);
             text-align: center;
             font-size: 36px;
             width: 100%;  /* Ensure header stretches across full width */
-<<<<<<< HEAD
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Optional: Add a shadow effect */
-=======
->>>>>>> e2a0598347daa7c6b1e16ed4c5003da2f2fc6352
         }
 
         nav {
@@ -116,11 +81,7 @@ $submissionsResult = $conn->query($submissionsSql);
         }
 
         nav a {
-<<<<<<< HEAD
-            color: #E7E7E5; /* Light color for the text */
-=======
             color: #E7E7E5;
->>>>>>> e2a0598347daa7c6b1e16ed4c5003da2f2fc6352
             text-decoration: none;
             font-size: 18px;
             padding: 10px 20px;
@@ -129,11 +90,7 @@ $submissionsResult = $conn->query($submissionsSql);
         }
 
         nav a:hover {
-<<<<<<< HEAD
-            background-color: #046896; /* Blue on hover */
-=======
             background-color: #046896;
->>>>>>> e2a0598347daa7c6b1e16ed4c5003da2f2fc6352
         }
 
         .main-content {
@@ -142,40 +99,6 @@ $submissionsResult = $conn->query($submissionsSql);
             max-width: 1200px;
             width: 100%;
             margin: 0 auto;
-<<<<<<< HEAD
-        }
-
-        .total-submissions {
-            font-size: 18px;
-            text-align: right;
-            margin-bottom: 20px; /* Adds space above the table */
-            color: #E7E7E5;
-        }
-
-        table {
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #1A1A1A;
-        }
-
-        td a {
-            color: #E7E7E5; /* Light color for the links */
-            text-decoration: none;
-        }
-
-        td a:hover {
-            color: #046896; /* Blue color on hover */
-=======
             display: flex;
             flex-direction: column;
             align-items: center; /* Center the content */
@@ -209,7 +132,6 @@ $submissionsResult = $conn->query($submissionsSql);
 
         .footer-links {
             margin-top: 20px;
->>>>>>> e2a0598347daa7c6b1e16ed4c5003da2f2fc6352
         }
 
         footer {
@@ -234,8 +156,6 @@ $submissionsResult = $conn->query($submissionsSql);
             text-decoration: underline;
         }
 
-<<<<<<< HEAD
-=======
         /* Table Styles for Submissions List */
         table {
             width: 100%;
@@ -272,7 +192,6 @@ $submissionsResult = $conn->query($submissionsSql);
         }
 
         /* Mobile Styling */
->>>>>>> e2a0598347daa7c6b1e16ed4c5003da2f2fc6352
         @media (max-width: 768px) {
             nav a {
                 padding: 12px 10px;
@@ -281,15 +200,6 @@ $submissionsResult = $conn->query($submissionsSql);
 
             .main-content {
                 padding: 30px 10px;
-<<<<<<< HEAD
-            }
-            
-            table {
-                margin-top: 10px;
-            }
-
-            th, td {
-=======
                 width: 100%;
                 box-sizing: border-box;
             }
@@ -310,17 +220,10 @@ $submissionsResult = $conn->query($submissionsSql);
             }
 
             table th, table td {
->>>>>>> e2a0598347daa7c6b1e16ed4c5003da2f2fc6352
                 font-size: 14px;
                 padding: 8px;
             }
         }
-<<<<<<< HEAD
-    </style>
-</head>
-<body>
-    <header>Admin Dashboard</header>
-=======
 
         /* Back to Top Button */
         .back-to-top {
@@ -341,7 +244,6 @@ $submissionsResult = $conn->query($submissionsSql);
 </head>
 <body>
     <header>Code to Adventure - Admin Dashboard</header>
->>>>>>> e2a0598347daa7c6b1e16ed4c5003da2f2fc6352
     
     <nav>
         <a href="admin_dashboard.php">Dashboard</a>
@@ -349,12 +251,6 @@ $submissionsResult = $conn->query($submissionsSql);
     </nav>
 
     <div class="main-content">
-<<<<<<< HEAD
-        <div class="total-submissions">
-            <strong>Total Submissions: <?php echo $totalSubmissions; ?></strong>
-        </div>
-        <h2>Referral Codes</h2>
-=======
         <!-- Display Total Users and Submissions in a prominent box -->
         <div class="total-box">
             <div>
@@ -374,7 +270,6 @@ $submissionsResult = $conn->query($submissionsSql);
 
         <!-- List of all submissions -->
         <h2>All Submissions</h2>
->>>>>>> e2a0598347daa7c6b1e16ed4c5003da2f2fc6352
         <table>
             <thead>
                 <tr>
@@ -386,34 +281,23 @@ $submissionsResult = $conn->query($submissionsSql);
                 </tr>
             </thead>
             <tbody>
-<<<<<<< HEAD
-                <?php while ($row = $result->fetch_assoc()): ?>
-=======
                 <?php while ($row = $submissionsResult->fetch_assoc()): ?>
->>>>>>> e2a0598347daa7c6b1e16ed4c5003da2f2fc6352
                     <tr>
                         <td><?php echo htmlspecialchars($row['id']); ?></td>
                         <td><?php echo htmlspecialchars($row['name']); ?></td>
                         <td><?php echo htmlspecialchars($row['username']); ?></td>
                         <td><?php echo htmlspecialchars($row['referral_code']); ?></td>
                         <td>
-<<<<<<< HEAD
-                            <a href="edit_referral.php?id=<?php echo $row['id']; ?>">Edit</a>
-=======
                             <a href="edit_referral.php?id=<?php echo $row['id']; ?>">Edit</a> | 
->>>>>>> e2a0598347daa7c6b1e16ed4c5003da2f2fc6352
                             <a href="delete_referral.php?id=<?php echo $row['id']; ?>">Delete</a>
                         </td>
                     </tr>
                 <?php endwhile; ?>
             </tbody>
         </table>
-<<<<<<< HEAD
-=======
 
         <!-- Back to Top Button -->
         <a href="#" class="back-to-top" onclick="window.scrollTo(0, 0);">Back to Top</a>
->>>>>>> e2a0598347daa7c6b1e16ed4c5003da2f2fc6352
     </div>
 
     <footer>
