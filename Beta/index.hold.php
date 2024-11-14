@@ -222,6 +222,7 @@ if ($images && count($images) > 0) {
 <body>
 
 <header>
+    <!-- Display the randomly selected image -->
     <img src="<?php echo $randomImage; ?>" alt="Header Image">
 </header>
 
@@ -230,7 +231,6 @@ if ($images && count($images) > 0) {
     <a href="submit.php">Submit Code</a>
     <a href="api-docs.html">API Docs</a>
     <a href="changelog.html">Changelog</a>
-    <a href="admin/">Admin Login</a>
 </nav>
 
 <div class="main-content">
