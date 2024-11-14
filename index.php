@@ -230,7 +230,7 @@ if ($images && count($images) > 0) {
     <a href="submit.php">Submit Code</a>
     <a href="api-docs.html">API Docs</a>
     <a href="changelog.html">Changelog</a>
-    <a href="admin/">Admin Login</a> <!-- Added Admin Login link -->
+    <a href="admin/">Admin Login</a>
 </nav>
 
 <div class="main-content">
