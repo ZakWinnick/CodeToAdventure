@@ -240,7 +240,7 @@ if ($images && count($images) > 0) {
     <a href="submit.php">Submit Code</a>
     <a href="api-docs.html">API Docs</a>
     <a href="changelog.html">Changelog</a>
-    <a href="https://codetoadventure.com/admin">Admin Login</a> <!-- Admin Login link -->
+    <a href="admin/">Admin Login</a> <!-- Admin Login link -->
 </nav>
 
 <div class="main-content">
