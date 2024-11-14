@@ -212,6 +212,10 @@ if ($images && count($images) > 0) {
                 font-size: 18px;
                 width: 90%;
             }
+
+            .main-content {
+                padding-bottom: 50px; /* Add space at the bottom to avoid overlap */
+            }
         }
     </style>
 </head>
@@ -258,7 +262,7 @@ if ($images && count($images) > 0) {
 </div>
 
 <footer>
-    <a href="changelog.html" target="_blank">Version 2024.11.7</a> | Created by <a href="https://winnick.is" target="_blank">Zak Winnick</a> | <a href="https://zak.codetoadventure.com" target="_blank">Zak's Referral Code</a> | <a href="mailto:admin@codetoadventure.com">E-mail the admin</a> for any questions or assistance
+    <a href="changelog.html" target="_blank">Version 2024.11.13</a> | Created by <a href="https://winnick.is" target="_blank">Zak Winnick</a> | <a href="https://zak.codetoadventure.com" target="_blank">Zak's Referral Code</a> | <a href="mailto:admin@codetoadventure.com">E-mail the admin</a> for any questions or assistance
 </footer>
 
 <?php $conn->close(); ?>

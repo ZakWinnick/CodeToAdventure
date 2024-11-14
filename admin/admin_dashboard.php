@@ -14,10 +14,10 @@ $sql = "SELECT * FROM codes";
 $result = $conn->query($sql);
 
 // Query to get the total number of submissions
-$totalQuery = "SELECT COUNT(*) AS total_submissions FROM codes";
-$totalResult = $conn->query($totalQuery);
+$totalSql = "SELECT COUNT(*) as total FROM codes";
+$totalResult = $conn->query($totalSql);
 $totalRow = $totalResult->fetch_assoc();
-$totalSubmissions = $totalRow['total_submissions'];
+$totalSubmissions = $totalRow['total']; // Store the total count
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,153 +26,156 @@ $totalSubmissions = $totalRow['total_submissions'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Code to Adventure</title>
     <style>
-        /* General styles */
+        /* General Styles */
         * {
-            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; /* Ensure padding and border are included in width and height */
         }
 
-        body {
+        html, body {
+            width: 100%;
+            height: 100%;
             background-color: #000;
             color: #E7E7E5;
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            text-align: center;
         }
 
         header {
-            background-color: #046896;
+            background-color: #046896; /* Header blue */
+            color: #E7E7E5;
             padding: 20px;
             text-align: center;
-            color: #E7E7E5;
             font-size: 36px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            width: 100%;  /* Ensure header stretches across full width */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Optional: Add a shadow effect */
         }
 
         nav {
-            background-color: #B4232A;
+            background-color: #B4232A; /* Red for the navigation bar */
             padding: 10px;
             text-align: center;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            width: 100%;
         }
 
         nav a {
-            color: #E7E7E5;
+            color: #E7E7E5; /* Light color for the text */
             text-decoration: none;
             font-size: 18px;
             padding: 10px 20px;
             border-radius: 5px;
-            margin: 0 10px;
+            transition: background-color 0.3s;
         }
 
         nav a:hover {
-            background-color: #046896;
+            background-color: #046896; /* Blue on hover */
         }
 
         .main-content {
-            padding: 20px;
-        }
-
-        .container {
+            flex: 1;
+            padding: 40px 20px;
             max-width: 1200px;
+            width: 100%;
             margin: 0 auto;
-            background-color: #1A1A1A;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
-        /* Display the total number of submissions on the right */
         .total-submissions {
-            font-size: 24px;
-            color: #00acee;
+            font-size: 18px;
             text-align: right;
-            margin-bottom: 20px;
+            margin-bottom: 20px; /* Adds space above the table */
+            color: #E7E7E5;
         }
 
         table {
             width: 100%;
+            margin-top: 20px;
             border-collapse: collapse;
-            margin-bottom: 20px;
         }
 
         th, td {
             padding: 10px;
             text-align: left;
-            border: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
         }
 
         th {
-            background-color: #046896;
-            color: #E7E7E5;
+            background-color: #1A1A1A;
+        }
+
+        td a {
+            color: #E7E7E5; /* Light color for the links */
+            text-decoration: none;
+        }
+
+        td a:hover {
+            color: #046896; /* Blue color on hover */
         }
 
         footer {
             padding: 20px;
             background-color: #222;
             color: #E7E7E5;
+            width: 100%;
             text-align: center;
+            font-size: 16px;
         }
 
         footer a {
-            color: #00acee;
+            color: #E7E7E5;
             text-decoration: none;
+        }
+
+        footer a:visited {
+            color: #B4232A; /* Red for visited links */
         }
 
         footer a:hover {
             text-decoration: underline;
         }
 
-        /* Mobile-friendly adjustments */
         @media (max-width: 768px) {
-            header {
-                font-size: 28px;
-                padding: 15px;
-            }
-
             nav a {
                 padding: 12px 10px;
                 font-size: 16px;
             }
 
             .main-content {
-                padding: 20px 10px;
+                padding: 30px 10px;
             }
-
-            .container {
-                padding: 20px;
-                width: 100%;
-            }
-
-            .total-submissions {
-                font-size: 20px;
-                text-align: center;
-            }
-
+            
             table {
-                font-size: 14px;
+                margin-top: 10px;
             }
 
             th, td {
+                font-size: 14px;
                 padding: 8px;
             }
         }
     </style>
 </head>
 <body>
+    <header>Admin Dashboard</header>
+    
+    <nav>
+        <a href="admin_dashboard.php">Dashboard</a>
+        <a href="logout.php">Logout</a>
+    </nav>
 
-<header>Code to Adventure - Admin Dashboard</header>
-
-<nav>
-    <a href="admin_dashboard.php">Dashboard</a>
-    <a href="logout.php">Logout</a>
-</nav>
-
-<div class="main-content">
-    <div class="container">
-        <!-- Display the total number of submissions at the top right -->
+    <div class="main-content">
         <div class="total-submissions">
-            <strong>Total Submissions: </strong><?php echo $totalSubmissions; ?>
+            <strong>Total Submissions: <?php echo $totalSubmissions; ?></strong>
         </div>
-
         <h2>Referral Codes</h2>
         <table>
             <thead>
@@ -200,15 +203,9 @@ $totalSubmissions = $totalRow['total_submissions'];
             </tbody>
         </table>
     </div>
-</div>
 
-<footer>
-    Created by <a href="https://winnick.is" target="_blank">Zak Winnick</a> | <a href="mailto:admin@codetoadventure.com">E-mail the admin</a> for any questions or assistance
-</footer>
-
+    <footer>
+        Created by <a href="https://winnick.is" target="_blank">Zak Winnick</a> | <a href="mailto:admin@codetoadventure.com">E-mail the admin</a> for any questions or assistance
+    </footer>
 </body>
 </html>
-
-<?php
-$conn->close();
-?>
