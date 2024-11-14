@@ -186,7 +186,6 @@ if ($images && count($images) > 0) {
             width: 100%;
             text-align: center;
             font-size: 16px;
-            position: relative; /* Ensure footer can contain the Pi symbol */
         }
 
         footer a {
@@ -202,25 +201,6 @@ if ($images && count($images) > 0) {
             text-decoration: underline;
         }
 
-        /* Pi symbol in the footer */
-        .pi-symbol {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            font-size: 40px; /* Adjust size of the Pi symbol */
-            color: #fff;  /* Pi symbol color (white) */
-            background-color: #333;  /* Dark background for contrast */
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .pi-symbol:hover {
-            background-color: #046896;  /* Change background on hover */
-            color: #fff;  /* Keep Pi symbol white on hover */
-        }
-
         /* Mobile-friendly adjustments */
         @media (max-width: 768px) {
             .main-content {
@@ -231,6 +211,10 @@ if ($images && count($images) > 0) {
                 padding: 12px 20px;
                 font-size: 18px;
                 width: 90%;
+            }
+
+            .main-content {
+                padding-bottom: 50px; /* Add space at the bottom to avoid overlap */
             }
         }
     </style>
@@ -278,10 +262,7 @@ if ($images && count($images) > 0) {
 </div>
 
 <footer>
-    <a href="changelog.html" target="_blank">Version 2024.11.13</a> | Created by <a href="https://winnick.is" target="_blank">Zak Winnick</a> | <a href="https://zak.codetoadventure.com" target="_blank">Zak's Referral Code</a> | <a href="mailto:admin@codetoadventure.com">E-mail the admin</a> for any questions or assistance
-    <span class="pi-symbol">
-        <a href="admin/admin_dashboard.php" style="color: #fff; text-decoration: none;">π</a>
-    </span>
+    <a href="changelog.html" target="_blank">Version 2024.11.7</a> | Created by <a href="https://winnick.is" target="_blank">Zak Winnick</a> | <a href="https://zak.codetoadventure.com" target="_blank">Zak's Referral Code</a> | <a href="mailto:admin@codetoadventure.com">E-mail the admin</a> for any questions or assistance
 </footer>
 
 <?php $conn->close(); ?>
