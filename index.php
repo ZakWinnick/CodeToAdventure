@@ -201,6 +201,25 @@ if ($images && count($images) > 0) {
             text-decoration: underline;
         }
 
+        /* Pi symbol in the bottom right corner */
+        .pi-symbol {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 40px; /* Adjust size of the Pi symbol */
+            color: #00acee;  /* Pi symbol color */
+            background-color: #1A1A1A;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .pi-symbol:hover {
+            background-color: #046896;
+            color: #fff;
+        }
+
         /* Mobile-friendly adjustments */
         @media (max-width: 768px) {
             .main-content {
@@ -258,8 +277,11 @@ if ($images && count($images) > 0) {
 </div>
 
 <footer>
-    <a href="changelog.html" target="_blank">Version 2024.11.7</a> | Created by <a href="https://winnick.is" target="_blank">Zak Winnick</a> | <a href="https://zak.codetoadventure.com" target="_blank">Zak's Referral Code</a> | <a href="mailto:admin@codetoadventure.com">E-mail the admin</a> for any questions or assistance
+    <a href="changelog.html" target="_blank">Version 2024.11.13</a> | Created by <a href="https://winnick.is" target="_blank">Zak Winnick</a> | <a href="https://zak.codetoadventure.com" target="_blank">Zak's Referral Code</a> | <a href="mailto:admin@codetoadventure.com">E-mail the admin</a> for any questions or assistance
 </footer>
+
+<!-- Pi symbol that links to the admin page -->
+<a href="admin/admin_dashboard.php" class="pi-symbol">π</a>
 
 <?php $conn->close(); ?>
 </body>
