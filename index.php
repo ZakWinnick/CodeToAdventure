@@ -186,6 +186,7 @@ if ($images && count($images) > 0) {
             width: 100%;
             text-align: center;
             font-size: 16px;
+            position: relative; /* Ensure footer can contain the Pi symbol */
         }
 
         footer a {
@@ -203,6 +204,9 @@ if ($images && count($images) > 0) {
 
         /* Pi symbol in the footer */
         .pi-symbol {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
             font-size: 40px; /* Adjust size of the Pi symbol */
             color: #fff;  /* Pi symbol color (white) */
             background-color: #333;  /* Dark background for contrast */
@@ -210,8 +214,6 @@ if ($images && count($images) > 0) {
             border-radius: 50%;
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
-            display: inline-block;
-            margin-top: 20px; /* Add space between text and the Pi symbol */
         }
 
         .pi-symbol:hover {
