@@ -32,12 +32,12 @@ if ($images && count($images) > 0) {
     <meta property="og:description" content="Discover and share Rivian referral codes to enjoy special offers. Submit your referral code or use one today!">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://codetoadventure.com">
-    <meta property="og:image" content="https://codetoadventure.com/lightbar-fade.png">
+    <meta property="og:image" content="https://codetoadventure.com/images/rivian-social-image.jpg"> <!-- Replace with actual image URL -->
     <meta property="og:site_name" content="Code to Adventure">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Code to Adventure - Random Rivian Referral Codes">
     <meta name="twitter:description" content="Discover and share Rivian referral codes to enjoy special offers. Submit your referral code or use one today!">
-    <meta name="twitter:image" content="https://codetoadventure.com/lightbar-fade.png">
+    <meta name="twitter:image" content="https://codetoadventure.com/images/rivian-social-image.jpg"> <!-- Replace with actual image URL -->
     <link rel="canonical" href="https://codetoadventure.com">
     <meta name="robots" content="index, follow">
 
@@ -212,10 +212,6 @@ if ($images && count($images) > 0) {
                 font-size: 18px;
                 width: 90%;
             }
-
-            .main-content {
-                padding-bottom: 50px; /* Add space at the bottom to avoid overlap */
-            }
         }
     </style>
 </head>
@@ -262,7 +258,7 @@ if ($images && count($images) > 0) {
 </div>
 
 <footer>
-    <a href="changelog.html" target="_blank">Version 2024.11.13</a> | Created by <a href="https://winnick.is" target="_blank">Zak Winnick</a> | <a href="https://zak.codetoadventure.com" target="_blank">Zak's Referral Code</a> | <a href="mailto:admin@codetoadventure.com">E-mail the admin</a> for any questions or assistance
+    Created by <a href="https://winnick.is" target="_blank">Zak Winnick</a> | <a href="https://zak.codetoadventure.com" target="_blank">Zak's Referral Code</a> | <a href="mailto:admin@codetoadventure.com">E-mail the admin</a> for any questions or assistance
 </footer>
 
 <?php $conn->close(); ?>

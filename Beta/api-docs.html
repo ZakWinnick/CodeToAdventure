@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation - Code to Adventure</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #E7E7E5;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100vh;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            box-sizing: border-box; /* Ensure padding and borders are included */
+        }
+
+        header {
+            background-color: #046896;
+            padding: 20px;
+            text-align: center;
+            color: #E7E7E5;
+            font-size: 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        nav {
+            background-color: #B4232A;
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #E7E7E5;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #046896;
+        }
+
+        .main-content {
+            flex: 1;
+            max-width: 1200px;
+            width: 100%;
+            padding: 40px 20px;
+            margin: 0 auto;
+            text-align: left;
+            box-sizing: border-box;
+        }
+
+        .api-docs {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #1A1A1A;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            overflow-x: hidden; /* Prevent overflow */
+        }
+
+        h1 {
+            color: #00acee;
+            text-align: center;
+            font-size: 32px;
+        }
+
+        h2 {
+            color: #00acee;
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        h3 {
+            color: #00acee;
+            font-size: 20px;
+        }
+
+        code, pre {
+            background-color: #333;
+            padding: 4px 8px;
+            border-radius: 5px;
+            color: #fff;
+            box-sizing: border-box;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        pre {
+            background-color: #444;
+            padding: 15px;
+            border-radius: 5px;
+            color: #ddd;
+            overflow-x: auto; /* Prevent horizontal scroll */
+            white-space: pre-wrap;
+        }
+
+        .rate-limit {
+            background-color: #222;
+            padding: 10px;
+            border-left: 4px solid #007bb5;
+            margin: 20px 0;
+        }
+
+        footer {
+            padding: 20px;
+            background-color: #222;
+            color: #E7E7E5;
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        footer a {
+            color: #00acee;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #00acee;
+            margin-top: 20px;
+            text-decoration: none;
+            border: 2px solid #00acee;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .back-link:hover {
+            background-color: #00acee;
+            color: #000;
+        }
+
+        /* Mobile-friendly adjustments */
+        @media (max-width: 768px) {
+            nav a {
+                padding: 12px 10px;
+                font-size: 16px;
+            }
+
+            .main-content {
+                padding: 30px 10px;
+                width: 100%;
+                box-sizing: border-box;
+                overflow-x: hidden; /* Extra safeguard for mobile */
+            }
+
+            .api-docs {
+                padding: 15px;
+                width: 100%;
+                box-sizing: border-box;
+                overflow-x: hidden;
+            }
+
+            pre {
+                white-space: pre-wrap; /* Wrap code blocks */
+                word-wrap: break-word;
+                overflow-x: hidden; /* Prevent side scroll */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>Code to Adventure</header>
+
+<nav>
+    <a href="index.php">Home</a>
+    <a href="submit.php">Submit Code</a>
+    <a href="api-docs.html">API Docs</a>
+    <a href="changelog.html">Changelog</a>
+</nav>
+
+<div class="main-content">
+    <div class="api-docs">
+        <h1>API Documentation</h1>
+
+        <p>Welcome to the Code to Adventure API! This API allows you to retrieve Rivian referral codes for use in your applications. Below are the details of the available endpoints, rate limits, and usage instructions.</p>
+
+        <h2>Endpoints</h2>
+
+        <h3>1. Get Random Referral Code</h3>
+        <p><strong>URL:</strong> <code>GET /api/random</code></p>
+        <p>This endpoint returns a randomly selected Rivian referral code from our database.</p>
+
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET https://codetoadventure.com/api.php?path=random</code></pre>
+
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "name": "John Doe",
+    "username": "johndoe",
+    "referral_code": "ABC123",
+    "link": "https://rivian.com/configurations/list?reprCode=ABC123"
+}</code></pre>
+
+        <h3>2. Get All Referral Codes</h3>
+        <p><strong>URL:</strong> <code>GET /api/codes</code></p>
+        <p>This endpoint returns a list of all referral codes stored in our database, including the user's name and X username.</p>
+
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET https://codetoadventure.com/api.php?path=codes</code></pre>
+
+        <p><strong>Example Response:</strong></p>
+        <pre><code>[
+    {
+        "name": "John Doe",
+        "username": "johndoe",
+        "referral_code": "ABC123",
+        "link": "https://rivian.com/configurations/list?reprCode=ABC123"
+    },
+    {
+        "name": "Jane Smith",
+        "username": "janesmith",
+        "referral_code": "XYZ456",
+        "link": "https://rivian.com/configurations/list?reprCode=XYZ456"
+    }
+]</code></pre>
+
+        <h2>Rate Limiting</h2>
+        <div class="rate-limit">
+            <p>To prevent abuse, the API is rate limited. Each IP address is allowed up to <strong>100 requests per minute</strong>.</p>
+            <p>If you exceed this limit, you will receive the following response:</p>
+            <pre><code>{
+    "error": "Rate limit exceeded. Try again later."
+}</code></pre>
+        </div>
+
+        <h2>Response Codes</h2>
+        <p>The API returns standard HTTP response codes to indicate the success or failure of an API request:</p>
+        <ul>
+            <li><strong>200 OK:</strong> The request was successful.</li>
+            <li><strong>404 Not Found:</strong> The requested endpoint or resource does not exist.</li>
+            <li><strong>429 Too Many Requests:</strong> The rate limit has been exceeded.</li>
+            <li><strong>500 Internal Server Error:</strong> Something went wrong on our end.</li>
+        </ul>
+
+        <h2>Usage Instructions</h2>
+        <p>To use the API, simply send a <code>GET</code> request to the respective endpoint. You can use the URLs directly in your browser, in your application, or via tools like <a href="https://www.postman.com/" target="_blank">Postman</a> to test the API responses.</p>
+        <p>Make sure to respect the rate limits to ensure consistent access for all users.</p>
+
+        <a href="index.php" class="back-link">Back to Home</a>
+    </div>
+</div>
+
+<footer>
+    Created by <a href="https://winnick.is" target="_blank">Zak Winnick</a> | <a href="https://zak.codetoadventure.com" target="_blank">Zak's Referral Code</a> | <a href="mailto:admin@codetoadventure.com">E-mail the admin</a> for any questions or assistance
+</footer>
+
+</body>
+</html>

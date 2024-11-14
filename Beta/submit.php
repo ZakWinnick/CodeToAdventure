@@ -205,8 +205,8 @@
             <label for="name">Name</label>
             <input type="text" id="name" name="name" required>
 
-            <label for="username">X Username (without @ or 'None')</label>
-            <input type="text" id="username" name="username">
+            <label for="username">X Username (without @)</label>
+            <input type="text" id="username" name="username" required>
 
             <label for="referralCode">Referral Code (Just the code - No URL)</label>
             <input type="text" id="referralCode" name="referralCode" required>
@@ -219,7 +219,7 @@
 </div>
 
 <footer>
-    <a href="changelog.html" target="_blank">Version 2024.11.13</a> | Created by <a href="https://winnick.is" target="_blank">Zak Winnick</a> | <a href="https://zak.codetoadventure.com" target="_blank">Zak's Referral Code</a> | <a href="mailto:admin@codetoadventure.com">E-mail the admin</a> for any questions or assistance
+    Created by <a href="https://winnick.is" target="_blank">Zak Winnick</a> | <a href="https://zak.codetoadventure.com" target="_blank">Zak's Referral Code</a> | <a href="mailto:admin@codetoadventure.com">E-mail the admin</a> for any questions or assistance
 </footer>
 
 </body>
