@@ -207,8 +207,8 @@ if ($images && count($images) > 0) {
             bottom: 20px;
             right: 20px;
             font-size: 40px; /* Adjust size of the Pi symbol */
-            color: #00acee;  /* Pi symbol color */
-            background-color: #1A1A1A;
+            color: #fff;  /* Pi symbol color (white) */
+            background-color: #333;  /* Dark background for contrast */
             padding: 10px;
             border-radius: 50%;
             cursor: pointer;
@@ -216,8 +216,8 @@ if ($images && count($images) > 0) {
         }
 
         .pi-symbol:hover {
-            background-color: #046896;
-            color: #fff;
+            background-color: #046896;  /* Change background on hover */
+            color: #fff;  /* Keep Pi symbol white on hover */
         }
 
         /* Mobile-friendly adjustments */
@@ -277,7 +277,7 @@ if ($images && count($images) > 0) {
 </div>
 
 <footer>
-    <a href="changelog.html" target="_blank">Version 2024.11.13</a> | Created by <a href="https://winnick.is" target="_blank">Zak Winnick</a> | <a href="https://zak.codetoadventure.com" target="_blank">Zak's Referral Code</a> | <a href="mailto:admin@codetoadventure.com">E-mail the admin</a> for any questions or assistance
+    <a href="changelog.html" target="_blank">Version 2024.11.7</a> | Created by <a href="https://winnick.is" target="_blank">Zak Winnick</a> | <a href="https://zak.codetoadventure.com" target="_blank">Zak's Referral Code</a> | <a href="mailto:admin@codetoadventure.com">E-mail the admin</a> for any questions or assistance
 </footer>
 
 <!-- Pi symbol that links to the admin page -->
