@@ -1,13 +1,9 @@
 <?php
-// Load environment variables from the .env file
-require_once __DIR__ . '/vendor/autoload.php';
-Dotenv\Dotenv::createImmutable(__DIR__)->load();
-
-// Access the environment variables
-$servername = getenv('DB_SERVER');
-$username = getenv('DB_USERNAME');
-$password = getenv('DB_PASSWORD');
-$dbname = getenv('DB_NAME');
+// Database configuration
+$servername = "mysql.randomrivianreferral.co"; // Change if necessary
+$username = "rrr_db"; // Your MySQL username
+$password = "Fr@km00v"; // Your MySQL password
+$dbname = "rrr_referrals"; // Database name
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
