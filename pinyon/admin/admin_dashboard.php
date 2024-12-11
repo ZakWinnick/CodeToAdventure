@@ -1,37 +1,3 @@
-<?php
-session_start(); // Start the session to check if the user is logged in
-
-// No need for admin check; anyone logged in can access this page
-// Just checking if the user is logged in
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");  // Redirect to login page if not logged in
-    exit();  // Ensure no further code is executed
-}
-
-include '../config.php';  // Adjust the path as necessary
-
-// Query to get the total number of users
-$totalSqlUsers = "SELECT COUNT(*) as total FROM users";
-$totalResultUsers = $conn->query($totalSqlUsers);
-$totalRowUsers = $totalResultUsers->fetch_assoc();
-$totalUsers = $totalRowUsers['total']; // Store the total user count
-
-// Query to get the total number of submissions
-$totalSqlSubmissions = "SELECT COUNT(*) as total FROM codes";
-$totalResultSubmissions = $conn->query($totalSqlSubmissions);
-$totalRowSubmissions = $totalResultSubmissions->fetch_assoc();
-$totalSubmissions = $totalRowSubmissions['total']; // Store the total submission count
-
-// Query to get the latest submission
-$latestSql = "SELECT * FROM codes ORDER BY id DESC LIMIT 1";
-$latestResult = $conn->query($latestSql);
-$latestSubmission = $latestResult->fetch_assoc();
-
-// Fetch all submissions ordered from oldest to newest
-$submissionsSql = "SELECT * FROM codes ORDER BY id ASC"; // Sorted by ID in ascending order
-$submissionsResult = $conn->query($submissionsSql);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,85 +5,98 @@ $submissionsResult = $conn->query($submissionsSql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code to Adventure - Admin Dashboard</title>
     <style>
-        /* General Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        html, body {
-            width: 100%;
-            height: 100%;
-            background-color: #000;
-            color: #E7E7E5;
-            font-family: Arial, sans-serif;
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #142a13;
+            color: #fff;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
             align-items: center;
             min-height: 100vh;
-            text-align: center;
         }
 
-        header {
-            background-color: #046896; /* Header blue */
-            color: #E7E7E5;
-            padding: 20px;
-            text-align: center;
-            font-size: 36px;
-            width: 100%;  /* Ensure header stretches across full width */
-        }
-
-        nav {
-            background-color: #B4232A; /* Red for the navigation bar */
-            padding: 10px;
-            text-align: center;
+        .title-bar {
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
             width: 100%;
+            max-width: 1200px;
+            padding: 1rem 1.5rem;
+            background-color: #123A13;
+            color: #E7E7E5;
         }
 
-        nav a {
-            color: #E7E7E5;
-            text-decoration: none;
-            font-size: 18px;
-            padding: 10px 20px;
-            border-radius: 5px;
+        .title-bar h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #DEB526;
+        }
+
+        .title-bar button {
+            background-color: #87b485;
+            color: #142a13;
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            cursor: pointer;
             transition: background-color 0.3s;
         }
 
-        nav a:hover {
-            background-color: #046896;
+        .title-bar button:hover {
+            background-color: #6f946f;
         }
 
-        .main-content {
-            flex: 1;
-            padding: 40px 20px;
-            max-width: 1200px;
+        .menu-bar {
             width: 100%;
+            max-width: 1200px;
+            background-color: #1a3e2b;
+            padding: 0.5rem 1.5rem;
             margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Center the content */
         }
 
-        /* Style for Total Count Box */
+        .menu {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .menu a {
+            color: #E7E7E5;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 5px;
+        }
+
+        .menu a:hover {
+            background-color: #6f946f;
+            color: #142a13;
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
         .total-box {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #1A1A1A;
-            padding: 20px;
+            justify-content: space-around;
+            background-color: #1a3e2b;
+            padding: 1rem;
             border-radius: 8px;
+            margin-bottom: 1rem;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            margin-bottom: 30px;
-            font-size: 24px;
-            color: #E7E7E5;
-            width: 100%; /* Ensure full width */
-            max-width: 900px; /* Max width for large screens */
         }
 
         .total-box div {
@@ -125,184 +104,167 @@ $submissionsResult = $conn->query($submissionsSql);
         }
 
         .total-box .total-heading {
-            font-size: 18px;
+            font-size: 1.5rem;
             font-weight: bold;
-            margin-bottom: 10px;
+            color: #87b485;
         }
 
-        .footer-links {
-            margin-top: 20px;
+        .table-container {
+            background-color: #1a3e2b;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
-        footer {
-            padding: 20px;
-            background-color: #222;
-            color: #E7E7E5;
-            width: 100%;
-            text-align: center;
-            font-size: 16px;
-        }
-
-        footer a {
-            color: #E7E7E5;
-            text-decoration: none;
-        }
-
-        footer a:visited {
-            color: #B4232A; /* Red for visited links */
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Table Styles for Submissions List */
         table {
             width: 100%;
-            margin-top: 20px;
             border-collapse: collapse;
+            margin-top: 1rem;
         }
 
         table th, table td {
-            padding: 10px;
             text-align: left;
-            border: 1px solid #ddd;
+            padding: 0.5rem;
+            border: 1px solid #333;
         }
 
         table th {
-            background-color: #046896;
+            background-color: #123A13;
             color: #E7E7E5;
         }
 
         table tr:nth-child(even) {
-            background-color: #1A1A1A;
+            background-color: #1a3e2b;
         }
 
         table tr:hover {
             background-color: #333;
         }
 
-        table a {
-            color: #00acee;
+        .back-to-top {
+            display: inline-block;
+            margin-top: 1rem;
+            background-color: #87b485;
+            color: #142a13;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .back-to-top:hover {
+            background-color: #6f946f;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #1a3e2b;
+            color: #E7E7E5;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        footer a {
+            color: #87b485;
             text-decoration: none;
         }
 
-        table a:hover {
+        footer a:hover {
             text-decoration: underline;
         }
 
-        /* Mobile Styling */
         @media (max-width: 768px) {
-            nav a {
-                padding: 12px 10px;
-                font-size: 16px;
+            .menu {
+                flex-wrap: wrap;
+                gap: 0.5rem;
             }
 
-            .main-content {
-                padding: 30px 10px;
-                width: 100%;
-                box-sizing: border-box;
+            .menu a {
+                padding: 0.5rem;
+                font-size: 0.9rem;
             }
 
             .total-box {
                 flex-direction: column;
-                text-align: center;
-                margin-bottom: 20px;
+                gap: 1rem;
             }
 
-            .total-box div {
-                margin-bottom: 10px;
-            }
-
-            table {
-                overflow-x: auto;
-                display: block;
+            .content {
+                padding: 1rem;
             }
 
             table th, table td {
-                font-size: 14px;
-                padding: 8px;
+                font-size: 0.9rem;
             }
-        }
-
-        /* Back to Top Button */
-        .back-to-top {
-            background-color: #046896;
-            color: #E7E7E5;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 20px;
-            cursor: pointer;
-        }
-
-        .back-to-top:hover {
-            background-color: #007bb5;
         }
     </style>
 </head>
 <body>
-    <header>Code to Adventure - Admin Dashboard</header>
-    
-    <nav>
-        <a href="admin_dashboard.php">Dashboard</a>
-        <a href="../index.php">Home</a>
-        <a href="logout.php">Logout</a>
-    </nav>
+    <div class="title-bar">
+        <h1>Code to Adventure</h1>
+        <button onclick="window.location.href='submit.php';">Submit Code</button>
+    </div>
 
-    <div class="main-content">
-        <!-- Display Total Users and Submissions in a prominent box -->
+    <div class="menu-bar">
+        <nav class="menu">
+            <a href="admin_dashboard.php">Dashboard</a>
+            <a href="../index.php">Home</a>
+            <a href="logout.php">Logout</a>
+        </nav>
+    </div>
+
+    <div class="content">
         <div class="total-box">
             <div>
                 <div class="total-heading">Latest Submission</div>
-                <div class="total-count">
+                <div>
                     <strong><?php echo htmlspecialchars($latestSubmission['name']); ?></strong> 
-                    (<a href="https://x.com/<?php echo htmlspecialchars($latestSubmission['username']); ?>" target="_blank" style="color: #00acee;">@<?php echo htmlspecialchars($latestSubmission['username']); ?></a>) - 
-                    <a href="https://rivian.com/configurations/list?reprCode=<?php echo htmlspecialchars($latestSubmission['referral_code']); ?>" target="_blank" style="color: #00acee;">Use this Referral Code</a>
+                    (<a href="https://x.com/<?php echo htmlspecialchars($latestSubmission['username']); ?>" target="_blank" style="color: #87b485;">@<?php echo htmlspecialchars($latestSubmission['username']); ?></a>) - 
+                    <a href="https://rivian.com/configurations/list?reprCode=<?php echo htmlspecialchars($latestSubmission['referral_code']); ?>" target="_blank" style="color: #87b485;">Use this Referral Code</a>
                 </div>
             </div>
-
             <div>
                 <div class="total-heading">Total Submissions</div>
-                <div class="total-count"><?php echo $totalSubmissions; ?></div>
+                <div><?php echo $totalSubmissions; ?></div>
             </div>
         </div>
 
-        <!-- List of all submissions -->
-        <h2>All Submissions</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Username</th>
-                    <th>Referral Code</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($row = $submissionsResult->fetch_assoc()): ?>
+        <div class="table-container">
+            <h2>All Submissions</h2>
+            <table>
+                <thead>
                     <tr>
-                        <td><?php echo htmlspecialchars($row['id']); ?></td>
-                        <td><?php echo htmlspecialchars($row['name']); ?></td>
-                        <td><?php echo htmlspecialchars($row['username']); ?></td>
-                        <td><?php echo htmlspecialchars($row['referral_code']); ?></td>
-                        <td>
-                            <a href="edit_referral.php?id=<?php echo $row['id']; ?>">Edit</a> | 
-                            <a href="delete_referral.php?id=<?php echo $row['id']; ?>">Delete</a>
-                        </td>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Referral Code</th>
+                        <th>Actions</th>
                     </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php while ($row = $submissionsResult->fetch_assoc()): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($row['id']); ?></td>
+                            <td><?php echo htmlspecialchars($row['name']); ?></td>
+                            <td><?php echo htmlspecialchars($row['username']); ?></td>
+                            <td><?php echo htmlspecialchars($row['referral_code']); ?></td>
+                            <td>
+                                <a href="edit_referral.php?id=<?php echo $row['id']; ?>">Edit</a> | 
+                                <a href="delete_referral.php?id=<?php echo $row['id']; ?>">Delete</a>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        </div>
 
-        <!-- Back to Top Button -->
         <a href="#" class="back-to-top" onclick="window.scrollTo(0, 0);">Back to Top</a>
     </div>
 
     <footer>
-        Created by <a href="https://winnick.is" target="_blank">Zak Winnick</a> | <a href="mailto:admin@codetoadventure.com">E-mail the admin</a> for any questions or assistance
+        Created by <a href="https://winnick.is" target="_blank">Zak Winnick</a> | <a href="mailto:admin@codetoadventure.com">E-mail the admin</a>
     </footer>
 </body>
 </html>
