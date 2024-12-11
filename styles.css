@@ -1,14 +1,70 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    background-color: #142a13;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 1rem;
+}
+
+/* Title Bar */
+.title-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0.5rem 1.5rem;
+    background-color: #123A13;
+    color: #E7E7E5;
+}
+
+.title-bar h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #DEB526;
+}
+
+.title-bar .button {
+    background-color: #87b485;
+    color: #142a13;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.title-bar .button:hover {
+    background-color: #6f946f;
+}
+
 /* Navigation Menu */
 .nav-menu {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 10px 1.5rem; /* Matches title bar spacing */
-    background-color: #123A13; /* Matches title bar color */
+    padding: 10px 1.5rem;
+    background-color: #123A13;
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    border-bottom: 2px solid #6f946f; /* Adds a slight separator for styling */
+    border-bottom: 2px solid #6f946f;
 }
 
 .nav-menu .menu {
@@ -21,22 +77,22 @@
 
 .nav-menu .menu li a {
     text-decoration: none;
-    color: #E7E7E5; /* Matches site text color */
+    color: #E7E7E5;
     font-size: 1.25rem;
     font-weight: bold;
-    padding: 0.5rem 0.75rem; /* Padding around each menu item */
-    border-radius: 8px; /* Rounded corners for a modern look */
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .nav-menu .menu li a:hover {
-    background-color: #6f946f; /* Matches button hover color */
-    color: #123A13; /* Inverts the text color for contrast */
+    background-color: #6f946f;
+    color: #123A13;
 }
 
 /* Hamburger Button */
 .hamburger {
-    display: none; /* Hidden on larger screens */
+    display: none;
     background: none;
     border: none;
     cursor: pointer;
@@ -50,7 +106,7 @@
     display: block;
     width: 30px;
     height: 3px;
-    background-color: #E7E7E5; /* Matches site text color */
+    background-color: #E7E7E5;
     border-radius: 2px;
     transition: transform 0.3s ease;
 }
@@ -58,36 +114,28 @@
 /* Mobile Styles */
 @media (max-width: 768px) {
     .hamburger {
-        display: flex; /* Show hamburger button */
+        display: flex;
     }
 
     .nav-menu .menu {
-        display: none; /* Hide menu by default */
+        display: none;
         flex-direction: column;
-        width: 100%; /* Full width menu */
-        background-color: #123A13; /* Matches title bar */
+        width: 100%;
+        background-color: #123A13;
         padding: 0.5rem 0;
     }
 
     .nav-menu .menu.active {
-        display: flex; /* Show menu when active */
+        display: flex;
     }
 
     .nav-menu .menu li {
-        width: 100%; /* Each item spans the menu width */
+        width: 100%;
     }
 
     .nav-menu .menu li a {
         display: block;
-        padding: 1rem; /* More padding for touch-friendly menu */
+        padding: 1rem;
         text-align: left;
-    }
-
-    .hamburger span:nth-child(1) {
-        transform-origin: top left;
-    }
-
-    .hamburger span:nth-child(3) {
-        transform-origin: bottom left;
     }
 }

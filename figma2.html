@@ -1,14 +1,103 @@
-<nav class="nav-menu">
-    <button class="hamburger" id="hamburger-menu">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-    <ul class="menu">
-        <li><a href="index.php">Home</a></li>
-        <li><a href="submit.php">Submit Code</a></li>
-        <li><a href="changelog.html">Changelog</a></li>
-        <li><a href="api-docs.html">API Docs</a></li>
-        <li><a href="/admin">Admin</a></li>
-    </ul>
-</nav>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code to Adventure - Random Rivian Referrals</title>
+    <meta name="description" content="Discover and share Rivian referral codes to earn exclusive rewards. Use a random referral code to get benefits on your Rivian purchase.">
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <!-- Title Bar -->
+    <div class="title-bar">
+        <h1>Code to Adventure</h1>
+        <a href="submit.php" class="button">Submit Code</a>
+    </div>
+
+    <!-- Navigation Menu -->
+    <nav class="nav-menu">
+        <button class="hamburger" id="hamburger-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="menu">
+            <li><a href="index.php">Home</a></li>
+            <li><a href="submit.php">Submit Code</a></li>
+            <li><a href="changelog.html">Changelog</a></li>
+            <li><a href="api-docs.html">API Docs</a></li>
+            <li><a href="/admin">Admin</a></li>
+        </ul>
+    </nav>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Buying a Rivian?<br>Use a referral code and <strong>get rewards</strong>!</h1>
+    </header>
+
+    <!-- Main Button for Referral -->
+    <a href="#" id="referral-link" class="button">
+        <span id="referral-text">Use Referral Code</span>
+        <svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M0 10h16m0 0L8 2m8 8l-8 8" stroke="#31572C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    </a>
+    <p class="note">
+        You’ll be directed to Rivian’s R1 Shop. Code changes every page refresh.
+    </p>
+
+    <!-- Main Content -->
+    <main class="content">
+        <section class="section">
+            <h2>How does it work?</h2>
+            <p>When you use an owner’s referral code during checkout of a qualifying R1 Shop vehicle, both the original owner (referrer) and new owner (referee) get rewards!</p>
+        </section>
+
+        <section class="section">
+            <h2>What are the rewards?</h2>
+            <div class="bottom-section">
+                <div class="bottom-text">
+                    <h3>750 Points</h3>
+                    <p>Redeemable in Gear Shop or R1 Shop.</p>
+                    <small>(1 point equals 1 dollar in credit)</small>
+                </div>
+                <div class="bottom-text">
+                    <h3>6 Months Charging</h3>
+                    <p>At Rivian Adventure Network sites.</p>
+                    <small>(Up to a lifetime limit of three years)</small>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="title-bar">
+        <p>&copy; <span id="current-year"></span> 
+            <a href="https://zak.codetoadventure.com" target="_blank" rel="noopener noreferrer">Zak Winnick</a>
+        </p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.getElementById('current-year').innerText = new Date().getFullYear();
+
+        // Hamburger menu toggle
+        const hamburger = document.getElementById('hamburger-menu');
+        const menu = document.querySelector('.menu');
+
+        hamburger.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
+
+        // Example dynamic referral data
+        fetch('/api/random-referral')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('referral-text').innerText = `Use ${data.referee}'s Code`;
+                document.getElementById('referral-link').href = data.referralLink;
+            })
+            .catch(error => console.error('Error fetching referral:', error));
+    </script>
+</body>
+</html>
