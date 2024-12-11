@@ -184,19 +184,6 @@
     $sql = "SELECT * FROM codes ORDER BY RAND() LIMIT 1";
     $result = $conn->query($sql);
     $referral = $result->fetch_assoc();
-
-    // Define the directory that contains the header images
-    $imageDir = 'header-images/';
-
-    // Get all image files in the directory (e.g., png, jpg, jpeg, gif)
-    $images = glob($imageDir . '*.{png,jpg,jpeg,gif}', GLOB_BRACE);
-
-    // Randomly select an image from the array
-    if ($images && count($images) > 0) {
-        $randomImage = $images[array_rand($images)];
-    } else {
-        $randomImage = 'default-image.png'; // Fallback image if no images are found
-    }
     ?>
 
     <div class="title-bar">
@@ -204,14 +191,14 @@
         <button onclick="window.location.href='submit.php';">Submit Code</button>
     </div>
 
-    <header style="background-image: url('<?php echo $randomImage; ?>'); background-size: cover; background-position: center;">
+    <header>
         <h1>Buying a Rivian?<br>Use a referral code and <strong>get rewards</strong>!</h1>
     </header>
 
     <div class="referral-display">
         <p class="referral-code">Code: <span><?php echo $referral['referral_code']; ?></span></p>
         <p class="referee-name">Submitted by: <span><?php echo $referral['name']; ?></span></p>
-        <a href="https://rivian.com/shop?referral=<?php echo $referral['referral_code']; ?>" target="_blank" class="shop-link">Shop with this Code</a>
+        <a href="https://rivian.com/configurations/list?reprCode=<?php echo $referral['referral_code']; ?>" target="_blank" class="shop-link">Shop with this Code</a>
     </div>
 
     <main class="content">
