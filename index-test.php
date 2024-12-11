@@ -225,8 +225,8 @@ if ($images && count($images) > 0) {
 <style>
     /* Promo Banner Style with flipped colors */
     .promo-banner {
-        background-color: #E7E7E5; /* Light background color */
-        color: #046896; /* Blue text color */
+        background-color: #E7E7E5; /* LA Silver background color */
+        color: #757474; /* El Cap Granite text color */
         font-size: 16px;
         padding: 10px 20px;
         display: flex;
