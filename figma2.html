@@ -45,6 +45,10 @@
             font-weight: bold;
         }
 
+        .title-bar a:hover {
+            color: #6f946f;
+        }
+
         header {
             text-align: center;
             margin-top: 2rem;
@@ -57,10 +61,12 @@
             margin-bottom: 1rem;
         }
 
-        .button {
-            background-color: #87b485;
-            color: #142a13;
-            padding: 0.5rem 1.5rem;
+        header p {
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+
+        .button { background-color: #87b485; color: #142a13; padding: 0.5rem 1.5rem;
             border: none;
             border-radius: 30px;
             font-size: 1.25rem;
@@ -78,56 +84,8 @@
             background-color: #6f946f;
         }
 
-        .modal-backdrop {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: none;
-            z-index: 999;
-        }
-
-        .modal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #1a3e2b;
-            padding: 2rem;
-            border-radius: 10px;
-            max-width: 600px;
-            width: 100%;
-            display: none;
-            z-index: 1000;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: #E7E7E5;
-            margin-bottom: 1rem;
-        }
-
-        .modal-header h2 {
+        .button span {
             font-size: 1.5rem;
-            margin: 0;
-        }
-
-        .modal-header button {
-            background: none;
-            border: none;
-            color: #DEB526;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .modal-content {
-            color: #87b485;
-            font-size: 1rem;
         }
 
         .content {
@@ -210,6 +168,10 @@
                 font-size: 2rem;
             }
 
+            header p {
+                font-size: 1.25rem;
+            }
+
             .section h2 {
                 font-size: 1.5rem;
             }
@@ -229,15 +191,24 @@
         }
     </style>
 </head>
-<body>
     <div class="title-bar">
         <h1>Code to Adventure</h1>
-        <button class="button" onclick="openModal()">Submit Code</button>
+        <button class="button" onclick="window.location.href='submit.php';">Submit Code</button>
     </div>
 
     <header>
         <h1>Buying a Rivian?<br>Use a referral code and <strong>get rewards</strong>!</h1>
     </header>
+
+    <button class="button">
+        <span>Use Mark's Code</span>
+        <svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 10h16m0 0L8 2m8 8l-8 8" stroke="#31572C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    </button>
+    <p style="font-size: 0.85rem; text-align: center; color: #87b485; margin-top: 0.5rem;">
+        You’ll be directed to Rivian’s R1 Shop. Code changes every page refresh.
+    </p>
 
     <main class="content">
         <section class="section">
@@ -265,47 +236,5 @@
     <footer>
         <p>&copy; <script>document.write(new Date().getFullYear());</script> <a href='https://zak.codetoadventure.com' style='color: #87b485; text-decoration: none;' target='_blank' rel='noopener noreferrer'>Zak Winnick</a></p>
     </footer>
-
-    <!-- Modal and Backdrop -->
-    <div class="modal-backdrop" id="modal-backdrop"></div>
-    <div class="modal" id="modal">
-        <div class="modal-header">
-            <h2>Submit Code</h2>
-            <button onclick="closeModal()">&times;</button>
-        </div>
-        <div class="modal-content" id="modal-content">
-            <!-- Content from submit.php will load here -->
-        </div>
-    </div>
-
-    <script>
-        async function openModal() {
-            const modal = document.getElementById('modal');
-            const backdrop = document.getElementById('modal-backdrop');
-            const modalContent = document.getElementById('modal-content');
-
-            // Show modal and backdrop
-            modal.style.display = 'block';
-            backdrop.style.display = 'block';
-
-            // Fetch the content of submit.php
-            try {
-                const response = await fetch('submit.php');
-                const content = await response.text();
-                modalContent.innerHTML = content;
-            } catch (error) {
-                modalContent.innerHTML = '<p>Failed to load content. Please try again later.</p>';
-            }
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('modal');
-            const backdrop = document.getElementById('modal-backdrop');
-
-            // Hide modal and backdrop
-            modal.style.display = 'none';
-            backdrop.style.display = 'none';
-        }
-    </script>
 </body>
 </html>
