@@ -240,6 +240,7 @@
             }
         }
     </style>
+    <script src="https://tinylytics.app/embed/wWu5hJWSQ_r9BAxgohx8.js" defer></script>
 </head>
 <body>
     <?php
