@@ -1,249 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code to Adventure - Random Rivian Referrals</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<body>
 
-        body {
-            font-family: 'Lato', sans-serif;
-            background-color: #142a13;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 1rem;
-        }
+    
+    
+<nav style="background-color: #123A13; color: #E7E7E5; padding: 0.5rem 1rem;">
+        <ul style="display: flex; justify-content: center; list-style: none; gap: 1rem; padding: 0; margin: 0;">
+            <li><a href="index.php" style="color: #87b485; text-decoration: none; font-weight: bold;">Home</a></li>
+            <li><a href="submit.php" style="color: #87b485; text-decoration: none; font-weight: bold;">Submit Code</a></li>
+            <li><a href="api-docs.html" style="color: #87b485; text-decoration: none; font-weight: bold;">API Docs</a></li>
+            <li><a href="changelog.html" style="color: #87b485; text-decoration: none; font-weight: bold;">Changelog</a></li>
+            <li><a href="/admin" style="color: #87b485; text-decoration: none; font-weight: bold;">Admin</a></li>
+        </ul>
+    </nav>
+
+    <button class="button" onclick="window.location.href='submit.php';">Submit Code</button>
+</div>
 
-        .title-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%; max-width: 1200px;
-            padding: 0rem 1.5rem;
-            background-color: #123A13;
-            color: #E7E7E5;
-        }
+<header>
+    <h1>Buying a Rivian?<br>Use a referral code and <strong>get rewards</strong>!</h1>
+</header>
 
-        .title-bar h1 {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #DEB526;
-        }
+<button class="button">
+    <span>Use Mark's Code</span>
+    <svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 10h16m0 0L8 2m8 8l-8 8" stroke="#31572C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+</button>
+<p style="font-size: 0.85rem; text-align: center; color: #87b485; margin-top: 0.5rem;">
+    You’ll be directed to Rivian’s R1 Shop. Code changes every page refresh.
+</p>
 
-        .title-bar a {
-            color: #31572C;
-            text-decoration: none;
-            font-size: 1.25rem;
-            font-weight: bold;
-        }
+<main class="content">
+    <section class="section">
+        <h2>How does it work?</h2>
+        <p>When you use an owner’s referral code during checkout of a qualifying R1 Shop vehicle, both the original owner (referrer) and new owner (referee) get rewards!</p>
+    </section>
 
-        .title-bar a:hover {
-            color: #6f946f;
-        }
-
-        header {
-            text-align: center;
-            margin-top: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            line-height: 1.4;
-            margin-bottom: 1rem;
-        }
-
-        header p {
-            font-size: 1.25rem;
-            font-weight: 500;
-        }
-
-        .button { background-color: #87b485; color: #142a13; padding: 0.5rem 1.5rem;
-            border: none;
-            border-radius: 30px;
-            font-size: 1.25rem;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .button:hover {
-            background-color: #6f946f;
-        }
-
-        .button span {
-            font-size: 1.5rem;
-        }
-
-        .content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem;
-        }
-
-        .section {
-            margin-bottom: 3rem;
-        }
-
-        .section h2 {
-            font-size: 1.75rem;
-            margin-bottom: 1rem;
-            color: #87b485;
-            text-align: left;
-        }
-
-        .section p {
-            font-size: 1.25rem;
-            line-height: 1.6;
-            text-align: left;
-        }
-
-        .bottom-section {
-            display: flex;
-            justify-content: space-between;
-            gap: 2rem;
-            max-width: 800px;
-            margin: 0 auto;
-            flex-wrap: wrap;
-        }
-
-        .bottom-text {
-            background-color: #1a3e2b;
-            border-radius: 8px;
-            padding: 1.5rem;
-            text-align: left;
-            flex: 1 1 300px;
-            color: #87b485;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .bottom-text h3 {
-            color: #E7E7E5;
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .bottom-text p {
-            margin: 0.5rem 0;
-        }
-
-        .bottom-text small {
-            font-size: 0.9rem;
-            color: #87b485;
-        }
-
-        footer {
-            text-align: center;
-            padding: 1rem;
-            background-color: #1a3e2b;
-            color: #E7E7E5;
-            width: 100%;
-            margin-top: auto;
-        }
-
-        @media (max-width: 768px) {
-            .title-bar {
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-                padding: 0.5rem 1.5rem;
-            }
-
-            header h1 {
-                font-size: 2rem;
-            }
-
-            header p {
-                font-size: 1.25rem;
-            }
-
-            .section h2 {
-                font-size: 1.5rem;
-            }
-
-            .section p {
-                font-size: 1rem;
-            }
-
-            .bottom-section {
-                flex-direction: column;
-                gap: 1.5rem;
-            }
-
-            .bottom-text {
-                flex: 1 1 auto;
-            }
-        }
-    </style>
-</head>
-    <nav style="background-color: #123A13; color: #E7E7E5; padding: 0.5rem 1rem;">
-            <ul style="display: flex; justify-content: center; list-style: none; gap: 1rem; padding: 0; margin: 0;">
-                <li><a href="index.php" style="color: #87b485; text-decoration: none; font-weight: bold;">Home</a></li>
-                <li><a href="submit.php" style="color: #87b485; text-decoration: none; font-weight: bold;">Submit Code</a></li>
-                <li><a href="api-docs.html" style="color: #87b485; text-decoration: none; font-weight: bold;">API Docs</a></li>
-                <li><a href="changelog.html" style="color: #87b485; text-decoration: none; font-weight: bold;">Changelog</a></li>
-                <li><a href="/admin" style="color: #87b485; text-decoration: none; font-weight: bold;">Admin</a></li>
-            </ul>
-        </nav>
-        
-        <h1>Code to Adventure</h1>
-        <button class="button" onclick="window.location.href='submit.php';">Submit Code</button>
-    </div>
-
-    <header>
-        <h1>Buying a Rivian?<br>Use a referral code and <strong>get rewards</strong>!</h1>
-    </header>
-
-    <button class="button">
-        <span>Use Mark's Code</span>
-        <svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 10h16m0 0L8 2m8 8l-8 8" stroke="#31572C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-    </button>
-    <p style="font-size: 0.85rem; text-align: center; color: #87b485; margin-top: 0.5rem;">
-        You’ll be directed to Rivian’s R1 Shop. Code changes every page refresh.
-    </p>
-
-    <main class="content">
-        <section class="section">
-            <h2>How does it work?</h2>
-            <p>When you use an owner’s referral code during checkout of a qualifying R1 Shop vehicle, both the original owner (referrer) and new owner (referee) get rewards!</p>
-        </section>
-
-        <section class="section">
-            <h2>What are the rewards?</h2>
-            <div class="bottom-section">
-                <div class="bottom-text">
-                    <h3>750 Points</h3>
-                    <p>Redeemable in Gear Shop or R1 Shop.</p>
-                    <small>(1 point equals 1 dollar in credit)</small>
-                </div>
-                <div class="bottom-text">
-                    <h3>6 Months Charging</h3>
-                    <p>At Rivian Adventure Network sites.</p>
-                    <small>(Up to a lifetime limit of three years)</small>
-                </div>
+    <section class="section">
+        <h2>What are the rewards?</h2>
+        <div class="bottom-section">
+            <div class="bottom-text">
+                <h3>750 Points</h3>
+                <p>Redeemable in Gear Shop or R1 Shop.</p>
+                <small>(1 point equals 1 dollar in credit)</small>
             </div>
-        </section>
-    </main>
+            <div class="bottom-text">
+                <h3>6 Months Charging</h3>
+                <p>At Rivian Adventure Network sites.</p>
+                <small>(Up to a lifetime limit of three years)</small>
+            </div>
+        </div>
+    </section>
+</main>
 
-    <footer>
-        <p>&copy; <script>document.write(new Date().getFullYear());</script> <a href='https://zak.codetoadventure.com' style='color: #87b485; text-decoration: none;' target='_blank' rel='noopener noreferrer'>Zak Winnick</a></p>
-    </footer>
+<footer>
+    <p>&copy; <script>document.write(new Date().getFullYear());</script> <a href='https://zak.codetoadventure.com' style='color: #87b485; text-decoration: none;' target='_blank' rel='noopener noreferrer'>Zak Winnick</a></p>
+</footer>
 </body>
 </html>
