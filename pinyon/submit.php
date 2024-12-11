@@ -120,7 +120,7 @@
             font-size: 1rem;
             border: none;
             border-radius: 5px;
-            background-color: #333;
+            background-color: #fff;
             color: #fff;
         }
 
