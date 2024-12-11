@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code for Adventure</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1a331d;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        .cta {
+            margin: 20px 0;
+        }
+
+        .cta button {
+            background-color: #6fa66d;
+            border: none;
+            border-radius: 25px;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: #ffffff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .cta button:hover {
+            background-color: #5a8d59;
+        }
+
+        .cta p {
+            font-size: 12px;
+            color: #d0d0d0;
+        }
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .info div {
+            text-align: left;
+        }
+
+        .info h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .info ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info ul li {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CODE for Adventure</h1>
+            <h2>Buying a Rivian? Use a referral code and <span style="color: #f2d202;">get rewards!</span></h2>
+        </header>
+
+        <div class="cta">
+            <button onclick="window.location.href='https://rivian.com'">Use Mark's Code &rarr;</button>
+            <p>You'll be directed to Rivian's R1 Shop. Code changes every page refresh.</p>
+        </div>
+
+        <div class="info">
+            <div>
+                <h3>How does it work?</h3>
+                <p>When you use an owner's referral code during checkout of a qualifying R1 Shop vehicle, then take delivery, both the original owner (referrer) and new owner (referee) get rewards!</p>
+            </div>
+
+            <div>
+                <h3>What are the rewards?</h3>
+                <ul>
+                    <li>&#127873; 750 points that can be redeemed in Gear Shop or R1 Shop (1 point equals 1 dollar in credit)</li>
+                    <li>&#9889; 6 months of charging at Rivian Adventure Network sites (up to a lifetime limit of three years)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
