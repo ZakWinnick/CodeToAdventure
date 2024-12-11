@@ -38,108 +38,177 @@
             color: #DEB526;
         }
 
-        .menu-bar {
-            width: 100%;
-            background-color: #1a3e2b;
-            display: flex;
-            justify-content: center;
-        }
-
-        .menu-bar ul {
-            list-style: none;
-            display: flex;
-            gap: 1.5rem;
-            padding: 1rem;
-        }
-
-        .menu-bar ul li {
-            font-size: 1.25rem;
-        }
-
-        .menu-bar ul li a {
+        .title-bar a {
+            color: #31572C;
             text-decoration: none;
-            color: #E7E7E5;
+            font-size: 1.25rem;
             font-weight: bold;
         }
 
-        .menu-bar ul li a:hover {
-            color: #87b485;
+        .title-bar a:hover {
+            color: #6f946f;
         }
 
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
+        header {
+            text-align: center;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+
+        header p {
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+
+        .button { background-color: #87b485; color: #142a13; padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.25rem;
+            font-weight: bold;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
         }
 
-        .hamburger div {
-            width: 25px;
-            height: 3px;
-            background-color: #E7E7E5;
+        .button:hover {
+            background-color: #6f946f;
         }
 
-        .mobile-menu {
-            display: none;
-            flex-direction: column;
-            background-color: #1a3e2b;
-            position: absolute;
-            top: 60px;
-            width: 100%;
-            left: 0;
+        .button span {
+            font-size: 1.5rem;
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 1rem;
         }
 
-        .mobile-menu.active {
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: #87b485;
+            text-align: left;
+        }
+
+        .section p {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .bottom-section {
             display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .bottom-text {
+            background-color: #1a3e2b;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: left;
+            flex: 1 1 300px;
+            color: #87b485;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .bottom-text h3 {
+            color: #E7E7E5;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .bottom-text p {
+            margin: 0.5rem 0;
+        }
+
+        .bottom-text small {
+            font-size: 0.9rem;
+            color: #87b485;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #1a3e2b;
+            color: #E7E7E5;
+            width: 100%;
+            margin-top: auto;
         }
 
         @media (max-width: 768px) {
-            .menu-bar {
-                display: none;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
             .title-bar {
-                justify-content: space-between;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                padding: 0.5rem 1.5rem;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            header p {
+                font-size: 1.25rem;
+            }
+
+            .section h2 {
+                font-size: 1.5rem;
+            }
+
+            .section p {
+                font-size: 1rem;
+            }
+
+            .bottom-section {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .bottom-text {
+                flex: 1 1 auto;
             }
         }
     </style>
 </head>
-<body>
     <div class="title-bar">
         <h1>Code to Adventure</h1>
-        <div class="hamburger" onclick="toggleMobileMenu()">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>
-
-    <div class="menu-bar">
-        <ul>
-            <li><a href="index.php">Home</a></li>
-            <li><a href="submit.php">Submit Code</a></li>
-            <li><a href="api-docs.html">API Docs</a></li>
-            <li><a href="changelog.html">Changelog</a></li>
-            <li><a href="/admin">Admin</a></li>
-        </ul>
-    </div>
-
-    <div class="mobile-menu" id="mobile-menu">
-        <a href="index.php">Home</a>
-        <a href="submit.php">Submit Code</a>
-        <a href="api-docs.html">API Docs</a>
-        <a href="changelog.html">Changelog</a>
-        <a href="/admin">Admin</a>
+        <button class="button" onclick="window.location.href='submit.php';">Submit Code</button>
     </div>
 
     <header>
         <h1>Buying a Rivian?<br>Use a referral code and <strong>get rewards</strong>!</h1>
     </header>
+
+    <button class="button">
+        <span>Use Mark's Code</span>
+        <svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 10h16m0 0L8 2m8 8l-8 8" stroke="#31572C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    </button>
+    <p style="font-size: 0.85rem; text-align: center; color: #87b485; margin-top: 0.5rem;">
+        You’ll be directed to Rivian’s R1 Shop. Code changes every page refresh.
+    </p>
 
     <main class="content">
         <section class="section">
@@ -167,52 +236,5 @@
     <footer>
         <p>&copy; <script>document.write(new Date().getFullYear());</script> <a href='https://zak.codetoadventure.com' style='color: #87b485; text-decoration: none;' target='_blank' rel='noopener noreferrer'>Zak Winnick</a></p>
     </footer>
-
-    <!-- Modal and Backdrop -->
-    <div class="modal-backdrop" id="modal-backdrop"></div>
-    <div class="modal" id="modal">
-        <div class="modal-header">
-            <h2>Submit Code</h2>
-            <button onclick="closeModal()">&times;</button>
-        </div>
-        <div class="modal-content" id="modal-content">
-            <!-- Content from submit.php will load here -->
-        </div>
-    </div>
-
-    <script>
-        async function openModal() {
-            const modal = document.getElementById('modal');
-            const backdrop = document.getElementById('modal-backdrop');
-            const modalContent = document.getElementById('modal-content');
-
-            // Show modal and backdrop
-            modal.style.display = 'block';
-            backdrop.style.display = 'block';
-
-            // Fetch the content of submit.php
-            try {
-                const response = await fetch('submit.php');
-                const content = await response.text();
-                modalContent.innerHTML = content;
-            } catch (error) {
-                modalContent.innerHTML = '<p>Failed to load content. Please try again later.</p>';
-            }
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('modal');
-            const backdrop = document.getElementById('modal-backdrop');
-
-            // Hide modal and backdrop
-            modal.style.display = 'none';
-            backdrop.style.display = 'none';
-        }
-
-        function toggleMobileMenu() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('active');
-        }
-    </script>
 </body>
 </html>
