@@ -233,35 +233,37 @@ if ($images && count($images) > 0) {
 <style>
     /* Promo Banner Style */
     .promo-banner {
-        background-color: #DEB526; /* Banner background color */
-        color: #000000; /* Text color set to black */
+        background-color: #046896; /* Banner background color */
+        color: #E7E7E5; /* Text color */
         font-size: 16px;
         padding: 10px 20px;
         display: flex;
-        justify-content: center; /* Center the content horizontally */
-        align-items: center; /* Center the content vertically */
+        justify-content: space-between; /* Space between the text and buttons */
+        align-items: center; /* Align items vertically */
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
         z-index: 9999;
+        width: 100%;
     }
 
     .promo-banner .promo-text {
+        flex-grow: 1;
         text-align: center; /* Center the text */
     }
 
     .promo-banner .promo-code {
         background-color: #FFFFFF;
-        color: #DEB526;
-        border: 2px solid #DEB526;
+        color: #046896;
+        border: 2px solid #046896;
         border-radius: 5px;
         padding: 5px 10px;
         cursor: pointer;
     }
 
     .promo-banner .promo-code:hover {
-        background-color: #DEB526;
+        background-color: #046896;
         color: #FFFFFF;
     }
 
@@ -272,6 +274,12 @@ if ($images && count($images) > 0) {
 
     .promo-banner .clipboard-icon:hover {
         color: #B4232A;
+    }
+
+    /* Ensure button and icon are aligned with the text */
+    .promo-banner div {
+        display: flex;
+        align-items: center;
     }
 
 </style>
@@ -311,6 +319,7 @@ if ($images && count($images) > 0) {
         alert('Promo code copied: ' + promoCode);
     });
 </script>
+
 
 <header>
     <img src="<?php echo $randomImage; ?>" alt="Header Image">
