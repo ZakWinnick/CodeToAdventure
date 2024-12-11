@@ -253,7 +253,7 @@ if ($images && count($images) > 0) {
     }
 
     .promo-banner .promo-code {
-        background-color: #FFFFFF;
+        background-color: #000000;
         color: #DEB526;
         border: 2px solid #DEB526;
         border-radius: 5px;
