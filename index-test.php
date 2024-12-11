@@ -234,12 +234,12 @@ if ($images && count($images) > 0) {
     /* Promo Banner Style */
     .promo-banner {
         background-color: #DEB526; /* Banner background color */
-        color: #FFFFFF; /* Text color */
+        color: #000000; /* Text color set to black */
         font-size: 16px;
         padding: 10px 20px;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        justify-content: center; /* Center the content horizontally */
+        align-items: center; /* Center the content vertically */
         position: fixed;
         top: 0;
         left: 0;
@@ -248,12 +248,11 @@ if ($images && count($images) > 0) {
     }
 
     .promo-banner .promo-text {
-        flex: 1;
-        text-align: left;
+        text-align: center; /* Center the text */
     }
 
     .promo-banner .promo-code {
-        background-color: #000000;
+        background-color: #FFFFFF;
         color: #DEB526;
         border: 2px solid #DEB526;
         border-radius: 5px;
@@ -312,6 +311,7 @@ if ($images && count($images) > 0) {
         alert('Promo code copied: ' + promoCode);
     });
 </script>
+
 <header>
     <img src="<?php echo $randomImage; ?>" alt="Header Image">
 </header>
