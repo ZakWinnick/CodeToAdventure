@@ -240,6 +240,7 @@ if ($images && count($images) > 0) {
         width: 100%;
         max-width: 100%; /* Ensures it stretches across the width */
         box-sizing: border-box; /* Includes padding in the width calculation */
+        margin-bottom: 10px; /* Adds space between the banner and the header */
     }
 
     .promo-banner .promo-text {
@@ -271,7 +272,7 @@ if ($images && count($images) > 0) {
         color: #B4232A;
     }
 
-    /* Push the rest of the content down so it doesn't overlap the header */
+    /* Body should have space at the top to avoid overlap */
     body {
         margin-top: 60px; /* Adds space for the banner to sit above the content */
     }
@@ -280,6 +281,7 @@ if ($images && count($images) > 0) {
     @media (max-width: 768px) {
         .promo-banner {
             font-size: 14px; /* Smaller font size for mobile */
+            padding: 8px 15px;
         }
 
         .promo-banner .promo-code {
