@@ -274,7 +274,7 @@ if ($images && count($images) > 0) {
 
     /* Body should have space at the top to avoid overlap */
     body {
-        margin-top: 60px; /* Adds space for the banner to sit above the content */
+        margin-top: 70px; /* Adds 10px more space to the banner, so the header image isn't overlapped */
     }
 
     /* Adjustments for mobile-friendly layout */
@@ -286,6 +286,10 @@ if ($images && count($images) > 0) {
 
         .promo-banner .promo-code {
             padding: 4px 8px;
+        }
+        
+        body {
+            margin-top: 80px; /* Extra margin on mobile to ensure no overlap */
         }
     }
 </style>
@@ -325,6 +329,7 @@ if ($images && count($images) > 0) {
         alert('Promo code copied: ' + promoCode);
     });
 </script>
+
 
 
 
