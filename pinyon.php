@@ -32,6 +32,34 @@
             color: #E7E7E5;
         }
 
+        .menu-bar {
+            width: 100%;
+            background-color: #1a3e2b;
+            padding: 0.5rem 0;
+            text-align: center;
+        }
+
+        .menu {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .menu a {
+            color: #E7E7E5;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 5px;
+        }
+
+        .menu a:hover {
+            background-color: #6f946f;
+            color: #142a13;
+        }
+
         .title-bar h1 {
             font-size: 1.5rem;
             font-weight: bold;
@@ -174,6 +202,24 @@
             width: 100%;
             margin-top: auto;
         }
+
+        @media (max-width: 768px) {
+            .title-bar {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .menu {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .menu a {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -189,6 +235,16 @@
     <div class="title-bar">
         <h1>Code to Adventure</h1>
         <button onclick="window.location.href='submit.php';">Submit Code</button>
+    </div>
+
+    <div class="menu-bar">
+        <nav class="menu">
+            <a href="index.php">Home</a>
+            <a href="submit.php">Submit Code</a>
+            <a href="api-docs.html">API Docs</a>
+            <a href="changelog.html">Changelog</a>
+            <a href="/admin">Admin</a>
+        </nav>
     </div>
 
     <header>

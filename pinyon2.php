@@ -34,9 +34,10 @@
 
         .menu-bar {
             width: 100%;
-            background-color: #1a3e2b;
-            padding: 0.5rem 0;
-            text-align: center;
+            max-width: 1200px;
+            background-color: #123A13;
+            padding: 0.5rem 1.5rem;
+            margin: 0 auto;
         }
 
         .menu {
