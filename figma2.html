@@ -9,15 +9,18 @@
     <script defer src="script.js"></script>
 </head>
 <body>
+    <!-- Title Bar -->
     <div class="title-bar">
         <h1>Code to Adventure</h1>
         <a href="submit.php" class="button">Submit Code</a>
     </div>
 
+    <!-- Header Section -->
     <header>
         <h1>Buying a Rivian?<br>Use a referral code and <strong>get rewards</strong>!</h1>
     </header>
 
+    <!-- Main Button for Referral -->
     <a href="#" id="referral-link" class="button">
         <span id="referral-text">Use Referral Code</span>
         <svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -28,6 +31,7 @@
         You’ll be directed to Rivian’s R1 Shop. Code changes every page refresh.
     </p>
 
+    <!-- Main Content -->
     <main class="content">
         <section class="section">
             <h2>How does it work?</h2>
@@ -51,10 +55,14 @@
         </section>
     </main>
 
+    <!-- Footer -->
     <footer class="title-bar">
-        <p>&copy; <span id="current-year"></span> <a href="https://zak.codetoadventure.com" target="_blank" rel="noopener noreferrer" style="color: #DEB526; text-decoration: none;">Zak Winnick</a></p>
+        <p>&copy; <span id="current-year"></span> 
+            <a href="https://zak.codetoadventure.com" target="_blank" rel="noopener noreferrer">Zak Winnick</a>
+        </p>
     </footer>
 
+    <!-- JavaScript -->
     <script>
         // JavaScript for dynamic referral and year
         document.getElementById('current-year').innerText = new Date().getFullYear();
