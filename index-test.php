@@ -238,19 +238,22 @@ if ($images && count($images) > 0) {
         font-size: 16px;
         padding: 10px 20px;
         display: flex;
-        justify-content: space-between; /* Space between the text and buttons */
-        align-items: center; /* Align items vertically */
+        justify-content: center; /* Center the text */
+        align-items: center; /* Center the content vertically */
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
         z-index: 9999;
         width: 100%;
+        max-width: 100%; /* Ensures it stretches across the width */
+        box-sizing: border-box; /* Includes padding in the width calculation */
     }
 
     .promo-banner .promo-text {
         flex-grow: 1;
         text-align: center; /* Center the text */
+        margin-right: 30px; /* Add some margin to create space for the buttons */
     }
 
     .promo-banner .promo-code {
@@ -276,12 +279,21 @@ if ($images && count($images) > 0) {
         color: #B4232A;
     }
 
-    /* Ensure button and icon are aligned with the text */
-    .promo-banner div {
-        display: flex;
-        align-items: center;
+    /* Push the rest of the content down so it doesn't overlap the header */
+    body {
+        margin-top: 60px; /* Adds space for the banner to sit above the content */
     }
 
+    /* Adjustments for mobile-friendly layout */
+    @media (max-width: 768px) {
+        .promo-banner {
+            font-size: 14px; /* Smaller font size for mobile */
+        }
+
+        .promo-banner .promo-code {
+            padding: 4px 8px;
+        }
+    }
 </style>
 
 <div class="promo-banner">
@@ -319,6 +331,7 @@ if ($images && count($images) > 0) {
         alert('Promo code copied: ' + promoCode);
     });
 </script>
+
 
 
 <header>
