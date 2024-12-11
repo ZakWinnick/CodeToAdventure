@@ -6,116 +6,152 @@
     <title>Changelog - Code to Adventure</title>
     <style>
         * {
-            box-sizing: border-box; /* Ensure padding/margins don't exceed element size */
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            background-color: #000;
-            color: #E7E7E5;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+            font-family: 'Lato', sans-serif;
+            background-color: #142a13;
+            color: #fff;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            align-items: center;
             min-height: 100vh;
-            overflow-x: hidden; /* Prevent horizontal scroll */
         }
 
-        header {
-            background-color: #046896;
-            padding: 20px;
-            text-align: center;
-            color: #E7E7E5;
-            font-size: 40px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        nav {
-            background-color: #B4232A;
-            padding: 10px;
-            text-align: center;
+        .title-bar {
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 1rem 1.5rem;
+            background-color: #123A13;
+            color: #E7E7E5;
         }
 
-        nav a {
-            color: #E7E7E5;
-            text-decoration: none;
-            font-size: 18px;
-            padding: 10px 20px;
-            border-radius: 5px;
+        .title-bar h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #DEB526;
+        }
+
+        .title-bar button {
+            background-color: #87b485;
+            color: #142a13;
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            cursor: pointer;
             transition: background-color 0.3s;
         }
 
-        nav a:hover {
-            background-color: #046896;
+        .title-bar button:hover {
+            background-color: #6f946f;
         }
 
-        .main-content {
-            flex: 1;
-            max-width: 1200px;
+        .menu-bar {
             width: 100%;
-            padding: 40px 20px;
+            max-width: 1200px;
+            background-color: #1a3e2b;
+            padding: 0.5rem 1.5rem;
             margin: 0 auto;
-            box-sizing: border-box;
+        }
+
+        .menu {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .menu a {
+            color: #E7E7E5;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 5px;
+        }
+
+        .menu a:hover {
+            background-color: #6f946f;
+            color: #142a13;
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
         }
 
         .changelog {
             max-width: 800px;
             margin: 0 auto;
-            text-align: left;
-        }
-
-        .entry {
-            margin-bottom: 40px;
-            background-color: #1A1A1A;
+            background-color: #1a3e2b;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
-        .entry h3 {
-            color: #00acee;
-            font-size: 26px;
-            margin: 0 0 10px;
+        h1 {
+            text-align: center;
+            color: #87b485;
+            font-size: 2rem;
         }
 
-        .entry p {
-            margin: 5px 0;
-            font-size: 16px;
+        h3 {
+            color: #87b485;
+            font-size: 1.25rem;
+            margin-top: 1rem;
+        }
+
+        p {
+            font-size: 1rem;
             line-height: 1.6;
+        }
+
+        a {
+            color: #87b485;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #6f946f;
         }
 
         .back-link {
             display: inline-block;
-            color: #00acee;
+            color: #87b485;
             margin-top: 20px;
             text-decoration: none;
-            border: 2px solid #00acee;
+            border: 2px solid #87b485;
             padding: 10px 20px;
             border-radius: 5px;
             transition: background-color 0.3s, color 0.3s;
         }
 
         .back-link:hover {
-            background-color: #00acee;
-            color: #000;
+            background-color: #87b485;
+            color: #142a13;
         }
 
         footer {
-            padding: 20px;
-            background-color: #222;
+            text-align: center;
+            padding: 1rem;
+            background-color: #1a3e2b;
             color: #E7E7E5;
             width: 100%;
-            text-align: center;
-            box-sizing: border-box;
+            margin-top: auto;
         }
 
         footer a {
-            color: #00acee;
+            color: #87b485;
             text-decoration: none;
         }
 
@@ -123,117 +159,101 @@
             text-decoration: underline;
         }
 
-        /* Mobile-friendly adjustments */
+        .entry {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: #1a3e2b;
+            border-radius: 8px;
+        }
+
         @media (max-width: 768px) {
-            nav a {
-                padding: 12px 10px;
-                font-size: 16px;
+            .menu {
+                flex-wrap: wrap;
+                gap: 0.5rem;
             }
 
-            .main-content {
-                padding: 30px 10px;
-                width: 100%;
-                box-sizing: border-box;
+            .menu a {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+
+            .content {
+                padding: 1rem;
             }
 
             .changelog {
-                padding: 0 10px; /* Ensure padding does not cause overflow */
-                width: 100%;
+                padding: 15px;
             }
 
             .entry {
-                margin-bottom: 30px;
-                padding: 15px;
+                padding: 1rem;
             }
         }
     </style>
 </head>
 <body>
-
-<header>Code to Adventure</header>
-
-<nav>
-    <a href="index.php">Home</a>
-    <a href="submit.php">Submit Code</a>
-    <a href="api-docs.html">API Docs</a>
-    <a href="changelog.html">Changelog</a>
-</nav>
-
-<div class="main-content">
-    <div class="changelog">
-    <!-- Version 2024.12.10 -->
-     <div class="entry">
-        <h3>Version 2024.12.10 - December 10, 2024</h3>
-        <p>- Added banner for admin's referral code.
-     </div>    
-	<!-- Version 2024.11.13 -->
-	<div class="entry">
-	<h3>Version 2024.11.13 - November 13, 2024</h3>
-	<p>- Created a new admin dashboard for easier editing/deleting entries for mistakes and spam.
-	<p>- Admins will now be notified, via e-mail, when a new code has been submitted.
-</div>
-	<!-- Version 2024.11.7 -->
-	<div class="entry">
-	<h3> Version 2024.11.7 - November 7, 2024</h3>
-	<p>- Moved development to GitHub for better version tracking.
-	<p>- Changed versioning numbers for better release notes.
-	<p>- Made Twitter/X handle not required for code submission (Thanks to Nathan for the suggestion!).
-</div>
-
-        <!-- Version 2.0 -->
-        <div class="entry">
-            <h3>Version 2.0 - September 29, 2024</h3>
-            <p>- The page title was updated to "Code to Adventure - Random Rivian Referral Codes" for better branding and SEO.</p>
-            <p>- The main layout now uses flexbox for full-page centering and responsiveness across all devices.</p>
-            <p>- Horizontal scrolling on mobile was fixed by adding <code>overflow-x: hidden</code> to the body to prevent the page from sliding around.</p>
-            <p>- Increased spacing and margins to improve the layout, ensuring no elements are cut off, particularly on mobile.</p>
-            <p>- Button size and padding were adjusted for mobile, making it fit properly within the viewport without being cut off.</p>
-            <p>- The header image is now randomly selected from a directory of images, enhancing the visual experience on each page load.</p>
-            <p>- The footer was updated with proper links to the creator's website and referral code, as well as a mailto link for administrative contact.</p>
-            <p>- Updated meta tags for better search engine optimization and social media previews (Open Graph and Twitter tags).</p>
-            <p>- An API was added to allow external access to retrieve random referral codes programmatically. API rate limit set to 100 requests per minute for fair usage and load management. API documentation is available on the "API Docs" page, detailing endpoints and usage.</p>
-        </div>
-
-        <!-- Version 1.3 -->
-        <div class="entry">
-            <h3>Version 1.3 - September 4, 2024</h3>
-            <p>- Added e-mail link to <a href="mailto:admin@codetoadventure.com">admin@codetoadventure.com</a>.</p>
-            <p>- Moved the domain to <a href="https://codetoadventure.com" target="_blank">codetoadventure.com</a>.</p>
-            <p>- Added a description to the homepage to better explain the site's purpose and functionality.</p>
-            <p>- Updated page titles to reflect new site name.</p>        
-        </div>
-
-        <!-- Version 1.2 -->
-        <div class="entry">
-            <h3>Version 1.2 - August 29, 2024</h3>
-            <p>- Implemented a duplicate check to prevent adding the same referral code multiple times.</p>
-            <p>- Updated the submission page to display an error message if a duplicate code is detected.</p>
-            <p>- Improved user experience by providing immediate feedback on the submission page for errors.</p>
-        </div>
-
-        <!-- Version 1.1 -->
-        <div class="entry">
-            <h3>Version 1.1 - August 29, 2024</h3>
-            <p>- Added a new page to view all referral data in a table format, sorted by ID.</p>
-            <p>- Improved the submission form to redirect users back to the homepage after submission.</p>
-            <p>- Updated SEO tags for better search engine visibility.</p>
-        </div>
-
-        <!-- Version 1.0 -->
-        <div class="entry">
-            <h3>Version 1.0 - August 29, 2024</h3>
-            <p>- Launched the website with the main page to display random referral links.</p>
-            <p>- Implemented the submission form for users to add their names, X usernames, and referral codes.</p>
-            <p>- Set up the backend database using PHP and MySQL to store referral data.</p>
-        </div>
+    <div class="title-bar">
+        <h1>Code to Adventure</h1>
+        <button onclick="window.location.href='submit.php';">Submit Code</button>
     </div>
 
-    <a href="index.php" class="back-link">Back to Home</a>
-</div>
+    <div class="menu-bar">
+        <nav class="menu">
+            <a href="index.php">Home</a>
+            <a href="submit.php">Submit Code</a>
+            <a href="api-docs.html">API Docs</a>
+            <a href="changelog.html">Changelog</a>
+        </nav>
+    </div>
 
-<footer>
-    Created by <a href="https://winnick.is" target="_blank">Zak Winnick</a> | <a href="https://zak.codetoadventure.com" target="_blank">Zak's Referral Code</a> | <a href="mailto:admin@codetoadventure.com">E-mail the admin</a> for any questions or assistance
-</footer>
+    <div class="content">
+        <div class="changelog">
+            <h1>Changelog</h1>
 
-</body>
-</html>
+            <div class="entry">
+                <h3>Version 2024.12.10 - December 10, 2024</h3>
+                <p>- Added banner for admin's referral code.</p>
+            </div>
+
+            <div class="entry">
+                <h3>Version 2024.11.13 - November 13, 2024</h3>
+                <p>- Created a new admin dashboard for easier editing/deleting entries for mistakes and spam.</p>
+                <p>- Admins will now be notified, via e-mail, when a new code has been submitted.</p>
+            </div>
+
+            <div class="entry">
+                <h3>Version 2024.11.7 - November 7, 2024</h3>
+                <p>- Moved development to GitHub for better version tracking.</p>
+                <p>- Changed versioning numbers for better release notes.</p>
+                <p>- Made Twitter/X handle not required for code submission (Thanks to Nathan for the suggestion!).</p>
+            </div>
+
+            <div class="entry">
+                <h3>Version 2.0 - September 29, 2024</h3>
+                <p>- The page title was updated to "Code to Adventure - Random Rivian Referral Codes" for better branding and SEO.</p>
+                <p>- The main layout now uses flexbox for full-page centering and responsiveness across all devices.</p>
+                <p>- Horizontal scrolling on mobile was fixed by adding <code>overflow-x: hidden</code> to the body to prevent the page from sliding around.</p>
+                <p>- Increased spacing and margins to improve the layout, ensuring no elements are cut off, particularly on mobile.</p>
+                <p>- Button size and padding were adjusted for mobile, making it fit properly within the viewport without being cut off.</p>
+                <p>- The header image is now randomly selected from a directory of images, enhancing the visual experience on each page load.</p>
+                <p>- The footer was updated with proper links to the creator's website and referral code, as well as a mailto link for administrative contact.</p>
+                <p>- Updated meta tags for better search engine optimization and social media previews (Open Graph and Twitter tags).</p>
+                <p>- An API was added to allow external access to retrieve random referral codes programmatically. API rate limit set to 100 requests per minute for fair usage and load management. API documentation is available on the "API Docs" page, detailing endpoints and usage.</p>
+            </div>
+
+            <div class="entry">
+                <h3>Version 1.3 - September 4, 2024</h3>
+                <p>- Added e-mail link to <a href="mailto:admin@codetoadventure.com">admin@codetoadventure.com</a>.</p>
+                <p>- Moved the domain to <a href="https://codetoadventure.com" target="_blank">codetoadventure.com</a>.</p>
+                <p>- Added a description to the homepage to better explain the site's purpose and functionality.</p>
+                <p>- Updated page titles to reflect new site name.</p>
+            </div>
+
+            <div class="entry">
+                <h3>Version 1.2 - August 29, 2024</h3>
+                <p>- Implemented a duplicate check to prevent adding the same referral code multiple times.</p>
+                <p>- Updated the submission page to display an error message if a duplicate code is detected.</p>
+                <p>- Improved user experience by providing immediate feedback on the submission page for errors.</p>
+            </div>
+
+            <div class="
