@@ -218,23 +218,15 @@ if ($images && count($images) > 0) {
             .main-content {
                 padding-bottom: 50px; /* Add space at the bottom to avoid overlap */
             }
-<<<<<<< HEAD
-=======
-
-            nav a {
-                padding: 12px 10px;
-                font-size: 16px;
-            }
->>>>>>> e2a0598347daa7c6b1e16ed4c5003da2f2fc6352
         }
     </style>
 </head>
 <body>
 <style>
-    /* Promo Banner Style */
+    /* Promo Banner Style with flipped colors */
     .promo-banner {
-        background-color: #046896; /* Banner background color */
-        color: #E7E7E5; /* Text color */
+        background-color: #E7E7E5; /* Light background color */
+        color: #046896; /* Blue text color */
         font-size: 16px;
         padding: 10px 20px;
         display: flex;
@@ -257,17 +249,17 @@ if ($images && count($images) > 0) {
     }
 
     .promo-banner .promo-code {
-        background-color: #FFFFFF;
-        color: #046896;
-        border: 2px solid #046896;
+        background-color: #046896; /* Blue background for the button */
+        color: #E7E7E5; /* Light text color */
+        border: 2px solid #046896; /* Blue border */
         border-radius: 5px;
         padding: 5px 10px;
         cursor: pointer;
     }
 
     .promo-banner .promo-code:hover {
-        background-color: #046896;
-        color: #FFFFFF;
+        background-color: #E7E7E5; /* Light background for hover */
+        color: #046896; /* Blue text for hover */
     }
 
     .promo-banner .clipboard-icon {
