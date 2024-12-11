@@ -49,6 +49,27 @@
             color: #6f946f;
         }
 
+        .menu-bar {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            background-color: #1a3e2b;
+            padding: 0.5rem 0;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .menu-bar a {
+            color: #87b485;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .menu-bar a:hover {
+            color: #6f946f;
+        }
+
         header {
             text-align: center;
             margin-top: 2rem;
@@ -195,6 +216,14 @@
     <div class="title-bar">
         <h1>Code to Adventure</h1>
         <button class="button" onclick="window.location.href='submit.php';">Submit Code</button>
+    </div>
+
+    <div class="menu-bar">
+        <a href="index.php">Home</a>
+        <a href="submit.php">Submit Code</a>
+        <a href="api-docs.html">API Docs</a>
+        <a href="changelog.html">Changelog</a>
+        <a href="/admin">Admin</a>
     </div>
 
     <header>
