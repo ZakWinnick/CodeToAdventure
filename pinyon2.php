@@ -194,6 +194,24 @@
             width: 100%;
             margin-top: auto;
         }
+
+        @media (max-width: 768px) {
+            .title-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .menu {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .menu a {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body>
