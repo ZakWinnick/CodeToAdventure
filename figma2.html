@@ -28,9 +28,10 @@
             align-items: center;
             width: 100%;
             max-width: 1200px;
-            padding: 0rem 1.5rem;
+            padding: 0.5rem 1.5rem;
             background-color: #123A13;
             color: #E7E7E5;
+            position: relative;
         }
 
         .title-bar h1 {
@@ -78,8 +79,9 @@
             gap: 5px;
             cursor: pointer;
             position: absolute;
-            top: 15px;
-            left: 15px;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
             z-index: 1000;
         }
 
@@ -219,10 +221,9 @@
 
         @media (max-width: 768px) {
             .title-bar {
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-                padding: 0.5rem 1.5rem;
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 0.5rem 1rem;
             }
 
             .menu-bar {
@@ -272,20 +273,11 @@
     <div class="title-bar">
         <h1>Code to Adventure</h1>
         <button class="button" onclick="window.location.href='submit.php';">Submit Code</button>
-    </div>
-
-    <div class="menu-bar">
-        <a href="index.php">Home</a>
-        <a href="submit.php">Submit Code</a>
-        <a href="api-docs.html">API Docs</a>
-        <a href="changelog.html">Changelog</a>
-        <a href="/admin">Admin</a>
-    </div>
-
-    <div class="hamburger" onclick="toggleMenu()">
-        <div></div>
-        <div></div>
-        <div></div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
     </div>
 
     <div class="mobile-menu">
