@@ -80,63 +80,77 @@
             background-color: #f1f1f1;
         }
 
-        .login-form {
-            max-width: 400px;
-            margin: 5rem auto;
-            padding: 2rem;
-            background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
+        .actions {
+            display: flex;
+            gap: 0.5rem;
         }
 
-        .login-form h1 {
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-            color: #333;
-        }
-
-        .login-form input[type="text"],
-        .login-form input[type="password"] {
-            width: 100%;
+        .actions button {
             padding: 0.5rem;
-            margin-bottom: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .login-form button {
-            width: 100%;
-            padding: 0.75rem;
-            background: #2c5f2d;
-            color: #fff;
+            font-size: 0.875rem;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 1rem;
         }
 
-        .login-form button:hover {
-            background: #256c21;
+        .actions .edit {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .actions .delete {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .back-to-top {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .back-to-top a {
+            text-decoration: none;
+            color: #2c5f2d;
+            font-weight: bold;
+        }
+
+        .back-to-top a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <?php
     session_start();
-    
-    // Mock username and password for simplicity
-    $username = 'admin';
-    $password = 'password123';
+    include 'config.php';
 
+    // Login handling
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        if ($_POST['username'] === $username && $_POST['password'] === $password) {
-            $_SESSION['loggedin'] = true;
-            header('Location: ' . $_SERVER['PHP_SELF']);
-            exit;
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
+        // Query to check credentials
+        $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? LIMIT 1");
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 1) {
+            $user = $result->fetch_assoc();
+            // Verify password
+            if (password_verify($password, $user['password'])) {
+                $_SESSION['loggedin'] = true;
+                $_SESSION['username'] = $user['username'];
+                header('Location: ' . $_SERVER['PHP_SELF']);
+                exit;
+            } else {
+                $loginError = 'Invalid username or password';
+            }
         } else {
             $loginError = 'Invalid username or password';
         }
+
+        $stmt->close();
     }
 
     if (!isset($_SESSION['loggedin'])) {
@@ -163,8 +177,6 @@
         </div>
 
         <?php
-        include 'config.php';
-
         // Fetch total count of submissions
         $countResult = $conn->query("SELECT COUNT(*) AS total FROM codes");
         $countData = $countResult->fetch_assoc();
@@ -198,22 +210,33 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Name</th>
                     <th>Referral Code</th>
-                    <th>Submitted By</th>
                     <th>Submission Date</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <?php while ($row = $allSubmissions->fetch_assoc()): ?>
                     <tr>
                         <td><?php echo $row['id']; ?></td>
-                        <td><?php echo $row['referral_code']; ?></td>
                         <td><?php echo $row['name']; ?></td>
+                        <td><?php echo $row['referral_code']; ?></td>
                         <td><?php echo $row['submission_date']; ?></td>
+                        <td>
+                            <div class="actions">
+                                <button class="edit" onclick="window.location.href='edit.php?id=<?php echo $row['id']; ?>';">Edit</button>
+                                <button class="delete" onclick="if(confirm('Are you sure you want to delete this code?')) window.location.href='delete.php?id=<?php echo $row['id']; ?>';">Delete</button>
+                            </div>
+                        </td>
                     </tr>
                 <?php endwhile; ?>
             </tbody>
         </table>
+
+        <div class="back-to-top">
+            <a href="#">Back to Top</a>
+        </div>
     </div>
 </body>
 </html>
