@@ -36,6 +36,22 @@
             font-size: 1.5rem;
         }
 
+        .button {
+            background-color: #87b485;
+            color: #142a13;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 2rem 0;
+        }
+
+        .button:hover {
+            background-color: #6f946f;
+        }
+
         .content {
             max-width: 1200px;
             margin: 0 auto;
@@ -79,6 +95,24 @@
             color: #87b485;
         }
 
+        .bottom-section {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            max-width: 800px;
+            margin: 2rem auto;
+            flex-wrap: wrap;
+        }
+
+        .bottom-text {
+            background-color: #1a3e2b;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            flex: 1 1 300px;
+            color: #87b485;
+        }
+
         footer {
             text-align: center;
             padding: 1rem;
@@ -112,6 +146,8 @@
         <p>Use a referral code and get rewards!</p>
     </header>
 
+    <button class="button">Use Mark's Code</button>
+
     <main class="content">
         <section class="section">
             <h2>How does it work?</h2>
@@ -131,6 +167,15 @@
                 </div>
             </div>
         </section>
+
+        <div class="bottom-section">
+            <div class="bottom-text">
+                <p>You’ll be directed to Rivian’s R1 Shop. Code changes every page refresh.</p>
+            </div>
+            <div class="bottom-text">
+                <p>Want to join? Submit your referral code now!</p>
+            </div>
+        </div>
     </main>
 
     <footer>
