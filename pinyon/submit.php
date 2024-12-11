@@ -121,7 +121,7 @@
             border: none;
             border-radius: 5px;
             background-color: #fff;
-            color: #fff;
+            color: #000;
         }
 
         button {
