@@ -1,57 +1,3 @@
-<?php
-session_start(); // Start the session to check if the user is logged in
-
-// If no user is logged in, redirect to the login page
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");  // Redirect to login page
-    exit();  // Ensure no further code is executed
-}
-
-include '../config.php';  // Adjust the path as necessary
-
-// Check if the ID is provided via URL
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-
-    // Fetch the referral details from the database
-    $sql = "SELECT * FROM codes WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $referral = $result->fetch_assoc();
-    
-    if (!$referral) {
-        // If no matching record is found, redirect or show an error
-        header("Location: admin_dashboard.php");
-        exit();
-    }
-}
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Get the updated values from the form
-    $name = htmlspecialchars(trim($_POST['name']));
-    $username = htmlspecialchars(trim($_POST['username']));
-    $referralCode = htmlspecialchars(trim($_POST['referralCode']));
-
-    // Update the referral details in the database
-    $updateSql = "UPDATE codes SET name = ?, username = ?, referral_code = ? WHERE id = ?";
-    $stmt = $conn->prepare($updateSql);
-    $stmt->bind_param("sssi", $name, $username, $referralCode, $id);
-    
-    if ($stmt->execute()) {
-        header("Location: admin_dashboard.php");  // Redirect back to the dashboard after successful update
-        exit();
-    } else {
-        echo "Error updating record: " . $stmt->error;
-    }
-    
-    $stmt->close();
-}
-
-$conn->close();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,123 +6,170 @@ $conn->close();
     <title>Edit Referral - Code to Adventure</title>
     <style>
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            background-color: #000;
+            font-family: 'Lato', sans-serif;
+            background-color: #142a13;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .title-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 1rem 1.5rem;
+            background-color: #123A13;
             color: #E7E7E5;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
         }
 
-        header {
-            background-color: #046896;
-            padding: 20px;
-            text-align: center;
-            color: #E7E7E5;
-            font-size: 36px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        .title-bar h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #DEB526;
         }
 
-        nav {
-            background-color: #B4232A;
-            padding: 10px;
-            text-align: center;
+        .title-bar button {
+            background-color: #87b485;
+            color: #142a13;
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
 
-        nav a {
+        .title-bar button:hover {
+            background-color: #6f946f;
+        }
+
+        .menu-bar {
+            width: 100%;
+            max-width: 1200px;
+            background-color: #1a3e2b;
+            padding: 0.5rem 1.5rem;
+            margin: 0 auto;
+        }
+
+        .menu {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .menu a {
             color: #E7E7E5;
             text-decoration: none;
-            font-size: 18px;
-            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            transition: background-color 0.3s, color 0.3s;
             border-radius: 5px;
-            margin: 0 10px;
         }
 
-        nav a:hover {
-            background-color: #046896;
+        .menu a:hover {
+            background-color: #6f946f;
+            color: #142a13;
         }
 
-        .main-content {
-            padding: 20px;
-        }
-
-        .container {
+        .content {
             max-width: 800px;
             margin: 0 auto;
-            background-color: #1A1A1A;
-            padding: 30px;
+            padding: 1rem;
+            background-color: #1a3e2b;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            text-align: center;
+            color: #87b485;
+            margin-bottom: 1rem;
         }
 
         form {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            width: 100%;
+            gap: 1rem;
         }
 
         label {
-            font-size: 16px;
+            font-size: 1rem;
             color: #E7E7E5;
         }
 
-        input, button {
-            padding: 12px;
-            font-size: 16px;
+        input {
+            padding: 0.75rem;
+            font-size: 1rem;
             border: none;
             border-radius: 5px;
-        }
-
-        input {
-            background-color: #333;
-            color: white;
+            background-color: #fff;
+            color: #000;
         }
 
         button {
-            background-color: #00acee;
-            color: white;
+            background-color: #87b485;
+            color: #142a13;
+            padding: 0.75rem;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
 
         button:hover {
-            background-color: #007bb5;
+            background-color: #6f946f;
         }
 
         .error {
-            color: red;
-            margin-bottom: 10px;
+            background-color: #ff4d4d;
+            color: #fff;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            border-radius: 5px;
         }
 
         .back-link {
             display: inline-block;
-            color: #00acee;
-            margin-top: 20px;
+            color: #87b485;
+            margin-top: 1rem;
             text-decoration: none;
-            border: 2px solid #00acee;
+            border: 2px solid #87b485;
             padding: 10px 20px;
             border-radius: 5px;
             transition: background-color 0.3s, color 0.3s;
         }
 
         .back-link:hover {
-            background-color: #00acee;
-            color: #000;
+            background-color: #87b485;
+            color: #142a13;
         }
 
         footer {
-            padding: 20px;
-            background-color: #222;
-            color: #E7E7E5;
             text-align: center;
+            padding: 1rem;
+            background-color: #1a3e2b;
+            color: #E7E7E5;
+            width: 100%;
+            margin-top: auto;
         }
 
         footer a {
-            color: #00acee;
+            color: #87b485;
             text-decoration: none;
         }
 
@@ -184,51 +177,47 @@ $conn->close();
             text-decoration: underline;
         }
 
-        /* Mobile-friendly adjustments */
         @media (max-width: 768px) {
-            header {
-                font-size: 28px;
+            .menu {
+                flex-wrap: wrap;
+                gap: 0.5rem;
             }
 
-            nav a {
-                padding: 12px 10px;
-                font-size: 16px;
+            .menu a {
+                padding: 0.5rem;
+                font-size: 0.9rem;
             }
 
-            .main-content {
-                padding: 20px 10px;
+            .content {
+                padding: 1rem;
             }
 
-            .container {
-                padding: 20px;
-                width: 100%;
-            }
-
-            form {
-                gap: 10px;
+            input {
+                font-size: 0.9rem;
             }
         }
     </style>
 </head>
 <body>
+    <div class="title-bar">
+        <h1>Code to Adventure</h1>
+        <button onclick="window.location.href='submit.php';">Submit Code</button>
+    </div>
 
-<header>Edit Referral Code</header>
+    <div class="menu-bar">
+        <nav class="menu">
+            <a href="admin_dashboard.php">Dashboard</a>
+            <a href="logout.php">Logout</a>
+        </nav>
+    </div>
 
-<nav>
-    <a href="admin_dashboard.php">Dashboard</a>
-    <a href="logout.php">Logout</a>
-</nav>
-
-<div class="main-content">
-    <div class="container">
+    <div class="content">
         <h2>Edit Referral Code Information</h2>
-        
-        <!-- If there's an error, show the error message -->
+
         <?php if (isset($_GET['error'])): ?>
             <div class="error">There was an error updating the referral code.</div>
         <?php endif; ?>
 
-        <!-- The form to edit referral code -->
         <form action="edit_referral.php?id=<?php echo $referral['id']; ?>" method="POST">
             <label for="name">Name</label>
             <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($referral['name']); ?>" required>
@@ -244,11 +233,9 @@ $conn->close();
 
         <a href="admin_dashboard.php" class="back-link">Back to Dashboard</a>
     </div>
-</div>
 
-<footer>
-    Created by <a href="https://winnick.is" target="_blank">Zak Winnick</a> | <a href="mailto:admin@codetoadventure.com">E-mail the admin</a> for any questions or assistance
-</footer>
-
+    <footer>
+        Created by <a href="https://winnick.is" target="_blank">Zak Winnick</a> | <a href="mailto:admin@codetoadventure.com">E-mail the admin</a>
+    </footer>
 </body>
 </html>
