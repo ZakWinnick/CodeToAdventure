@@ -32,8 +32,16 @@
             color: #E7E7E5;
         }
 
+        .menu-bar {
+            width: 100%;
+            background-color: #1a3e2b;
+            padding: 0.5rem 0;
+            text-align: center;
+        }
+
         .menu {
             display: flex;
+            justify-content: center;
             gap: 1.5rem;
         }
 
@@ -198,7 +206,7 @@
         @media (max-width: 768px) {
             .title-bar {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: center;
                 gap: 1rem;
             }
 
@@ -226,6 +234,10 @@
 
     <div class="title-bar">
         <h1>Code to Adventure</h1>
+        <button onclick="window.location.href='submit.php';">Submit Code</button>
+    </div>
+
+    <div class="menu-bar">
         <nav class="menu">
             <a href="index.php">Home</a>
             <a href="submit.php">Submit Code</a>
