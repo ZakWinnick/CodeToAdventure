@@ -51,8 +51,22 @@
         </section>
     </main>
 
-    <footer>
-        <p>&copy; <span id="current-year"></span> <a href="https://zak.codetoadventure.com" target="_blank" rel="noopener noreferrer">Zak Winnick</a></p>
+    <footer class="title-bar">
+        <p>&copy; <span id="current-year"></span> <a href="https://zak.codetoadventure.com" target="_blank" rel="noopener noreferrer" style="color: #DEB526; text-decoration: none;">Zak Winnick</a></p>
     </footer>
+
+    <script>
+        // JavaScript for dynamic referral and year
+        document.getElementById('current-year').innerText = new Date().getFullYear();
+
+        // Example of dynamic referral data
+        fetch('/api/random-referral')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('referral-text').innerText = `Use ${data.referee}'s Code`;
+                document.getElementById('referral-link').href = data.referralLink;
+            })
+            .catch(error => console.error('Error fetching referral:', error));
+    </script>
 </body>
 </html>

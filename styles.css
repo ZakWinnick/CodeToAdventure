@@ -54,6 +54,15 @@ body {
     background-color: #6f946f;
 }
 
+/* Footer */
+footer.title-bar {
+    text-align: center;
+}
+
+footer.title-bar a:hover {
+    color: #6f946f;
+}
+
 /* Header */
 header {
     text-align: center;
@@ -151,6 +160,15 @@ header h1 {
 
 .bottom-text h3 {
     color: #E7E7E5;
-    font-size: 1.5
-::contentReference[oaicite:0]{index=0}
- 
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.bottom-text p {
+    margin: 0.5rem 0;
+}
+
+.bottom-text small {
+    font-size: 0.9rem;
+    color: #87b485;
+}
