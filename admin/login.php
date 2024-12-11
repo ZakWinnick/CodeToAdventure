@@ -1,3 +1,43 @@
+<?php
+session_start();
+include 'config.php';
+
+// Enable error display for debugging
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Query to check credentials
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? LIMIT 1");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 1) {
+        $user = $result->fetch_assoc();
+        if (password_verify($password, $user['password'])) {
+            $_SESSION['loggedin'] = true;
+            $_SESSION['username'] = $user['username'];
+            header('Location: admin.php'); // Redirect to admin panel
+            exit;
+        } else {
+            $loginError = 'Invalid username or password';
+        }
+    } else {
+        $loginError = 'Invalid username or password';
+    }
+    $stmt->close();
+}
+
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    header('Location: admin.php');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,106 +45,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Admin Panel</title>
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
         body {
-            background-color: #000;
-            color: #E7E7E5;
             font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
-
-        header {
-            background-color: #046896;
-            padding: 20px;
-            text-align: center;
-            color: #E7E7E5;
-            font-size: 40px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .container {
+        .login-form {
             max-width: 400px;
-            background-color: #1A1A1A;
-            padding: 30px;
+            padding: 2rem;
+            background: #ffffff;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            margin: 20px auto;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-
-        input {
-            padding: 12px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            width: 100%;
-            background-color: #333;
-            color: white;
-            margin-bottom: 10px;
-        }
-
-        button {
-            padding: 12px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            width: 100%;
-            background-color: #00acee;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #007bb5;
-        }
-
-        .error {
-            color: red;
-            margin-bottom: 10px;
-        }
-
-        footer {
-            padding: 20px;
-            background-color: #222;
-            color: #E7E7E5;
-            width: 100%;
+        .login-form h1 {
             text-align: center;
-            box-sizing: border-box;
+            margin-bottom: 1.5rem;
+            color: #333;
         }
-
-        footer a {
-            color: #00acee;
-            text-decoration: none;
+        .login-form input {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
         }
-
-        footer a:hover {
-            text-decoration: underline;
+        .login-form button {
+            width: 100%;
+            padding: 0.75rem;
+            background: #2c5f2d;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .login-form button:hover {
+            background: #256c21;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.875rem;
+            text-align: center;
+            margin-bottom: 1rem;
         }
     </style>
 </head>
 <body>
-
-<header>Admin Login</header>
-
-<div class="container">
-    <?php if (isset($_GET['error'])): ?>
-        <div class="error"><?php echo htmlspecialchars($_GET['error']); ?></div>
-    <?php endif; ?>
-    
-    <form action="authenticate.php" method="POST">
-        <input type="text" name="username" placeholder="Username" required><br>
-        <input type="password" name="password" placeholder="Password" required><br>
-        <button type="submit">Login</button>
-    </form>
-</div>
-
-<footer>
-    <a href="../index.php">Back to Home</a>
-</footer>
-
+    <div class="login-form">
+        <h1>Admin Login</h1>
+        <?php if (!empty($loginError)): ?>
+            <div class="error-message"><?php echo $loginError; ?></div>
+        <?php endif; ?>
+        <form method="POST">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
 </body>
 </html>
