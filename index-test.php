@@ -226,7 +226,7 @@ if ($images && count($images) > 0) {
     /* Promo Banner Style with flipped colors */
     .promo-banner {
         background-color: #275905; /* Forest Green background color */
-        color: #DEB526; /* Compass Yellow text color */
+        color: #E7E7E5; /* LA Silver text color */
         font-size: 16px;
         padding: 10px 20px;
         display: flex;
