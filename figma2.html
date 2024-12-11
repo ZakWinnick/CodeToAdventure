@@ -3,102 +3,241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code for Adventure</title>
+    <title>Code to Adventure - Random Rivian Referrals</title>
     <style>
-        body {
+        * {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #1a331d;
-            color: #ffffff;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #142a13;
+            color: #fff;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             min-height: 100vh;
-            text-align: center;
+            padding: 1rem;
         }
 
-        .container {
-            max-width: 800px;
-            padding: 20px;
-        }
-
-        .cta {
-            margin: 20px 0;
-        }
-
-        .cta button {
-            background-color: #6fa66d;
-            border: none;
-            border-radius: 25px;
-            padding: 15px 30px;
-            font-size: 18px;
-            color: #ffffff;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .cta button:hover {
-            background-color: #5a8d59;
-        }
-
-        .cta p {
-            font-size: 12px;
-            color: #d0d0d0;
-        }
-
-        .info {
+        .title-bar {
             display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin-top: 40px;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 1rem 2rem;
+            background-color: transparent;
         }
 
-        .info div {
+        .title-bar h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ecf39e;
+        }
+
+        .title-bar a {
+            color: #87b485;
+            text-decoration: none;
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+        .title-bar a:hover {
+            color: #6f946f;
+        }
+
+        header {
+            text-align: center;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+
+        header p {
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+
+        .button {
+            background-color: #87b485;
+            color: #142a13;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .button:hover {
+            background-color: #6f946f;
+        }
+
+        .button span {
+            font-size: 1.5rem;
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: #87b485;
             text-align: left;
         }
 
-        .info h3 {
-            margin-bottom: 10px;
-            font-size: 18px;
+        .section p {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            text-align: left;
         }
 
-        .info ul {
-            list-style: none;
-            padding: 0;
+        .bottom-section {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            flex-wrap: wrap;
         }
 
-        .info ul li {
-            font-size: 16px;
+        .bottom-text {
+            background-color: #1a3e2b;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: left;
+            flex: 1 1 300px;
+            color: #87b485;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .bottom-text h3 {
+            color: #fff;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .bottom-text p {
+            margin: 0.5rem 0;
+        }
+
+        .bottom-text small {
+            font-size: 0.9rem;
+            color: #87b485;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #1a3e2b;
+            color: #fff;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            .title-bar {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            header p {
+                font-size: 1.25rem;
+            }
+
+            .section h2 {
+                font-size: 1.5rem;
+            }
+
+            .section p {
+                font-size: 1rem;
+            }
+
+            .bottom-section {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .bottom-text {
+                flex: 1 1 auto;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>CODE for Adventure</h1>
-            <h2>Buying a Rivian? Use a referral code and <span style="color: #f2d202;">get rewards!</span></h2>
-        </header>
-
-        <div class="cta">
-            <button onclick="window.location.href='https://rivian.com'">Use Mark's Code &rarr;</button>
-            <p>You'll be directed to Rivian's R1 Shop. Code changes every page refresh.</p>
-        </div>
-
-        <div class="info">
-            <div>
-                <h3>How does it work?</h3>
-                <p>When you use an owner's referral code during checkout of a qualifying R1 Shop vehicle, then take delivery, both the original owner (referrer) and new owner (referee) get rewards!</p>
-            </div>
-
-            <div>
-                <h3>What are the rewards?</h3>
-                <ul>
-                    <li>&#127873; 750 points that can be redeemed in Gear Shop or R1 Shop (1 point equals 1 dollar in credit)</li>
-                    <li>&#9889; 6 months of charging at Rivian Adventure Network sites (up to a lifetime limit of three years)</li>
-                </ul>
-            </div>
-        </div>
+    <div class="title-bar">
+        <h1>CODE for Adventure</h1>
+        <a href="submit.php">Submit Code</a>
     </div>
+
+    <header>
+        <h1>Buying a Rivian?<br>Use a referral code and <strong>get rewards</strong>!</h1>
+    </header>
+
+    <button class="button">
+        <span>Use Mark's Code</span>
+        <svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 10h16m0 0L8 2m8 8l-8 8" stroke="#142a13" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    </button>
+    <p style="font-size: 0.85rem; text-align: center; color: #87b485; margin-top: 0.5rem;">
+        You’ll be directed to Rivian’s R1 Shop. Code changes every page refresh.
+    </p>
+
+    <main class="content">
+        <section class="section">
+            <h2>How does it work?</h2>
+            <p>When you use an owner’s referral code during checkout of a qualifying R1 Shop vehicle, both the original owner (referrer) and new owner (referee) get rewards!</p>
+        </section>
+
+        <section class="section">
+            <h2>What are the rewards?</h2>
+            <div class="bottom-section">
+                <div class="bottom-text">
+                    <h3>750 Points</h3>
+                    <p>Redeemable in Gear Shop or R1 Shop.</p>
+                    <small>1 point equals 1 dollar in credit</small>
+                </div>
+                <div class="bottom-text">
+                    <h3>6 Months Charging</h3>
+                    <p>At Rivian Adventure Network sites.</p>
+                    <small>Up to a lifetime limit of three years</small>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Rivian Referral Program</p>
+    </footer>
 </body>
 </html>
