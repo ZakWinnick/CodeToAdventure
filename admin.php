@@ -129,7 +129,6 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-        // Query to check credentials
         $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? LIMIT 1");
         $stmt->bind_param("s", $username);
         $stmt->execute();
@@ -137,11 +136,10 @@
 
         if ($result->num_rows === 1) {
             $user = $result->fetch_assoc();
-            // Verify password
             if (password_verify($password, $user['password'])) {
                 $_SESSION['loggedin'] = true;
                 $_SESSION['username'] = $user['username'];
-                header('Location: ' . $_SERVER['PHP_SELF']);
+                header('Location: admin.php');
                 exit;
             } else {
                 $loginError = 'Invalid username or password';
@@ -149,7 +147,6 @@
         } else {
             $loginError = 'Invalid username or password';
         }
-
         $stmt->close();
     }
 
@@ -158,7 +155,7 @@
         <div class="login-form">
             <h1>Admin Login</h1>
             <?php if (!empty($loginError)): ?>
-                <p style="color: red;"><?php echo $loginError; ?></p>
+                <div class="error-message"><?php echo $loginError; ?></div>
             <?php endif; ?>
             <form method="POST">
                 <input type="text" name="username" placeholder="Username" required>
@@ -169,26 +166,23 @@
     <?php
         exit;
     }
+
+    // Fetch total count and latest submission
+    $countResult = $conn->query("SELECT COUNT(*) AS total FROM codes");
+    $countData = $countResult->fetch_assoc();
+    $totalCount = $countData['total'];
+
+    $latestResult = $conn->query("SELECT * FROM codes ORDER BY id DESC LIMIT 1");
+    $latestSubmission = $latestResult->fetch_assoc();
+
+    // Fetch all submissions
+    $allSubmissions = $conn->query("SELECT * FROM codes ORDER BY id ASC");
     ?>
 
     <div class="container">
         <div class="header">
             <h1>Admin Panel - Rivian Referral Submissions</h1>
         </div>
-
-        <?php
-        // Fetch total count of submissions
-        $countResult = $conn->query("SELECT COUNT(*) AS total FROM codes");
-        $countData = $countResult->fetch_assoc();
-        $totalCount = $countData['total'];
-
-        // Fetch latest submission
-        $latestResult = $conn->query("SELECT * FROM codes ORDER BY id DESC LIMIT 1");
-        $latestSubmission = $latestResult->fetch_assoc();
-
-        // Fetch all submissions
-        $allSubmissions = $conn->query("SELECT * FROM codes ORDER BY id ASC");
-        ?>
 
         <div class="summary">
             <div class="block">
@@ -226,7 +220,7 @@
                         <td>
                             <div class="actions">
                                 <button class="edit" onclick="window.location.href='edit.php?id=<?php echo $row['id']; ?>';">Edit</button>
-                                <button class="delete" onclick="if(confirm('Are you sure you want to delete this code?')) window.location.href='delete.php?id=<?php echo $row['id']; ?>';">Delete</button>
+                                <button class="delete" onclick="if(confirm('Are you sure?')) window.location.href='delete.php?id=<?php echo $row['id']; ?>';">Delete</button>
                             </div>
                         </td>
                     </tr>
