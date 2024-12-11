@@ -1,212 +1,69 @@
-/* Reset and base styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Lato', sans-serif;
-    background-color: #142a13;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    padding: 1rem;
-}
-
-/* Title bar */
-.title-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    max-width: 1200px;
-    padding: 0.5rem 1.5rem;
-    background-color: #123A13;
-    color: #E7E7E5;
-}
-
-.title-bar h1 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #DEB526;
-}
-
-.title-bar .button {
-    background-color: #87b485;
-    color: #142a13;
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 30px;
-    font-size: 1.25rem;
-    font-weight: bold;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    transition: background-color 0.3s ease;
-    flex-wrap: nowrap;
-}
-
-.title-bar .button:hover {
-    background-color: #6f946f;
-}
-
-/* Footer */
-footer.title-bar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 1rem;
-}
-
-footer.title-bar a {
-    color: #DEB526;
-    text-decoration: none;
-}
-
-footer.title-bar a:hover {
-    color: #6f946f;
-}
-
-/* Header */
-header {
-    text-align: center;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-}
-
-header h1 {
-    font-size: 2.5rem;
-    line-height: 1.4;
-    margin-bottom: 1rem;
-}
-
-/* Main button */
-.button {
-    background-color: #87b485;
-    color: #142a13;
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 30px;
-    font-size: 1.25rem;
-    font-weight: bold;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    gap: 10px;
-    flex-wrap: nowrap;
-}
-
-.button:hover {
-    background-color: #6f946f;
-}
-
-.button span {
-    font-size: 1.5rem;
-}
-
-/* Note */
-.note {
-    font-size: 0.85rem;
-    text-align: center;
-    color: #87b485;
-    margin-top: 0.5rem;
-}
-
-/* Content */
-.content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem;
-}
-
-.section {
-    margin-bottom: 3rem;
-}
-
-.section h2 {
-    font-size: 1.75rem;
-    margin-bottom: 1rem;
-    color: #87b485;
-    text-align: left;
-}
-
-.section p {
-    font-size: 1.25rem;
-    line-height: 1.6;
-    text-align: left;
-}
-
-/* Bottom section */
-.bottom-section {
-    display: flex;
-    justify-content: space-between;
-    gap: 2rem;
-    max-width: 800px;
-    margin: 0 auto;
-    flex-wrap: wrap;
-}
-
-.bottom-text {
-    background-color: #1a3e2b;
-    border-radius: 8px;
-    padding: 1.5rem;
-    text-align: left;
-    flex: 1 1 300px;
-    color: #87b485;
+/* Navigation Menu */
+.nav-menu {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    padding: 10px 1rem; /* 10px gap from title bar */
+    background-color: #123A13;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.bottom-text h3 {
+.nav-menu .menu {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-menu .menu li a {
+    text-decoration: none;
     color: #E7E7E5;
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    padding: 0.5rem;
 }
 
-.bottom-text p {
-    margin: 0.5rem 0;
+.nav-menu .menu li a:hover {
+    color: #DEB526;
 }
 
-.bottom-text small {
-    font-size: 0.9rem;
-    color: #87b485;
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 10px;
 }
 
-/* Mobile-specific styles */
+.hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #E7E7E5;
+    border-radius: 2px;
+}
+
+/* Mobile Styles */
 @media (max-width: 768px) {
-    .title-bar {
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-menu .menu {
+        display: none;
         flex-direction: column;
-        gap: 1rem; /* Add spacing between title and button */
+        gap: 0;
     }
 
-    .title-bar .button {
-        font-size: 1rem; /* Reduce font size */
-        padding: 0.5rem 1rem; /* Smaller padding for mobile */
-        border-radius: 20px; /* Compact button corners */
+    .nav-menu .menu.active {
+        display: flex;
     }
 
-    .button {
-        width: auto; /* Prevent button from stretching */
-    }
-
-    header h1 {
-        font-size: 1.75rem; /* Adjust heading size for mobile */
-    }
-
-    .section h2 {
-        font-size: 1.5rem;
-    }
-
-    .section p {
-        font-size: 1rem;
+    .nav-menu .menu li {
+        text-align: left;
+        margin-bottom: 10px;
     }
 }

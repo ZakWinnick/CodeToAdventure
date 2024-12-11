@@ -15,6 +15,22 @@
         <a href="submit.php" class="button">Submit Code</a>
     </div>
 
+    <!-- Navigation Menu -->
+    <nav class="nav-menu">
+        <button class="hamburger" id="hamburger-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="menu">
+            <li><a href="index.php">Home</a></li>
+            <li><a href="submit.php">Submit Code</a></li>
+            <li><a href="changelog.html">Changelog</a></li>
+            <li><a href="api-docs.html">API Docs</a></li>
+            <li><a href="/admin">Admin</a></li>
+        </ul>
+    </nav>
+
     <!-- Header Section -->
     <header>
         <h1>Buying a Rivian?<br>Use a referral code and <strong>get rewards</strong>!</h1>
@@ -64,10 +80,17 @@
 
     <!-- JavaScript -->
     <script>
-        // JavaScript for dynamic referral and year
         document.getElementById('current-year').innerText = new Date().getFullYear();
 
-        // Example of dynamic referral data
+        // Hamburger menu toggle
+        const hamburger = document.getElementById('hamburger-menu');
+        const menu = document.querySelector('.menu');
+
+        hamburger.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
+
+        // Example dynamic referral data
         fetch('/api/random-referral')
             .then(response => response.json())
             .then(data => {
