@@ -1,3 +1,37 @@
+<?php
+session_start(); // Start the session to check if the user is logged in
+
+// No need for admin check; anyone logged in can access this page
+// Just checking if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");  // Redirect to login page if not logged in
+    exit();  // Ensure no further code is executed
+}
+
+include '../config.php';  // Adjust the path as necessary
+
+// Query to get the total number of users
+$totalSqlUsers = "SELECT COUNT(*) as total FROM users";
+$totalResultUsers = $conn->query($totalSqlUsers);
+$totalRowUsers = $totalResultUsers->fetch_assoc();
+$totalUsers = $totalRowUsers['total']; // Store the total user count
+
+// Query to get the total number of submissions
+$totalSqlSubmissions = "SELECT COUNT(*) as total FROM codes";
+$totalResultSubmissions = $conn->query($totalSqlSubmissions);
+$totalRowSubmissions = $totalResultSubmissions->fetch_assoc();
+$totalSubmissions = $totalRowSubmissions['total']; // Store the total submission count
+
+// Query to get the latest submission
+$latestSql = "SELECT * FROM codes ORDER BY id DESC LIMIT 1";
+$latestResult = $conn->query($latestSql);
+$latestSubmission = $latestResult->fetch_assoc();
+
+// Fetch all submissions ordered from oldest to newest
+$submissionsSql = "SELECT * FROM codes ORDER BY id ASC"; // Sorted by ID in ascending order
+$submissionsResult = $conn->query($submissionsSql);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
