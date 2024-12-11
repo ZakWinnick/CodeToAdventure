@@ -32,6 +32,26 @@
             color: #E7E7E5;
         }
 
+        .menu {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .menu a {
+            color: #E7E7E5;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 5px;
+        }
+
+        .menu a:hover {
+            background-color: #6f946f;
+            color: #142a13;
+        }
+
         .title-bar h1 {
             font-size: 1.5rem;
             font-weight: bold;
@@ -188,7 +208,13 @@
 
     <div class="title-bar">
         <h1>Code to Adventure</h1>
-        <button onclick="window.location.href='submit.php';">Submit Code</button>
+        <nav class="menu">
+            <a href="index.php">Home</a>
+            <a href="submit.php">Submit Code</a>
+            <a href="api-docs.html">API Docs</a>
+            <a href="changelog.html">Changelog</a>
+            <a href="/admin">Admin</a>
+        </nav>
     </div>
 
     <header>

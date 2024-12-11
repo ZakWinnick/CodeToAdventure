@@ -177,6 +177,15 @@
     </style>
 </head>
 <body>
+    <?php
+    include 'config.php';
+
+    // Fetch random referral data from the database
+    $sql = "SELECT * FROM codes ORDER BY RAND() LIMIT 1";
+    $result = $conn->query($sql);
+    $referral = $result->fetch_assoc();
+    ?>
+
     <div class="title-bar">
         <h1>Code to Adventure</h1>
         <button onclick="window.location.href='submit.php';">Submit Code</button>
@@ -187,9 +196,9 @@
     </header>
 
     <div class="referral-display">
-        <p class="referral-code">Code: <span id="referralCode">Loading...</span></p>
-        <p class="referee-name">Submitted by: <span id="refereeName">Loading...</span></p>
-        <a id="shopLink" href="#" target="_blank" class="shop-link">Shop with this Code</a>
+        <p class="referral-code">Code: <span><?php echo $referral['referral_code']; ?></span></p>
+        <p class="referee-name">Submitted by: <span><?php echo $referral['name']; ?></span></p>
+        <a href="https://rivian.com/configurations/list?reprCode=<?php echo $referral['referral_code']; ?>" target="_blank" class="shop-link">Shop with this Code</a>
     </div>
 
     <main class="content">
@@ -218,24 +227,5 @@
     <footer>
         <p>&copy; <script>document.write(new Date().getFullYear());</script> <a href='https://zak.codetoadventure.com' style='color: #87b485; text-decoration: none;' target='_blank' rel='noopener noreferrer'>Zak Winnick</a></p>
     </footer>
-
-    <script>
-        // Fetch a random referral code and update the display
-        async function fetchRandomCode() {
-            try {
-                const response = await fetch('/api/random-code');
-                const data = await response.json();
-
-                document.getElementById('referralCode').textContent = data.referralCode;
-                document.getElementById('refereeName').textContent = data.refereeName;
-                document.getElementById('shopLink').href = `https://rivian.com/shop?referral=${data.referralCode}`;
-            } catch (error) {
-                console.error('Error fetching random code:', error);
-            }
-        }
-
-        // Initialize the page
-        fetchRandomCode();
-    </script>
 </body>
 </html>
