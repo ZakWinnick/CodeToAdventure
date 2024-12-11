@@ -64,6 +64,11 @@ footer.title-bar {
     padding: 1rem;
 }
 
+footer.title-bar a {
+    color: #DEB526;
+    text-decoration: none;
+}
+
 footer.title-bar a:hover {
     color: #6f946f;
 }
@@ -105,13 +110,6 @@ header h1 {
 
 .button span {
     font-size: 1.5rem;
-}
-
-@media (max-width: 768px) {
-    .button {
-        width: 100%; /* Ensures the button adapts to small screens */
-        justify-content: center;
-    }
 }
 
 /* Note */
@@ -181,4 +179,34 @@ header h1 {
 .bottom-text small {
     font-size: 0.9rem;
     color: #87b485;
+}
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+    .title-bar {
+        flex-direction: column;
+        gap: 1rem; /* Add spacing between title and button */
+    }
+
+    .title-bar .button {
+        font-size: 1rem; /* Reduce font size */
+        padding: 0.5rem 1rem; /* Smaller padding for mobile */
+        border-radius: 20px; /* Compact button corners */
+    }
+
+    .button {
+        width: auto; /* Prevent button from stretching */
+    }
+
+    header h1 {
+        font-size: 1.75rem; /* Adjust heading size for mobile */
+    }
+
+    .section h2 {
+        font-size: 1.5rem;
+    }
+
+    .section p {
+        font-size: 1rem;
+    }
 }
