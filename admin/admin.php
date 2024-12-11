@@ -1,57 +1,133 @@
-<?php
-session_start();
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-include 'config.php';
-
-// Debug database connection
-if ($conn->connect_error) {
-    die('Database connection failed: ' . $conn->connect_error);
-}
-echo "Database connected successfully.<br>";
-
-// Check if user is logged in
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    echo "User is not logged in.<br>";
-    header('Location: login.php');
-    exit;
-}
-echo "User is logged in.<br>";
-
-// Fetch total count and latest submission
-$countResult = $conn->query("SELECT COUNT(*) AS total FROM codes");
-if (!$countResult) {
-    die('Count query failed: ' . $conn->error);
-}
-$countData = $countResult->fetch_assoc();
-$totalCount = $countData['total'];
-echo "Total count fetched: $totalCount<br>";
-
-$latestResult = $conn->query("SELECT * FROM codes ORDER BY id DESC LIMIT 1");
-if (!$latestResult) {
-    die('Latest query failed: ' . $conn->error);
-}
-$latestSubmission = $latestResult->fetch_assoc();
-echo "Latest submission fetched.<br>";
-
-$allSubmissions = $conn->query("SELECT * FROM codes ORDER BY id ASC");
-if (!$allSubmissions) {
-    die('All submissions query failed: ' . $conn->error);
-}
-echo "All submissions fetched.<br>";
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Submissions</title>
-    <!-- Styles omitted for brevity -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .logout {
+            text-align: right;
+            margin-bottom: 1rem;
+        }
+
+        .logout a {
+            text-decoration: none;
+            color: #f44336;
+            font-weight: bold;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+
+        table th, table td {
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #2c5f2d;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .actions button {
+            padding: 0.5rem;
+            font-size: 0.875rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .actions .edit {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .actions .delete {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #2c5f2d;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        .back-to-top:hover {
+            background-color: #256c21;
+        }
+    </style>
 </head>
 <body>
+    <?php
+    session_start();
+    include 'config.php';
+
+    // Check if user is logged in
+    if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+        header('Location: login.php');
+        exit;
+    }
+
+    // Fetch total count and latest submission
+    $countResult = $conn->query("SELECT COUNT(*) AS total FROM codes");
+    $countData = $countResult->fetch_assoc();
+    $totalCount = $countData['total'];
+
+    $latestResult = $conn->query("SELECT * FROM codes ORDER BY id DESC LIMIT 1");
+    $latestSubmission = $latestResult->fetch_assoc();
+
+    // Fetch all submissions
+    $allSubmissions = $conn->query("SELECT * FROM codes ORDER BY id ASC");
+    ?>
+
     <div class="container">
         <div class="logout">
             <a href="logout.php">Logout</a>
