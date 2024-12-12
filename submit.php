@@ -24,7 +24,6 @@
 
         .title-bar {
             display: flex;
-            justify-content: space-between;
             align-items: center;
             width: 100%;
             max-width: 1200px;
@@ -37,22 +36,6 @@
             font-size: 1.5rem;
             font-weight: bold;
             color: #DEB526;
-        }
-
-        .title-bar button {
-            background-color: #87b485;
-            color: #142a13;
-            padding: 0.5rem 1.5rem;
-            font-size: 1.25rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .title-bar button:hover {
-            background-color: #6f946f;
         }
 
         .menu-bar {
@@ -204,7 +187,6 @@
 <body>
     <div class="title-bar">
         <h1>Code to Adventure</h1>
-        <button onclick="window.location.href='submit.php';">Submit Code</button>
     </div>
 
     <div class="menu-bar">
