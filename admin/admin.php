@@ -1,5 +1,9 @@
 <?php
 session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 include 'config.php';
 
 // Check if the user is logged in or verify the persistent login token
@@ -28,8 +32,7 @@ $countResult = $conn->query("SELECT COUNT(*) AS total FROM codes");
 if (!$countResult) {
     die("Count query failed: " . $conn->error);
 }
-$countData = $countResult->fetch_assoc();
-$totalCount = $countData['total'];
+$totalCount = $countResult->fetch_assoc()['total'];
 
 // Fetch the latest submission
 $latestResult = $conn->query("SELECT * FROM codes ORDER BY id DESC LIMIT 1");
