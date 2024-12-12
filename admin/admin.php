@@ -1,3 +1,55 @@
+<?php
+session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+include 'config.php';
+
+// Check if the user is logged in or verify the persistent login token
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    if (!empty($_COOKIE['login_token'])) {
+        $token = $_COOKIE['login_token'];
+        $result = $conn->query("SELECT * FROM users WHERE token IS NOT NULL");
+
+        while ($user = $result->fetch_assoc()) {
+            if (password_verify($token, $user['token'])) {
+                if (strtotime($user['token_expires']) > time()) {
+                    $_SESSION['loggedin'] = true;
+                    $_SESSION['username'] = $user['username'];
+                }
+                break;
+            }
+        }
+    }
+
+    if (!isset($_SESSION['loggedin'])) {
+        header('Location: login.php');
+        exit;
+    }
+}
+
+// Fetch total submissions count
+$countResult = $conn->query("SELECT COUNT(*) AS total FROM codes");
+if (!$countResult) {
+    die("Count query failed: " . $conn->error);
+}
+$countData = $countResult->fetch_assoc();
+$totalCount = $countData['total'];
+
+// Fetch the latest submission
+$latestResult = $conn->query("SELECT * FROM codes ORDER BY id DESC LIMIT 1");
+if (!$latestResult) {
+    die("Latest query failed: " . $conn->error);
+}
+$latestSubmission = $latestResult->fetch_assoc();
+
+// Fetch all submissions
+$allSubmissions = $conn->query("SELECT * FROM codes ORDER BY id ASC");
+if (!$allSubmissions) {
+    die("All submissions query failed: " . $conn->error);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
