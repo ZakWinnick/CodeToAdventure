@@ -91,9 +91,9 @@
 
         .form-container {
             max-width: 800px;
-            margin: 0 auto;
+            margin: 2rem auto;
             background-color: #1a3e2b;
-            padding: 20px;
+            padding: 2rem;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
@@ -102,6 +102,7 @@
             text-align: center;
             color: #87b485;
             font-size: 2rem;
+            margin-bottom: 1rem;
         }
 
         form {
@@ -207,7 +208,7 @@
             }
 
             .form-container {
-                padding: 15px;
+                padding: 1.5rem;
             }
         }
     </style>
