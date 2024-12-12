@@ -7,7 +7,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
 
     // Verify username and password
-    $result = $conn->query("SELECT * FROM users WHERE username='$username'");
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
     $user = $result->fetch_assoc();
 
     if ($user && password_verify($password, $user['password'])) {
@@ -22,7 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Store the token in the database
             $hashedToken = password_hash($token, PASSWORD_DEFAULT);
-            $conn->query("UPDATE users SET token='$hashedToken', token_expires=DATE_ADD(NOW(), INTERVAL 30 DAY) WHERE username='$username'");
+            $stmt = $conn->prepare("UPDATE users SET token = ?, token_expires = DATE_ADD(NOW(), INTERVAL 30 DAY) WHERE username = ?");
+            $stmt->bind_param("ss", $hashedToken, $username);
+            $stmt->execute();
         }
 
         header('Location: admin.php');
@@ -39,12 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Admin Panel</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: 'Lato', sans-serif;
             background-color: #142a13;
@@ -57,8 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .login-container {
-            width: 100%;
             max-width: 400px;
+            width: 100%;
             background-color: #123A13;
             padding: 2rem;
             border-radius: 8px;
@@ -67,19 +66,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         .login-container h1 {
             text-align: center;
-            margin-bottom: 2rem;
-            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
             color: #DEB526;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: bold;
             color: #87b485;
         }
 
@@ -113,12 +110,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         .login-button {
             width: 100%;
-            background-color: #87b485;
-            color: #142a13;
             padding: 0.75rem;
             font-size: 1.25rem;
             font-weight: bold;
-            text-align: center;
+            color: #142a13;
+            background-color: #87b485;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -134,26 +130,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-size: 0.9rem;
             margin-bottom: 1rem;
             text-align: center;
-        }
-
-        @media (max-width: 480px) {
-            .login-container {
-                padding: 1.5rem;
-            }
-
-            .login-container h1 {
-                font-size: 1.5rem;
-            }
-
-            .form-group input {
-                padding: 0.5rem;
-                font-size: 0.9rem;
-            }
-
-            .login-button {
-                font-size: 1rem;
-                padding: 0.5rem;
-            }
         }
     </style>
 </head>
