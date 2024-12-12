@@ -1,10 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="https://tinylytics.app/embed/wWu5hJWSQ_r9BAxgohx8.js" defer></script>
+<script src="https://tinylytics.app/embed/wWu5hJWSQ_r9BAxgohx8.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code to Adventure - Random Rivian Referrals</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Discover Rivian referral codes and get rewards like 750 points for the Gear Shop or 6 months of free charging. Submit your code today!">
+    <meta name="keywords" content="Rivian, referral codes, Rivian rewards, Rivian discounts, Rivian referral program, Rivian Adventure Network">
+    <meta name="author" content="Zak Winnick">
+    <link rel="canonical" href="https://codetoadventure.com">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Code to Adventure - Random Rivian Referrals">
+    <meta property="og:description" content="Buying a Rivian? Use a referral code and get rewards like 750 points for the Gear Shop or 6 months of free charging.">
+    <meta property="og:image" content="https://codetoadventure.com/assets/images/rivian_referral_card.png">
+    <meta property="og:url" content="https://codetoadventure.com">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Code to Adventure - Random Rivian Referrals">
+    <meta name="twitter:description" content="Discover Rivian referral codes and get rewards like 750 points for the Gear Shop or 6 months of free charging. Submit your code today!">
+    <meta name="twitter:image" content="https://codetoadventure.com/assets/images/rivian_referral_card.png">
+    <meta name="twitter:site" content="@codetoadventure">
     <style>
         * {
             margin: 0;
