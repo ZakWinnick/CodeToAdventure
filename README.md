@@ -24,7 +24,7 @@ This project aims to streamline the process of sharing Rivian referral codes in 
 
 ---
 
-## Roadmap
+## Roadmap (updated 12/12/2024)
 
 - [x] Random referral code display
 - [x] User submission form
