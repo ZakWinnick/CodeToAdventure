@@ -86,12 +86,30 @@ if (!$allSubmissions) {
             color: #E7E7E5;
         }
 
-        .logout {
-            text-align: right;
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 1rem;
         }
 
-        .logout a {
+        .nav-bar a {
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .home {
+            background-color: #87b485;
+            color: #142a13;
+        }
+
+        .home:hover {
+            background-color: #6f946f;
+        }
+
+        .logout {
             text-decoration: none;
             color: #f44336;
             font-weight: bold;
@@ -237,8 +255,9 @@ if (!$allSubmissions) {
 </head>
 <body>
     <div class="container">
-        <div class="logout">
-            <a href="logout.php">Logout</a>
+        <div class="nav-bar">
+            <a href="/index.php" class="home">Home</a>
+            <a href="logout.php" class="logout">Logout</a>
         </div>
 
         <div class="header">
