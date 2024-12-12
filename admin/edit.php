@@ -129,6 +129,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background-color: #6f946f;
         }
 
+        .back-button {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: white;
+            background-color: #f44336;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 1rem;
+        }
+
+        .back-button:hover {
+            background-color: #d32f2f;
+        }
+
         .error-message {
             color: #f44336;
             font-size: 0.9rem;
@@ -153,6 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <button type="submit" class="edit-button">Save Changes</button>
         </form>
+        <button onclick="window.location.href='admin.php';" class="back-button">Back</button>
     </div>
 </body>
 </html>
