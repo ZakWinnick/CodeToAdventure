@@ -1,9 +1,5 @@
 <?php
 session_start();
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 include 'config.php';
 
 // Check if the user is logged in or verify the persistent login token
@@ -13,11 +9,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         $result = $conn->query("SELECT * FROM users WHERE token IS NOT NULL");
 
         while ($user = $result->fetch_assoc()) {
-            if (password_verify($token, $user['token'])) {
-                if (strtotime($user['token_expires']) > time()) {
-                    $_SESSION['loggedin'] = true;
-                    $_SESSION['username'] = $user['username'];
-                }
+            if (password_verify($token, $user['token']) && strtotime($user['token_expires']) > time()) {
+                $_SESSION['loggedin'] = true;
+                $_SESSION['username'] = $user['username'];
                 break;
             }
         }
