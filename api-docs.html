@@ -101,6 +101,11 @@
             margin-bottom: 1rem;
         }
 
+        ul {
+            margin-left: 1.5rem;
+            list-style-type: disc;
+        }
+
         pre {
             background-color: #123A13;
             padding: 1rem;
@@ -120,6 +125,22 @@
             margin: 20px 0;
         }
 
+        .back-link {
+            display: inline-block;
+            color: #87b485;
+            margin-top: 20px;
+            text-decoration: none;
+            border: 2px solid #87b485;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .back-link:hover {
+            background-color: #87b485;
+            color: #142a13;
+        }
+
         footer {
             text-align: center;
             padding: 1rem;
@@ -135,22 +156,6 @@
 
         footer a:hover {
             text-decoration: underline;
-        }
-
-        .back-link {
-            display: inline-block;
-            color: #87b485;
-            margin-top: 20px;
-            text-decoration: none;
-            border: 2px solid #87b485;
-            padding: 10px 20px;
-            border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .back-link:hover {
-            background-color: #87b485;
-            color: #142a13;
         }
 
         @media (max-width: 768px) {
@@ -196,49 +201,41 @@
             <h2>Endpoints</h2>
             <h3>1. Get Random Referral Code</h3>
             <p><strong>URL:</strong> <code>GET /api/random</code></p>
-            <p><strong>Example Request:</strong></p>
             <pre><code>GET https://codetoadventure.com/api.php?path=random</code></pre>
-            <p><strong>Example Response:</strong></p>
             <pre><code>{
     "name": "John Doe",
     "referral_code": "ABC123",
     "link": "https://rivian.com/configurations/list?reprCode=ABC123"
 }</code></pre>
 
-            <h3>2. Get All Referral Codes</h3>
-            <p><strong>URL:</strong> <code>GET /api/codes</code></p>
-            <p><strong>Example Request:</strong></p>
-            <pre><code>GET https://codetoadventure.com/api.php?path=codes</code></pre>
-
             <h2>Rate Limiting</h2>
             <div class="rate-limit">
                 <p><strong>Limit:</strong> 100 requests per minute.</p>
-                <p><strong>Exceeding:</strong> You will receive this response:</p>
+                <p>Exceeding the limit will return:</p>
                 <pre><code>{
     "error": "Rate limit exceeded."
 }</code></pre>
             </div>
-    <div class="response-codes">
-        <h2>Response Codes</h2>
-        <p>The API returns standard HTTP response codes to indicate the success or failure of an API request:</p>
-            <li>200 OK: The request was successful.</li>
-            <li>404 Not Found: The requested endpoint or resource does not exist.</li>
-            <li>429 Too Many Requests: The rate limit has been exceeded.</li>
-            <li>500 Internal Server Error: Something went wrong on our end.</li>
-    </div>
-    <div class="usage-instructions">
-        <h2>Usage Instructions</h2>
-        <p>To use the API, simply send a GET request to the respective endpoint. You can use the URLs directly in your browser, in your application, or via tools like <a href="https://postman.com" target="_blank">Postman</a> to test the API responses.
 
-            <p>Make sure to respect the rate limits to ensure consistent access for all users.</p>
-    </div>
-    <p></p>
+            <h2>Response Codes</h2>
+            <p>The API uses standard HTTP response codes:</p>
+            <ul>
+                <li><strong>200 OK:</strong> Request successful.</li>
+                <li><strong>404 Not Found:</strong> Endpoint does not exist.</li>
+                <li><strong>429 Too Many Requests:</strong> Rate limit exceeded.</li>
+                <li><strong>500 Internal Server Error:</strong> Server issue.</li>
+            </ul>
+
+            <h2>Usage Instructions</h2>
+            <p>To use the API, send a <code>GET</code> request to the endpoint. You can test it using browsers, tools like Postman, or integrate into applications.</p>
+            <p>Respect rate limits for consistent access.</p>
+
             <a href="index.php" class="back-link">Back to Home</a>
         </div>
     </div>
 
     <footer>
-        &copy; 2024 <a href="https://zakwinnick.com" target="_blank">Zak Winnick</a> | <a href="https://zak.codetoadventure.com" target="_blank">Zak's Referral Code</a> | <a href="mailto:admin@codetoadventure.com">Contact Admin</a>
+        &copy; 2024 <a href="https://zakwinnick.com" target="_blank">Zak Winnick</a> | <a href="mailto:admin@codetoadventure.com">Contact Admin</a>
     </footer>
 </body>
 </html>
