@@ -6,18 +6,22 @@ error_reporting(E_ALL);
 
 include 'config.php';
 
-// Check if the user is logged in or verify the persistent login token
+// Check if session exists, or validate the persistent login token
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    if (!empty($_COOKIE['login_token'])) {
+    if (isset($_COOKIE['login_token'])) {
         $token = $_COOKIE['login_token'];
-        $result = $conn->query("SELECT * FROM users WHERE token IS NOT NULL");
+        $stmt = $conn->prepare("SELECT * FROM users WHERE login_token = ? AND token_expires > NOW()");
+        $stmt->bind_param("s", $token);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
 
-        while ($user = $result->fetch_assoc()) {
-            if (password_verify($token, $user['token']) && strtotime($user['token_expires']) > time()) {
-                $_SESSION['loggedin'] = true;
-                $_SESSION['username'] = $user['username'];
-                break;
-            }
+        if ($user) {
+            $_SESSION['loggedin'] = true;
+            $_SESSION['username'] = $user['username'];
+        } else {
+            // Invalid token: Clear cookie
+            setcookie('login_token', '', time() - 3600, '/');
         }
     }
 

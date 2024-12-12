@@ -1,15 +1,21 @@
 <?php
 session_start();
+include 'config.php';
 
-// Clear the session data
+// Remove session
 session_unset();
 session_destroy();
 
-// Remove the persistent login cookie
+// Clear token in database
 if (isset($_COOKIE['login_token'])) {
-    setcookie('login_token', '', time() - 3600, '/'); // Set cookie to expire in the past
+    $token = $_COOKIE['login_token'];
+    $stmt = $conn->prepare("UPDATE users SET login_token = NULL, token_expires = NULL WHERE login_token = ?");
+    $stmt->bind_param("s", $token);
+    $stmt->execute();
+    setcookie('login_token', '', time() - 3600, '/'); // Expire cookie
 }
 
-// Redirect to the home page
+// Redirect to home page
 header('Location: ../index.php');
 exit;
+?>
