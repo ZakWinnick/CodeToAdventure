@@ -243,9 +243,6 @@
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" required>
 
-                <label for="username">X Username (without @ or 'None')</label>
-                <input type="text" id="username" name="username">
-
                 <label for="referralCode">Referral Code (Just the code - No URL)</label>
                 <input type="text" id="referralCode" name="referralCode" required>
 
