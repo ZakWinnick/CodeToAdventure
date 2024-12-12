@@ -32,7 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Email body message
         $message = "A new referral code has been submitted:\n\n";
         $message .= "Name: $name\n";
-        $message .= "Username: $username\n";
         $message .= "Referral Code: $referralCode\n";
         
         // Email headers (optional)
