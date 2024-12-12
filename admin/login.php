@@ -48,6 +48,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Admin Panel</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Lato', sans-serif;
             background-color: #142a13;
@@ -55,27 +61,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 1rem;
+            height: 100vh;
+            margin: 0;
         }
 
         .login-container {
             max-width: 400px;
-            width: 100%;
+            width: 90%;
             background-color: #123A13;
             padding: 2rem;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
 
         .login-container h1 {
-            text-align: center;
             margin-bottom: 1.5rem;
             color: #DEB526;
+            font-size: 1.75rem;
         }
 
         .form-group {
             margin-bottom: 1rem;
+            text-align: left;
         }
 
         .form-group label {
@@ -110,6 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         .form-group .checkbox label {
             font-size: 0.9rem;
+            color: #E7E7E5;
         }
 
         .login-button {
@@ -133,7 +142,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             color: #f44336;
             font-size: 0.9rem;
             margin-bottom: 1rem;
-            text-align: center;
+        }
+
+        @media (max-height: 500px) {
+            .login-container {
+                padding: 1.5rem;
+            }
+
+            .login-button {
+                font-size: 1rem;
+                padding: 0.5rem;
+            }
+
+            .form-group input {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
