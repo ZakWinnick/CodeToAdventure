@@ -46,5 +46,5 @@ For any inquiries or suggestions, feel free to reach out:
 
 - **Website**: [CodeToAdventure.com](https://www.codetoadventure.com)
 - **GitHub**: [Zak Winnick](https://github.com/ZakWinnick)
-- **Email**: [zak@codetoadventure.com](hmailto:zak@codetoadventure.com)
+- **Email**: [zak@codetoadventure.com](mailto:zak@codetoadventure.com)
 
