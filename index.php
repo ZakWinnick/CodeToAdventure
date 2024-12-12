@@ -281,7 +281,7 @@
     </main>
 
     <footer>
-        <p>&copy; <script>document.write(new Date().getFullYear());</script> <a href='https://zakwinnick.com' style='color: #87b485; text-decoration: none;' target='_blank' rel='noopener noreferrer'>Zak Winnick</a>| <a href='https://zak.codetoadventure.com' style='color: #87b485; text-decoration: none;' target='_blank' rel='noopener noreferrer'>Zak's Referral Code</a>
+        <p>&copy; <script>document.write(new Date().getFullYear());</script> <a href='https://zakwinnick.com' style='color: #87b485; text-decoration: none;' target='_blank' rel='noopener noreferrer'>Zak Winnick</a> | <a href='https://zak.codetoadventure.com' style='color: #87b485; text-decoration: none;' target='_blank' rel='noopener noreferrer'>Zak's Referral Code</a>
     </footer>
 </body>
 </html>
