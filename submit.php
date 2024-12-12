@@ -42,8 +42,8 @@
         .title-bar button {
             background-color: #87b485;
             color: #142a13;
-            padding: 0.5rem 1rem;
-            font-size: 1rem;
+            padding: 0.5rem 1.5rem;
+            font-size: 1.25rem;
             font-weight: bold;
             border: none;
             border-radius: 30px;
@@ -204,7 +204,7 @@
 <body>
     <div class="title-bar">
         <h1>Code to Adventure</h1>
-        <button onclick="window.location.href='submit.php';">Submit</button>
+        <button onclick="window.location.href='submit.php';">Submit Code</button>
     </div>
 
     <div class="menu-bar">
