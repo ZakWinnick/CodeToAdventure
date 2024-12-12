@@ -1,36 +1,3 @@
-<?php
-session_start();
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-include 'config.php';
-
-// Check if the user is logged in
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header('Location: login.php');
-    exit;
-}
-
-// Fetch total count and latest submission
-$countResult = $conn->query("SELECT COUNT(*) AS total FROM codes");
-if (!$countResult) {
-    die("Count query failed: " . $conn->error);
-}
-$countData = $countResult->fetch_assoc();
-$totalCount = $countData['total'];
-
-$latestResult = $conn->query("SELECT * FROM codes ORDER BY id DESC LIMIT 1");
-if (!$latestResult) {
-    die("Latest query failed: " . $conn->error);
-}
-$latestSubmission = $latestResult->fetch_assoc();
-
-$allSubmissions = $conn->query("SELECT * FROM codes ORDER BY id ASC");
-if (!$allSubmissions) {
-    die("All submissions query failed: " . $conn->error);
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -167,6 +134,51 @@ if (!$allSubmissions) {
 
         .summary h2 {
             color: #87b485;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 0.5rem;
+            }
+
+            .container {
+                padding: 0.5rem;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            table th, table td {
+                font-size: 0.875rem;
+                padding: 0.5rem;
+            }
+
+            .summary {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .actions {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.25rem;
+            }
+
+            table th, table td {
+                font-size: 0.75rem;
+                padding: 0.25rem;
+            }
+
+            .actions button {
+                font-size: 0.75rem;
+                padding: 0.25rem;
+            }
         }
     </style>
 </head>
