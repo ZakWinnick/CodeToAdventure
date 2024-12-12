@@ -15,7 +15,7 @@
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Code to Adventure - Random Rivian Referrals">
     <meta property="og:description" content="Buying a Rivian? Use a referral code and get rewards like 750 points for the Gear Shop or 6 months of free charging.">
-    <meta property="og:image" content="https://codetoadventure.com/assets/images/rivian_referral_card.png">
+    <meta property="og:image" content="https://codetoadventure.com/lightbar-fade.png">
     <meta property="og:url" content="https://codetoadventure.com">
     <meta property="og:type" content="website">
 
@@ -23,8 +23,8 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Code to Adventure - Random Rivian Referrals">
     <meta name="twitter:description" content="Discover Rivian referral codes and get rewards like 750 points for the Gear Shop or 6 months of free charging. Submit your code today!">
-    <meta name="twitter:image" content="https://codetoadventure.com/assets/images/rivian_referral_card.png">
-    <meta name="twitter:site" content="@codetoadventure">
+    <meta name="twitter:image" content="https://codetoadventure.com/lightbar-fade.png">
+    <meta name="twitter:site" content="@zakwinnick">
     <style>
         * {
             margin: 0;
