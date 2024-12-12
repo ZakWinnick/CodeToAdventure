@@ -48,3 +48,5 @@ For any inquiries or suggestions, feel free to reach out:
 - **GitHub**: [Zak Winnick](https://github.com/ZakWinnick)
 - **Email**: [zak@codetoadventure.com](mailto:zak@codetoadventure.com)
 
+**NOTE:** Due to security concerns, config.php is missing from this repo. If you clone this repo, you will have to create your own. If you would like to contribute to this project, please e-mail [zak@codetoadventure.com](mailto:zak@codetoadventure.com), and I will provide a copy of this file to you.
+
