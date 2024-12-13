@@ -304,7 +304,7 @@
 
     <footer>
         <p>&copy; <script>document.write(new Date().getFullYear());</script> <a href='https://zakwinnick.com' style='color: #87b485; text-decoration: none;' target='_blank' rel='noopener noreferrer'>Zak Winnick</a> | <a href='https://zak.codetoadventure.com' style='color: #87b485; text-decoration: none;' target='_blank' rel='noopener noreferrer'>Zak's Referral Code</a>  | <a href="mailto:admin@codetoadventure.com" style='color: #87b485; text-decoration: none;' target='_blank' rel='noopener noreferrer'>E-mail the admin</a>
-        <br>
+        <p>
         <a href='changelog.html' style='color: #87b485; text-decoration: none;' target='_blank' rel='noopener noreferrer'>Version 2024.12.11</a>
     </footer>
 </body>
