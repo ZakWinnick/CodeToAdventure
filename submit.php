@@ -215,7 +215,7 @@
             <label for="name">Name</label>
             <input type="text" id="name" name="name" required>
 
-            <label for="referralCode">Referral Code (Just the code - No URL)</label>
+            <label for="referralCode">Referral Code (Just the code - ex. ZAK1452284)</label>
             <input type="text" id="referralCode" name="referralCode" required>
 
             <button type="submit">Submit</button>
