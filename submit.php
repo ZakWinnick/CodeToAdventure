@@ -217,10 +217,10 @@
 
             <label for="referralCode">Referral Code<br>(Just the code - ex. ZAK1452284)</label>
             <input type="text" id="referralCode" name="referralCode" required>
-
+            <br>
             <button type="submit">Submit</button>
         </form>
-
+            <br>
         <a href="index.php" class="back-link">Back to Home</a>
     </div>
 </body>
