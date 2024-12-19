@@ -414,6 +414,7 @@
 
         <section class="info-section">
             <h2 class="info-title">How does it work?</h2>
+            <br>
             <p>When you use an owner's referral code during checkout of a qualifying R1 Shop vehicle, both the original owner (referrer) and new owner (referee) get rewards!</p>
             
             <h2 class="info-title">What are the rewards?</h2>
