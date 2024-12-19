@@ -120,7 +120,6 @@
         .nav-content {
             display: flex;
             justify-content: center;
-            flex-wrap: wrap;
             gap: 0.5rem;
             max-width: var(--max-width);
             margin: 0 auto;
@@ -271,7 +270,7 @@
         /* Responsive Design */
         @media (max-width: 768px) {
             body {
-                overflow-x: hidden; /* Prevent horizontal scroll */
+                overflow-x: hidden;
             }
             
             .header-content {
@@ -286,26 +285,33 @@
             }
 
             .nav-container {
-                padding: 0.5rem 0;
+                padding: 0.5rem;
             }
 
             .nav-content {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 0.25rem;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.5rem;
                 width: 100%;
-                padding: 0 0.5rem;
+                padding: 0.5rem;
             }
 
             .nav-link {
                 text-align: center;
-                padding: 0.625rem 0.5rem;
+                padding: 0.625rem 0.75rem;
                 font-size: 0.875rem;
-                width: 100%;
+                min-height: 44px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                min-height: 44px; /* Ensure good touch target size */
+            }
+
+            /* Special styling for Admin link on mobile */
+            .nav-link[href="/admin"] {
+                width: 100%;
+                max-width: 200px;
+                margin: 0.25rem auto 0;
             }
 
             .hero-title {
