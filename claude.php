@@ -65,10 +65,9 @@
             background-color: var(--primary-bg);
             color: var(--primary-text);
             line-height: 1.6;
+            min-height: 100vh;
             display: grid;
             grid-template-rows: auto auto 1fr auto;
-            min-height: 100vh;
-            overflow-x: hidden;
         }
 
         /* Header Styles */
@@ -115,34 +114,27 @@
         .nav-container {
             width: 100%;
             background-color: var(--secondary-bg);
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            padding: 0.5rem 0;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .nav-container::-webkit-scrollbar {
-            display: none;
+            padding: 0.5rem;
         }
 
         .nav-content {
             display: flex;
-            gap: 1rem;
-            padding: 0 1rem;
-            min-width: min-content;
-            width: max-content;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            max-width: var(--max-width);
             margin: 0 auto;
+            padding: 0 1rem;
         }
 
         .nav-link {
             color: var(--primary-text);
             text-decoration: none;
             font-weight: 500;
-            padding: 0.75rem 1rem;
-            white-space: nowrap;
+            padding: 0.5rem 0.75rem;
             border-radius: var(--border-radius);
             transition: all var(--transition-speed) ease;
+            font-size: 0.9375rem;
         }
 
         .nav-link:hover {
@@ -278,36 +270,65 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
+            body {
+                overflow-x: hidden; /* Prevent horizontal scroll */
+            }
+            
             .header-content {
                 flex-direction: column;
                 text-align: center;
+                padding: 0.75rem;
+            }
+
+            .submit-button {
+                width: 100%;
+                max-width: 300px;
             }
 
             .nav-container {
-                margin: 0 -1rem;
-                width: calc(100% + 2rem);
+                padding: 0.5rem 0;
             }
 
             .nav-content {
-                padding: 0 1rem;
-                justify-content: flex-start;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.25rem;
+                width: 100%;
+                padding: 0 0.5rem;
             }
 
             .nav-link {
-                padding: 0.5rem 0.75rem;
-                font-size: 0.9rem;
+                text-align: center;
+                padding: 0.625rem 0.5rem;
+                font-size: 0.875rem;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 44px; /* Ensure good touch target size */
             }
 
             .hero-title {
                 font-size: clamp(1.75rem, 3vw, 2.5rem);
             }
 
+            .referral-section {
+                padding: 1.5rem;
+            }
+
             .referral-code {
                 font-size: 1.5rem;
+                word-break: break-all;
             }
 
             .rewards-grid {
                 grid-template-columns: 1fr;
+                gap: 1.25rem;
+            }
+
+            .footer-links {
+                gap: 1rem;
+                padding: 0 0.5rem;
             }
         }
 
