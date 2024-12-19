@@ -404,7 +404,16 @@
             <h1 class="hero-title">Buying a Rivian?<br>Use a referral code and <strong>get rewards</strong>!</h1>
         </section>
 
-        <section class="referral-section animate-in">
+        <?php
+    include 'config.php';
+
+    // Fetch random referral data from the database
+    $sql = "SELECT * FROM codes ORDER BY RAND() LIMIT 1";
+    $result = $conn->query($sql);
+    $referral = $result->fetch_assoc();
+    ?>
+    
+    <section class="referral-section animate-in">
             <p class="referral-code">Code: <span><?php echo htmlspecialchars($referral['referral_code']); ?></span></p>
             <p class="referral-name">Submitted by: <span><?php echo htmlspecialchars($referral['name']); ?></span></p>
             <a href="https://rivian.com/configurations/list?reprCode=<?php echo htmlspecialchars($referral['referral_code']); ?>" 
@@ -413,7 +422,8 @@
                class="shop-link">
                 Shop with this Code
             </a>
-        </section>
+        <?php endif; ?>
+    </section>
 
         <section class="info-section">
             <h2 class="info-title">How does it work?</h2>
