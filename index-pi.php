@@ -39,7 +39,6 @@
     <meta name="twitter:site" content="@zakwinnick">
 
     <style>
-        /* CSS Custom Properties for consistent theming */
         :root {
             --primary-bg: #142a13;
             --secondary-bg: #1a3e2b;
@@ -53,24 +52,29 @@
             --transition-speed: 0.3s;
         }
 
-        /* Base styles and reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
+        html, body {
+            height: 100%;
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             background-color: var(--primary-bg);
             color: var(--primary-text);
             line-height: 1.6;
-            min-height: 100vh;
-            display: grid;
-            grid-template-rows: auto auto 1fr auto;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Header Styles */
+        body {
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 4rem; /* Leave space for the Pi symbol */
+            overflow-x: hidden;
+        }
+
         .header-container {
             background-color: var(--header-bg);
             padding: 1rem;
@@ -83,7 +87,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 1rem;
         }
 
         .site-title {
@@ -110,7 +113,6 @@
             transform: translateY(-2px);
         }
 
-        /* Navigation Styles */
         .nav-container {
             width: 100%;
             background-color: var(--secondary-bg);
@@ -123,7 +125,6 @@
             gap: 0.5rem;
             max-width: var(--max-width);
             margin: 0 auto;
-            padding: 0 1rem;
         }
 
         .nav-link {
@@ -133,7 +134,6 @@
             padding: 0.5rem 0.75rem;
             border-radius: var(--border-radius);
             transition: all var(--transition-speed) ease;
-            font-size: 0.9375rem;
         }
 
         .nav-link:hover {
@@ -141,111 +141,16 @@
             color: var(--primary-bg);
         }
 
-        /* Main Content Styles */
         .main-content {
             max-width: var(--max-width);
             margin: 2rem auto;
             padding: 0 1rem;
+            flex: 1;
         }
 
-        .hero-section {
-            text-align: center;
-            margin: 3rem 0;
-        }
-
-        .hero-title {
-            font-size: clamp(2rem, 4vw, 3rem);
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
-        }
-
-        .referral-section {
-            background-color: var(--secondary-bg);
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            text-align: center;
-            margin: 2rem 0;
-        }
-
-        .referral-code {
-            font-size: 2rem;
-            color: var(--accent-color);
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .referral-name {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .shop-link {
-            display: inline-block;
-            background-color: var(--accent-color);
-            color: var(--primary-bg);
-            padding: 1rem 2rem;
-            border-radius: 30px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all var(--transition-speed) ease;
-        }
-
-        .shop-link:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-2px);
-        }
-
-        /* Information Sections */
-        .info-section {
-            margin: 4rem 0;
-        }
-
-        .info-title {
-            font-size: 1.75rem;
-            color: var(--accent-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .rewards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .reward-card {
-            background-color: var(--secondary-bg);
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            transition: transform var(--transition-speed) ease;
-        }
-
-        .reward-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .reward-title {
-            font-size: 1.5rem;
-            color: var(--primary-text);
-            margin-bottom: 1rem;
-        }
-
-        .reward-description {
-            color: var(--accent-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .reward-note {
-            font-size: 0.9rem;
-            color: var(--accent-color);
-            opacity: 0.8;
-        }
-
-        /* Footer Styles */
         .footer {
             background-color: var(--secondary-bg);
             padding: 2rem 1rem;
-            margin-top: 4rem;
             text-align: center;
         }
 
@@ -267,104 +172,47 @@
             color: var(--accent-hover);
         }
 
-        /* Responsive Design */
+        .pi-link {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 2rem;
+            color: var(--accent-color);
+            background-color: var(--secondary-bg);
+            z-index: 1000;
+            padding: 0.5rem;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .pi-link a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .pi-link:hover {
+            color: var(--accent-hover);
+        }
+
         @media (max-width: 768px) {
-            body {
-                overflow-x: hidden;
-            }
-            
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-                padding: 0.75rem;
-            }
-
-            .submit-button {
-                width: 100%;
-                max-width: 300px;
-            }
-
-            .nav-container {
-                padding: 0.5rem;
-            }
-
-            .nav-content {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 0.5rem;
-                width: 100%;
-                padding: 0.5rem;
-            }
-
-            .nav-link {
-                text-align: center;
-                padding: 0.625rem 0.75rem;
-                font-size: 0.875rem;
-                min-height: 44px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            /* Special styling for Admin link on mobile */
-            .nav-link[href="/admin"] {
-                width: 100%;
-                max-width: 200px;
-                margin: 0.25rem auto 0;
-            }
-
-            .hero-title {
-                font-size: clamp(1.75rem, 3vw, 2.5rem);
-            }
-
-            .referral-section {
-                padding: 1.5rem;
-            }
-
-            .referral-code {
+            .pi-link {
                 font-size: 1.5rem;
-                word-break: break-all;
             }
-
-            .rewards-grid {
-                grid-template-columns: 1fr;
-                gap: 1.25rem;
-            }
-
-            .footer-links {
-                gap: 1rem;
-                padding: 0 0.5rem;
-            }
-        }
-
-        /* Animation Keyframes */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-in {
-            animation: fadeIn 0.6s ease-out forwards;
         }
     </style>
 </head>
 <body>
     <?php
-    // Include database configuration
     if (!file_exists('config.php')) {
         die('Configuration file not found');
     }
     include 'config.php';
 
-    // Initialize referral variable
     $referral = null;
-
-    // Fetch random referral data from the database
     if (isset($conn) && $conn instanceof mysqli) {
         $sql = "SELECT * FROM codes ORDER BY RAND() LIMIT 1";
         $result = $conn->query($sql);
-        
+
         if ($result) {
             $referral = $result->fetch_assoc();
         } else {
@@ -393,11 +241,11 @@
     </nav>
 
     <main class="main-content">
-        <section class="hero-section animate-in">
+        <section class="hero-section">
             <h1 class="hero-title">Buying a Rivian?<br>Use a referral code and <strong>get rewards</strong>!</h1>
         </section>
 
-        <section class="referral-section animate-in">
+        <section class="referral-section">
             <?php if ($referral): ?>
                 <p class="referral-code">Code: <span><?php echo htmlspecialchars($referral['referral_code']); ?></span></p>
                 <p class="referral-name">Submitted by: <span><?php echo htmlspecialchars($referral['name']); ?></span></p>
@@ -411,25 +259,6 @@
                 <p>Unable to fetch a referral code at this time. Please try again later.</p>
             <?php endif; ?>
         </section>
-
-        <section class="info-section">
-            <h2 class="info-title">How does it work?</h2>
-            <p>When you use an owner's referral code during checkout of a qualifying R1 Shop vehicle, both the original owner (referrer) and new owner (referee) get rewards!</p>
-            
-            <h2 class="info-title">What are the rewards?</h2>
-            <div class="rewards-grid">
-                <div class="reward-card">
-                    <h3 class="reward-title">750 Points</h3>
-                    <p class="reward-description">Redeemable in Gear Shop or R1 Shop.</p>
-                    <small class="reward-note">(1 point equals 1 dollar in credit)</small>
-                </div>
-                <div class="reward-card">
-                    <h3 class="reward-title">6 Months Charging</h3>
-                    <p class="reward-description">At Rivian Adventure Network sites.</p>
-                    <small class="reward-note">(Up to a lifetime limit of three years)</small>
-                </div>
-            </div>
-        </section>
     </main>
 
     <footer class="footer">
@@ -439,8 +268,14 @@
         <div class="footer-links">
             <a href='https://zak.codetoadventure.com' class="footer-link" target='_blank' rel='noopener noreferrer'>Zak's Referral Code</a>
             <a href='changelog.html' class="footer-link" target='_blank' rel='noopener noreferrer'>Version 2024.12.18</a>
-            <a href="mailto:admin@codetoadventure.com" class="footer-link" target='_blank' rel='noopener noreferrer'>E-mail the admin</a>
+            <a href="mailto:admin@codetoadventure.com" class="footer-link" target='_blank' rel='noopener noreferrer">E-mail the admin</a>
         </div>
     </footer>
+
+    <div class="pi-link">
+        <a href="/admin" title="Admin">
+            &#960;
+        </a>
+    </div>
 </body>
 </html>
