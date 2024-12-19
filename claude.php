@@ -1,11 +1,11 @@
-<?php
-// Enable error reporting for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <?php
+    // Enable error reporting for debugging
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code to Adventure - Random Rivian Referrals</title>
@@ -39,7 +39,7 @@ ini_set('display_errors', 1);
     <meta name="twitter:site" content="@zakwinnick">
 
     <style>
-        /* CSS Reset and Base Styles */
+        /* CSS Custom Properties for consistent theming */
         :root {
             --primary-bg: #142a13;
             --secondary-bg: #1a3e2b;
@@ -53,6 +53,7 @@ ini_set('display_errors', 1);
             --transition-speed: 0.3s;
         }
 
+        /* Base styles and reset */
         * {
             margin: 0;
             padding: 0;
@@ -74,10 +75,7 @@ ini_set('display_errors', 1);
         .header-container {
             background-color: var(--header-bg);
             padding: 1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
         }
 
         .header-content {
@@ -115,24 +113,34 @@ ini_set('display_errors', 1);
 
         /* Navigation Styles */
         .nav-container {
+            width: 100%;
             background-color: var(--secondary-bg);
-            padding: 0.75rem;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 0.5rem 0;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .nav-container::-webkit-scrollbar {
+            display: none;
         }
 
         .nav-content {
-            max-width: var(--max-width);
-            margin: 0 auto;
             display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 0 1rem;
+            min-width: min-content;
+            width: max-content;
+            margin: 0 auto;
         }
 
         .nav-link {
             color: var(--primary-text);
             text-decoration: none;
             font-weight: 500;
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 1rem;
+            white-space: nowrap;
             border-radius: var(--border-radius);
             transition: all var(--transition-speed) ease;
         }
@@ -196,7 +204,7 @@ ini_set('display_errors', 1);
             transform: translateY(-2px);
         }
 
-        /* Information Section Styles */
+        /* Information Sections */
         .info-section {
             margin: 4rem 0;
         }
@@ -273,105 +281,33 @@ ini_set('display_errors', 1);
             .header-content {
                 flex-direction: column;
                 text-align: center;
-                padding: 0.75rem;
-            }
-
-            .site-title {
-                margin-bottom: 0.5rem;
-            }
-
-            .submit-button {
-                width: 100%;
-                max-width: 300px;
-                padding: 0.875rem;
             }
 
             .nav-container {
-                padding: 0.5rem;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
+                margin: 0 -1rem;
+                width: calc(100% + 2rem);
             }
 
             .nav-content {
-                gap: 0.5rem;
-                padding: 0.25rem;
+                padding: 0 1rem;
                 justify-content: flex-start;
-                width: max-content;
-                min-width: 100%;
             }
 
             .nav-link {
-                font-size: 0.875rem;
                 padding: 0.5rem 0.75rem;
-                white-space: nowrap;
-            }
-
-            .main-content {
-                margin: 1rem auto;
-                padding: 0 0.75rem;
-            }
-
-            .hero-section {
-                margin: 2rem 0;
+                font-size: 0.9rem;
             }
 
             .hero-title {
-                font-size: clamp(1.5rem, 5vw, 2rem);
-                line-height: 1.3;
-            }
-
-            .referral-section {
-                padding: 1.5rem 1rem;
-                margin: 1.5rem 0;
+                font-size: clamp(1.75rem, 3vw, 2.5rem);
             }
 
             .referral-code {
-                font-size: 1.25rem;
-                word-break: break-all;
-                padding: 0 0.5rem;
-            }
-
-            .referral-name {
-                font-size: 1rem;
-            }
-
-            .shop-link {
-                width: 100%;
-                max-width: 280px;
-                padding: 0.875rem;
-                font-size: 0.9375rem;
-            }
-
-            .info-section {
-                margin: 2.5rem 0;
-            }
-
-            .info-title {
                 font-size: 1.5rem;
-                margin-bottom: 1rem;
             }
 
             .rewards-grid {
                 grid-template-columns: 1fr;
-                gap: 1.25rem;
-            }
-
-            .reward-card {
-                padding: 1.5rem;
-            }
-
-            .reward-title {
-                font-size: 1.25rem;
-            }
-
-            .footer {
-                padding: 1.5rem 1rem;
-                margin-top: 2.5rem;
-            }
-
-            .footer-links {
-                gap: 1rem;
-                margin-top: 0.75rem;
             }
         }
 
@@ -387,31 +323,7 @@ ini_set('display_errors', 1);
     </style>
 </head>
 <body>
-    <header class="header-container">
-        <div class="header-content">
-            <a href="/" class="site-title">Code to Adventure</a>
-            <button onclick="window.location.href='submit.php';" class="submit-button">Submit Code</button>
-        </div>
-    </header>
-
-    <nav class="nav-container">
-        <div class="nav-scroll-container">
-            <div class="nav-content">
-            <a href="index.php" class="nav-link">Home</a>
-            <a href="submit.php" class="nav-link">Submit Code</a>
-            <a href="api-docs.html" class="nav-link">API Docs</a>
-            <a href="changelog.html" class="nav-link">Changelog</a>
-            <a href="/admin" class="nav-link">Admin</a>
-            </div>
-        </div>
-    </nav>
-
-    <main class="main-content">
-        <section class="hero-section animate-in">
-            <h1 class="hero-title">Buying a Rivian?<br>Use a referral code and <strong>get rewards</strong>!</h1>
-        </section>
-
-        <?php
+    <?php
     // Include database configuration
     if (!file_exists('config.php')) {
         die('Configuration file not found');
@@ -435,19 +347,43 @@ ini_set('display_errors', 1);
         error_log("Database connection not properly initialized");
     }
     ?>
-    
-    <section class="referral-section animate-in">
+
+    <header class="header-container">
+        <div class="header-content">
+            <a href="/" class="site-title">Code to Adventure</a>
+            <button onclick="window.location.href='submit.php';" class="submit-button">Submit Code</button>
+        </div>
+    </header>
+
+    <nav class="nav-container">
+        <div class="nav-content">
+            <a href="index.php" class="nav-link">Home</a>
+            <a href="submit.php" class="nav-link">Submit Code</a>
+            <a href="api-docs.html" class="nav-link">API Docs</a>
+            <a href="changelog.html" class="nav-link">Changelog</a>
+            <a href="/admin" class="nav-link">Admin</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="hero-section animate-in">
+            <h1 class="hero-title">Buying a Rivian?<br>Use a referral code and <strong>get rewards</strong>!</h1>
+        </section>
+
+        <section class="referral-section animate-in">
             <?php if ($referral): ?>
                 <p class="referral-code">Code: <span><?php echo htmlspecialchars($referral['referral_code']); ?></span></p>
                 <p class="referral-name">Submitted by: <span><?php echo htmlspecialchars($referral['name']); ?></span></p>
                 <a href="https://rivian.com/configurations/list?reprCode=<?php echo htmlspecialchars($referral['referral_code']); ?>" 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               class="shop-link">
-                Shop with this Code
-            </a>
-        <?php endif; ?>
-    </section>
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="shop-link">
+                    Shop with this Code
+                </a>
+            <?php else: ?>
+                <p>Unable to fetch a referral code at this time. Please try again later.</p>
+            <?php endif; ?>
+        </section>
 
         <section class="info-section">
             <h2 class="info-title">How does it work?</h2>
