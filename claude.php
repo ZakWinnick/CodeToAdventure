@@ -1,3 +1,8 @@
+<?php
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -405,18 +410,35 @@
         </section>
 
         <?php
+    // Include database configuration
+    if (!file_exists('config.php')) {
+        die('Configuration file not found');
+    }
     include 'config.php';
 
+    // Initialize referral variable
+    $referral = null;
+
     // Fetch random referral data from the database
-    $sql = "SELECT * FROM codes ORDER BY RAND() LIMIT 1";
-    $result = $conn->query($sql);
-    $referral = $result->fetch_assoc();
+    if (isset($conn) && $conn instanceof mysqli) {
+        $sql = "SELECT * FROM codes ORDER BY RAND() LIMIT 1";
+        $result = $conn->query($sql);
+        
+        if ($result) {
+            $referral = $result->fetch_assoc();
+        } else {
+            error_log("Database query failed: " . $conn->error);
+        }
+    } else {
+        error_log("Database connection not properly initialized");
+    }
     ?>
     
     <section class="referral-section animate-in">
-            <p class="referral-code">Code: <span><?php echo htmlspecialchars($referral['referral_code']); ?></span></p>
-            <p class="referral-name">Submitted by: <span><?php echo htmlspecialchars($referral['name']); ?></span></p>
-            <a href="https://rivian.com/configurations/list?reprCode=<?php echo htmlspecialchars($referral['referral_code']); ?>" 
+            <?php if ($referral): ?>
+                <p class="referral-code">Code: <span><?php echo htmlspecialchars($referral['referral_code']); ?></span></p>
+                <p class="referral-name">Submitted by: <span><?php echo htmlspecialchars($referral['name']); ?></span></p>
+                <a href="https://rivian.com/configurations/list?reprCode=<?php echo htmlspecialchars($referral['referral_code']); ?>" 
                target="_blank" 
                rel="noopener noreferrer" 
                class="shop-link">
