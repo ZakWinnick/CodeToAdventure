@@ -440,5 +440,4 @@ if ($entries_per_page === -1) {
             window.location.search = urlParams.toString();
         }
 
-        function changeSort(column) {
-            const urlParams = new URLSearchParams
+        function change
