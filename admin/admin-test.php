@@ -6,17 +6,31 @@ session_start();
 
 require 'config.php';
 
-// Get total count
+// Get pagination parameters
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$entries_per_page = isset($_GET['entries']) ? (int)$_GET['entries'] : 25;
+$offset = ($page - 1) * $entries_per_page;
+
+// Get total count and calculate total pages
 $countResult = $conn->query("SELECT COUNT(*) AS total FROM codes");
 $totalCount = $countResult->fetch_assoc()['total'];
+$total_pages = $entries_per_page === -1 ? 1 : ceil($totalCount / $entries_per_page);
 
 // Get latest submission
 $latestResult = $conn->query("SELECT * FROM codes ORDER BY id DESC LIMIT 1");
 $latestSubmission = $latestResult->fetch_assoc();
 
-// Get all submissions (we'll add pagination later)
-$query = "SELECT * FROM codes ORDER BY id DESC LIMIT 25";
-$allSubmissions = $conn->query($query);
+// Get submissions with pagination
+if ($entries_per_page === -1) {
+    $query = "SELECT * FROM codes ORDER BY id DESC";
+    $allSubmissions = $conn->query($query);
+} else {
+    $query = "SELECT * FROM codes ORDER BY id DESC LIMIT ? OFFSET ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("ii", $entries_per_page, $offset);
+    $stmt->execute();
+    $allSubmissions = $stmt->get_result();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -139,6 +153,43 @@ $allSubmissions = $conn->query($query);
                     <p>No submissions yet</p>
                 <?php endif; ?>
             </div>
+        </div>
+
+        <div class="table-controls">
+            <div class="entries-selector">
+                <label for="entries">Show entries:</label>
+                <select id="entries" onchange="changeEntries(this.value)">
+                    <option value="25" <?php echo $entries_per_page === 25 ? 'selected' : ''; ?>>25</option>
+                    <option value="50" <?php echo $entries_per_page === 50 ? 'selected' : ''; ?>>50</option>
+                    <option value="100" <?php echo $entries_per_page === 100 ? 'selected' : ''; ?>>100</option>
+                    <option value="-1" <?php echo $entries_per_page === -1 ? 'selected' : ''; ?>>All</option>
+                </select>
+            </div>
+
+            <?php if ($entries_per_page !== -1): ?>
+            <div class="pagination">
+                <?php if ($page > 1): ?>
+                    <a href="?page=1&entries=<?php echo $entries_per_page; ?>">First</a>
+                    <a href="?page=<?php echo $page-1; ?>&entries=<?php echo $entries_per_page; ?>">Previous</a>
+                <?php endif; ?>
+
+                <?php
+                $start = max(1, $page - 2);
+                $end = min($total_pages, $page + 2);
+                
+                for ($i = $start; $i <= $end; $i++): ?>
+                    <a href="?page=<?php echo $i; ?>&entries=<?php echo $entries_per_page; ?>" 
+                       class="<?php echo $i === $page ? 'current' : ''; ?>">
+                        <?php echo $i; ?>
+                    </a>
+                <?php endfor; ?>
+
+                <?php if ($page < $total_pages): ?>
+                    <a href="?page=<?php echo $page+1; ?>&entries=<?php echo $entries_per_page; ?>">Next</a>
+                    <a href="?page=<?php echo $total_pages; ?>&entries=<?php echo $entries_per_page; ?>">Last</a>
+                <?php endif; ?>
+            </div>
+            <?php endif; ?>
         </div>
 
         <table>
