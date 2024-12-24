@@ -199,6 +199,47 @@ if ($entries_per_page === -1) {
             color: white;
         }
 
+        /* Sortable column styles */
+        .sortable {
+            cursor: pointer;
+            position: relative;
+            padding-right: 2rem !important;
+        }
+
+        .sortable::after {
+            content: '';
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid #E7E7E5;
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.5;
+        }
+
+        .sortable.asc::after {
+            border-top: 0;
+            border-bottom: 5px solid #87b485;
+            opacity: 1;
+        }
+
+        .sortable.desc::after {
+            border-top: 5px solid #87b485;
+            opacity: 1;
+        }
+
+        .sortable:hover {
+            background-color: #3a6f4a;
+        }
+
+        .sortable:hover::after {
+            opacity: 0.8;
+        }
+
         @media (max-width: 768px) {
             .table-controls {
                 flex-direction: column;
@@ -280,8 +321,8 @@ if ($entries_per_page === -1) {
             <?php if ($entries_per_page !== -1): ?>
             <div class="pagination">
                 <?php if ($page > 1): ?>
-                    <a href="?page=1&entries=<?php echo $entries_per_page; ?>">First</a>
-                    <a href="?page=<?php echo $page-1; ?>&entries=<?php echo $entries_per_page; ?>">Previous</a>
+                    <a href="?page=1&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">First</a>
+                    <a href="?page=<?php echo $page-1; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Previous</a>
                 <?php endif; ?>
 
                 <?php
@@ -289,15 +330,15 @@ if ($entries_per_page === -1) {
                 $end = min($total_pages, $page + 2);
                 
                 for ($i = $start; $i <= $end; $i++): ?>
-                    <a href="?page=<?php echo $i; ?>&entries=<?php echo $entries_per_page; ?>" 
+                    <a href="?page=<?php echo $i; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>" 
                        class="<?php echo $i === $page ? 'current' : ''; ?>">
                         <?php echo $i; ?>
                     </a>
                 <?php endfor; ?>
 
                 <?php if ($page < $total_pages): ?>
-                    <a href="?page=<?php echo $page+1; ?>&entries=<?php echo $entries_per_page; ?>">Next</a>
-                    <a href="?page=<?php echo $total_pages; ?>&entries=<?php echo $entries_per_page; ?>">Last</a>
+                    <a href="?page=<?php echo $page+1; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Next</a>
+                    <a href="?page=<?php echo $total_pages; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Last</a>
                 <?php endif; ?>
             </div>
             <?php endif; ?>
