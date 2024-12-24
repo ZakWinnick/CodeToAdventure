@@ -423,7 +423,7 @@ if ($entries_per_page === -1) {
         </table>
     </div>
 
-    <script>
+        <script>
         function changeEntries(value) {
             const urlParams = new URLSearchParams(window.location.search);
             // Set new entries value and reset to first page
@@ -440,4 +440,31 @@ if ($entries_per_page === -1) {
             window.location.search = urlParams.toString();
         }
 
-        function change
+        function changeSort(column) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentSort = urlParams.get('sort');
+            const currentDirection = urlParams.get('direction');
+            
+            if (currentSort === column) {
+                // Toggle direction if clicking the same column
+                urlParams.set('direction', currentDirection === 'ASC' ? 'DESC' : 'ASC');
+            } else {
+                // Default to ASC for new column
+                urlParams.set('sort', column);
+                urlParams.set('direction', 'ASC');
+            }
+            
+            // Maintain entries per page
+            if (urlParams.has('entries')) {
+                urlParams.set('entries', urlParams.get('entries'));
+            }
+            
+            // Reset to first page
+            urlParams.set('page', 1);
+            
+            // Update URL with new parameters
+            window.location.search = urlParams.toString();
+        }
+    </script>
+</body>
+</html>
