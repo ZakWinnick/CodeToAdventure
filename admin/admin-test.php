@@ -1,56 +1,435 @@
 <?php
-// Start with error reporting
+// Start with error reporting and session
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-
-// Start session first, before any output
 session_start();
 
-// Include configuration
+// Include database configuration
 include 'config.php';
 
-// Initialize variables
-$debug_messages = [];
+// Authentication check
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    if (isset($_COOKIE['login_token'])) {
+        $token = $_COOKIE['login_token'];
+        $stmt = $conn->prepare("SELECT * FROM users WHERE login_token = ? AND token_expires > NOW()");
+        $stmt->bind_param("s", $token);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
 
-try {
-    // Test database connection
-    $test_query = $conn->query("SELECT COUNT(*) as count FROM codes");
-    if ($test_query) {
-        $count = $test_query->fetch_assoc()['count'];
-        $debug_messages[] = "Database connected, found {$count} codes";
-    } else {
-        $debug_messages[] = "Database error: " . $conn->error;
+        if ($user) {
+            $_SESSION['loggedin'] = true;
+            $_SESSION['username'] = $user['username'];
+        } else {
+            setcookie('login_token', '', time() - 3600, '/');
+        }
     }
-} catch (Exception $e) {
-    $debug_messages[] = "Error: " . $e->getMessage();
+
+    if (!isset($_SESSION['loggedin'])) {
+        header('Location: login.php');
+        exit;
+    }
 }
-?>
-<!DOCTYPE html>
+
+// Get pagination parameters
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$entries_per_page = isset($_GET['entries']) ? (int)$_GET['entries'] : 25;
+$offset = ($page - 1) * $entries_per_page;
+
+// Get sorting parameters
+$sort_column = isset($_GET['sort']) ? $_GET['sort'] : 'id';
+$sort_direction = isset($_GET['direction']) ? $_GET['direction'] : 'ASC';
+
+// Validate sort parameters
+$allowed_columns = ['id', 'name', 'referral_code'];
+if (!in_array($sort_column, $allowed_columns)) {
+    $sort_column = 'id';
+}
+$sort_direction = strtoupper($sort_direction) === 'DESC' ? 'DESC' : 'ASC';
+
+// Get total count
+$countResult = $conn->query("SELECT COUNT(*) AS total FROM codes");
+$totalCount = $countResult->fetch_assoc()['total'];
+$total_pages = $entries_per_page === -1 ? 1 : ceil($totalCount / $entries_per_page);
+
+// Get latest submission
+$latestResult = $conn->query("SELECT * FROM codes ORDER BY id DESC LIMIT 1");
+$latestSubmission = $latestResult->fetch_assoc();
+
+// Get submissions based on pagination and sorting
+if ($entries_per_page === -1) {
+    $query = "SELECT * FROM codes ORDER BY $sort_column $sort_direction";
+    $allSubmissions = $conn->query($query);
+} else {
+    $query = "SELECT * FROM codes ORDER BY $sort_column $sort_direction LIMIT ? OFFSET ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("ii", $entries_per_page, $offset);
+    $stmt->execute();
+    $allSubmissions = $stmt->get_result();
+}
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel Debug</title>
+    <title>Admin Panel - Submissions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-color: #142a13;
-            color: #E7E7E5;
-            font-family: sans-serif;
-            padding: 20px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .debug-message {
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #142a13;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: #123A13;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            color: #E7E7E5;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .nav-bar a {
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .home {
+            background-color: #87b485;
+            color: #142a13;
+        }
+
+        .home:hover {
+            background-color: #6f946f;
+        }
+
+        .logout {
+            text-decoration: none;
+            color: #f44336;
+            font-weight: bold;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+
+        table th, table td {
+            padding: 1rem;
+            border-bottom: 1px solid #2c5f2d;
+            color: #E7E7E5;
+        }
+
+        table th {
+            background-color: #2c5f2d;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
             background-color: #1a3e2b;
-            padding: 10px;
-            margin: 5px 0;
+        }
+
+        table tr:hover {
+            background-color: #3a6f4a;
+        }
+
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .actions button {
+            padding: 0.5rem;
+            font-size: 0.875rem;
+            border: none;
             border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .actions .edit {
+            background-color: #87b485;
+            color: #142a13;
+        }
+
+        .actions .delete {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .table-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background-color: #1a3e2b;
+            border-radius: 8px;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .entries-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .entries-selector select {
+            padding: 0.5rem;
+            background-color: #123A13;
+            color: #E7E7E5;
+            border: 1px solid #87b485;
+            border-radius: 4px;
+        }
+
+        .pagination {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .pagination a {
+            padding: 0.5rem 1rem;
+            background-color: #87b485;
+            color: #142a13;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .pagination a:hover {
+            background-color: #6f946f;
+        }
+
+        .pagination .current {
+            background-color: #142a13;
+            color: #87b485;
+            border: 1px solid #87b485;
+        }
+
+        .summary {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .summary div {
+            flex: 1;
+            padding: 1rem;
+            background-color: #1a3e2b;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .summary h2 {
+            color: #87b485;
+            margin-bottom: 0.5rem;
+        }
+
+        .sortable {
+            cursor: pointer;
+            position: relative;
+            padding-right: 1.5rem;
+        }
+
+        .sortable::after {
+            content: '↕';
+            position: absolute;
+            right: 0.5rem;
+            opacity: 0.5;
+        }
+
+        .sortable.asc::after {
+            content: '↑';
+            opacity: 1;
+        }
+
+        .sortable.desc::after {
+            content: '↓';
+            opacity: 1;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #2c5f2d;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-to-top:hover {
+            background-color: #256c21;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 0.5rem;
+            }
+
+            .container {
+                padding: 0.5rem;
+            }
+
+            .table-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .entries-selector {
+                justify-content: center;
+            }
+
+            .pagination {
+                justify-content: center;
+            }
+
+            table th, table td {
+                font-size: 0.875rem;
+                padding: 0.5rem;
+            }
+
+            .summary {
+                flex-direction: column;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.25rem;
+            }
+
+            table th, table td {
+                font-size: 0.75rem;
+                padding: 0.25rem;
+            }
+
+            .actions button {
+                font-size: 0.75rem;
+                padding: 0.25rem;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Debug Test Page</h1>
-    <?php foreach ($debug_messages as $message): ?>
-        <div class="debug-message"><?php echo htmlspecialchars($message); ?></div>
-    <?php endforeach; ?>
-</body>
-</html>
+    <div class="container">
+        <div class="nav-bar">
+            <a href="/index.php" class="home">Home</a>
+            <a href="logout.php" class="logout">Logout</a>
+        </div>
+
+        <div class="header">
+            <h1>Admin Panel - Submissions</h1>
+        </div>
+
+        <div class="summary">
+            <div>
+                <h2>Total Submissions</h2>
+                <p><?php echo $totalCount; ?> codes submitted</p>
+            </div>
+            <div>
+                <h2>Latest Submission</h2>
+                <?php if ($latestSubmission): ?>
+                    <p>Code: <?php echo htmlspecialchars($latestSubmission['referral_code']); ?></p>
+                    <p>Submitted by: <?php echo htmlspecialchars($latestSubmission['name']); ?></p>
+                <?php else: ?>
+                    <p>No submissions yet</p>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <div class="table-controls">
+            <div class="entries-selector">
+                <label for="entries">Show entries:</label>
+                <select id="entries" onchange="changeEntries(this.value)">
+                    <option value="25" <?php echo $entries_per_page === 25 ? 'selected' : ''; ?>>25</option>
+                    <option value="50" <?php echo $entries_per_page === 50 ? 'selected' : ''; ?>>50</option>
+                    <option value="100" <?php echo $entries_per_page === 100 ? 'selected' : ''; ?>>100</option>
+                    <option value="-1" <?php echo $entries_per_page === -1 ? 'selected' : ''; ?>>All</option>
+                </select>
+            </div>
+
+            <?php if ($entries_per_page !== -1): ?>
+            <div class="pagination">
+                <?php if ($page > 1): ?>
+                    <a href="?page=1&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">First</a>
+                    <a href="?page=<?php echo $page-1; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Previous</a>
+                <?php endif; ?>
+
+                <?php
+                $start = max(1, $page - 2);
+                $end = min($total_pages, $page + 2);
+                
+                for ($i = $start; $i <= $end; $i++): ?>
+                    <a href="?page=<?php echo $i; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>" 
+                       class="<?php echo $i === $page ? 'current' : ''; ?>">
+                        <?php echo $i; ?>
+                    </a>
+                <?php endfor; ?>
+
+                <?php if ($page < $total_pages): ?>
+                    <a href="?page=<?php echo $page+1; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Next</a>
+                    <a href="?page=<?php echo $total_pages; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Last</a>
+                <?php endif; ?>
+            </div>
+            <?php endif; ?>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th class="sortable <?php echo $sort_column === 'id' ? $sort_direction === 'ASC' ? 'asc' : 'desc' : ''; ?>" 
+                        onclick="changeSort('id')">ID</th>
+                    <th class="sortable <?php echo $sort_column === 'name' ? $sort_direction === 'ASC' ? 'asc' : 'desc' : ''; ?>" 
+                        onclick="changeSort('name')">Name</th>
+                    <th class="sortable <?php echo $sort_column === 'referral_code' ? $sort_direction === 'ASC' ? 'asc' : 'desc' : ''; ?>" 
+                        onclick="changeSort('referral_code')">Referral Code</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($row =
