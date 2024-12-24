@@ -1,54 +1,46 @@
 <?php
-session_start();
+error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+session_start();
 
-include 'config.php';
+require 'config.php';
 
-// Check if session exists, or validate the persistent login token
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    if (isset($_COOKIE['login_token'])) {
-        $token = $_COOKIE['login_token'];
-        $stmt = $conn->prepare("SELECT * FROM users WHERE login_token = ? AND token_expires > NOW()");
-        $stmt->bind_param("s", $token);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $user = $result->fetch_assoc();
+// Get pagination parameters
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$entries_per_page = isset($_GET['entries']) ? (int)$_GET['entries'] : 25;
+$offset = ($page - 1) * $entries_per_page;
 
-        if ($user) {
-            $_SESSION['loggedin'] = true;
-            $_SESSION['username'] = $user['username'];
-        } else {
-            // Invalid token: Clear cookie
-            setcookie('login_token', '', time() - 3600, '/');
-        }
-    }
+// Get sorting parameters
+$sort_column = isset($_GET['sort']) ? $_GET['sort'] : 'id';
+$sort_direction = isset($_GET['direction']) ? $_GET['direction'] : 'DESC';
 
-    if (!isset($_SESSION['loggedin'])) {
-        header('Location: login.php');
-        exit;
-    }
+// Validate sort parameters
+$allowed_columns = ['id', 'name', 'referral_code'];
+if (!in_array($sort_column, $allowed_columns)) {
+    $sort_column = 'id';
 }
+$sort_direction = strtoupper($sort_direction) === 'DESC' ? 'DESC' : 'ASC';
 
-// Fetch total submissions count
+// Get total count and calculate total pages
 $countResult = $conn->query("SELECT COUNT(*) AS total FROM codes");
-if (!$countResult) {
-    die("Count query failed: " . $conn->error);
-}
 $totalCount = $countResult->fetch_assoc()['total'];
+$total_pages = $entries_per_page === -1 ? 1 : ceil($totalCount / $entries_per_page);
 
-// Fetch the latest submission
+// Get latest submission
 $latestResult = $conn->query("SELECT * FROM codes ORDER BY id DESC LIMIT 1");
-if (!$latestResult) {
-    die("Latest query failed: " . $conn->error);
-}
 $latestSubmission = $latestResult->fetch_assoc();
 
-// Fetch all submissions
-$allSubmissions = $conn->query("SELECT * FROM codes ORDER BY id ASC");
-if (!$allSubmissions) {
-    die("All submissions query failed: " . $conn->error);
+// Get submissions with pagination and sorting
+if ($entries_per_page === -1) {
+    $query = "SELECT * FROM codes ORDER BY $sort_column $sort_direction";
+    $allSubmissions = $conn->query($query);
+} else {
+    $query = "SELECT * FROM codes ORDER BY $sort_column $sort_direction LIMIT ? OFFSET ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("ii", $entries_per_page, $offset);
+    $stmt->execute();
+    $allSubmissions = $stmt->get_result();
 }
 ?>
 <!DOCTYPE html>
@@ -91,6 +83,7 @@ if (!$allSubmissions) {
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1rem;
+            padding: 0.5rem 0;
         }
 
         .nav-bar a {
@@ -110,14 +103,92 @@ if (!$allSubmissions) {
         }
 
         .logout {
-            text-decoration: none;
             color: #f44336;
+            text-decoration: none;
             font-weight: bold;
         }
 
         .header {
             text-align: center;
             margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            color: #E7E7E5;
+            font-size: 1.8rem;
+        }
+
+        .summary {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .summary div {
+            flex: 1;
+            padding: 1rem;
+            background-color: #1a3e2b;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .summary h2 {
+            color: #87b485;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Table controls */
+        .table-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background-color: #1a3e2b;
+            border-radius: 8px;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .entries-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .entries-selector select {
+            padding: 0.5rem;
+            background-color: #123A13;
+            color: #E7E7E5;
+            border: 1px solid #87b485;
+            border-radius: 4px;
+        }
+
+        .pagination {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .pagination a {
+            padding: 0.5rem 1rem;
+            background-color: #87b485;
+            color: #142a13;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .pagination a:hover {
+            background-color: #6f946f;
+        }
+
+        .pagination .current {
+            background-color: #142a13;
+            color: #87b485;
+            border: 1px solid #87b485;
         }
 
         table {
@@ -128,7 +199,7 @@ if (!$allSubmissions) {
 
         table th, table td {
             padding: 1rem;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #2c5f2d;
             color: #E7E7E5;
         }
 
@@ -168,56 +239,59 @@ if (!$allSubmissions) {
             color: white;
         }
 
-        .back-to-top {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #2c5f2d;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 50px;
-            font-size: 14px;
-            font-weight: bold;
-            text-align: center;
-            text-decoration: none;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        /* Sortable column styles */
+        .sortable {
             cursor: pointer;
+            position: relative;
+            padding-right: 2rem !important;
         }
 
-        .back-to-top:hover {
-            background-color: #256c21;
+        .sortable::after {
+            content: '';
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid #E7E7E5;
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.5;
         }
 
-        .summary {
-            display: flex;
-            justify-content: space-between;
-            gap: 2rem;
-            flex-wrap: wrap;
+        .sortable.asc::after {
+            border-top: 0;
+            border-bottom: 5px solid #87b485;
+            opacity: 1;
         }
 
-        .summary div {
-            flex: 1;
-            padding: 1rem;
-            background-color: #1a3e2b;
-            border-radius: 8px;
-            text-align: center;
+        .sortable.desc::after {
+            border-top: 5px solid #87b485;
+            opacity: 1;
         }
 
-        .summary h2 {
-            color: #87b485;
+        .sortable:hover {
+            background-color: #3a6f4a;
+        }
+
+        .sortable:hover::after {
+            opacity: 0.8;
         }
 
         @media (max-width: 768px) {
-            body {
-                padding: 0.5rem;
+            .table-controls {
+                flex-direction: column;
+                align-items: stretch;
             }
 
-            .container {
-                padding: 0.5rem;
+            .entries-selector {
+                justify-content: center;
             }
 
-            .header h1 {
-                font-size: 1.5rem;
+            .pagination {
+                justify-content: center;
             }
 
             table th, table td {
@@ -227,18 +301,20 @@ if (!$allSubmissions) {
 
             .summary {
                 flex-direction: column;
-                gap: 1rem;
             }
 
             .actions {
                 flex-direction: column;
-                gap: 0.25rem;
             }
         }
 
         @media (max-width: 480px) {
-            .header h1 {
-                font-size: 1.25rem;
+            body {
+                padding: 0.5rem;
+            }
+
+            .container {
+                padding: 0.5rem;
             }
 
             table th, table td {
@@ -272,29 +348,69 @@ if (!$allSubmissions) {
             <div>
                 <h2>Latest Submission</h2>
                 <?php if ($latestSubmission): ?>
-                    <p>Code: <?php echo $latestSubmission['referral_code']; ?></p>
-                    <p>Submitted by: <?php echo $latestSubmission['name']; ?></p>
+                    <p>Code: <?php echo htmlspecialchars($latestSubmission['referral_code']); ?></p>
+                    <p>Submitted by: <?php echo htmlspecialchars($latestSubmission['name']); ?></p>
                 <?php else: ?>
                     <p>No submissions yet</p>
                 <?php endif; ?>
             </div>
         </div>
 
+        <div class="table-controls">
+            <div class="entries-selector">
+                <label for="entries">Show entries:</label>
+                <select id="entries" onchange="changeEntries(this.value)">
+                    <option value="25" <?php echo $entries_per_page === 25 ? 'selected' : ''; ?>>25</option>
+                    <option value="50" <?php echo $entries_per_page === 50 ? 'selected' : ''; ?>>50</option>
+                    <option value="100" <?php echo $entries_per_page === 100 ? 'selected' : ''; ?>>100</option>
+                    <option value="-1" <?php echo $entries_per_page === -1 ? 'selected' : ''; ?>>All</option>
+                </select>
+            </div>
+
+            <?php if ($entries_per_page !== -1): ?>
+            <div class="pagination">
+                <?php if ($page > 1): ?>
+                    <a href="?page=1&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">First</a>
+                    <a href="?page=<?php echo $page-1; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Previous</a>
+                <?php endif; ?>
+
+                <?php
+                $start = max(1, $page - 2);
+                $end = min($total_pages, $page + 2);
+                
+                for ($i = $start; $i <= $end; $i++): ?>
+                    <a href="?page=<?php echo $i; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>" 
+                       class="<?php echo $i === $page ? 'current' : ''; ?>">
+                        <?php echo $i; ?>
+                    </a>
+                <?php endfor; ?>
+
+                <?php if ($page < $total_pages): ?>
+                    <a href="?page=<?php echo $page+1; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Next</a>
+                    <a href="?page=<?php echo $total_pages; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Last</a>
+                <?php endif; ?>
+            </div>
+            <?php endif; ?>
+        </div>
+
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Referral Code</th>
+                    <th class="sortable <?php echo $sort_column === 'id' ? strtolower($sort_direction) : ''; ?>" 
+                        onclick="changeSort('id')">ID</th>
+                    <th class="sortable <?php echo $sort_column === 'name' ? strtolower($sort_direction) : ''; ?>" 
+                        onclick="changeSort('name')">Name</th>
+                    <th class="sortable <?php echo $sort_column === 'referral_code' ? strtolower($sort_direction) : ''; ?>" 
+                        onclick="changeSort('referral_code')">Referral Code</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <?php while ($row = $allSubmissions->fetch_assoc()): ?>
                     <tr>
-                        <td><?php echo $row['id']; ?></td>
-                        <td><?php echo $row['name']; ?></td>
-                        <td><?php echo $row['referral_code']; ?></td>
+                        <td><?php echo htmlspecialchars($row['id']); ?></td>
+                        <td><?php echo htmlspecialchars($row['name']); ?></td>
+                        <td><?php echo htmlspecialchars($row['referral_code']); ?></td>
                         <td>
                             <div class="actions">
                                 <button class="edit" onclick="window.location.href='edit.php?id=<?php echo $row['id']; ?>';">Edit</button>
@@ -307,6 +423,22 @@ if (!$allSubmissions) {
         </table>
     </div>
 
-    <a href="#" class="back-to-top">Back to Top</a>
-</body>
-</html>
+    <script>
+        function changeEntries(value) {
+            const urlParams = new URLSearchParams(window.location.search);
+            // Set new entries value and reset to first page
+            urlParams.set('entries', value);
+            urlParams.set('page', 1);
+            // Maintain sort parameters
+            if (urlParams.has('sort')) {
+                const sort = urlParams.get('sort');
+                const direction = urlParams.get('direction');
+                urlParams.set('sort', sort);
+                urlParams.set('direction', direction);
+            }
+            // Update URL with new parameters
+            window.location.search = urlParams.toString();
+        }
+
+        function changeSort(column) {
+            const urlParams = new URLSearchParams
