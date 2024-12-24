@@ -88,6 +88,58 @@ if ($entries_per_page === -1) {
             margin-bottom: 0.5rem;
         }
 
+        /* Table controls */
+        .table-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background-color: #1a3e2b;
+            border-radius: 8px;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .entries-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .entries-selector select {
+            padding: 0.5rem;
+            background-color: #123A13;
+            color: #E7E7E5;
+            border: 1px solid #87b485;
+            border-radius: 4px;
+        }
+
+        .pagination {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .pagination a {
+            padding: 0.5rem 1rem;
+            background-color: #87b485;
+            color: #142a13;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .pagination a:hover {
+            background-color: #6f946f;
+        }
+
+        .pagination .current {
+            background-color: #142a13;
+            color: #87b485;
+            border: 1px solid #87b485;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -134,6 +186,54 @@ if ($entries_per_page === -1) {
         .actions .delete {
             background-color: #f44336;
             color: white;
+        }
+
+        @media (max-width: 768px) {
+            .table-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .entries-selector {
+                justify-content: center;
+            }
+
+            .pagination {
+                justify-content: center;
+            }
+
+            table th, table td {
+                font-size: 0.875rem;
+                padding: 0.5rem;
+            }
+
+            .summary {
+                flex-direction: column;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0.5rem;
+            }
+
+            .container {
+                padding: 0.5rem;
+            }
+
+            table th, table td {
+                font-size: 0.75rem;
+                padding: 0.25rem;
+            }
+
+            .actions button {
+                font-size: 0.75rem;
+                padding: 0.25rem;
+            }
         }
     </style>
 </head>
@@ -218,5 +318,16 @@ if ($entries_per_page === -1) {
             </tbody>
         </table>
     </div>
+
+    <script>
+        function changeEntries(value) {
+            const urlParams = new URLSearchParams(window.location.search);
+            // Set new entries value and reset to first page
+            urlParams.set('entries', value);
+            urlParams.set('page', 1);
+            // Update URL with new parameters
+            window.location.search = urlParams.toString();
+        }
+    </script>
 </body>
 </html>
