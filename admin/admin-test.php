@@ -48,7 +48,7 @@ if ($entries_per_page === -1) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Test</title>
+    <title>Admin Panel - Submissions</title>
     <style>
         * {
             margin: 0;
@@ -76,6 +76,46 @@ if ($entries_per_page === -1) {
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             color: #E7E7E5;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.5rem 0;
+        }
+
+        .nav-bar a {
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .home {
+            background-color: #87b485;
+            color: #142a13;
+        }
+
+        .home:hover {
+            background-color: #6f946f;
+        }
+
+        .logout {
+            color: #f44336;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            color: #E7E7E5;
+            font-size: 1.8rem;
         }
 
         .summary {
@@ -291,6 +331,15 @@ if ($entries_per_page === -1) {
 </head>
 <body>
     <div class="container">
+        <div class="nav-bar">
+            <a href="/index.php" class="home">Home</a>
+            <a href="logout.php" class="logout">Logout</a>
+        </div>
+
+        <div class="header">
+            <h1>Admin Panel - Submissions</h1>
+        </div>
+
         <div class="summary">
             <div>
                 <h2>Total Submissions</h2>
@@ -392,30 +441,4 @@ if ($entries_per_page === -1) {
         }
 
         function changeSort(column) {
-            const urlParams = new URLSearchParams(window.location.search);
-            const currentSort = urlParams.get('sort');
-            const currentDirection = urlParams.get('direction');
-            
-            if (currentSort === column) {
-                // Toggle direction if clicking the same column
-                urlParams.set('direction', currentDirection === 'ASC' ? 'DESC' : 'ASC');
-            } else {
-                // Default to ASC for new column
-                urlParams.set('sort', column);
-                urlParams.set('direction', 'ASC');
-            }
-            
-            // Maintain entries per page
-            if (urlParams.has('entries')) {
-                urlParams.set('entries', urlParams.get('entries'));
-            }
-            
-            // Reset to first page
-            urlParams.set('page', 1);
-            
-            // Update URL with new parameters
-            window.location.search = urlParams.toString();
-        }
-    </script>
-</body>
-</html>
+            const urlParams = new URLSearchParams
