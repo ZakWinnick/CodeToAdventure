@@ -11,6 +11,17 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $entries_per_page = isset($_GET['entries']) ? (int)$_GET['entries'] : 25;
 $offset = ($page - 1) * $entries_per_page;
 
+// Get sorting parameters
+$sort_column = isset($_GET['sort']) ? $_GET['sort'] : 'id';
+$sort_direction = isset($_GET['direction']) ? $_GET['direction'] : 'DESC';
+
+// Validate sort parameters
+$allowed_columns = ['id', 'name', 'referral_code'];
+if (!in_array($sort_column, $allowed_columns)) {
+    $sort_column = 'id';
+}
+$sort_direction = strtoupper($sort_direction) === 'DESC' ? 'DESC' : 'ASC';
+
 // Get total count and calculate total pages
 $countResult = $conn->query("SELECT COUNT(*) AS total FROM codes");
 $totalCount = $countResult->fetch_assoc()['total'];
@@ -20,12 +31,12 @@ $total_pages = $entries_per_page === -1 ? 1 : ceil($totalCount / $entries_per_pa
 $latestResult = $conn->query("SELECT * FROM codes ORDER BY id DESC LIMIT 1");
 $latestSubmission = $latestResult->fetch_assoc();
 
-// Get submissions with pagination
+// Get submissions with pagination and sorting
 if ($entries_per_page === -1) {
-    $query = "SELECT * FROM codes ORDER BY id DESC";
+    $query = "SELECT * FROM codes ORDER BY $sort_column $sort_direction";
     $allSubmissions = $conn->query($query);
 } else {
-    $query = "SELECT * FROM codes ORDER BY id DESC LIMIT ? OFFSET ?";
+    $query = "SELECT * FROM codes ORDER BY $sort_column $sort_direction LIMIT ? OFFSET ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("ii", $entries_per_page, $offset);
     $stmt->execute();
@@ -295,9 +306,12 @@ if ($entries_per_page === -1) {
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Referral Code</th>
+                    <th class="sortable <?php echo $sort_column === 'id' ? strtolower($sort_direction) : ''; ?>" 
+                        onclick="changeSort('id')">ID</th>
+                    <th class="sortable <?php echo $sort_column === 'name' ? strtolower($sort_direction) : ''; ?>" 
+                        onclick="changeSort('name')">Name</th>
+                    <th class="sortable <?php echo $sort_column === 'referral_code' ? strtolower($sort_direction) : ''; ?>" 
+                        onclick="changeSort('referral_code')">Referral Code</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -325,6 +339,39 @@ if ($entries_per_page === -1) {
             // Set new entries value and reset to first page
             urlParams.set('entries', value);
             urlParams.set('page', 1);
+            // Maintain sort parameters
+            if (urlParams.has('sort')) {
+                const sort = urlParams.get('sort');
+                const direction = urlParams.get('direction');
+                urlParams.set('sort', sort);
+                urlParams.set('direction', direction);
+            }
+            // Update URL with new parameters
+            window.location.search = urlParams.toString();
+        }
+
+        function changeSort(column) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentSort = urlParams.get('sort');
+            const currentDirection = urlParams.get('direction');
+            
+            if (currentSort === column) {
+                // Toggle direction if clicking the same column
+                urlParams.set('direction', currentDirection === 'ASC' ? 'DESC' : 'ASC');
+            } else {
+                // Default to ASC for new column
+                urlParams.set('sort', column);
+                urlParams.set('direction', 'ASC');
+            }
+            
+            // Maintain entries per page
+            if (urlParams.has('entries')) {
+                urlParams.set('entries', urlParams.get('entries'));
+            }
+            
+            // Reset to first page
+            urlParams.set('page', 1);
+            
             // Update URL with new parameters
             window.location.search = urlParams.toString();
         }
