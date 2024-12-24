@@ -199,39 +199,6 @@ if ($entries_per_page === -1) {
             color: white;
         }
 
-        /* Sortable column styles */
-        .sortable {
-            cursor: pointer;
-            position: relative;
-            padding-right: 2rem !important;
-        }
-
-        .sortable::after {
-            content: '↕';
-            position: absolute;
-            right: 0.75rem;
-            opacity: 0.8;
-            font-size: 1.2rem;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .sortable.asc::after {
-            content: '↑';
-            opacity: 1;
-            color: #87b485;
-        }
-
-        .sortable.desc::after {
-            content: '↓';
-            opacity: 1;
-            color: #87b485;
-        }
-
-        .sortable:hover {
-            background-color: #3a6f4a;
-        }
-
         @media (max-width: 768px) {
             .table-controls {
                 flex-direction: column;
@@ -313,8 +280,8 @@ if ($entries_per_page === -1) {
             <?php if ($entries_per_page !== -1): ?>
             <div class="pagination">
                 <?php if ($page > 1): ?>
-                    <a href="?page=1&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">First</a>
-                    <a href="?page=<?php echo $page-1; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Previous</a>
+                    <a href="?page=1&entries=<?php echo $entries_per_page; ?>">First</a>
+                    <a href="?page=<?php echo $page-1; ?>&entries=<?php echo $entries_per_page; ?>">Previous</a>
                 <?php endif; ?>
 
                 <?php
@@ -322,15 +289,15 @@ if ($entries_per_page === -1) {
                 $end = min($total_pages, $page + 2);
                 
                 for ($i = $start; $i <= $end; $i++): ?>
-                    <a href="?page=<?php echo $i; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>" 
+                    <a href="?page=<?php echo $i; ?>&entries=<?php echo $entries_per_page; ?>" 
                        class="<?php echo $i === $page ? 'current' : ''; ?>">
                         <?php echo $i; ?>
                     </a>
                 <?php endfor; ?>
 
                 <?php if ($page < $total_pages): ?>
-                    <a href="?page=<?php echo $page+1; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Next</a>
-                    <a href="?page=<?php echo $total_pages; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Last</a>
+                    <a href="?page=<?php echo $page+1; ?>&entries=<?php echo $entries_per_page; ?>">Next</a>
+                    <a href="?page=<?php echo $total_pages; ?>&entries=<?php echo $entries_per_page; ?>">Last</a>
                 <?php endif; ?>
             </div>
             <?php endif; ?>
