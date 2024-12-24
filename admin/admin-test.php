@@ -1,23 +1,29 @@
 <?php
+// Start with error reporting
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
-echo "Step 1: Starting<br>"; // Debug point 1
-
+// Start session first, before any output
 session_start();
-echo "Step 2: Session started<br>"; // Debug point 2
 
+// Include configuration
 include 'config.php';
-echo "Step 3: Config included<br>"; // Debug point 3
 
-// Basic query to test database connection
-$test_query = $conn->query("SELECT COUNT(*) as count FROM codes");
-if ($test_query) {
-    $count = $test_query->fetch_assoc()['count'];
-    echo "Step 4: Database connected, found {$count} codes<br>"; // Debug point 4
-} else {
-    echo "Step 4: Database error: " . $conn->error . "<br>";
+// Initialize variables
+$debug_messages = [];
+
+try {
+    // Test database connection
+    $test_query = $conn->query("SELECT COUNT(*) as count FROM codes");
+    if ($test_query) {
+        $count = $test_query->fetch_assoc()['count'];
+        $debug_messages[] = "Database connected, found {$count} codes";
+    } else {
+        $debug_messages[] = "Database error: " . $conn->error;
+    }
+} catch (Exception $e) {
+    $debug_messages[] = "Error: " . $e->getMessage();
 }
 ?>
 <!DOCTYPE html>
@@ -33,10 +39,18 @@ if ($test_query) {
             font-family: sans-serif;
             padding: 20px;
         }
+        .debug-message {
+            background-color: #1a3e2b;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
     <h1>Debug Test Page</h1>
-    <p>If you can see this, HTML is rendering correctly.</p>
+    <?php foreach ($debug_messages as $message): ?>
+        <div class="debug-message"><?php echo htmlspecialchars($message); ?></div>
+    <?php endforeach; ?>
 </body>
 </html>
