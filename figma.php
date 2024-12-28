@@ -223,16 +223,6 @@
         <a href="submit.php" class="submit-button">Submit Your Code</a>
     </header>
 
-    <nav class="nav-container">
-        <div class="nav-content">
-            <a href="index.php" class="nav-link">Home</a>
-            <a href="submit.php" class="nav-link">Submit Code</a>
-            <a href="api-docs.html" class="nav-link">API Docs</a>
-            <a href="changelog.html" class="nav-link">Changelog</a>
-            <a href="/admin" class="nav-link">Admin</a>
-        </div>
-    </nav>
-
     <main class="main-content">
         <h1 class="hero-title">Buying a Rivian?</h1>
         <h2 class="hero-subtitle">Use a referral code and get rewards!</h2>
