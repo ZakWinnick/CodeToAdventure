@@ -219,7 +219,7 @@
     ?>
 
     <header class="header">
-        <a href="/" class="logo-container">CODE for Adventure</a>
+        <a href="/" class="logo-container">CODE to Adventure</a>
         <a href="submit.php" class="submit-button">Submit Your Code</a>
     </header>
 
