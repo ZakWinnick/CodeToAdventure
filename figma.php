@@ -7,7 +7,7 @@
     ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code to Adventure - Random Rivian Referrals</title>
+    <title>Code To Adventure - Random Rivian Referrals</title>
     
     <!-- Preload key resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -258,7 +258,7 @@
     ?>
 
     <header class="header">
-        <a href="/" class="logo-container">Code to Adventure</a>
+        <a href="/" class="logo-container">Code To Adventure</a>
         <a href="submit.php" class="submit-button">Submit Your Code</a>
     </header>
 
