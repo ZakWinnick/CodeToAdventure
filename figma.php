@@ -77,6 +77,33 @@
             transform: translateY(-2px);
         }
 
+        /* Navigation Styles */
+        .nav-container {
+            width: 100%;
+            background-color: rgba(26, 62, 43, 0.5);
+            padding: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .nav-link {
+            color: var(--light-yellow);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-link:hover {
+            opacity: 0.8;
+        }
+
         .main-content {
             flex: 1;
             max-width: var(--max-width);
@@ -128,6 +155,13 @@
             padding: 0 2rem;
         }
 
+        .info-section > div {
+            background-color: rgba(26, 62, 43, 0.5);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: left;
+        }
+
         .info-title {
             font-size: 1.5rem;
             margin-bottom: 1.5rem;
@@ -145,6 +179,7 @@
             align-items: flex-start;
             gap: 1rem;
             margin-bottom: 1.5rem;
+            text-align: left;
         }
 
         .reward-icon {
@@ -164,10 +199,9 @@
         }
 
         .footer {
-            background-color: var(--secondary-bg);
+            background-color: rgba(26, 62, 43, 0.5);
             padding: 2rem 1rem;
             text-align: center;
-            background-color: rgba(26, 62, 43, 0.5);
         }
 
         .footer-links {
@@ -201,6 +235,11 @@
                 padding: 1rem;
             }
 
+            .nav-content {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
             .footer-links {
                 flex-direction: column;
                 gap: 0.75rem;
@@ -219,9 +258,19 @@
     ?>
 
     <header class="header">
-        <a href="/" class="logo-container">CODE to Adventure</a>
+        <a href="/" class="logo-container">Code to Adventure</a>
         <a href="submit.php" class="submit-button">Submit Your Code</a>
     </header>
+
+    <nav class="nav-container">
+        <div class="nav-content">
+            <a href="index.php" class="nav-link">Home</a>
+            <a href="submit.php" class="nav-link">Submit Code</a>
+            <a href="api-docs.html" class="nav-link">API Docs</a>
+            <a href="changelog.html" class="nav-link">Changelog</a>
+            <a href="/admin" class="nav-link">Admin</a>
+        </div>
+    </nav>
 
     <main class="main-content">
         <h1 class="hero-title">Buying a Rivian?</h1>
