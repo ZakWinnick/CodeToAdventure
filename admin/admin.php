@@ -114,10 +114,12 @@ if ($entries_per_page === -1) {
         }
 
         .header h1 {
-            color: #E7E7E5;
-            font-size: 1.8rem;
+            font-size: 2.5rem;
+            color: var(--mindaro);
+            margin-bottom: 1rem;
+            text-align: center;
         }
-
+      
         .summary {
             display: flex;
             justify-content: space-between;
@@ -336,24 +338,30 @@ if ($entries_per_page === -1) {
         }
 
         @media (max-width: 480px) {
-            body {
-                padding: 0.5rem;
-            }
+    body {
+        padding: 1rem;
+    }
 
-            .container {
-                padding: 0.5rem;
-            }
+    .container {
+        padding: 0.75rem;
+    }
 
-            table th, table td {
-                font-size: 0.75rem;
-                padding: 0.25rem;
-            }
+    table th, table td {
+        font-size: 0.75rem;
+        padding: 0.5rem;
+    }
 
-            .actions button {
-                font-size: 0.75rem;
-                padding: 0.25rem;
-            }
-        }
+    .actions button {
+        font-size: 0.75rem;
+        padding: 0.25rem;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -363,9 +371,9 @@ if ($entries_per_page === -1) {
             <a href="logout.php" class="logout">Logout</a>
         </div>
 
-        <div class="header">
-            <h1>Admin Panel - Submissions</h1>
-        </div>
+        <header class="header">
+            <h1>Code to Adventure - Admin Panel</h1>
+        </header>
 
         <div class="summary">
             <div>
