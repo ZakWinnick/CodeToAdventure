@@ -434,8 +434,6 @@
     </footer>
 
     <!-- Modal Dialog -->
-    <div class="modal" id="submitModal">
-        <div class="form-container">
         <div class="modal" id="submitModal">
         <div class="form-container">
             <button class="modal-close" onclick="closeModal()">&times;</button>
