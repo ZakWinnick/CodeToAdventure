@@ -48,7 +48,10 @@ if ($entries_per_page === -1) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - Submissions</title>
+    <meta name="description" content="Admin panel for managing referral code submissions on Code to Adventure.">
+    <meta name="author" content="Zak Winnick">
+
+    <title>CTA Admin Panel</title>
     <style>
         * {
             margin: 0;
