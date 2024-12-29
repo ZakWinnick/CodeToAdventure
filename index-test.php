@@ -436,3 +436,41 @@
     <!-- Modal Dialog -->
     <div class="modal" id="submitModal">
         <div class="form-container">
+        <div class="modal" id="submitModal">
+        <div class="form-container">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h1>Submit Your Referral Code</h1>
+            <form action="store_code.php" method="POST">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="referralCode">Referral Code<br>(Just the code - ex. ZAK1452284)</label>
+                <input type="text" id="referralCode" name="referralCode" required>
+                <br>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add JavaScript functions -->
+    <script>
+        function showModal() {
+            document.getElementById('submitModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('submitModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('submitModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
