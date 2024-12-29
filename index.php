@@ -27,6 +27,8 @@
             --text-white: #FFFFFF;
             --button-radius: 40px;
             --max-width: 1200px;
+            --border-radius: 8px;
+            --transition-speed: 0.3s;
         }
 
         * {
