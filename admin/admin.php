@@ -239,6 +239,33 @@ if ($entries_per_page === -1) {
             color: white;
         }
 
+
+        /* Footer styles */
+        footer {
+            background-color: var(--hunter-green);
+            padding: 2rem 1rem;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .footer-link {
+            color: var(--mindaro);
+            text-decoration: none;
+            transition: opacity var(--transition-speed) ease;
+        }
+
+        .footer-link:hover {
+             color: var(--moss-green);
+        }
+
         /* Sortable column styles */
         .sortable {
             cursor: pointer;
@@ -467,4 +494,13 @@ if ($entries_per_page === -1) {
         }
     </script>
 </body>
+<footer>
+    <p>&copy; <script>document.write(new Date().getFullYear());</script>
+        <a href="https://zakwinnick.com" class="footer-link" target="_blank" rel="noopener noreferrer">Zak Winnick</a>
+    </p>
+    <div class="footer-links">
+        <a href="/index.php" class="footer-link" target="_blank" rel="noopener noreferrer">Home</a>
+        <a href="mailto:admin@codetoadventure.com" class="footer-link" target="_blank" rel="noopener noreferrer">Contact Admin</a>
+    </div>
+</footer>
 </html>
