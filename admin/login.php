@@ -46,8 +46,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Admin login panel for Code to Adventure.">
     <title>Login - Admin Panel</title>
+
+    <!-- Preload key resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
+        :root {
+            --dark-green: #132A13;
+            --hunter-green: #31572C;
+            --fern-green: #4F772D;
+            --moss-green: #90A955;
+            --mindaro: #ECF39E;
+            --text-white: #FFFFFF;
+            --border-radius: 8px;
+            --transition-speed: 0.3s;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -55,9 +73,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         body {
-            font-family: 'Lato', sans-serif;
-            background-color: #142a13;
-            color: #fff;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--dark-green);
+            color: var(--text-white);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -68,16 +86,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .login-container {
             max-width: 400px;
             width: 90%;
-            background-color: #123A13;
+            background-color: var(--hunter-green);
             padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             text-align: center;
         }
 
         .login-container h1 {
             margin-bottom: 1.5rem;
-            color: #DEB526;
+            color: var(--mindaro);
             font-size: 1.75rem;
         }
 
@@ -89,21 +107,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            color: #87b485;
+            color: var(--mindaro);
         }
 
         .form-group input {
             width: 100%;
             padding: 0.75rem;
             font-size: 1rem;
-            border: 1px solid #87b485;
-            border-radius: 5px;
-            background-color: #1a3e2b;
-            color: #E7E7E5;
+            border: 1px solid var(--fern-green);
+            border-radius: var(--border-radius);
+            background-color: var(--dark-green);
+            color: var(--text-white);
         }
 
         .form-group input:focus {
-            border-color: #6f946f;
+            border-color: var(--moss-green);
             outline: none;
         }
 
@@ -118,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         .form-group .checkbox label {
             font-size: 0.9rem;
-            color: #E7E7E5;
+            color: var(--text-white);
         }
 
         .login-button {
@@ -126,16 +144,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             padding: 0.75rem;
             font-size: 1.25rem;
             font-weight: bold;
-            color: #142a13;
-            background-color: #87b485;
+            color: var(--dark-green);
+            background-color: var(--mindaro);
             border: none;
-            border-radius: 5px;
+            border-radius: var(--border-radius);
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color var(--transition-speed) ease;
         }
 
         .login-button:hover {
-            background-color: #6f946f;
+            background-color: var(--moss-green);
         }
 
         .error-message {
