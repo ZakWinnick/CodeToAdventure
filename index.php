@@ -481,5 +481,37 @@
             }
         }
     </script>
+
+<script>
+    // Fade-in animation for main content on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        const mainContent = document.querySelector('.main-content');
+        mainContent.classList.add('animate-in');
+    });
+
+    // Show modal with fade-in animation
+    function showModal() {
+        const modal = document.getElementById('submitModal');
+        modal.style.display = 'block';
+        modal.classList.add('animate-in'); // Add fade-in animation
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Close modal
+    function closeModal() {
+        const modal = document.getElementById('submitModal');
+        modal.style.display = 'none';
+        modal.classList.remove('animate-in'); // Remove animation class (optional)
+        document.body.style.overflow = 'auto';
+    }
+
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+        const modal = document.getElementById('submitModal');
+        if (event.target === modal) {
+            closeModal();
+        }
+    }
+</script>
 </body>
 </html>
