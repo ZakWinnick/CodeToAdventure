@@ -352,7 +352,8 @@
                 font-size: 1rem;
                 padding: 0.5rem;
             }
-
+        }
+        
           /* Animation Keyframes */
           @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -361,7 +362,7 @@
         .animate-in {
             animation: fadeIn 0.6s ease-out forwards;
         }
-        
+
     </style>
 </head>
 <body>
