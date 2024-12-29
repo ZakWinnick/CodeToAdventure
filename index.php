@@ -17,12 +17,13 @@
     <!-- Deferred analytics -->
     <script src="https://tinylytics.app/embed/wWu5hJWSQ_r9BAxgohx8.js" defer></script>
     
-    <!-- Your existing meta tags -->
-    
     <style>
         :root {
-            --dark-green: #142a13;
-            --light-yellow: #F2EFB6;
+            --dark-green: #132A13;
+            --hunter-green: #31572C;
+            --fern-green: #4F772D;
+            --moss-green: #90A955;
+            --mindaro: #ECF39E;
             --text-white: #FFFFFF;
             --button-radius: 40px;
             --max-width: 1200px;
@@ -55,7 +56,7 @@
         }
 
         .logo-container {
-            background-color: var(--light-yellow);
+            background-color: var(--mindaro);
             padding: 8px 16px;
             border-radius: 12px;
             color: var(--dark-green);
@@ -64,7 +65,7 @@
         }
 
         .submit-button {
-            background-color: var(--light-yellow);
+            background-color: var(--mindaro);
             color: var(--dark-green);
             padding: 8px 16px;
             border-radius: 12px;
@@ -75,12 +76,13 @@
 
         .submit-button:hover {
             transform: translateY(-2px);
+            background-color: var(--moss-green);
         }
 
         /* Navigation Styles */
         .nav-container {
             width: 100%;
-            background-color: rgba(26, 62, 43, 0.5);
+            background-color: var(--hunter-green);
             padding: 0.75rem;
             margin-bottom: 2rem;
         }
@@ -95,13 +97,13 @@
         }
 
         .nav-link {
-            color: var(--light-yellow);
+            color: var(--mindaro);
             text-decoration: none;
-            transition: opacity 0.3s ease;
+            transition: color 0.3s ease;
         }
 
         .nav-link:hover {
-            opacity: 0.8;
+            color: var(--moss-green);
         }
 
         .main-content {
@@ -124,20 +126,21 @@
         }
 
         .referral-button {
-            background-color: var(--light-yellow);
+            background-color: var(--mindaro);
             border-radius: var(--button-radius);
             padding: 20px 40px;
             font-size: 1.25rem;
             color: var(--dark-green);
             text-decoration: none;
             display: inline-block;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
             margin-bottom: 1rem;
             font-weight: 500;
         }
 
         .referral-button:hover {
             transform: translateY(-2px);
+            background-color: var(--moss-green);
         }
 
         .refresh-text {
@@ -156,7 +159,7 @@
         }
 
         .info-section > div {
-            background-color: rgba(26, 62, 43, 0.5);
+            background-color: var(--hunter-green);
             padding: 2rem;
             border-radius: 12px;
             text-align: left;
@@ -165,11 +168,11 @@
         .info-title {
             font-size: 1.5rem;
             margin-bottom: 1.5rem;
-            color: var(--light-yellow);
+            color: var(--mindaro);
         }
 
         .info-text {
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--text-white);
             font-size: 1.125rem;
             line-height: 1.6;
         }
@@ -185,21 +188,21 @@
         .reward-icon {
             width: 24px;
             height: 24px;
-            fill: var(--light-yellow);
+            fill: var(--mindaro);
         }
 
         .reward-text {
             font-size: 1.125rem;
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--text-white);
         }
 
         .reward-note {
             font-size: 0.875rem;
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--moss-green);
         }
 
         .footer {
-            background-color: rgba(26, 62, 43, 0.5);
+            background-color: var(--hunter-green);
             padding: 2rem 1rem;
             text-align: center;
         }
@@ -213,13 +216,13 @@
         }
 
         .footer-link {
-            color: var(--light-yellow);
+            color: var(--mindaro);
             text-decoration: none;
-            transition: opacity 0.3s ease;
+            transition: color 0.3s ease;
         }
 
         .footer-link:hover {
-            opacity: 0.8;
+            color: var(--moss-green);
         }
 
         @media (max-width: 768px) {
