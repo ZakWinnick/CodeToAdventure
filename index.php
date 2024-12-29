@@ -16,6 +16,39 @@
     
     <!-- Deferred analytics -->
     <script src="https://tinylytics.app/embed/wWu5hJWSQ_r9BAxgohx8.js" defer></script>
+
+    <!-- JavaScript for Modal and Animations -->
+    <script>
+        // Fade-in animation for main content on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainContent = document.querySelector('.main-content');
+            mainContent.classList.add('animate-in');
+        });
+
+        // Show modal with fade-in animation
+        function showModal() {
+            const modal = document.getElementById('submitModal');
+            modal.style.display = 'block';
+            modal.classList.add('animate-in');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close modal
+        function closeModal() {
+            const modal = document.getElementById('submitModal');
+            modal.style.display = 'none';
+            modal.classList.remove('animate-in');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('submitModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
     
     <style>
         :root {
@@ -257,7 +290,8 @@
         }
 
         .form-container h1 {
-            margin-bottom: 1.5rem;
+            margin: 0.5rem 0 1.5rem 0;
+            padding-right: 2rem;
             color: var(--mindaro);
             font-size: 1.75rem;
         }
@@ -301,19 +335,32 @@
         }
 
         .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            color: var(--mindaro);
-            font-size: 1.5rem;
-            cursor: pointer;
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--moss-green);
             background: none;
-            border: none;
-            padding: 0.5rem;
+            border: 1px solid var(--moss-green);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
         }
 
         .modal-close:hover {
-            color: var(--moss-green);
+            background-color: var(--moss-green);
+            color: var(--dark-green);
+        }
+
+        /* Animation Keyframes */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-in {
+            animation: fadeIn 0.6s ease-out forwards;
         }
 
         @media (max-width: 768px) {
@@ -353,15 +400,6 @@
                 padding: 0.5rem;
             }
         }
-
-          /* Animation Keyframes */
-          @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }                                                                        }
-
-        .animate-in {
-            animation: fadeIn 0.6s ease-out forwards;
-        }
     </style>
 </head>
 <body>
@@ -382,7 +420,7 @@
     <nav class="nav-container">
         <div class="nav-content">
             <a href="index.php" class="nav-link">Home</a>
-            <a href="#" class="nav-link" onclick="showModal(); return false;">Submit Your Code</a>
+            <a href="#" class="nav-link" onclick="showModal(); return false;">Submit Code</a>
             <a href="api-docs.html" class="nav-link">API Docs</a>
             <a href="changelog.html" class="nav-link">Changelog</a>
             <a href="/admin" class="nav-link">Admin</a>
@@ -445,9 +483,8 @@
     </footer>
 
     <!-- Modal Dialog -->
-        <div class="modal" id="submitModal">
+    <div class="modal" id="submitModal">
         <div class="form-container">
-            <!-- <button class="modal-close" onclick="closeModal()">&times;</button> -->
             <h1>Submit Your Referral Code</h1>
             <form action="store_code.php" method="POST">
                 <label for="name">Name</label>
@@ -458,60 +495,8 @@
                 <br>
                 <button type="submit">Submit</button>
             </form>
+            <button class="modal-close" onclick="closeModal()">Cancel</button>
         </div>
     </div>
-
-    <!-- Add JavaScript functions -->
-    <script>
-        function showModal() {
-            document.getElementById('submitModal').style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            document.getElementById('submitModal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('submitModal');
-            if (event.target === modal) {
-                closeModal();
-            }
-        }
-    </script>
-
-<script>
-    // Fade-in animation for main content on page load
-    document.addEventListener('DOMContentLoaded', () => {
-        const mainContent = document.querySelector('.main-content');
-        mainContent.classList.add('animate-in');
-    });
-
-    // Show modal with fade-in animation
-    function showModal() {
-        const modal = document.getElementById('submitModal');
-        modal.style.display = 'block';
-        modal.classList.add('animate-in'); // Add fade-in animation
-        document.body.style.overflow = 'hidden';
-    }
-
-    // Close modal
-    function closeModal() {
-        const modal = document.getElementById('submitModal');
-        modal.style.display = 'none';
-        modal.classList.remove('animate-in'); // Remove animation class (optional)
-        document.body.style.overflow = 'auto';
-    }
-
-    // Close modal when clicking outside of it
-    window.onclick = function(event) {
-        const modal = document.getElementById('submitModal');
-        if (event.target === modal) {
-            closeModal();
-        }
-    }
-</script>
 </body>
 </html>
