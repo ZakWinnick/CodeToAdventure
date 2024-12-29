@@ -353,7 +353,7 @@
                 padding: 0.5rem;
             }
         }
-        
+
           /* Animation Keyframes */
           @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -362,7 +362,6 @@
         .animate-in {
             animation: fadeIn 0.6s ease-out forwards;
         }
-
     </style>
 </head>
 <body>
@@ -426,7 +425,7 @@
                         <path d="M7 2v11h3v9l7-12h-4l4-8z"/>
                     </svg>
                     <div>
-                        <p class="reward-text">6 months of charging at Rivian Adventure Network sites</p>
+                        <p class="reward-text">6 months of free charging at Rivian Adventure Network sites</p>
                         <p class="reward-note">(up to a lifetime limit of three years)</p>
                     </div>
                 </div>
