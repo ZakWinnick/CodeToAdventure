@@ -100,6 +100,8 @@
             color: var(--mindaro);
             text-decoration: none;
             transition: color 0.3s ease;
+            font-weight: 600;
+            padding: 0.5rem 0;
         }
 
         .nav-link:hover {
