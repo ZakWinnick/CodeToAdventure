@@ -244,6 +244,15 @@ if ($entries_per_page === -1) {
             color: white;
         }
 
+        .error-message {
+            background-color: #f44336;
+            color: #fff;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+}
+
 
         /* Footer styles */
         footer {
