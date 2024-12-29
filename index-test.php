@@ -436,7 +436,7 @@
     <!-- Modal Dialog -->
         <div class="modal" id="submitModal">
         <div class="form-container">
-            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <!-- <button class="modal-close" onclick="closeModal()">&times;</button> -->
             <h1>Submit Your Referral Code</h1>
             <form action="store_code.php" method="POST">
                 <label for="name">Name</label>
