@@ -3,8 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Submit your Rivian referral code to Code to Adventure and share the rewards with the community.">
+    <meta name="author" content="Zak Winnick">
     <title>Submit Your Referral Code - Code to Adventure</title>
+
+    <!-- Preload key resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
+        :root {
+            --dark-green: #132A13;
+            --hunter-green: #31572C;
+            --fern-green: #4F772D;
+            --moss-green: #90A955;
+            --mindaro: #ECF39E;
+            --text-white: #FFFFFF;
+            --button-radius: 40px;
+            --max-width: 1200px;
+            --border-radius: 8px;
+            --transition-speed: 0.3s;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,67 +33,64 @@
         }
 
         body {
-            font-family: 'Lato', sans-serif;
-            background-color: #142a13;
-            color: #fff;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--dark-green);
+            color: var(--text-white);
+            line-height: 1.6;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
             padding: 1rem;
         }
 
         .title-bar {
-            display: flex;
-            align-items: center;
+            background-color: var(--hunter-green);
             width: 100%;
-            max-width: 1200px;
             padding: 1rem 1.5rem;
-            background-color: #123A13;
-            color: #E7E7E5;
+            text-align: center;
+            color: var(--mindaro);
         }
 
         .title-bar h1 {
-            font-size: 1.5rem;
+            font-size: 2rem;
             font-weight: bold;
-            color: #DEB526;
         }
 
         .menu-bar {
+            background-color: var(--fern-green);
             width: 100%;
-            max-width: 1200px;
-            background-color: #1a3e2b;
-            padding: 0.5rem 1.5rem;
-            margin: 0 auto;
+            padding: 0.75rem 1.5rem;
         }
 
         .menu {
             display: flex;
             justify-content: center;
             gap: 1.5rem;
+            max-width: var(--max-width);
+            margin: 0 auto;
         }
 
         .menu a {
-            color: #E7E7E5;
+            color: var(--mindaro);
             text-decoration: none;
-            font-size: 1rem;
-            font-weight: bold;
+            font-weight: 600;
             padding: 0.5rem 1rem;
-            transition: background-color 0.3s, color 0.3s;
-            border-radius: 5px;
+            transition: background-color var(--transition-speed) ease;
+            border-radius: var(--border-radius);
         }
 
         .menu a:hover {
-            background-color: #6f946f;
-            color: #142a13;
+            background-color: var(--moss-green);
+            color: var(--dark-green);
         }
 
         .form-container {
             max-width: 400px;
             width: 100%;
-            background-color: #123A13;
+            background-color: var(--hunter-green);
             padding: 2rem;
-            border-radius: 8px;
+            border-radius: var(--border-radius);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             text-align: center;
             margin-top: 2rem;
@@ -80,7 +98,7 @@
 
         h1 {
             margin-bottom: 1.5rem;
-            color: #DEB526;
+            color: var(--mindaro);
             font-size: 1.75rem;
         }
 
@@ -93,14 +111,14 @@
         label {
             text-align: left;
             font-size: 1rem;
-            color: #E7E7E5;
+            color: var(--text-white);
         }
 
         input {
             padding: 0.75rem;
             font-size: 1rem;
             border: none;
-            border-radius: 5px;
+            border-radius: var(--border-radius);
             background-color: #fff;
             color: #000;
         }
@@ -110,22 +128,22 @@
             padding: 0.75rem;
             font-size: 1.25rem;
             font-weight: bold;
-            color: #142a13;
-            background-color: #87b485;
+            color: var(--dark-green);
+            background-color: var(--mindaro);
             border: none;
-            border-radius: 5px;
+            border-radius: var(--border-radius);
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color var(--transition-speed) ease;
         }
 
         button:hover {
-            background-color: #6f946f;
+            background-color: var(--moss-green);
         }
 
         .message {
             margin-bottom: 1rem;
             padding: 1rem;
-            border-radius: 5px;
+            border-radius: var(--border-radius);
             text-align: center;
         }
 
@@ -142,30 +160,25 @@
         .back-link {
             margin-top: 1rem;
             display: inline-block;
-            background-color: #87b485;
-            color: #142a13;
+            background-color: var(--moss-green);
+            color: var(--dark-green);
             padding: 0.75rem 1.5rem;
             font-size: 1rem;
             font-weight: bold;
             text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s;
+            border-radius: var(--border-radius);
+            transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
         }
 
         .back-link:hover {
-            background-color: #6f946f;
+            background-color: var(--mindaro);
+            color: var(--dark-green);
         }
 
         @media (max-width: 768px) {
-            .title-bar {
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-            }
-
             .menu {
                 flex-wrap: wrap;
-                gap: 0.5rem;
+                gap: 0.75rem;
             }
 
             .form-container {
@@ -220,7 +233,7 @@
             <br>
             <button type="submit">Submit</button>
         </form>
-            <br>
+        <br>
         <a href="index.php" class="back-link">Back to Home</a>
     </div>
 </body>
