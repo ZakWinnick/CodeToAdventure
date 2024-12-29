@@ -72,6 +72,7 @@
             text-decoration: none;
             font-weight: 500;
             transition: transform 0.3s ease;
+            cursor: pointer;
         }
 
         .submit-button:hover {
@@ -135,7 +136,7 @@
             color: var(--dark-green);
             text-decoration: none;
             display: inline-block;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease;
             margin-bottom: 1rem;
             font-weight: 500;
         }
@@ -220,10 +221,96 @@
         .footer-link {
             color: var(--mindaro);
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: opacity 0.3s ease;
         }
 
         .footer-link:hover {
+            color: var(--moss-green);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            padding: 1rem;
+        }
+
+        .form-container {
+            max-width: 400px;
+            width: 100%;
+            background-color: var(--hunter-green);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            margin: 5% auto;
+            position: relative;
+        }
+
+        .form-container h1 {
+            margin-bottom: 1.5rem;
+            color: var(--mindaro);
+            font-size: 1.75rem;
+        }
+
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-container label {
+            text-align: left;
+            font-size: 1rem;
+            color: var(--text-white);
+        }
+
+        .form-container input {
+            padding: 0.75rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #000;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--dark-green);
+            background-color: var(--mindaro);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .form-container button:hover {
+            background-color: var(--moss-green);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: var(--mindaro);
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+        }
+
+        .modal-close:hover {
             color: var(--moss-green);
         }
 
@@ -249,6 +336,20 @@
                 flex-direction: column;
                 gap: 0.75rem;
             }
+
+            .form-container {
+                margin: 10% auto;
+                padding: 1.5rem;
+            }
+
+            .form-container h1 {
+                font-size: 1.5rem;
+            }
+
+            .form-container button {
+                font-size: 1rem;
+                padding: 0.5rem;
+            }
         }
     </style>
 </head>
@@ -264,7 +365,7 @@
 
     <header class="header">
         <a href="/" class="logo-container">Code To Adventure</a>
-        <a href="submit.php" class="submit-button">Submit Your Code</a>
+        <a href="#" class="submit-button" onclick="showModal(); return false;">Submit Your Code</a>
     </header>
 
     <nav class="nav-container">
@@ -331,5 +432,43 @@
             <a href="mailto:admin@codetoadventure.com" class="footer-link" target='_blank' rel='noopener noreferrer'>E-mail the admin</a>
         </div>
     </footer>
+
+    <!-- Modal Dialog -->
+        <div class="modal" id="submitModal">
+        <div class="form-container">
+            <!-- <button class="modal-close" onclick="closeModal()">&times;</button> -->
+            <h1>Submit Your Referral Code</h1>
+            <form action="store_code.php" method="POST">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="referralCode">Referral Code<br>(Just the code - ex. ZAK1452284)</label>
+                <input type="text" id="referralCode" name="referralCode" required>
+                <br>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add JavaScript functions -->
+    <script>
+        function showModal() {
+            document.getElementById('submitModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('submitModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('submitModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
 </body>
 </html>

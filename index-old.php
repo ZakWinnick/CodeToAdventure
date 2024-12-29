@@ -2,13 +2,12 @@
 <html lang="en">
 <head>
     <?php
-    // Enable error reporting for debugging
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code to Adventure - Random Rivian Referrals</title>
+    <title>Code To Adventure - Random Rivian Referrals</title>
     
     <!-- Preload key resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,42 +17,18 @@
     <!-- Deferred analytics -->
     <script src="https://tinylytics.app/embed/wWu5hJWSQ_r9BAxgohx8.js" defer></script>
     
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Discover Rivian referral codes and get rewards like 750 points for the Gear Shop or 6 months of free charging. Submit your code today!">
-    <meta name="keywords" content="Rivian, referral codes, Rivian rewards, Rivian discounts, Rivian referral program, Rivian Adventure Network">
-    <meta name="author" content="Zak Winnick">
-    <link rel="canonical" href="https://codetoadventure.com">
-
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Code to Adventure - Random Rivian Referrals">
-    <meta property="og:description" content="Buying a Rivian? Use a referral code and get rewards like 750 points for the Gear Shop or 6 months of free charging.">
-    <meta property="og:image" content="https://codetoadventure.com/lightbar-fade.png">
-    <meta property="og:url" content="https://codetoadventure.com">
-    <meta property="og:type" content="website">
-
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Code to Adventure - Random Rivian Referrals">
-    <meta name="twitter:description" content="Discover Rivian referral codes and get rewards like 750 points for the Gear Shop or 6 months of free charging. Submit your code today!">
-    <meta name="twitter:image" content="https://codetoadventure.com/lightbar-fade.png">
-    <meta name="twitter:site" content="@zakwinnick">
-
     <style>
-        /* CSS Custom Properties for consistent theming */
         :root {
-            --primary-bg: #142a13;
-            --secondary-bg: #1a3e2b;
-            --header-bg: #123A13;
-            --primary-text: #E7E7E5;
-            --accent-color: #87b485;
-            --accent-hover: #6f946f;
-            --highlight-color: #DEB526;
+            --dark-green: #132A13;
+            --hunter-green: #31572C;
+            --fern-green: #4F772D;
+            --moss-green: #90A955;
+            --mindaro: #ECF39E;
+            --text-white: #FFFFFF;
+            --button-radius: 40px;
             --max-width: 1200px;
-            --border-radius: 8px;
-            --transition-speed: 0.3s;
         }
 
-        /* Base styles and reset */
         * {
             margin: 0;
             padding: 0;
@@ -62,190 +37,175 @@
 
         body {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background-color: var(--primary-bg);
-            color: var(--primary-text);
+            background-color: var(--dark-green);
+            color: var(--text-white);
             line-height: 1.6;
             min-height: 100vh;
-            display: grid;
-            grid-template-rows: auto auto 1fr auto;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Header Styles */
-        .header-container {
-            background-color: var(--header-bg);
-            padding: 1rem;
-            width: 100%;
-        }
-
-        .header-content {
-            max-width: var(--max-width);
-            margin: 0 auto;
+        .header {
+            padding: 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 1rem;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            width: 100%;
         }
 
-        .site-title {
-            font-size: clamp(1.5rem, 2.5vw, 2rem);
-            color: var(--highlight-color);
+        .logo-container {
+            background-color: var(--mindaro);
+            padding: 8px 16px;
+            border-radius: 12px;
+            color: var(--dark-green);
+            font-weight: bold;
             text-decoration: none;
-            font-weight: 700;
         }
 
         .submit-button {
-            background-color: var(--accent-color);
-            color: var(--primary-bg);
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all var(--transition-speed) ease;
+            background-color: var(--mindaro);
+            color: var(--dark-green);
+            padding: 8px 16px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: transform 0.3s ease;
         }
 
         .submit-button:hover {
-            background-color: var(--accent-hover);
             transform: translateY(-2px);
+            background-color: var(--moss-green);
         }
 
         /* Navigation Styles */
         .nav-container {
             width: 100%;
-            background-color: var(--secondary-bg);
-            padding: 0.5rem;
+            background-color: var(--hunter-green);
+            padding: 0.75rem;
+            margin-bottom: 2rem;
         }
 
         .nav-content {
             display: flex;
             justify-content: center;
-            gap: 0.5rem;
+            gap: 1.5rem;
             max-width: var(--max-width);
             margin: 0 auto;
             padding: 0 1rem;
         }
 
         .nav-link {
-            color: var(--primary-text);
+            color: var(--mindaro);
             text-decoration: none;
-            font-weight: 500;
-            padding: 0.5rem 0.75rem;
-            border-radius: var(--border-radius);
-            transition: all var(--transition-speed) ease;
-            font-size: 0.9375rem;
+            transition: color 0.3s ease;
+            font-weight: 600;
+            padding: 0.5rem 0;
         }
 
         .nav-link:hover {
-            background-color: var(--accent-hover);
-            color: var(--primary-bg);
+            color: var(--moss-green);
         }
 
-        /* Main Content Styles */
         .main-content {
+            flex: 1;
             max-width: var(--max-width);
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .hero-section {
+            margin: 4rem auto;
+            padding: 0 2rem;
             text-align: center;
-            margin: 3rem 0;
+            width: 100%;
         }
 
         .hero-title {
-            font-size: clamp(2rem, 4vw, 3rem);
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
-        }
-
-        .referral-section {
-            background-color: var(--secondary-bg);
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            text-align: center;
-            margin: 2rem 0;
-        }
-
-        .referral-code {
-            font-size: 2rem;
-            color: var(--accent-color);
-            font-weight: 700;
+            font-size: clamp(2.5rem, 5vw, 4rem);
             margin-bottom: 1rem;
         }
 
-        .referral-name {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
+        .hero-subtitle {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            margin-bottom: 3rem;
         }
 
-        .shop-link {
-            display: inline-block;
-            background-color: var(--accent-color);
-            color: var(--primary-bg);
-            padding: 1rem 2rem;
-            border-radius: 30px;
-            font-weight: 600;
+        .referral-button {
+            background-color: var(--mindaro);
+            border-radius: var(--button-radius);
+            padding: 20px 40px;
+            font-size: 1.25rem;
+            color: var(--dark-green);
             text-decoration: none;
-            transition: all var(--transition-speed) ease;
+            display: inline-block;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+            font-weight: 500;
         }
 
-        .shop-link:hover {
-            background-color: var(--accent-hover);
+        .referral-button:hover {
             transform: translateY(-2px);
+            background-color: var(--moss-green);
         }
 
-        /* Information Sections */
+        .refresh-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.875rem;
+            margin-top: 1rem;
+        }
+
         .info-section {
-            margin: 4rem 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 900px;
+            margin: 6rem auto;
+            padding: 0 2rem;
+        }
+
+        .info-section > div {
+            background-color: var(--hunter-green);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: left;
         }
 
         .info-title {
-            font-size: 1.75rem;
-            color: var(--accent-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .rewards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .reward-card {
-            background-color: var(--secondary-bg);
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            transition: transform var(--transition-speed) ease;
-        }
-
-        .reward-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .reward-title {
             font-size: 1.5rem;
-            color: var(--primary-text);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            color: var(--mindaro);
         }
 
-        .reward-description {
-            color: var(--accent-color);
-            margin-bottom: 0.5rem;
+        .info-text {
+            color: var(--text-white);
+            font-size: 1.125rem;
+            line-height: 1.6;
+        }
+
+        .reward-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .reward-icon {
+            width: 24px;
+            height: 24px;
+            fill: var(--mindaro);
+        }
+
+        .reward-text {
+            font-size: 1.125rem;
+            color: var(--text-white);
         }
 
         .reward-note {
-            font-size: 0.9rem;
-            color: var(--accent-color);
-            opacity: 0.8;
+            font-size: 0.875rem;
+            color: var(--moss-green);
         }
 
-        /* Footer Styles */
         .footer {
-            background-color: var(--secondary-bg);
+            background-color: var(--hunter-green);
             padding: 2rem 1rem;
-            margin-top: 4rem;
             text-align: center;
         }
 
@@ -258,128 +218,53 @@
         }
 
         .footer-link {
-            color: var(--accent-color);
+            color: var(--mindaro);
             text-decoration: none;
-            transition: color var(--transition-speed) ease;
+            transition: color 0.3s ease;
         }
 
         .footer-link:hover {
-            color: var(--accent-hover);
+            color: var(--moss-green);
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
-            body {
-                overflow-x: hidden;
+            .info-section {
+                grid-template-columns: 1fr;
+                gap: 2rem;
             }
-            
-            .header-content {
+
+            .header {
                 flex-direction: column;
+                gap: 1rem;
                 text-align: center;
-                padding: 0.75rem;
-            }
-
-            .submit-button {
-                width: 100%;
-                max-width: 300px;
-            }
-
-            .nav-container {
-                padding: 0.5rem;
+                padding: 1rem;
             }
 
             .nav-content {
-                display: flex;
                 flex-wrap: wrap;
-                justify-content: center;
-                gap: 0.5rem;
-                width: 100%;
-                padding: 0.5rem;
-            }
-
-            .nav-link {
-                text-align: center;
-                padding: 0.625rem 0.75rem;
-                font-size: 0.875rem;
-                min-height: 44px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            /* Special styling for Admin link on mobile */
-            .nav-link[href="/admin"] {
-                width: 100%;
-                max-width: 200px;
-                margin: 0.25rem auto 0;
-            }
-
-            .hero-title {
-                font-size: clamp(1.75rem, 3vw, 2.5rem);
-            }
-
-            .referral-section {
-                padding: 1.5rem;
-            }
-
-            .referral-code {
-                font-size: 1.5rem;
-                word-break: break-all;
-            }
-
-            .rewards-grid {
-                grid-template-columns: 1fr;
-                gap: 1.25rem;
+                gap: 1rem;
             }
 
             .footer-links {
-                gap: 1rem;
-                padding: 0 0.5rem;
+                flex-direction: column;
+                gap: 0.75rem;
             }
-        }
-
-        /* Animation Keyframes */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-in {
-            animation: fadeIn 0.6s ease-out forwards;
         }
     </style>
 </head>
 <body>
     <?php
-    // Include database configuration
-    if (!file_exists('config.php')) {
-        die('Configuration file not found');
-    }
     include 'config.php';
 
-    // Initialize referral variable
-    $referral = null;
-
-    // Fetch random referral data from the database
-    if (isset($conn) && $conn instanceof mysqli) {
-        $sql = "SELECT * FROM codes ORDER BY RAND() LIMIT 1";
-        $result = $conn->query($sql);
-        
-        if ($result) {
-            $referral = $result->fetch_assoc();
-        } else {
-            error_log("Database query failed: " . $conn->error);
-        }
-    } else {
-        error_log("Database connection not properly initialized");
-    }
+    // Get random referral code
+    $sql = "SELECT * FROM codes ORDER BY RAND() LIMIT 1";
+    $result = $conn->query($sql);
+    $referral = $result->fetch_assoc();
     ?>
 
-    <header class="header-container">
-        <div class="header-content">
-            <a href="/" class="site-title">Code to Adventure</a>
-            <button onclick="window.location.href='submit.php';" class="submit-button">Submit Code</button>
-        </div>
+    <header class="header">
+        <a href="/" class="logo-container">Code To Adventure</a>
+        <a href="submit.php" class="submit-button">Submit Your Code</a>
     </header>
 
     <nav class="nav-container">
@@ -393,44 +278,47 @@
     </nav>
 
     <main class="main-content">
-        <section class="hero-section animate-in">
-            <h1 class="hero-title">Buying a Rivian?<br>Use a referral code and <strong>get rewards</strong>!</h1>
-        </section>
+        <h1 class="hero-title">Buying a Rivian?</h1>
+        <h2 class="hero-subtitle">Use a referral code and get rewards!</h2>
 
-        <section class="referral-section animate-in">
-            <?php if ($referral): ?>
-                <p class="referral-code">Code: <span><?php echo htmlspecialchars($referral['referral_code']); ?></span></p>
-                <p class="referral-name">Submitted by: <span><?php echo htmlspecialchars($referral['name']); ?></span></p>
-                <a href="https://rivian.com/configurations/list?reprCode=<?php echo htmlspecialchars($referral['referral_code']); ?>" 
-                   target="_blank" 
-                   rel="noopener noreferrer" 
-                   class="shop-link">
-                    Shop with this Code
-                </a>
-            <?php else: ?>
-                <p>Unable to fetch a referral code at this time. Please try again later.</p>
-            <?php endif; ?>
-        </section>
+        <?php if ($referral): ?>
+            <a href="https://rivian.com/configurations/list?reprCode=<?php echo htmlspecialchars($referral['referral_code']); ?>" 
+               class="referral-button" 
+               target="_blank" 
+               rel="noopener noreferrer">
+                Use <?php echo htmlspecialchars($referral['name']); ?>'s Code
+            </a>
+            <p class="refresh-text">You'll be directed to Rivian's R1 Shop. Code changes every page refresh.</p>
+        <?php endif; ?>
 
-        <section class="info-section">
-            <h2 class="info-title">How does it work?</h2>
-            <p>When you use an owner's referral code during checkout of a qualifying R1 Shop vehicle, both the original owner (referrer) and new owner (referee) get rewards!</p>
-            <br>
-            <br>
-            <h2 class="info-title">What are the rewards?</h2>
-            <div class="rewards-grid">
-                <div class="reward-card">
-                    <h3 class="reward-title">750 Points</h3>
-                    <p class="reward-description">Redeemable in Gear Shop or R1 Shop.</p>
-                    <small class="reward-note">(1 point equals 1 dollar in credit)</small>
+        <div class="info-section">
+            <div>
+                <h3 class="info-title">How does it work?</h3>
+                <p class="info-text">When you use an owner's referral code during checkout of a qualifying R1 Shop vehicle, then takes delivery – both the original owner (referrer) and new owner (referee) get rewards!</p>
+            </div>
+
+            <div>
+                <h3 class="info-title">What are the rewards?</h3>
+                <div class="reward-item">
+                    <svg class="reward-icon" viewBox="0 0 24 24">
+                        <path d="M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 0 0-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z"/>
+                    </svg>
+                    <div>
+                        <p class="reward-text">500 points that can be redeemed in Gear Shop or R1 Shop</p>
+                        <p class="reward-note">(1 point equals 1 dollar in credit)</p>
+                    </div>
                 </div>
-                <div class="reward-card">
-                    <h3 class="reward-title">6 Months Charging</h3>
-                    <p class="reward-description">At Rivian Adventure Network sites.</p>
-                    <small class="reward-note">(Up to a lifetime limit of three years)</small>
+                <div class="reward-item">
+                    <svg class="reward-icon" viewBox="0 0 24 24">
+                        <path d="M7 2v11h3v9l7-12h-4l4-8z"/>
+                    </svg>
+                    <div>
+                        <p class="reward-text">6 months of charging at Rivian Adventure Network sites</p>
+                        <p class="reward-note">(up to a lifetime limit of three years)</p>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
     </main>
 
     <footer class="footer">
@@ -439,7 +327,7 @@
         </p>
         <div class="footer-links">
             <a href='https://zak.codetoadventure.com' class="footer-link" target='_blank' rel='noopener noreferrer'>Zak's Referral Code</a>
-            <a href='changelog.html' class="footer-link" target='_blank' rel='noopener noreferrer'>Version 2024.12.24</a>
+            <a href='changelog.html' class="footer-link" target='_blank' rel='noopener noreferrer'>Version 2024.12.28</a>
             <a href="mailto:admin@codetoadventure.com" class="footer-link" target='_blank' rel='noopener noreferrer'>E-mail the admin</a>
         </div>
     </footer>
