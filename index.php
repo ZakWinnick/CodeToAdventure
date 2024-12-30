@@ -450,7 +450,7 @@
         <div class="info-section">
             <div>
                 <h3 class="info-title">How does it work?</h3>
-                <p class="info-text">When you use an owner's referral code during checkout of a qualifying R1 Shop vehicle, then takes delivery – both the original owner (referrer) and new owner (referee) get rewards!</p>
+                <p class="info-text">When you use an owner's referral code during checkout of a qualifying R1 Shop vehicle, then take delivery – both the original owner (referrer) and new owner (referee) get rewards!</p>
             </div>
 
             <div>
