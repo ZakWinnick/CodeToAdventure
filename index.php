@@ -503,7 +503,7 @@
 
     <footer class="footer">
         <p>&copy; <script>document.write(new Date().getFullYear());</script> 
-            <a href='https://zakwinnick.com' class="footer-link" target='_blank' rel='noopener noreferrer'>Zak Winnick</a>
+            <a href='https://winnick.io' class="footer-link" target='_blank' rel='noopener noreferrer'>Zak Winnick</a>
         </p>
         <div class="footer-links">
             <a href='https://zak.codetoadventure.com' class="footer-link" target='_blank' rel='noopener noreferrer'>Zak's Referral Code</a>
