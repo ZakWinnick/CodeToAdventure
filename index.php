@@ -7,26 +7,28 @@
     ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Discover and use random Rivian referral codes to earn rewards. Submit your code to share the adventure!">
-    <meta name="keywords" content="Rivian, referral codes, rewards, Code To Adventure">
-    <meta name="author" content="Zak Winnick">
     <title>Code To Adventure - Random Rivian Referrals</title>
-
+    
     <!-- Preload key resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+    
     <!-- Deferred analytics -->
     <script src="https://tinylytics.app/embed/wWu5hJWSQ_r9BAxgohx8.js" defer></script>
 
     <!-- JavaScript for Modal and Animations -->
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
     <script>
+        // Fade-in animation for main content on page load
         document.addEventListener('DOMContentLoaded', () => {
             const mainContent = document.querySelector('.main-content');
-            mainContent?.classList.add('animate-in');
+            mainContent.classList.add('animate-in');
         });
 
+        // Show modal with fade-in animation
         function showModal() {
             const modal = document.getElementById('submitModal');
             modal.style.display = 'block';
@@ -34,6 +36,7 @@
             document.body.style.overflow = 'hidden';
         }
 
+        // Close modal
         function closeModal() {
             const modal = document.getElementById('submitModal');
             modal.style.display = 'none';
@@ -41,11 +44,33 @@
             document.body.style.overflow = 'auto';
         }
 
+        // Close modal when clicking outside of it
         window.onclick = function(event) {
             const modal = document.getElementById('submitModal');
             if (event.target === modal) {
                 closeModal();
             }
+        }
+
+        // Copy code functionality
+        async function copyCode(code) {
+            try {
+                await navigator.clipboard.writeText(code);
+                showToast('Code copied to clipboard!');
+            } catch (err) {
+                showToast('Failed to copy code. Please try again.');
+            }
+        }
+
+        // Toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.display = 'block';
+
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
         }
     </script>
     
@@ -405,15 +430,10 @@
     <?php
     include 'config.php';
 
-    $referral = null;
-    try {
-        // Get random referral code
-        $sql = "SELECT * FROM codes ORDER BY RAND() LIMIT 1";
-        $result = $conn->query($sql);
-        $referral = $result ? $result->fetch_assoc() : null;
-    } catch (Exception $e) {
-        error_log("Database error: " . $e->getMessage());
-    }
+    // Get random referral code
+    $sql = "SELECT * FROM codes ORDER BY RAND() LIMIT 1";
+    $result = $conn->query($sql);
+    $referral = $result->fetch_assoc();
     ?>
 
     <header class="header">
@@ -435,22 +455,26 @@
         <h1 class="hero-title">Buying a Rivian?</h1>
         <h2 class="hero-subtitle">Use a referral code and get rewards!</h2>
 
-        <?php if ($referral): ?>
             <a href="https://rivian.com/configurations/list?reprCode=<?php echo htmlspecialchars($referral['referral_code']); ?>" 
                class="referral-button" 
                target="_blank" 
                rel="noopener noreferrer">
                 Use <?php echo htmlspecialchars($referral['name']); ?>'s Code
             </a>
+            <?php if ($referral): ?>
+            <div class="code-container">
+                <span class="referral-code"><?php echo htmlspecialchars($referral['referral_code']); ?></span>
+                <button class="copy-button" onclick="copyCode('<?php echo htmlspecialchars($referral['referral_code']); ?>')" title="Copy code">
+                    <span>⧉</span> Copy Code
+                </button>
+            </div>
             <p class="refresh-text">You'll be directed to Rivian's R1 Shop. Code changes every page refresh.</p>
-        <?php else: ?>
-            <p>No referral codes are currently available. Please check back later!</p>
         <?php endif; ?>
 
         <div class="info-section">
             <div>
                 <h3 class="info-title">How does it work?</h3>
-                <p class="info-text">When you use an owner's referral code during checkout of a qualifying R1 Shop vehicle, then take delivery – both the original owner (referrer) and new owner (referee) get rewards!</p>
+                <p class="info-text">When you use an owner's referral code during checkout of a qualifying R1 Shop vehicle, then takes delivery – both the original owner (referrer) and new owner (referee) get rewards!</p>
             </div>
 
             <div>
@@ -483,7 +507,7 @@
         </p>
         <div class="footer-links">
             <a href='https://zak.codetoadventure.com' class="footer-link" target='_blank' rel='noopener noreferrer'>Zak's Referral Code</a>
-            <a href='changelog.html' class="footer-link" target='_blank' rel='noopener noreferrer'>Version 2024.12.28</a>
+            <a href='changelog.html' class="footer-link" target='_blank' rel='noopener noreferrer'>Version 2025.1</a>
             <a href="mailto:admin@codetoadventure.com" class="footer-link" target='_blank' rel='noopener noreferrer'>E-mail the admin</a>
         </div>
     </footer>
@@ -492,28 +516,17 @@
     <div class="modal" id="submitModal">
         <div class="form-container">
             <h1>Submit Your Referral Code</h1>
-            <form action="store_code.php" method="POST" onsubmit="return validateForm();">
+            <form action="store_code.php" method="POST">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" required>
 
                 <label for="referralCode">Referral Code<br>(Just the code - ex. ZAK1452284)</label>
-                <input type="text" id="referralCode" name="referralCode" pattern="[A-Za-z0-9]{6,}" title="Code should be alphanumeric and at least 6 characters." required>
+                <input type="text" id="referralCode" name="referralCode" required>
                 <br>
                 <button type="submit">Submit</button>
             </form>
             <button class="modal-close" onclick="closeModal()">Cancel</button>
         </div>
     </div>
-
-    <script>
-        function validateForm() {
-            const referralCode = document.getElementById('referralCode').value;
-            if (!/^[A-Za-z0-9]{6,}$/.test(referralCode)) {
-                alert('Referral code must be alphanumeric and at least 6 characters long.');
-                return false;
-            }
-            return true;
-        }
-    </script>
 </body>
 </html>
