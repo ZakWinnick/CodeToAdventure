@@ -455,19 +455,19 @@
         <h1 class="hero-title">Buying a Rivian?</h1>
         <h2 class="hero-subtitle">Use a referral code and get rewards!</h2>
 
-        <?php if ($referral): ?>
-            <div class="code-container">
-                <span class="referral-code"><?php echo htmlspecialchars($referral['referral_code']); ?></span>
-                <button class="copy-button" onclick="copyCode('<?php echo htmlspecialchars($referral['referral_code']); ?>')" title="Copy code">
-                    <span>⧉</span> Copy Code
-                </button>
-            </div>
             <a href="https://rivian.com/configurations/list?reprCode=<?php echo htmlspecialchars($referral['referral_code']); ?>" 
                class="referral-button" 
                target="_blank" 
                rel="noopener noreferrer">
                 Use <?php echo htmlspecialchars($referral['name']); ?>'s Code
             </a>
+            <?php if ($referral): ?>
+            <div class="code-container">
+                <span class="referral-code"><?php echo htmlspecialchars($referral['referral_code']); ?></span>
+                <button class="copy-button" onclick="copyCode('<?php echo htmlspecialchars($referral['referral_code']); ?>')" title="Copy code">
+                    <span>⧉</span> Copy Code
+                </button>
+            </div>
             <p class="refresh-text">You'll be directed to Rivian's R1 Shop. Code changes every page refresh.</p>
         <?php endif; ?>
 
