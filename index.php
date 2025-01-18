@@ -513,7 +513,6 @@
                rel="noopener noreferrer">
                 Use <?php echo htmlspecialchars($referral['name']); ?>'s Code
             </a>
-            <p class="refresh-text">You'll be directed to Rivian's R1 Shop. Code changes every page refresh.</p>
             <br>
             <?php if ($referral): ?>
             <div class="code-container">
@@ -522,6 +521,7 @@
                     <span>⧉</span> Copy Code
                 </button>
             </div>
+            <p class="refresh-text">You'll be directed to Rivian's R1 Shop. Code changes every page refresh.</p>
         <?php endif; ?>
 
         <div class="info-section">
