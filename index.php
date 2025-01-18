@@ -517,6 +517,8 @@
             <?php if ($referral): ?>
             <div class="code-container">
                 <span class="referral-code"><?php echo htmlspecialchars($referral['referral_code']); ?></span>
+            </div>
+        <div class="copy-code">    
                 <button class="copy-button" onclick="copyCode('<?php echo htmlspecialchars($referral['referral_code']); ?>')" title="Copy code">
                     <span>⧉</span> Copy Code
                 </button>
