@@ -513,6 +513,7 @@
                rel="noopener noreferrer">
                 Use <?php echo htmlspecialchars($referral['name']); ?>'s Code
             </a>
+            <br>
             <?php if ($referral): ?>
             <div class="code-container">
                 <span class="referral-code"><?php echo htmlspecialchars($referral['referral_code']); ?></span>
