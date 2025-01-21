@@ -199,9 +199,10 @@ async function getNewCode() {
         DOM.codeContainer.innerHTML = loadingHTML;
         DOM.referralButton.style.opacity = '0.7';
         
-        // Make the request
+        // Make the request with cache busting
         console.log('Making request to get_new_code.php');
-        const response = await fetch(`get_new_code.php?current=${encodeURIComponent(currentCode)}`);
+        const timestamp = new Date().getTime();
+        const response = await fetch(`get_new_code.php?current=${encodeURIComponent(currentCode)}&t=${timestamp}`);
         console.log('Got response:', response.status);
         
         const data = await response.json();
