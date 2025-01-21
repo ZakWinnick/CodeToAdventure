@@ -36,6 +36,9 @@ document.addEventListener('DOMContentLoaded', () => {
     DOM.init();
     initializeEventListeners();
     initializeAnimations();
+    
+    // Set current year in footer
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
 });
 
 function initializeEventListeners() {

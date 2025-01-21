@@ -129,7 +129,7 @@
     </main>
 
     <footer class="footer">
-        <p>&copy; <script>document.write(new Date().getFullYear());</script> 
+        <p>&copy; <span id="currentYear"></span> 
             <a href='https://winnick.io' class="footer-link" target='_blank' rel='noopener noreferrer'>Zak Winnick</a>
         </p>
         <div class="footer-links">
