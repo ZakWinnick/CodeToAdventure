@@ -193,25 +193,16 @@ async function getNewCode() {
         DOM.codeContainer.innerHTML = loadingHTML;
         DOM.referralButton.style.opacity = '0.7';
         
-        const response = await fetch(`${CONFIG.API_ENDPOINTS.NEW_CODE}?current=${encodeURIComponent(currentCode)}`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        // Log the request URL for debugging
+        console.log('Fetching new code, excluding:', currentCode);
+        const response = await fetch(`get_new_code.php?current=${encodeURIComponent(currentCode)}`);
+        
         const data = await response.json();
+        console.log('Received response:', data);  // Log the response
         
         if (data.success && data.code) {
-            // Remove existing fade-in-up class
-            DOM.codeContainer.classList.remove('fade-in-up');
-            
             // Update the display
             updateCodeDisplay(data.code);
-            
-            // Trigger reflow to restart animation
-            void DOM.codeContainer.offsetWidth;
-            
-            // Add the class back
-            DOM.codeContainer.classList.add('fade-in-up');
-            
             showToast('New code fetched successfully!');
         } else {
             throw new Error(data.message || 'Error fetching new code');
