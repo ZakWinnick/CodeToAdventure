@@ -139,7 +139,7 @@
             background-color: var(--moss-green);
         }
 
-        /* Toast Notification */
+    /* Toast Notification */
 .toast {
     position: fixed;
     bottom: 20px;
@@ -153,6 +153,42 @@
     display: none;
     z-index: 1000;
     animation: slideUp 0.3s ease-out forwards;
+}
+
+/* Copy Button */
+.code-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.copy-button {
+    background-color: var(--mindaro);
+    color: var(--dark-green);
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.copy-button:hover {
+    background-color: var(--moss-green);
+    transform: translateY(-2px);
+    color: var(--dark-green);
+}
+
+.copy-button span {
+    font-size: 1.2rem;
+    color: inherit;
 }
 
 /* Copy Button */
