@@ -191,27 +191,43 @@ async function getNewCode() {
     const loadingHTML = '<div class="loading-spinner"></div>';
     const currentCode = document.querySelector('.referral-code')?.textContent || '';
     
+    console.log('Starting getNewCode function');
+    console.log('Current code:', currentCode);
+    
     try {
         // Show loading state
         DOM.codeContainer.innerHTML = loadingHTML;
         DOM.referralButton.style.opacity = '0.7';
         
-        // Log the request URL for debugging
-        console.log('Fetching new code, excluding:', currentCode);
+        // Make the request
+        console.log('Making request to get_new_code.php');
         const response = await fetch(`get_new_code.php?current=${encodeURIComponent(currentCode)}`);
+        console.log('Got response:', response.status);
         
         const data = await response.json();
-        console.log('Received response:', data);  // Log the response
+        console.log('Parsed response data:', data);
         
         if (data.success && data.code) {
+            console.log('Updating display with new code:', data.code);
+            // Remove existing fade-in-up class
+            DOM.codeContainer.classList.remove('fade-in-up');
+            
             // Update the display
             updateCodeDisplay(data.code);
+            
+            // Force reflow
+            void DOM.codeContainer.offsetWidth;
+            
+            // Add animation class back
+            DOM.codeContainer.classList.add('fade-in-up');
+            
             showToast('New code fetched successfully!');
         } else {
+            console.error('Response indicated failure:', data);
             throw new Error(data.message || 'Error fetching new code');
         }
     } catch (err) {
-        console.error('Error fetching new code:', err);
+        console.error('Error in getNewCode:', err);
         DOM.codeContainer.innerHTML = '<p class="error-message">Error fetching new code. Please try again.</p>';
         showToast('Error fetching new code. Please try again.');
     } finally {
