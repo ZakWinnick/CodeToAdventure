@@ -7,10 +7,32 @@
     ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Get Rivian referral codes for rewards and discounts on your R1T or R1S purchase">
-    <meta name="keywords" content="Rivian, referral code, R1T, R1S, electric vehicles, EV rewards">
     
+    <!-- Primary Meta Tags -->
     <title>Code To Adventure - Random Rivian Referrals</title>
+    <meta name="title" content="Code To Adventure - Random Rivian Referrals">
+    <meta name="description" content="Get $500 in credit and 6 months free charging with Rivian referral codes for your R1T or R1S purchase. Find valid referral codes from real Rivian owners.">
+    <meta name="keywords" content="Rivian, referral code, R1T, R1S, electric vehicles, EV rewards, electric truck, electric SUV">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://codetoadventure.com/">
+    <meta property="og:title" content="Get Rivian Referral Rewards - Code To Adventure">
+    <meta property="og:description" content="Save $500 and get 6 months free charging on your new Rivian with owner referral codes. Find valid codes instantly.">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://codetoadventure.com/">
+    <meta property="twitter:title" content="Get Rivian Referral Rewards - Code To Adventure">
+    <meta property="twitter:description" content="Save $500 and get 6 months free charging on your new Rivian with owner referral codes. Find valid codes instantly.">
+    
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <link rel="canonical" href="https://codetoadventure.com/">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
     
     <!-- Preconnect to external resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -74,6 +96,17 @@
                 Get Another Code
             </button>
             <p class="refresh-text">You'll be directed to Rivian's R1 Shop.</p>
+            
+            <div class="share-buttons">
+                <button onclick="shareCode('twitter')" class="share-button twitter">
+                    <svg viewBox="0 0 24 24" class="share-icon"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                    Share on Twitter
+                </button>
+                <button onclick="shareCode('facebook')" class="share-button facebook">
+                    <svg viewBox="0 0 24 24" class="share-icon"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                    Share on Facebook
+                </button>
+            </div>
         <?php endif; ?>
 
         <div class="info-section">

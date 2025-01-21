@@ -87,20 +87,52 @@ function handleFormSubmit(event) {
 }
 
 function validateForm(name, code) {
+    const nameInput = document.getElementById('name');
+    const codeInput = document.getElementById('referralCode');
+    let isValid = true;
+
     // Name validation
     if (!name || name.trim().length < 2) {
-        showToast('Please enter a valid name (at least 2 characters)');
-        return false;
+        showInputError(nameInput, 'Please enter a valid name (at least 2 characters)');
+        isValid = false;
+    } else {
+        clearInputError(nameInput);
     }
 
     // Code validation (assuming format like ZAK1452284)
     const codeRegex = /^[A-Z]{3}\d{7}$/;
     if (!codeRegex.test(code)) {
-        showToast('Please enter a valid referral code (format: ABC1234567)');
-        return false;
+        showInputError(codeInput, 'Please enter a valid referral code (format: ABC1234567)');
+        isValid = false;
+    } else {
+        clearInputError(codeInput);
     }
 
-    return true;
+    return isValid;
+}
+
+function showInputError(input, message) {
+    const errorDiv = input.nextElementSibling?.classList.contains('error-message') 
+        ? input.nextElementSibling 
+        : document.createElement('div');
+    
+    errorDiv.className = 'error-message';
+    errorDiv.textContent = message;
+    
+    if (!input.nextElementSibling?.classList.contains('error-message')) {
+        input.parentNode.insertBefore(errorDiv, input.nextSibling);
+    }
+    
+    input.classList.add('input-error');
+    showToast(message);
+}
+
+function clearInputError(input) {
+    const errorDiv = input.nextElementSibling;
+    if (errorDiv?.classList.contains('error-message')) {
+        errorDiv.remove();
+    }
+    input.classList.remove('input-error');
 }
 
 async function submitForm(formData) {
@@ -161,16 +193,20 @@ async function getNewCode() {
         DOM.referralButton.style.opacity = '0.7';
         
         const response = await fetch(CONFIG.API_ENDPOINTS.NEW_CODE);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
         
-        if (data.success) {
+        if (data.success && data.code) {
             updateCodeDisplay(data.code);
             showToast('New code fetched successfully!');
         } else {
-            showToast('Error fetching new code. Please try again.');
+            throw new Error(data.message || 'Error fetching new code');
         }
     } catch (err) {
         console.error('Error fetching new code:', err);
+        DOM.codeContainer.innerHTML = '<p class="error-message">Error fetching new code. Please try again.</p>';
         showToast('Error fetching new code. Please try again.');
     } finally {
         DOM.referralButton.style.opacity = '1';
@@ -178,18 +214,39 @@ async function getNewCode() {
 }
 
 function updateCodeDisplay(codeData) {
-    if (!DOM.codeContainer || !DOM.referralButton) return;
+    if (!DOM.codeContainer || !DOM.referralButton || !codeData) return;
 
-    DOM.referralButton.href = `https://rivian.com/configurations/list?reprCode=${codeData.referral_code}`;
-    DOM.referralButton.innerHTML = `Use ${codeData.name}'s Code`;
-    
-    DOM.codeContainer.innerHTML = `
-        <span class="referral-code">${codeData.referral_code}</span>
-        <button class="copy-button" onclick="copyCode('${codeData.referral_code}')" title="Copy code">
-            <span>⧉</span> Copy Code
-        </button>
-    `;
-    DOM.codeContainer.classList.add('fade-in-up');
+    try {
+        // Update the referral button
+        if (DOM.referralButton) {
+            DOM.referralButton.href = `https://rivian.com/configurations/list?reprCode=${encodeURIComponent(codeData.referral_code)}`;
+            DOM.referralButton.innerHTML = `Use ${escapeHtml(codeData.name)}'s Code`;
+        }
+        
+        // Update the code container
+        if (DOM.codeContainer) {
+            DOM.codeContainer.innerHTML = `
+                <span class="referral-code">${escapeHtml(codeData.referral_code)}</span>
+                <button class="copy-button" onclick="copyCode('${escapeHtml(codeData.referral_code)}')" title="Copy code">
+                    <span>⧉</span> Copy Code
+                </button>
+            `;
+            DOM.codeContainer.classList.add('fade-in-up');
+        }
+    } catch (error) {
+        console.error('Error updating code display:', error);
+        showToast('Error updating display. Please refresh the page.');
+    }
+}
+
+// Helper function to escape HTML and prevent XSS
+function escapeHtml(unsafe) {
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
 // ==========================================================================
