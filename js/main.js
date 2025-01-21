@@ -186,20 +186,32 @@ async function getNewCode() {
     if (!DOM.codeContainer || !DOM.referralButton) return;
 
     const loadingHTML = '<div class="loading-spinner"></div>';
+    const currentCode = document.querySelector('.referral-code')?.textContent || '';
     
     try {
         // Show loading state
         DOM.codeContainer.innerHTML = loadingHTML;
         DOM.referralButton.style.opacity = '0.7';
         
-        const response = await fetch(CONFIG.API_ENDPOINTS.NEW_CODE);
+        const response = await fetch(`${CONFIG.API_ENDPOINTS.NEW_CODE}?current=${encodeURIComponent(currentCode)}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
         
         if (data.success && data.code) {
+            // Remove existing fade-in-up class
+            DOM.codeContainer.classList.remove('fade-in-up');
+            
+            // Update the display
             updateCodeDisplay(data.code);
+            
+            // Trigger reflow to restart animation
+            void DOM.codeContainer.offsetWidth;
+            
+            // Add the class back
+            DOM.codeContainer.classList.add('fade-in-up');
+            
             showToast('New code fetched successfully!');
         } else {
             throw new Error(data.message || 'Error fetching new code');
@@ -218,21 +230,23 @@ function updateCodeDisplay(codeData) {
 
     try {
         // Update the referral button
-        if (DOM.referralButton) {
-            DOM.referralButton.href = `https://rivian.com/configurations/list?reprCode=${encodeURIComponent(codeData.referral_code)}`;
-            DOM.referralButton.innerHTML = `Use ${escapeHtml(codeData.name)}'s Code`;
-        }
+        DOM.referralButton.href = `https://rivian.com/configurations/list?reprCode=${encodeURIComponent(codeData.referral_code)}`;
+        DOM.referralButton.innerHTML = `Use ${escapeHtml(codeData.name)}'s Code`;
         
         // Update the code container
-        if (DOM.codeContainer) {
-            DOM.codeContainer.innerHTML = `
-                <span class="referral-code">${escapeHtml(codeData.referral_code)}</span>
-                <button class="copy-button" onclick="copyCode('${escapeHtml(codeData.referral_code)}')" title="Copy code">
-                    <span>⧉</span> Copy Code
-                </button>
-            `;
-            DOM.codeContainer.classList.add('fade-in-up');
-        }
+        const newHTML = `
+            <span class="referral-code">${escapeHtml(codeData.referral_code)}</span>
+            <button class="copy-button" onclick="copyCode('${escapeHtml(codeData.referral_code)}')" title="Copy code">
+                <span>⧉</span> Copy Code
+            </button>
+        `;
+        
+        // Apply the new content
+        DOM.codeContainer.innerHTML = newHTML;
+        
+        // Force a reflow to ensure animation plays
+        void DOM.codeContainer.offsetWidth;
+        
     } catch (error) {
         console.error('Error updating code display:', error);
         showToast('Error updating display. Please refresh the page.');
