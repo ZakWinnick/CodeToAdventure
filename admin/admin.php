@@ -150,8 +150,8 @@ $allSubmissions = $conn->query($query);
                                 <td><?php echo number_format($row['use_count']); ?></td>
                                 <td>
                                     <div class="actions">
-                                        <button class="edit" onclick="window.location.href='edit.php?id=<?php echo $row['id']; ?>';">Edit</button>
-                                        <button class="delete" onclick="if(confirm('Are you sure?')) window.location.href='delete.php?id=<?php echo $row['id']; ?>';">Delete</button>
+                                        <a href="edit.php?id=<?php echo $row['id']; ?>" class="submit-button edit-btn">Edit</a>
+                                        <a href="delete.php?id=<?php echo $row['id']; ?>" class="submit-button delete-btn" onclick="return confirm('Are you sure you want to delete this code?')">Delete</a>
                                     </div>
                                 </td>
                             </tr>
