@@ -90,30 +90,32 @@
 }
 
 .actions button {
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    border: none;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.actions .edit {
     background-color: var(--mindaro);
     color: var(--dark-green);
+    padding: 8px 16px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    border: none;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-.actions .edit:hover {
+.actions button:hover {
+    transform: translateY(-2px);
     background-color: var(--moss-green);
 }
 
 .actions .delete {
-    background-color: #f44336;
-    color: white;
+    background-color: var(--hunter-green);
+    color: var(--mindaro);
+    border: 2px solid var(--mindaro);
 }
 
 .actions .delete:hover {
-    background-color: #d32f2f;
+    background-color: var(--mindaro);
+    color: var(--dark-green);
 }
 
 @media (max-width: 768px) {
