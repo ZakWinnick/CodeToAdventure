@@ -77,15 +77,6 @@ $random_description = $meta_descriptions[array_rand($meta_descriptions)];
     <script src="js/main.js" defer></script>
     <script src="https://tinylytics.app/embed/wWu5hJWSQ_r9BAxgohx8.js" defer></script>
 
-    <!-- Service Worker Registration -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js')
-                .then(registration => console.log('ServiceWorker registered'))
-                .catch(error => console.error('ServiceWorker error:', error));
-        }
-    </script>
-
     <!-- Schema.org markup -->
     <script type="application/ld+json">
     {
@@ -131,7 +122,7 @@ $random_description = $meta_descriptions[array_rand($meta_descriptions)];
         <h2 class="hero-subtitle">Use a referral code and get rewards!</h2>
 
         <?php if ($referral): ?>
-            <a href="https://rivian.com/configurations/list?reprCode=<?php echo htmlspecialchars($referral['referral_code']); ?>" 
+            <a href="track.php?code=<?php echo htmlspecialchars($referral['referral_code']); ?>" 
                class="referral-button" 
                target="_blank" 
                rel="noopener noreferrer">
