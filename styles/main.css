@@ -16,7 +16,6 @@
     --text-secondary: var(--mindaro);
     --accent-primary: var(--mindaro);
     --accent-secondary: var(--moss-green);
-    --button-text: var(--dark-green);
     
     /* UI Elements */
     --button-radius: 40px;
@@ -25,15 +24,44 @@
     --transition-speed: 0.3s;
 }
 
-/* Light Theme */
+/* Light Theme Colors */
 [data-theme="light"] {
-    --bg-primary: #F5F5F5;
-    --bg-secondary: #FFFFFF;
-    --text-primary: #132A13;
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #F5F5F5;
+    --text-primary: var(--dark-green);
     --text-secondary: var(--hunter-green);
     --accent-primary: var(--hunter-green);
     --accent-secondary: var(--fern-green);
-    --button-text: #FFFFFF;
+}
+
+/* Apply theme colors to elements */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.nav-container {
+    background-color: var(--bg-secondary);
+}
+
+.nav-link, .theme-toggle {
+    color: var(--text-secondary);
+}
+
+.nav-link:hover, .theme-toggle:hover {
+    color: var(--accent-secondary);
+}
+
+.modal, .footer {
+    background-color: var(--bg-secondary);
+}
+
+.info-section > div {
+    background-color: var(--bg-secondary);
+}
+
+.form-container {
+    background-color: var(--bg-secondary);
 }
 
 /* ==========================================================================
@@ -64,24 +92,14 @@ body {
     color: var(--mindaro);
     font-family: inherit;
     font-size: inherit;
-    padding: 0.5rem;
+    padding: 0.5rem 0;
     margin: 0;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: color var(--transition-speed) ease;
+    font-weight: 600;  /* Match other nav items */
+    transition: color 0.3s ease;
 }
 
 .theme-toggle:hover {
     color: var(--moss-green);
-}
-
-/* Add this to ensure button styling is consistent */
-.nav-link.theme-toggle {
-    display: inline-flex;
-    align-items: center;
-    text-decoration: none;
-    transition: color 0.3s ease;
 }
 
 /* ==========================================================================

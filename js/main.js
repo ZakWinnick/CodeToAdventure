@@ -35,31 +35,45 @@ const DOM = {
 // ==========================================================================
 // Theme Management
 // ==========================================================================
-function initializeTheme() {
-    console.log('Initializing theme...');
+// ==========================================================================
+// Theme Management
+// ==========================================================================
+
+function initThemeToggle() {
     const themeToggle = document.getElementById('themeToggle');
+    const root = document.documentElement;
     
-    if (!themeToggle) {
-        console.error('Theme toggle button not found!');
-        return;
-    }
+    // Get initial theme from localStorage or default to dark
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    root.setAttribute('data-theme', currentTheme);
     
-    console.log('Theme toggle button found:', themeToggle);
+    // Update button text based on current theme
+    updateThemeButtonText(currentTheme);
     
+    // Add click handler
     themeToggle.addEventListener('click', () => {
-        console.log('Theme toggle clicked');
-        const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
-        document.documentElement.setAttribute('data-theme', newTheme);
+        const newTheme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
-        console.log('Theme switched to:', newTheme);
+        updateThemeButtonText(newTheme);
     });
-    
-    // Set initial theme
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
 }
+
+function updateThemeButtonText(theme) {
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.textContent = theme === 'dark' ? '🌓 Light Mode' : '🌓 Dark Mode';
+}
+
+// Add to our DOMContentLoaded event
+document.addEventListener('DOMContentLoaded', () => {
+    DOM.init();
+    initializeEventListeners();
+    initializeAnimations();
+    initThemeToggle();  // Initialize theme toggle
+    
+    // Set current year in footer
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+});
 
 function toggleTheme() {
     const currentTheme = document.documentElement.getAttribute('data-theme');
