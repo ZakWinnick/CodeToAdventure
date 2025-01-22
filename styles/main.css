@@ -1,37 +1,39 @@
 /* ==========================================================================
    Base Variables
    ========================================================================== */
-   :root {
-    /* Base Colors */
+   :root[data-theme="dark"] {
+    /* Dark Theme (default) */
+    --bg-primary: #132A13;
+    --bg-secondary: #31572C;
+    --text-primary: #FFFFFF;
+    --text-secondary: #ECF39E;
+    --accent-primary: #ECF39E;
+    --accent-secondary: #90A955;
+}
+
+:root[data-theme="light"] {
+    /* Light Theme */
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #F5F5F5;
+    --text-primary: #132A13;
+    --text-secondary: #31572C;
+    --accent-primary: #31572C;
+    --accent-secondary: #4F772D;
+}
+
+:root {
+    /* Base Colors for Reference */
     --dark-green: #132A13;
     --hunter-green: #31572C;
     --fern-green: #4F772D;
     --moss-green: #90A955;
     --mindaro: #ECF39E;
     
-    /* Theme Colors - Dark (default) */
-    --bg-primary: var(--dark-green);
-    --bg-secondary: var(--hunter-green);
-    --text-primary: #FFFFFF;
-    --text-secondary: var(--mindaro);
-    --accent-primary: var(--mindaro);
-    --accent-secondary: var(--moss-green);
-    
     /* UI Elements */
     --button-radius: 40px;
     --max-width: 1200px;
     --border-radius: 8px;
     --transition-speed: 0.3s;
-}
-
-/* Light Theme Colors */
-[data-theme="light"] {
-    --bg-primary: #FFFFFF;
-    --bg-secondary: #F5F5F5;
-    --text-primary: var(--dark-green);
-    --text-secondary: var(--hunter-green);
-    --accent-primary: var(--hunter-green);
-    --accent-secondary: var(--fern-green);
 }
 
 /* Apply theme colors to elements */
