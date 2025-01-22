@@ -41,17 +41,29 @@ $allSubmissions = $conn->query($query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code To Adventure - Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/main.css">
     <link rel="stylesheet" href="dashboard.css">
 </head>
-<body class="dashboard">
-    <header class="header" role="banner">
+<body>
+    <header class="header">
         <a href="/" class="logo-container">Code To Adventure</a>
-        <div class="admin-controls">
-            <span class="admin-user">Admin Dashboard</span>
-            <a href="logout.php" class="logout-button">Logout</a>
+        <div class="nav-content">
+            <a href="../index.php" class="nav-link">Home</a>
+            <a href="#" class="nav-link">Submit Code</a>
+            <a href="../api-docs.html" class="nav-link">API Docs</a>
+            <a href="../changelog.html" class="nav-link">Changelog</a>
+            <a href="logout.php" class="nav-link">Logout</a>
         </div>
     </header>
+
+    <nav class="nav-container">
+        <div class="nav-content">
+            <span class="nav-link">Admin Dashboard</span>
+        </div>
+    </nav>
 
     <main class="dashboard-content">
         <!-- Overview Cards -->
@@ -89,62 +101,65 @@ $allSubmissions = $conn->query($query);
             </div>
         </div>
 
-        <div class="chart-container">
-            <h3>Top Referral Codes</h3>
-            <div class="table-container">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Code</th>
-                            <th>Uses</th>
-                            <th>Last Used</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($code = $topCodesResult->fetch_assoc()): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($code['name']); ?></td>
-                            <td><?php echo htmlspecialchars($code['referral_code']); ?></td>
-                            <td><?php echo number_format($code['use_count']); ?></td>
-                            <td><?php echo $code['last_used'] ? date('M j, Y', strtotime($code['last_used'])) : 'Never'; ?></td>
-                        </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
+        <div class="info-section">
+            <div>
+                <h3 class="info-title">Top Referral Codes</h3>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Code</th>
+                                <th>Uses</th>
+                                <th>Last Used</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($code = $topCodesResult->fetch_assoc()): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($code['name']); ?></td>
+                                <td><?php echo htmlspecialchars($code['referral_code']); ?></td>
+                                <td><?php echo number_format($code['use_count']); ?></td>
+                                <td><?php echo $code['last_used'] ? date('M j, Y', strtotime($code['last_used'])) : 'Never'; ?></td>
+                            </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
 
-        <!-- All Submissions Table -->
-        <div class="submissions-container">
-            <h3>All Submissions</h3>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Code</th>
-                        <th>Uses</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php while ($row = $allSubmissions->fetch_assoc()): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($row['id']); ?></td>
-                        <td><?php echo htmlspecialchars($row['name']); ?></td>
-                        <td><?php echo htmlspecialchars($row['referral_code']); ?></td>
-                        <td><?php echo number_format($row['use_count']); ?></td>
-                        <td>
-                            <div class="actions">
-                                <button class="edit" onclick="window.location.href='edit.php?id=<?php echo $row['id']; ?>';">Edit</button>
-                                <button class="delete" onclick="if(confirm('Are you sure?')) window.location.href='delete.php?id=<?php echo $row['id']; ?>';">Delete</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <?php endwhile; ?>
-                </tbody>
-            </table>
+            <div>
+                <h3 class="info-title">All Submissions</h3>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Code</th>
+                                <th>Uses</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($row = $allSubmissions->fetch_assoc()): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($row['id']); ?></td>
+                                <td><?php echo htmlspecialchars($row['name']); ?></td>
+                                <td><?php echo htmlspecialchars($row['referral_code']); ?></td>
+                                <td><?php echo number_format($row['use_count']); ?></td>
+                                <td>
+                                    <div class="actions">
+                                        <a href="edit.php?id=<?php echo $row['id']; ?>" class="edit-btn">Edit</a>
+                                        <a href="delete.php?id=<?php echo $row['id']; ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this code?')">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </main>
 </body>
