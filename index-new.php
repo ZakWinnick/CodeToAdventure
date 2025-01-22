@@ -111,10 +111,6 @@ $random_description = $meta_descriptions[array_rand($meta_descriptions)];
     <div class="toast" id="toast" role="alert" aria-hidden="true"></div>
 </head>
 <body>
-    <div class="skip-link">
-        <a href="#main-content">Skip to main content</a>
-    </div>
-
     <header class="header" role="banner">
         <a href="/" class="logo-container">Code To Adventure</a>
         <a href="#" class="submit-button" onclick="showModal(); return false;">Submit Your Code</a>
