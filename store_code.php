@@ -1,59 +1,54 @@
 <?php
 include 'config.php';
 
-// Check if the form was submitted
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $name = htmlspecialchars(trim($_POST['name']));
-    $username = htmlspecialchars(trim($_POST['username']));
-    $referralCode = htmlspecialchars(trim($_POST['referralCode']));
+header('Content-Type: application/json');
 
-    // Check if the referral code already exists in the database
-    $stmt = $conn->prepare("SELECT id FROM codes WHERE referral_code = ?");
-    $stmt->bind_param("s", $referralCode);
-    $stmt->execute();
-    $result = $stmt->get_result();
+try {
+    // Get and validate the submitted data
+    $name = isset($_POST['name']) ? trim($_POST['name']) : '';
+    $referralCode = isset($_POST['referralCode']) ? trim($_POST['referralCode']) : '';
 
-    // If the referral code already exists, redirect with an error
-    if ($result->num_rows > 0) {
-        header('Location: submit.php?error=duplicate'); // Redirect to submit page with error
-        exit();
+    // Validate inputs
+    if (empty($name) || empty($referralCode)) {
+        throw new Exception('Name and referral code are required');
     }
 
-    // Prepare and bind the SQL query to insert the referral data
-    $stmt = $conn->prepare("INSERT INTO codes (name, username, referral_code) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $name, $username, $referralCode);
+    // Validate referral code format (3 letters followed by 7 numbers)
+    if (!preg_match('/^[A-Z]{3}\d{7}$/', $referralCode)) {
+        throw new Exception('Invalid referral code format');
+    }
 
-    // Execute the statement to insert the data
+    // Check if code already exists
+    $checkSql = "SELECT COUNT(*) as count FROM codes WHERE referral_code = ?";
+    $checkStmt = $conn->prepare($checkSql);
+    $checkStmt->bind_param('s', $referralCode);
+    $checkStmt->execute();
+    $result = $checkStmt->get_result();
+    $row = $result->fetch_assoc();
+
+    if ($row['count'] > 0) {
+        throw new Exception('This referral code already exists');
+    }
+
+    // Insert the new code
+    $sql = "INSERT INTO codes (name, referral_code) VALUES (?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('ss', $name, $referralCode);
+    
     if ($stmt->execute()) {
-        // Send email notification
-        $to = "admin@codetoadventure.com";  // Replace this with the email address where you want to receive submissions
-        $subject = "New Referral Code Submitted";
-        
-        // Email body message
-        $message = "A new referral code has been submitted:\n\n";
-        $message .= "Name: $name\n";
-        $message .= "Referral Code: $referralCode\n";
-        
-        // Email headers (optional)
-        $headers = "From: no-reply@codetoadventure.com" . "\r\n" .
-                   "Reply-To: no-reply@codetoadventure.com" . "\r\n" .
-                   "X-Mailer: PHP/" . phpversion();
-
-        // Send the email using PHP's mail() function
-        if (mail($to, $subject, $message, $headers)) {
-            // Redirect to index page (or show success message)
-            header('Location: index.php?status=success');
-        } else {
-            // If email fails to send
-            echo "There was an error sending the email.";
-        }
-        exit();  // Make sure to exit after redirecting or outputting message
+        echo json_encode([
+            'success' => true,
+            'message' => 'Code submitted successfully!'
+        ]);
     } else {
-        echo "Error: " . $stmt->error;
+        throw new Exception('Error saving the code');
     }
 
-    $stmt->close();
+} catch (Exception $e) {
+    echo json_encode([
+        'success' => false,
+        'message' => $e->getMessage()
+    ]);
 }
 
 $conn->close();
-?>
