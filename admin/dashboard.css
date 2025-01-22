@@ -1,13 +1,83 @@
-.dashboard {
-    background-color: #142a13;
+:root {
+    --dark-green: #132A13;
+    --hunter-green: #31572C;
+    --fern-green: #4F772D;
+    --moss-green: #90A955;
+    --mindaro: #ECF39E;
+    --text-white: #FFFFFF;
+    --button-radius: 40px;
+    --max-width: 1200px;
+    --border-radius: 8px;
+    --transition-speed: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--dark-green) !important;
+    color: var(--text-white);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    width: 100%;
+}
+
+.logo-container {
+    background-color: var(--mindaro);
+    padding: 8px 16px;
+    border-radius: 12px;
+    color: var(--dark-green);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.admin-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.admin-user {
+    color: var(--mindaro);
+}
+
+.logout-button {
+    background-color: var(--hunter-green);
+    color: var(--mindaro);
+    padding: 8px 16px;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: var(--mindaro);
+    color: var(--dark-green);
 }
 
 .dashboard-content {
-    max-width: 1200px;
+    max-width: var(--max-width);
     margin: 2rem auto;
     padding: 0 2rem;
+    width: 100%;
 }
 
+/* Metrics Grid */
 .metrics-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -16,52 +86,39 @@
 }
 
 .metric-card {
-    background-color: #31572C;
+    background-color: var(--hunter-green);
     padding: 1.5rem;
-    border-radius: 12px;
+    border-radius: var(--border-radius);
     text-align: center;
 }
 
 .metric-card h3 {
-    color: #ECF39E;
-    font-size: 1rem;
+    color: var(--mindaro);
     margin-bottom: 0.5rem;
 }
 
 .metric-value {
     font-size: 2rem;
     font-weight: bold;
-    color: #fff;
+    color: var(--text-white);
 }
 
-.charts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 2rem;
+/* Tables */
+.table-container {
+    background-color: var(--hunter-green);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
     margin-bottom: 2rem;
 }
 
-.chart-container {
-    background-color: #31572C;
-    padding: 1.5rem;
-    border-radius: 12px;
-    min-height: 400px;
-}
-
-.chart-container h3 {
-    color: #ECF39E;
+.table-container h3 {
+    color: var(--mindaro);
     margin-bottom: 1rem;
-}
-
-/* Add your existing admin.php table styles here */
-.table-container {
-    overflow-x: auto;
 }
 
 .data-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 1rem;
 }
 
 .data-table th,
@@ -72,24 +129,77 @@
 }
 
 .data-table th {
-    color: #ECF39E;
+    color: var(--mindaro);
     font-weight: 600;
 }
 
 .data-table td {
-    color: #fff;
+    color: var(--text-white);
+}
+
+/* Action Buttons */
+.actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.actions button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-weight: 500;
+    transition: all var(--transition-speed) ease;
+}
+
+.actions .edit {
+    background-color: var(--mindaro);
+    color: var(--dark-green);
+}
+
+.actions .edit:hover {
+    background-color: var(--moss-green);
+    transform: translateY(-2px);
+}
+
+.actions .delete {
+    background-color: #f44336;
+    color: white;
+}
+
+.actions .delete:hover {
+    background-color: #d32f2f;
+    transform: translateY(-2px);
 }
 
 @media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+        padding: 1rem;
+    }
+
     .metrics-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-    
-    .charts-grid {
+
+    .table-container {
+        overflow-x: auto;
+    }
+
+    .data-table {
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .metrics-grid {
         grid-template-columns: 1fr;
     }
-    
-    .chart-container {
-        min-height: 300px;
+
+    .actions {
+        flex-direction: column;
     }
 }
