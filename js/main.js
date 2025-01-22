@@ -35,33 +35,25 @@ const DOM = {
 // ==========================================================================
 // Theme Management
 // ==========================================================================
-// ==========================================================================
-// Theme Management
-// ==========================================================================
-
 function initThemeToggle() {
     const themeToggle = document.getElementById('themeToggle');
-    const root = document.documentElement;
-    
-    // Get initial theme from localStorage or default to dark
-    const currentTheme = localStorage.getItem('theme') || 'dark';
-    root.setAttribute('data-theme', currentTheme);
-    
-    // Update button text based on current theme
-    updateThemeButtonText(currentTheme);
-    
-    // Add click handler
-    themeToggle.addEventListener('click', () => {
-        const newTheme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-        root.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        updateThemeButtonText(newTheme);
-    });
-}
+    if (!themeToggle) return;
 
-function updateThemeButtonText(theme) {
-    const themeToggle = document.getElementById('themeToggle');
-    themeToggle.textContent = theme === 'dark' ? '🌓 Light Mode' : '🌓 Dark Mode';
+    // Get body element
+    const body = document.body;
+    body.classList.add('dark-theme');  // Set default theme
+
+    themeToggle.addEventListener('click', () => {
+        if (body.classList.contains('dark-theme')) {
+            body.classList.remove('dark-theme');
+            body.classList.add('light-theme');
+            themeToggle.textContent = '🌓 Dark Mode';
+        } else {
+            body.classList.remove('light-theme');
+            body.classList.add('dark-theme');
+            themeToggle.textContent = '🌓 Light Mode';
+        }
+    });
 }
 
 // Add to our DOMContentLoaded event

@@ -1,39 +1,14 @@
 /* ==========================================================================
    Base Variables
    ========================================================================== */
-   :root[data-theme="dark"] {
-    /* Dark Theme (default) */
-    --bg-primary: #132A13;
-    --bg-secondary: #31572C;
-    --text-primary: #FFFFFF;
-    --text-secondary: #ECF39E;
-    --accent-primary: #ECF39E;
-    --accent-secondary: #90A955;
+   .dark-theme {
+    background-color: #132A13;
+    color: #FFFFFF;
 }
 
-:root[data-theme="light"] {
-    /* Light Theme */
-    --bg-primary: #FFFFFF;
-    --bg-secondary: #F5F5F5;
-    --text-primary: #132A13;
-    --text-secondary: #31572C;
-    --accent-primary: #31572C;
-    --accent-secondary: #4F772D;
-}
-
-:root {
-    /* Base Colors for Reference */
-    --dark-green: #132A13;
-    --hunter-green: #31572C;
-    --fern-green: #4F772D;
-    --moss-green: #90A955;
-    --mindaro: #ECF39E;
-    
-    /* UI Elements */
-    --button-radius: 40px;
-    --max-width: 1200px;
-    --border-radius: 8px;
-    --transition-speed: 0.3s;
+.light-theme {
+    background-color: #FFFFFF;
+    color: #132A13;
 }
 
 /* Apply theme colors to elements */
