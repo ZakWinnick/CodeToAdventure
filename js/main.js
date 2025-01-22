@@ -36,9 +36,29 @@ const DOM = {
 // Theme Management
 // ==========================================================================
 function initializeTheme() {
+    console.log('Initializing theme...');
+    const themeToggle = document.getElementById('themeToggle');
+    
+    if (!themeToggle) {
+        console.error('Theme toggle button not found!');
+        return;
+    }
+    
+    console.log('Theme toggle button found:', themeToggle);
+    
+    themeToggle.addEventListener('click', () => {
+        console.log('Theme toggle clicked');
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        console.log('Theme switched to:', newTheme);
+    });
+    
+    // Set initial theme
     const savedTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
-    updateThemeIcon(savedTheme);
 }
 
 function toggleTheme() {
