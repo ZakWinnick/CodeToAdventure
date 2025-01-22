@@ -89,33 +89,9 @@
     gap: 0.5rem;
 }
 
-.actions button {
-    background-color: var(--mindaro);
-    color: var(--dark-green);
-    padding: 8px 16px;
-    border-radius: 12px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: transform 0.3s ease;
-    cursor: pointer;
-    border: none;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-}
-
-.actions button:hover {
-    transform: translateY(-2px);
-    background-color: var(--moss-green);
-}
-
-.actions .delete {
-    background-color: var(--hunter-green);
-    color: var(--mindaro);
-    border: 2px solid var(--mindaro);
-}
-
-.actions .delete:hover {
-    background-color: var(--mindaro);
-    color: var(--dark-green);
+.actions .submit-button {
+    font-size: 0.9rem;
+    padding: 6px 12px;
 }
 
 @media (max-width: 768px) {
