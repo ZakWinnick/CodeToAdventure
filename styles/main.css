@@ -1,15 +1,7 @@
 /* ==========================================================================
    Base Variables
    ========================================================================== */
-   .dark-theme {
-    background-color: #132A13;
-    color: #FFFFFF;
-}
-
-.light-theme {
-    background-color: #FFFFFF;
-    color: #132A13;
-}
+/* Remove all theme-related classes */
 
 /* Apply theme colors to elements */
 body {

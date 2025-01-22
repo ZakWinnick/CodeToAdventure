@@ -99,7 +99,6 @@
             <a href="api-docs.html" class="nav-link">API Docs</a>
             <a href="changelog.html" class="nav-link">Changelog</a>
             <a href="/admin" class="nav-link">Admin</a>
-            <button type="button" id="themeToggle" class="nav-link theme-toggle">🌓 Theme</button>
         </div>
     </nav>
 
