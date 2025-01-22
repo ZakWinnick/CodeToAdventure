@@ -4,16 +4,12 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 session_start();
 
-// Check login
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header('Location: login.php');
     exit;
 }
 
 require_once '../config.php';
-
-// Fetch metrics
-$lastMonth = date('Y-m-d', strtotime('-30 days'));
 
 // Total codes and claims
 $totalQuery = "SELECT 
@@ -23,17 +19,6 @@ $totalQuery = "SELECT
 FROM codes";
 $totalResult = $conn->query($totalQuery);
 $totals = $totalResult->fetch_assoc();
-
-// Daily claims over last 30 days
-$dailyQuery = "SELECT 
-    DATE(last_used) as date,
-    COUNT(*) as claims
-FROM codes 
-WHERE last_used >= '$lastMonth' AND last_used IS NOT NULL
-GROUP BY DATE(last_used)
-ORDER BY date ASC
-LIMIT 30";
-$dailyResult = $conn->query($dailyQuery);
 
 // Top codes
 $topCodesQuery = "SELECT 
@@ -58,7 +43,6 @@ $allSubmissions = $conn->query($query);
     <title>Code To Adventure - Admin Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="dashboard.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="dashboard">
     <header class="header" role="banner">
@@ -105,36 +89,29 @@ $allSubmissions = $conn->query($query);
             </div>
         </div>
 
-        <!-- Charts -->
-        <div class="charts-grid">
-            <div class="chart-container">
-                <h3>Daily Claims (30 Days)</h3>
-                <canvas id="claimsChart"></canvas>
-            </div>
-            <div class="chart-container">
-                <h3>Top Referral Codes</h3>
-                <div class="table-container">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Code</th>
-                                <th>Uses</th>
-                                <th>Last Used</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php while ($code = $topCodesResult->fetch_assoc()): ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($code['name']); ?></td>
-                                <td><?php echo htmlspecialchars($code['referral_code']); ?></td>
-                                <td><?php echo number_format($code['use_count']); ?></td>
-                                <td><?php echo $code['last_used'] ? date('M j, Y', strtotime($code['last_used'])) : 'Never'; ?></td>
-                            </tr>
-                            <?php endwhile; ?>
-                        </tbody>
-                    </table>
-                </div>
+        <div class="chart-container">
+            <h3>Top Referral Codes</h3>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Code</th>
+                            <th>Uses</th>
+                            <th>Last Used</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($code = $topCodesResult->fetch_assoc()): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($code['name']); ?></td>
+                            <td><?php echo htmlspecialchars($code['referral_code']); ?></td>
+                            <td><?php echo number_format($code['use_count']); ?></td>
+                            <td><?php echo $code['last_used'] ? date('M j, Y', strtotime($code['last_used'])) : 'Never'; ?></td>
+                        </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -170,53 +147,5 @@ $allSubmissions = $conn->query($query);
             </table>
         </div>
     </main>
-
-    <script>
-    // Initialize chart
-    const ctx = document.getElementById('claimsChart').getContext('2d');
-    const chartData = <?php 
-        $dailyData = [];
-        while ($row = $dailyResult->fetch_assoc()) {
-            $dailyData[] = [
-                'date' => $row['date'],
-                'claims' => (int)$row['claims']
-            ];
-        }
-        echo json_encode($dailyData); 
-    ?>;
-    
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: chartData.map(d => d.date),
-            datasets: [{
-                label: 'Daily Claims',
-                data: chartData.map(d => d.claims),
-                borderColor: '#ECF39E',
-                backgroundColor: 'rgba(236, 243, 158, 0.1)',
-                tension: 0.4,
-                fill: true
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                    ticks: { color: '#fff' }
-                },
-                x: {
-                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                    ticks: { color: '#fff', maxRotation: 45, minRotation: 45 }
-                }
-            }
-        }
-    });
-    </script>
 </body>
 </html>
