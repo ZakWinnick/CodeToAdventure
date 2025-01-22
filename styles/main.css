@@ -1,7 +1,62 @@
 /* ==========================================================================
    Base Variables
    ========================================================================== */
-/* Remove all theme-related classes */
+   :root {
+    --dark-green: #132A13;
+    --hunter-green: #31572C;
+    --fern-green: #4F772D;
+    --moss-green: #90A955;
+    --mindaro: #ECF39E;
+    --text-white: #FFFFFF;
+    --button-radius: 40px;
+    --max-width: 1200px;
+    --border-radius: 8px;
+    --transition-speed: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--dark-green);
+    color: var(--text-white);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-container {
+    width: 100%;
+    background-color: var(--hunter-green);
+    padding: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.nav-content {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.nav-link {
+    color: var(--mindaro);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-weight: 600;
+    padding: 0.5rem 0;
+}
+
+.nav-link:hover {
+    color: var(--moss-green);
+}
 
 /* Apply theme colors to elements */
 body {
