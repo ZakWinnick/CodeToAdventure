@@ -2,16 +2,38 @@
    Base Variables
    ========================================================================== */
    :root {
+    /* Base Colors */
     --dark-green: #132A13;
     --hunter-green: #31572C;
     --fern-green: #4F772D;
     --moss-green: #90A955;
     --mindaro: #ECF39E;
-    --text-white: #FFFFFF;
+    
+    /* Theme Colors - Dark (default) */
+    --bg-primary: var(--dark-green);
+    --bg-secondary: var(--hunter-green);
+    --text-primary: #FFFFFF;
+    --text-secondary: var(--mindaro);
+    --accent-primary: var(--mindaro);
+    --accent-secondary: var(--moss-green);
+    --button-text: var(--dark-green);
+    
+    /* UI Elements */
     --button-radius: 40px;
     --max-width: 1200px;
     --border-radius: 8px;
     --transition-speed: 0.3s;
+}
+
+/* Light Theme */
+[data-theme="light"] {
+    --bg-primary: #F5F5F5;
+    --bg-secondary: #FFFFFF;
+    --text-primary: #132A13;
+    --text-secondary: var(--hunter-green);
+    --accent-primary: var(--hunter-green);
+    --accent-secondary: var(--fern-green);
+    --button-text: #FFFFFF;
 }
 
 /* ==========================================================================
@@ -25,12 +47,44 @@
 
 body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background-color: var(--dark-green);
-    color: var(--text-white);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     line-height: 1.6;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 2px solid var(--accent-primary);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.theme-toggle svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
 }
 
 /* ==========================================================================

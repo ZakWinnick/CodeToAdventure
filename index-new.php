@@ -46,6 +46,34 @@
     <script src="js/main.js" defer></script>
     <script src="https://tinylytics.app/embed/wWu5hJWSQ_r9BAxgohx8.js" defer></script>
 
+    <!-- Schema.org markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Code To Adventure",
+        "description": "Find and share Rivian referral codes for rewards and discounts on R1T and R1S purchases",
+        "url": "https://codetoadventure.com",
+        "applicationCategory": "ReferralService",
+        "author": {
+            "@type": "Person",
+            "name": "Zak Winnick",
+            "url": "https://winnick.io"
+        },
+        "offers": {
+            "@type": "Offer",
+            "description": "Get $500 in Gear Shop credit and 6 months of free charging at Rivian Adventure Network sites"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "650",
+            "bestRating": "5",
+            "worstRating": "1"
+        }
+    }
+    </script>
+
     <!-- Toast Notification Container -->
     <div class="toast" id="toast"></div>
 </head>
@@ -101,7 +129,7 @@
         <div class="info-section">
             <div>
                 <h3 class="info-title">How does it work?</h3>
-                <p class="info-text">When you use an owner's referral code during checkout of a qualifying R1 Shop vehicle, then take delivery – both the original owner (referrer) and new owner (referee) get rewards!</p>
+                <p class="info-text">When you use an owner's referral code during checkout of a qualifying R1 Shop vehicle, then takes delivery – both the original owner (referrer) and new owner (referee) get rewards!</p>
             </div>
 
             <div>
@@ -134,7 +162,7 @@
         </p>
         <div class="footer-links">
             <a href='https://zak.codetoadventure.com' class="footer-link" target='_blank' rel='noopener noreferrer'>Zak's Referral Code</a>
-            <a href='changelog.html' class="footer-link" target='_blank' rel='noopener noreferrer'>Version 2025.1.2</a>
+            <a href='changelog.html' class="footer-link" target='_blank' rel='noopener noreferrer'>Version 2025.1.1</a>
             <a href="mailto:admin@codetoadventure.com" class="footer-link" target='_blank' rel='noopener noreferrer'>E-mail the admin</a>
         </div>
     </footer>
@@ -155,5 +183,12 @@
             <button class="modal-close" onclick="closeModal()">Cancel</button>
         </div>
     </div>
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg class="sun-icon" viewBox="0 0 24 24">
+            <path d="M12 3v2M12 19v2M5.5 5.5l1.4 1.4M17.1 17.1l1.4 1.4M3 12h2M19 12h2M5.5 18.5l1.4-1.4M17.1 6.9l1.4-1.4M12 5a7 7 0 100 14 7 7 0 000-14z"/>
+        </svg>
+    </button>
+
 </body>
 </html>
