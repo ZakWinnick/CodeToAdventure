@@ -22,7 +22,7 @@
 
 body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background-color: var(--dark-green);
+    background-color: #132A13 !important; /* Force the dark green */
     color: var(--text-white);
     line-height: 1.6;
     min-height: 100vh;
