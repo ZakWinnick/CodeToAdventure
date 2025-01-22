@@ -63,10 +63,10 @@ body {
     right: 20px;
     background-color: var(--bg-secondary);
     color: var(--text-secondary);
-    border: 2px solid var(--accent-primary);
+    border: 1px solid var(--accent-primary);
     border-radius: 50%;
-    width: 48px;
-    height: 48px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -74,6 +74,7 @@ body {
     transition: all var(--transition-speed) ease;
     z-index: 1000;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 8px;
 }
 
 .theme-toggle:hover {
@@ -82,9 +83,13 @@ body {
 }
 
 .theme-toggle svg {
-    width: 24px;
-    height: 24px;
-    fill: currentColor;
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 /* ==========================================================================
