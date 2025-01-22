@@ -26,3 +26,32 @@
     font-size: 1.5rem;
     font-weight: bold;
 }
+
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.subsection-title {
+    color: var(--mindaro);
+    font-size: 1.1rem;
+    margin: 1.5rem 0 1rem 0;
+}
+
+.analytics-grid .metric-card {
+    padding: 1rem;
+}
+
+.analytics-grid .metric-card h4 {
+    color: var(--moss-green);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.analytics-grid .metric-card p {
+    color: var(--text-white);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
