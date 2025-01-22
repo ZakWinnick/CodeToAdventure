@@ -1,7 +1,4 @@
-/* ==========================================================================
-   Base Variables
-   ========================================================================== */
-   :root {
+:root {
     --dark-green: #132A13;
     --hunter-green: #31572C;
     --fern-green: #4F772D;
@@ -22,7 +19,7 @@
 
 body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background-color: #132A13 !important; /* Force the dark green */
+    background-color: #132A13 !important;
     color: var(--text-white);
     line-height: 1.6;
     min-height: 100vh;
@@ -30,105 +27,6 @@ body {
     flex-direction: column;
 }
 
-.nav-container {
-    width: 100%;
-    background-color: var(--hunter-green);
-    padding: 0.75rem;
-    margin-bottom: 2rem;
-}
-
-.nav-content {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 0 1rem;
-}
-
-.nav-link {
-    color: var(--mindaro);
-    text-decoration: none;
-    transition: color 0.3s ease;
-    font-weight: 600;
-    padding: 0.5rem 0;
-}
-
-.nav-link:hover {
-    color: var(--moss-green);
-}
-
-/* Apply theme colors to elements */
-body {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-}
-
-.nav-container {
-    background-color: var(--bg-secondary);
-}
-
-.nav-link, .theme-toggle {
-    color: var(--text-secondary);
-}
-
-.nav-link:hover, .theme-toggle:hover {
-    color: var(--accent-secondary);
-}
-
-.modal, .footer {
-    background-color: var(--bg-secondary);
-}
-
-.info-section > div {
-    background-color: var(--bg-secondary);
-}
-
-.form-container {
-    background-color: var(--bg-secondary);
-}
-
-/* ==========================================================================
-   Reset & Base Styles
-   ========================================================================== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    line-height: 1.6;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    transition: background-color var(--transition-speed), color var(--transition-speed);
-}
-
-/* Theme Toggle Button */
-.theme-toggle {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--mindaro);
-    font-family: inherit;
-    font-size: inherit;
-    padding: 0.5rem 0;
-    margin: 0;
-    font-weight: 600;  /* Match other nav items */
-    transition: color 0.3s ease;
-}
-
-.theme-toggle:hover {
-    color: var(--moss-green);
-}
-
-/* ==========================================================================
-   Header & Navigation
-   ========================================================================== */
 .header {
     padding: 2rem;
     display: flex;
@@ -148,6 +46,23 @@ body {
     text-decoration: none;
 }
 
+.submit-button {
+    background-color: var(--mindaro);
+    color: var(--dark-green);
+    padding: 8px 16px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    transform: translateY(-2px);
+    background-color: var(--moss-green);
+}
+
+/* Navigation Styles */
 .nav-container {
     width: 100%;
     background-color: var(--hunter-green);
@@ -176,9 +91,6 @@ body {
     color: var(--moss-green);
 }
 
-/* ==========================================================================
-   Main Content Area
-   ========================================================================== */
 .main-content {
     flex: 1;
     max-width: var(--max-width);
@@ -198,25 +110,6 @@ body {
     font-size: clamp(1.5rem, 3vw, 2.5rem);
     margin-bottom: 3rem;
     color: var(--text-white);
-}
-
-/* ==========================================================================
-   Buttons & Interactive Elements
-   ========================================================================== */
-.submit-button {
-    background-color: var(--mindaro);
-    color: var(--dark-green);
-    padding: 8px 16px;
-    border-radius: 12px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: transform 0.3s ease;
-    cursor: pointer;
-}
-
-.submit-button:hover {
-    transform: translateY(-2px);
-    background-color: var(--moss-green);
 }
 
 .referral-button {
@@ -254,14 +147,26 @@ body {
     transform: translateY(-2px);
 }
 
-/* Copy Button */
+/* Code Display */
 .code-container {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     margin-bottom: 1rem;
+    color: var(--text-white);
 }
 
+.referral-code {
+    color: var(--text-white);
+}
+
+.refresh-text {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.875rem;
+    margin-top: 1rem;
+}
+
+/* Copy Button */
 .copy-button {
     background-color: var(--mindaro);
     color: var(--dark-green);
@@ -282,6 +187,7 @@ body {
 .copy-button:hover {
     background-color: var(--moss-green);
     transform: translateY(-2px);
+    color: var(--dark-green);
 }
 
 .copy-button span {
@@ -289,9 +195,7 @@ body {
     color: inherit;
 }
 
-/* ==========================================================================
-   Info Section
-   ========================================================================== */
+/* Info Section */
 .info-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -306,13 +210,6 @@ body {
     padding: 2rem;
     border-radius: 12px;
     text-align: left;
-    transition: transform var(--transition-speed) ease, 
-                box-shadow var(--transition-speed) ease;
-}
-
-.info-section > div:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .info-title {
@@ -327,7 +224,6 @@ body {
     line-height: 1.6;
 }
 
-/* Reward Items */
 .reward-item {
     display: flex;
     align-items: flex-start;
@@ -352,9 +248,48 @@ body {
     color: var(--moss-green);
 }
 
-/* ==========================================================================
-   Modal Styles
-   ========================================================================== */
+/* Toast Notification */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--hunter-green);
+    color: var(--mindaro);
+    padding: 1rem 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 1000;
+    animation: slideUp 0.3s ease-out forwards;
+}
+
+/* Footer */
+.footer {
+    background-color: var(--hunter-green);
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.footer-link {
+    color: var(--mindaro);
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.footer-link:hover {
+    color: var(--moss-green);
+}
+
+/* Modal Styles */
 .modal {
     display: none;
     position: fixed;
@@ -402,34 +337,10 @@ body {
 .form-container input {
     padding: 0.75rem;
     font-size: 1rem;
-    border: 2px solid transparent;
+    border: none;
     border-radius: 5px;
     background-color: #fff;
     color: #000;
-    transition: border-color 0.3s ease;
-}
-
-.form-container input.input-error {
-    border-color: #ff4444;
-}
-
-.error-message {
-    color: #ff4444;
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
-    text-align: left;
-    animation: slideDown 0.3s ease-out;
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 .form-container button {
@@ -468,94 +379,17 @@ body {
     color: var(--dark-green);
 }
 
-/* ==========================================================================
-   Footer Styles
-   ========================================================================== */
-.footer {
-    background-color: var(--hunter-green);
-    padding: 2rem 1rem;
-    text-align: center;
-}
-
-.footer-links {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    margin-top: 1rem;
-}
-
-.footer-link {
-    color: var(--mindaro);
-    text-decoration: none;
-    transition: opacity 0.3s ease;
-}
-
-.footer-link:hover {
-    color: var(--moss-green);
-}
-
-/* ==========================================================================
-   Utility Classes & Animations
-   ========================================================================== */
-.toast {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: var(--hunter-green);
-    color: var(--mindaro);
-    padding: 1rem 2rem;
-    border-radius: var(--border-radius);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: none;
-    z-index: 1000;
-    animation: slideUp 0.3s ease-out forwards;
-}
-
-.loading-spinner {
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    border: 3px solid var(--mindaro);
-    border-radius: 50%;
-    border-top-color: transparent;
-    animation: spin 1s linear infinite;
-    margin: 0 auto;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
+/* Animation Keyframes */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
-}
-
-.fade-in-up {
-    animation: fadeInUp 0.4s ease-out forwards;
 }
 
 .animate-in {
     animation: fadeIn 0.6s ease-out forwards;
 }
 
-/* ==========================================================================
-   Media Queries
-   ========================================================================== */
+/* Media Queries */
 @media (max-width: 768px) {
     .info-section {
         grid-template-columns: 1fr;
