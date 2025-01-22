@@ -1,9 +1,8 @@
 <?php
-session_start();
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
+session_start();
 
 // Check login
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
@@ -11,12 +10,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit;
 }
 
-require_once 'config.php';
-
-// Get pagination parameters
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$entries_per_page = isset($_GET['entries']) ? (int)$_GET['entries'] : 25;
-$offset = ($page - 1) * $entries_per_page;
+require_once '../config.php';
 
 // Fetch metrics
 $lastMonth = date('Y-m-d', strtotime('-30 days'));
@@ -35,9 +29,10 @@ $dailyQuery = "SELECT
     DATE(last_used) as date,
     COUNT(*) as claims
 FROM codes 
-WHERE last_used >= '$lastMonth'
+WHERE last_used >= '$lastMonth' AND last_used IS NOT NULL
 GROUP BY DATE(last_used)
-ORDER BY date DESC";
+ORDER BY date ASC
+LIMIT 30";
 $dailyResult = $conn->query($dailyQuery);
 
 // Top codes
@@ -51,22 +46,9 @@ ORDER BY use_count DESC
 LIMIT 10";
 $topCodesResult = $conn->query($topCodesQuery);
 
-// Pagination
-$countResult = $conn->query("SELECT COUNT(*) AS total FROM codes");
-$totalCount = $countResult->fetch_assoc()['total'];
-$total_pages = $entries_per_page === -1 ? 1 : ceil($totalCount / $entries_per_page);
-
-// Get submissions with pagination
-if ($entries_per_page === -1) {
-    $query = "SELECT * FROM codes ORDER BY id DESC";
-    $allSubmissions = $conn->query($query);
-} else {
-    $query = "SELECT * FROM codes ORDER BY id DESC LIMIT ? OFFSET ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("ii", $entries_per_page, $offset);
-    $stmt->execute();
-    $allSubmissions = $stmt->get_result();
-}
+// Get all codes for bottom table
+$query = "SELECT * FROM codes ORDER BY id DESC";
+$allSubmissions = $conn->query($query);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,12 +57,8 @@ if ($entries_per_page === -1) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code To Adventure - Admin Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        /* Your existing admin styles here */
-        <?php include 'dashboard.css'; ?>
-    </style>
 </head>
 <body class="dashboard">
     <header class="header" role="banner">
@@ -115,7 +93,7 @@ if ($entries_per_page === -1) {
             </div>
             <div class="metric-card">
                 <h3>Active Today</h3>
-                <p class="metric-value" id="activeToday">
+                <p class="metric-value">
                     <?php 
                     $today = date('Y-m-d');
                     $activeQuery = "SELECT COUNT(*) as active FROM codes WHERE DATE(last_used) = '$today'";
@@ -163,7 +141,6 @@ if ($entries_per_page === -1) {
         <!-- All Submissions Table -->
         <div class="submissions-container">
             <h3>All Submissions</h3>
-            <?php include 'table_controls.php'; // Your existing pagination controls ?>
             <table class="data-table">
                 <thead>
                     <tr>
@@ -235,7 +212,7 @@ if ($entries_per_page === -1) {
                 },
                 x: {
                     grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                    ticks: { color: '#fff' }
+                    ticks: { color: '#fff', maxRotation: 45, minRotation: 45 }
                 }
             }
         }
