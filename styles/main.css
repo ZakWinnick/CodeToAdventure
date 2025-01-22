@@ -191,11 +191,13 @@ body {
 .hero-title {
     font-size: clamp(2.5rem, 5vw, 4rem);
     margin-bottom: 1rem;
+    color: var(--text-white);
 }
 
 .hero-subtitle {
     font-size: clamp(1.5rem, 3vw, 2.5rem);
     margin-bottom: 3rem;
+    color: var(--text-white);
 }
 
 /* ==========================================================================
