@@ -1,17 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="View the complete changelog of Code to Adventure to stay updated on all the latest features and improvements.">
-        <meta name="author" content="Zak Winnick">
-        <title>Changelog - Code to Adventure</title>
-    
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="styles/main.css">
-    </head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="View the complete changelog of Code to Adventure to stay updated on all the latest features and improvements.">
+    <meta name="author" content="Zak Winnick">
+    <title>Changelog - Code to Adventure</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --dark-green: #132A13;
+            --hunter-green: #31572C;
+            --fern-green: #4F772D;
+            --moss-green: #90A955;
+            --mindaro: #ECF39E;
+            --text-white: #FFFFFF;
+            --button-radius: 40px;
+            --max-width: 1200px;
+            --border-radius: 8px;
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--dark-green);
+            color: var(--text-white);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            background-color: var(--hunter-green);
+            width: 100%;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            color: var(--mindaro);
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-container {
+            background-color: var(--fern-green);
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .nav-link {
+            color: var(--mindaro);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            transition: background-color var(--transition-speed) ease;
+            border-radius: var(--border-radius);
+        }
+
+        .nav-link:hover {
+            background-color: var(--moss-green);
+            color: var(--dark-green);
+        }
+
+        .main-content {
+            flex: 1;
+            max-width: var(--max-width);
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+
+        .changelog {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--mindaro);
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .changelog-entry {
+            background-color: var(--hunter-green);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--moss-green);
+        }
+
+        .changelog-entry:nth-child(even) {
+            background-color: var(--fern-green);
+        }
+
+        .changelog-entry h3 {
+            color: var(--mindaro);
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .changelog-entry p {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .changelog-entry p:last-child {
+            margin-bottom: 0;
+        }
+
+        .footer {
+            background-color: var(--hunter-green);
+            color: var(--text-white);
+            padding: 1rem;
+            width: 100%;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: var(--moss-green);
+            text-decoration: none;
+            transition: color var(--transition-speed) ease;
+        }
+
+        .footer-link:hover {
+            color: var(--mindaro);
+        }
+
+        @media (max-width: 768px) {
+            .nav-content {
+                flex-wrap: wrap;
+                gap: 0.75rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .changelog-entry {
+                padding: 1rem;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
 <body>
     <header class="header">
         <a href="/" class="logo-container">Code to Adventure</a>
