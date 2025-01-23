@@ -1,54 +1,41 @@
 <?php
-include 'config.php';
+// Assuming this is part of store_code.php
 
-header('Content-Type: application/json');
+// Database connection and code storage logic
+include 'db.php';
 
-try {
-    // Get and validate the submitted data
-    $name = isset($_POST['name']) ? trim($_POST['name']) : '';
-    $referralCode = isset($_POST['referralCode']) ? trim($_POST['referralCode']) : '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = $_POST['name'] ?? '';
+    $code = $_POST['code'] ?? '';
 
-    // Validate inputs
-    if (empty($name) || empty($referralCode)) {
-        throw new Exception('Name and referral code are required');
-    }
+    if (!empty($name) && !empty($code)) {
+        // Insert into database
+        $stmt = $conn->prepare("INSERT INTO referral_codes (name, code) VALUES (?, ?)");
+        $stmt->bind_param("ss", $name, $code);
+        $stmt->execute();
 
-    // Validate referral code format (3 letters followed by 7 numbers)
-    if (!preg_match('/^[A-Z]{3}\d{7}$/', $referralCode)) {
-        throw new Exception('Invalid referral code format');
-    }
+        if ($stmt->affected_rows > 0) {
+            // Send email notification
+            $to = 'your_email@example.com'; // Replace with your email address
+            $subject = 'New Referral Code Submitted';
+            $message = "A new referral code has been submitted:\n\nName: $name\nCode: $code";
+            $headers = "From: noreply@codetoadventure.com"; // Update with your domain
 
-    // Check if code already exists
-    $checkSql = "SELECT COUNT(*) as count FROM codes WHERE referral_code = ?";
-    $checkStmt = $conn->prepare($checkSql);
-    $checkStmt->bind_param('s', $referralCode);
-    $checkStmt->execute();
-    $result = $checkStmt->get_result();
-    $row = $result->fetch_assoc();
+            // Use PHP's mail function
+            if (mail($to, $subject, $message, $headers)) {
+                echo "Code stored successfully and email sent.\n\nEntered Details:\nName: $name\n\nCode: $code";
+            } else {
+                echo "Code stored successfully but failed to send email.\n\nEntered Details:\nName: $name\n\nCode: $code";
+            }
+        } else {
+            echo "Failed to store the code.\n\nEntered Details:\nName: $name\n\nCode: $code";
+        }
 
-    if ($row['count'] > 0) {
-        throw new Exception('This referral code already exists');
-    }
-
-    // Insert the new code
-    $sql = "INSERT INTO codes (name, referral_code) VALUES (?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('ss', $name, $referralCode);
-    
-    if ($stmt->execute()) {
-        echo json_encode([
-            'success' => true,
-            'message' => 'Code submitted successfully!'
-        ]);
+        $stmt->close();
     } else {
-        throw new Exception('Error saving the code');
+        echo 'Name and code are required.';
     }
-
-} catch (Exception $e) {
-    echo json_encode([
-        'success' => false,
-        'message' => $e->getMessage()
-    ]);
 }
 
 $conn->close();
+?>
