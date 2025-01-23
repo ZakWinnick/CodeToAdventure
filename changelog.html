@@ -7,7 +7,6 @@
     <meta name="author" content="Zak Winnick">
     <title>Changelog - Code to Adventure</title>
 
-    <!-- Preload key resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -43,26 +42,29 @@
             align-items: center;
         }
 
-        .title-bar {
+        .header {
             background-color: var(--hunter-green);
             width: 100%;
             padding: 1rem 1.5rem;
-            text-align: center;
-            color: var(--mindaro);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .title-bar h1 {
-            font-size: 2rem;
+        .logo-container {
+            color: var(--mindaro);
+            text-decoration: none;
+            font-size: 1.5rem;
             font-weight: bold;
         }
 
-        .menu-bar {
+        .nav-container {
             background-color: var(--fern-green);
             width: 100%;
             padding: 0.75rem 1.5rem;
         }
 
-        .menu {
+        .nav-content {
             display: flex;
             justify-content: center;
             gap: 1.5rem;
@@ -70,7 +72,7 @@
             margin: 0 auto;
         }
 
-        .menu a {
+        .nav-link {
             color: var(--mindaro);
             text-decoration: none;
             font-weight: 600;
@@ -79,16 +81,17 @@
             border-radius: var(--border-radius);
         }
 
-        .menu a:hover {
+        .nav-link:hover {
             background-color: var(--moss-green);
             color: var(--dark-green);
         }
 
-        .content {
+        .main-content {
             flex: 1;
             max-width: var(--max-width);
             margin: 2rem auto;
             padding: 0 1.5rem;
+            width: 100%;
         }
 
         .changelog {
@@ -97,57 +100,68 @@
         }
 
         h1 {
-            text-align: center;
+            color: var(--mindaro);
             font-size: 2.5rem;
             margin-bottom: 2rem;
-            color: var(--mindaro);
+            text-align: center;
         }
 
-        .entry {
+        .changelog-entry {
+            background-color: var(--hunter-green);
             padding: 1.5rem;
             border-radius: var(--border-radius);
             margin-bottom: 1.5rem;
+            border-left: 4px solid var(--moss-green);
         }
 
-        .entry:nth-child(odd) {
-            background-color: var(--hunter-green);
-        }
-
-        .entry:nth-child(even) {
+        .changelog-entry:nth-child(even) {
             background-color: var(--fern-green);
         }
 
-        h3 {
+        .changelog-entry h3 {
             color: var(--mindaro);
-            font-size: 1.5rem;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .changelog-entry p {
             margin-bottom: 0.5rem;
+            font-size: 1rem;
         }
 
-        p {
-            font-size: 1.125rem;
-            line-height: 1.8;
+        .changelog-entry p:last-child {
+            margin-bottom: 0;
         }
 
-        footer {
+        .footer {
             background-color: var(--hunter-green);
             color: var(--text-white);
             padding: 1rem;
             width: 100%;
             text-align: center;
+            margin-top: auto;
         }
 
-        footer a {
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
             color: var(--moss-green);
             text-decoration: none;
             transition: color var(--transition-speed) ease;
         }
 
-        footer a:hover {
+        .footer-link:hover {
             color: var(--mindaro);
         }
 
         @media (max-width: 768px) {
-            .menu {
+            .nav-content {
                 flex-wrap: wrap;
                 gap: 0.75rem;
             }
@@ -156,55 +170,62 @@
                 font-size: 2rem;
             }
 
-            .entry {
+            .changelog-entry {
                 padding: 1rem;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 0.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="title-bar">
-        <h1>Code to Adventure - Changelog</h1>
-    </div>
+    <header class="header">
+        <a href="/" class="logo-container">Code to Adventure</a>
+        <a href="#" class="nav-link" onclick="showModal(); return false;">Submit Code</a>
+    </header>
 
-    <div class="menu-bar">
-        <nav class="menu">
-            <a href="index.php">Home</a>
-            <a href="submit.php">Submit Code</a>
-            <a href="api-docs.html">API Docs</a>
-            <a href="changelog.html">Changelog</a>
-        </nav>
-    </div>
+    <nav class="nav-container">
+        <div class="nav-content">
+            <a href="index.php" class="nav-link">Home</a>
+            <a href="submit.php" class="nav-link">Submit Code</a>
+            <a href="api-docs.html" class="nav-link">API Docs</a>
+            <a href="changelog.html" class="nav-link">Changelog</a>
+            <a href="/admin" class="nav-link">Admin</a>
+        </div>
+    </nav>
 
-    <div class="content">
+    <main class="main-content">
         <div class="changelog">
             <h1>Changelog</h1>
 
-            <div class="entry">
+            <div class="changelog-entry">
                 <h3>Version 2025.3 - January 22, 2025</h3>
                 <p>- Added referral code tracking for statistical purposes</p>
-                <P>- Minor performance and security improvements</P>
+                <p>- Minor performance and security improvements</p>
             </div>
 
-            <div class="entry">
+            <div class="changelog-entry">
                 <h3>Version 2025.2 - January 21, 2025</h3>
-                <P>- Added a "Get Another Code" button so you don't have to refresh the page to get a new code</P>
+                <p>- Added a "Get Another Code" button so you don't have to refresh the page to get a new code</p>
                 <p>- Changed the site infrastructure to pull out CSS and JS code and place them in their own sections</p>
                 <p>- Enhanced some visual elements, including adding icons to the rewards section</p>
             </div>
 
-            <div class="entry">
+            <div class="changelog-entry">
                 <h3>Version 2025.1.1 - January 18, 2025</h3>
-                <P>- Updated formatting of the new 'Copy Code' button to match the rest of the site</P>
+                <p>- Updated formatting of the new 'Copy Code' button to match the rest of the site</p>
             </div>
 
-            <div class="entry">
+            <div class="changelog-entry">
                 <h3>Version 2025.1 - January 17, 2025</h3>
-                <P>- Added a "Copy Code" modal that also display's referree's code</P>
+                <p>- Added a "Copy Code" modal that also display's referree's code</p>
                 <p>- Changed version numbering to new methodology (Year.Version.Fix)</p>
             </div>
 
-            <div class="entry">
+            <div class="changelog-entry">
                 <h3>Version 2024.12.28 - December 28, 2024</h3>
                 <p>- Updated color scheme</p>
                 <p>- Added a working modal dialog for code submission</p>
@@ -215,60 +236,64 @@
                 <p>- Improved user experience with cancel/submit options</p>
                 <p>- Updated referral points to reflect program changes by Rivian</p>
             </div>
-            
-            <div class="entry">
+
+            <div class="changelog-entry">
                 <h3>Version 2024.12.24 - December 24, 2024</h3>
-                <P>- Updated Admin Portal with sortable tables and pagination</P>
+                <p>- Updated Admin Portal with sortable tables and pagination</p>
             </div>
 
-            <div class="entry">
+            <div class="changelog-entry">
                 <h3>Version 2024.12.18 - December 18, 2024</h3>
-                <p>- Redesigned mobile navigation with improved layout and touch interaction, featuring a streamlined menu that keeps primary navigation items together while positioning the Admin link for easy access</p>
-                <p>- Enhanced site performance through optimized resource loading and improved error handling for database operations</p>
-                <p>- Implemented comprehensive responsive design improvements across the site, ensuring better usability on all devices while maintaining the core referral code functionality</p>
-                <p>- Updated API documentation to reflect all API calls (this was previously missing from older versions)</p>
+                <p>- Redesigned mobile navigation with improved layout and touch interaction</p>
+                <p>- Enhanced site performance through optimized resource loading</p>
+                <p>- Implemented comprehensive responsive design improvements</p>
+                <p>- Updated API documentation to reflect all API calls</p>
             </div>
 
-            <div class="entry">
+            <div class="changelog-entry">
                 <h3>Version 2024.12.11 - December 11, 2024</h3>
-                <p>- Complete refresh of the design language for the site.</p>
-                <p>- Simplified backend code for efficiency.</p>
-                <p>- Revamped admin console design, and added persistent login via browser cookies.</p>
-                <p>- Removed X Username field from Submit Code page (you're welcome...).</p>
+                <p>- Complete refresh of the design language for the site</p>
+                <p>- Simplified backend code for efficiency</p>
+                <p>- Revamped admin console design and added persistent login</p>
+                <p>- Removed X Username field from Submit Code page</p>
             </div>
 
-            <div class="entry">
+            <div class="changelog-entry">
                 <h3>Version 2024.12.10 - December 10, 2024</h3>
-                <p>- Added admin referral code banner.</p>
+                <p>- Added admin referral code banner</p>
             </div>
 
-            <div class="entry">
+            <div class="changelog-entry">
                 <h3>Version 2024.11.13 - November 13, 2024</h3>
-                <p>- Created new admin dashboard for editing and deleting entries.</p>
-                <p>- Added email notifications for new submissions.</p>
+                <p>- Created new admin dashboard for editing and deleting entries</p>
+                <p>- Added email notifications for new submissions</p>
             </div>
 
-            <div class="entry">
+            <div class="changelog-entry">
                 <h3>Version 2024.11.7 - November 7, 2024</h3>
-                <p>- Moved development to GitHub for version tracking.</p>
-                <p>- Made Twitter handle submission optional.</p>
+                <p>- Moved development to GitHub for version tracking</p>
+                <p>- Made Twitter handle submission optional</p>
             </div>
 
-            <div class="entry">
+            <div class="changelog-entry">
                 <h3>Version 2.0 - September 29, 2024</h3>
-                <p>- Updated page titles for SEO.</p>
-                <p>- Improved layout and responsiveness.</p>
-                <p>- Added random header images.</p>
-                <p>- Enhanced footer links and meta tags.</p>
+                <p>- Updated page titles for SEO</p>
+                <p>- Improved layout and responsiveness</p>
+                <p>- Added random header images</p>
+                <p>- Enhanced footer links and meta tags</p>
             </div>
         </div>
-    </div>
+    </main>
 
-    <footer>
-        &copy; <script>document.write(new Date().getFullYear());</script> 
-        <a href="https://zakwinnick.com" target="_blank">Zak Winnick</a> |
-        <a href="https://zak.codetoadventure.com" target="_blank">Zak's Referral Code</a> |
-        <a href="mailto:admin@codetoadventure.com">Contact Admin</a>
+    <footer class="footer">
+        <p>&copy; <script>document.write(new Date().getFullYear());</script> 
+            <a href="https://winnick.io" class="footer-link" target="_blank">Zak Winnick</a>
+        </p>
+        <div class="footer-links">
+            <a href="https://zak.codetoadventure.com" class="footer-link" target="_blank">Zak's Referral Code</a>
+            <a href="changelog.html" class="footer-link">Version 2025.3</a>
+            <a href="mailto:admin@codetoadventure.com" class="footer-link">Contact Admin</a>
+        </div>
     </footer>
 </body>
 </html>
