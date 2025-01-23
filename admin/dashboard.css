@@ -367,20 +367,21 @@
 /* Mobile optimization for All Submissions */
 @media (max-width: 768px) {
     .info-section > div.full-width {
-        padding: 0.5rem; /* Minimal but comfortable padding */
-        width: 85%; /* Smaller width */
-        margin: 0 auto; /* Centered */
-        border-radius: 10px; /* Slightly reduced border radius */
+        padding: 0.25rem; /* Further reduced padding */
+        width: 80%; /* Reduced width */
+        margin: 0 auto; /* Center the box */
+        border-radius: 8px; /* Slightly reduced border radius */
     }
 
     .data-table {
-        font-size: 0.75rem; /* Keep font size readable */
-        min-width: 85%; /* Slightly smaller table width */
+        font-size: 0.75rem; /* Maintain readable font size */
+        min-width: 80%; /* Adjusted table width */
     }
 
     .table-container {
         margin: 0 auto; /* Center the container */
-        padding: 0.5rem; /* Reduced padding */
-        width: 85%; /* Reduce overall width */
+        padding: 0.25rem; /* Further reduced padding */
+        width: 80%; /* Reduced width */
     }
 }
+
