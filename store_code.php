@@ -34,11 +34,21 @@ try {
     $sql = "INSERT INTO codes (name, referral_code) VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('ss', $name, $referralCode);
-    
+
     if ($stmt->execute()) {
+        // Send email notification
+        $to = 'your_email@example.com'; // Replace with your email address
+        $subject = 'New Referral Code Submitted';
+        $message = "A new referral code has been submitted:\n\nName: $name\n\nReferral Code: $referralCode";
+        $headers = "From: noreply@codetoadventure.com"; // Update with your domain
+
+        if (!mail($to, $subject, $message, $headers)) {
+            throw new Exception('Code saved, but email notification failed.');
+        }
+
         echo json_encode([
             'success' => true,
-            'message' => 'Code submitted successfully!'
+            'message' => 'Code submitted successfully! Email notification sent.'
         ]);
     } else {
         throw new Exception('Error saving the code');
