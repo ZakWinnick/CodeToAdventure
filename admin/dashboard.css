@@ -367,22 +367,23 @@
 /* Mobile optimization for All Submissions */
 @media (max-width: 768px) {
     .info-section > div.full-width {
-        padding: 0.1rem; /* Minimal padding */
-        width: 70%; /* Smaller width */
-        margin: 0 auto; /* Centered horizontally */
-        border-radius: 6px; /* Slightly sharper corners for a compact look */
+        padding: 0.1rem; /* Further reduced padding for compact size */
+        width: 65%; /* Further reduced width */
+        margin: 0 auto; /* Keep centered */
+        border-radius: 5px; /* Sharper corners for a smaller footprint */
     }
 
     .data-table {
-        font-size: 0.75rem; /* Keep text readable */
-        min-width: 70%; /* Reduce table width */
+        font-size: 0.8rem; /* Slightly larger for readability */
+        min-width: 65%; /* Shrink the table to match parent width */
     }
 
     .table-container {
-        margin: 0 auto; /* Center the container */
-        padding: 0.1rem; /* Minimal padding */
-        width: 70%; /* Smaller overall width */
+        margin: 0 auto; /* Center table container */
+        padding: 0.1rem; /* Tighten padding */
+        width: 65%; /* Keep consistent with the box size */
     }
 }
+
 
 
