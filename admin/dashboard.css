@@ -365,22 +365,22 @@
 }
 
 /* Mobile optimization for All Submissions */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
     .info-section > div.full-width {
-        padding: 1rem;
-        width: 100%;
-        margin: 0;
+        padding: 0.5rem; /* Reduced padding */
+        width: 90%; /* Reduced width */
+        margin: 0 auto; /* Center the box */
         border-radius: 12px;
     }
 
     .data-table {
-        font-size: 0.75rem;
-        min-width: 100%;
+        font-size: 0.65rem; /* Reduced font size */
+        min-width: 90%; /* Reduced table width */
     }
 
     .table-container {
-        margin: 0;
-        padding: 0;
-        width: 100%;
+        margin: 0 auto; /* Center the table */
+        padding: 0.5rem; /* Reduced padding */
+        width: 90%; /* Reduced width */
     }
 }
