@@ -60,7 +60,14 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
-    margin-bottom: 2rem;
+    margin: 2rem auto;
+    max-width: var(--max-width);
+}
+
+.info-section > div.full-width {
+    grid-column: 1 / -1;
+    max-width: var(--max-width);
+    margin: 0 auto;
 }
 
 .info-section > div {

@@ -176,6 +176,17 @@ $allSubmissions = $conn->query($query);
             </div>
 
             <div>
+                <h3 class="info-title">Recent Activity</h3>
+                <div class="table-container">
+                    <!-- Placeholder for recent activity -->
+                    <p style="color: var(--text-white);">Coming soon...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- All Submissions -->
+        <div class="info-section">
+            <div class="full-width">
                 <h3 class="info-title">All Submissions</h3>
                 <!-- Search Form -->
                 <div class="search-container">
