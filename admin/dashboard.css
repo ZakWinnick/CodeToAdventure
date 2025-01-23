@@ -365,7 +365,7 @@
 }
 
 /* Mobile optimization for All Submissions */
-@media (max-width: 768px) {
+@media (max-width: 640px) {
     .info-section > div.full-width {
         padding: 1rem;
         width: 100%;
