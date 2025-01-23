@@ -313,3 +313,24 @@
         font-size: 0.9rem;
     }
 }
+
+/* Mobile optimization for All Submissions */
+@media (max-width: 768px) {
+    .info-section > div.full-width {
+        padding: 1rem;
+        width: 100%;
+        margin: 0;
+        border-radius: 12px;
+    }
+
+    .data-table {
+        font-size: 0.75rem;
+        min-width: 100%;
+    }
+
+    .table-container {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+}
