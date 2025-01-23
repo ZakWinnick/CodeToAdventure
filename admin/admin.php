@@ -265,7 +265,7 @@ try {
                                     <td><?php echo htmlspecialchars($row['id']); ?></td>
                                     <td><?php echo htmlspecialchars($row['name']); ?></td>
                                     <td><?php echo htmlspecialchars($row['referral_code']); ?></td>
-                                    <td><?php echo number_format($row['use_count']); ?></td>
+                                    <td><?php echo number_format($row['use_count'] ?? 0); ?></td>
                                     <td>
                                         <div class="actions">
                                             <a href="edit.php?id=<?php echo $row['id']; ?>" class="edit-btn">Edit</a>
