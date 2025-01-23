@@ -2,7 +2,7 @@
 // Assuming this is part of store_code.php
 
 // Database connection and code storage logic
-include 'db.php';
+include 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'] ?? '';
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($stmt->affected_rows > 0) {
             // Send email notification
-            $to = 'your_email@example.com'; // Replace with your email address
+            $to = 'zak@codetoadventure.com'; // Replace with your email address
             $subject = 'New Referral Code Submitted';
             $message = "A new referral code has been submitted:\n\nName: $name\nCode: $code";
             $headers = "From: noreply@codetoadventure.com"; // Update with your domain
