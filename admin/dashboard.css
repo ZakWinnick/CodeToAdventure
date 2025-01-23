@@ -66,8 +66,7 @@
 
 .info-section > div.full-width {
     grid-column: 1 / -1;
-    max-width: var(--max-width);
-    margin: 0 auto;
+    width: 100%;
 }
 
 .info-section > div {
@@ -81,6 +80,30 @@
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
     color: var(--mindaro);
+}
+
+/* Analytics Grid */
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.analytics-grid .metric-card {
+    padding: 1rem;
+}
+
+.analytics-grid .metric-card h4 {
+    color: var(--mindaro);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.analytics-grid .metric-card p {
+    color: var(--text-white);
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
 /* Search */
@@ -142,6 +165,7 @@
 .data-table {
     width: 100%;
     border-collapse: collapse;
+    margin: 0 auto;
 }
 
 .data-table th,

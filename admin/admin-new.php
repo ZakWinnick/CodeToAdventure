@@ -69,6 +69,27 @@ $total_pages = ceil($totalCount / $entries_per_page);
 // Get all submissions with sorting, search, and pagination
 $query = "SELECT * FROM codes" . $search_condition . " ORDER BY $sort_column $sort_direction LIMIT $entries_per_page OFFSET $offset";
 $allSubmissions = $conn->query($query);
+
+// Calculate analytics data
+$analyticsQuery = "SELECT 
+    COUNT(*) as total_clicks,
+    COUNT(DISTINCT ip_address) as unique_visitors,
+    COUNT(CASE WHEN is_unique = 1 THEN 1 END) as unique_clicks
+FROM code_analytics";
+try {
+    $analyticsResult = $conn->query($analyticsQuery);
+    $analytics = $analyticsResult->fetch_assoc();
+    $conversionRate = $analytics['total_clicks'] > 0 
+        ? round(($analytics['unique_clicks'] / $analytics['total_clicks']) * 100, 1)
+        : 0;
+} catch (Exception $e) {
+    $analytics = [
+        'total_clicks' => 0,
+        'unique_visitors' => 0,
+        'unique_clicks' => 0
+    ];
+    $conversionRate = 0;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -150,6 +171,24 @@ $allSubmissions = $conn->query($query);
 
         <div class="info-section">
             <div>
+                <h3 class="info-title">Analytics Overview</h3>
+                <div class="analytics-grid">
+                    <div class="metric-card">
+                        <h4>Total Clicks</h4>
+                        <p><?php echo number_format($analytics['total_clicks']); ?></p>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Unique Visitors</h4>
+                        <p><?php echo number_format($analytics['unique_visitors']); ?></p>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Conversion Rate</h4>
+                        <p><?php echo $conversionRate; ?>%</p>
+                    </div>
+                </div>
+            </div>
+
+            <div>
                 <h3 class="info-title">Top Referral Codes</h3>
                 <div class="table-container">
                     <table class="data-table">
@@ -174,105 +213,99 @@ $allSubmissions = $conn->query($query);
                     </table>
                 </div>
             </div>
-
-            <div>
-                <h3 class="info-title">Recent Activity</h3>
-                <div class="table-container">
-                    <!-- Placeholder for recent activity -->
-                    <p style="color: var(--text-white);">Coming soon...</p>
-                </div>
-            </div>
         </div>
 
         <!-- All Submissions -->
-        <div class="info-section">
-            <div class="full-width">
-                <h3 class="info-title">All Submissions</h3>
-                <!-- Search Form -->
-                <div class="search-container">
-                    <form action="" method="GET" class="search-form">
-                        <input type="text" 
-                               name="search" 
-                               value="<?php echo htmlspecialchars($search); ?>" 
-                               placeholder="Search by name or code..."
-                               class="search-input">
-                        <button type="submit" class="search-button">Search</button>
-                    </form>
-                </div>
-
-                <!-- Table Controls -->
-                <div class="table-controls">
-                    <div class="entries-selector">
-                        <label for="entries">Show entries:</label>
-                        <select id="entries" onchange="changeEntries(this.value)">
-                            <option value="25" <?php echo $entries_per_page === 25 ? 'selected' : ''; ?>>25</option>
-                            <option value="50" <?php echo $entries_per_page === 50 ? 'selected' : ''; ?>>50</option>
-                            <option value="100" <?php echo $entries_per_page === 100 ? 'selected' : ''; ?>>100</option>
-                        </select>
+        <div style="max-width: calc(var(--max-width) - 4rem); margin: 0 auto;">
+            <div class="info-section">
+                <div class="full-width">
+                    <h3 class="info-title">All Submissions</h3>
+                    <!-- Search Form -->
+                    <div class="search-container">
+                        <form action="" method="GET" class="search-form">
+                            <input type="text" 
+                                   name="search" 
+                                   value="<?php echo htmlspecialchars($search); ?>" 
+                                   placeholder="Search by name or code..."
+                                   class="search-input">
+                            <button type="submit" class="search-button">Search</button>
+                        </form>
                     </div>
-                </div>
 
-                <div class="table-container">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th class="sortable <?php echo $sort_column === 'id' ? strtolower($sort_direction) : ''; ?>" 
-                                    onclick="changeSort('id')">ID</th>
-                                <th class="sortable <?php echo $sort_column === 'name' ? strtolower($sort_direction) : ''; ?>" 
-                                    onclick="changeSort('name')">Name</th>
-                                <th class="sortable <?php echo $sort_column === 'referral_code' ? strtolower($sort_direction) : ''; ?>" 
-                                    onclick="changeSort('referral_code')">Code</th>
-                                <th class="sortable <?php echo $sort_column === 'use_count' ? strtolower($sort_direction) : ''; ?>" 
-                                    onclick="changeSort('use_count')">Uses</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php while ($row = $allSubmissions->fetch_assoc()): ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($row['id']); ?></td>
-                                <td><?php echo htmlspecialchars($row['name']); ?></td>
-                                <td><?php echo htmlspecialchars($row['referral_code']); ?></td>
-                                <td><?php echo number_format($row['use_count']); ?></td>
-                                <td>
-                                    <div class="actions">
-                                        <a href="edit.php?id=<?php echo $row['id']; ?>" class="edit-btn">Edit</a>
-                                        <a href="delete.php?id=<?php echo $row['id']; ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this code?')">Delete</a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <?php endwhile; ?>
-                        </tbody>
-                    </table>
-                </div>
+                    <!-- Table Controls -->
+                    <div class="table-controls">
+                        <div class="entries-selector">
+                            <label for="entries">Show entries:</label>
+                            <select id="entries" onchange="changeEntries(this.value)">
+                                <option value="25" <?php echo $entries_per_page === 25 ? 'selected' : ''; ?>>25</option>
+                                <option value="50" <?php echo $entries_per_page === 50 ? 'selected' : ''; ?>>50</option>
+                                <option value="100" <?php echo $entries_per_page === 100 ? 'selected' : ''; ?>>100</option>
+                            </select>
+                        </div>
+                    </div>
 
-                <!-- Pagination -->
-                <?php if ($total_pages > 1): ?>
-                <div class="pagination">
-                    <?php if ($page > 1): ?>
-                        <a href="?page=1<?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">First</a>
-                        <a href="?page=<?php echo $page-1; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Previous</a>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th class="sortable <?php echo $sort_column === 'id' ? strtolower($sort_direction) : ''; ?>" 
+                                        onclick="changeSort('id')">ID</th>
+                                    <th class="sortable <?php echo $sort_column === 'name' ? strtolower($sort_direction) : ''; ?>" 
+                                        onclick="changeSort('name')">Name</th>
+                                    <th class="sortable <?php echo $sort_column === 'referral_code' ? strtolower($sort_direction) : ''; ?>" 
+                                        onclick="changeSort('referral_code')">Code</th>
+                                    <th class="sortable <?php echo $sort_column === 'use_count' ? strtolower($sort_direction) : ''; ?>" 
+                                        onclick="changeSort('use_count')">Uses</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php while ($row = $allSubmissions->fetch_assoc()): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($row['id']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['name']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['referral_code']); ?></td>
+                                    <td><?php echo number_format($row['use_count']); ?></td>
+                                    <td>
+                                        <div class="actions">
+                                            <a href="edit.php?id=<?php echo $row['id']; ?>" class="edit-btn">Edit</a>
+                                            <a href="delete.php?id=<?php echo $row['id']; ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this code?')">Delete</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <?php endwhile; ?>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <?php if ($total_pages > 1): ?>
+                    <div class="pagination">
+                        <?php if ($page > 1): ?>
+                            <a href="?page=1<?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">First</a>
+                            <a href="?page=<?php echo $page-1; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Previous</a>
+                        <?php endif; ?>
+
+                        <?php
+                        $start = max(1, $page - 2);
+                        $end = min($total_pages, $page + 2);
+                        
+                        for ($i = $start; $i <= $end; $i++): ?>
+                            <a href="?page=<?php echo $i; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>" 
+                               class="<?php echo $i === $page ? 'current' : ''; ?>">
+                                <?php echo $i; ?>
+                            </a>
+                        <?php endfor; ?>
+
+                        <?php if ($page < $total_pages): ?>
+                            <a href="?page=<?php echo $page+1; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Next</a>
+                            <a href="?page=<?php echo $total_pages; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Last</a>
+                        <?php endif; ?>
+                    </div>
                     <?php endif; ?>
-
-                    <?php
-                    $start = max(1, $page - 2);
-                    $end = min($total_pages, $page + 2);
-                    
-                    for ($i = $start; $i <= $end; $i++): ?>
-                        <a href="?page=<?php echo $i; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>" 
-                           class="<?php echo $i === $page ? 'current' : ''; ?>">
-                            <?php echo $i; ?>
-                        </a>
-                    <?php endfor; ?>
-
-                    <?php if ($page < $total_pages): ?>
-                        <a href="?page=<?php echo $page+1; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Next</a>
-                        <a href="?page=<?php echo $total_pages; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Last</a>
-                    <?php endif; ?>
                 </div>
-                <?php endif; ?>
             </div>
-        </div>
+            </div>
     </main>
 
     <script>
