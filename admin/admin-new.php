@@ -156,67 +156,71 @@ try {
         </div>
 
         <!-- Latest Submission -->
-        <div class="latest-submission">
-            <h3 class="info-title">Latest Submission</h3>
-            <div class="submission-details">
-                <?php if ($latest): ?>
-                    <p>Code: <strong><?php echo htmlspecialchars($latest['referral_code']); ?></strong></p>
-                    <p>Submitted by: <strong><?php echo htmlspecialchars($latest['name']); ?></strong></p>
-                    <p>Uses: <strong><?php echo number_format($latest['use_count']); ?></strong></p>
-                <?php else: ?>
-                    <p>No submissions yet</p>
-                <?php endif; ?>
+        <div class="metrics-section">
+            <div class="latest-submission">
+                <h3 class="info-title">Latest Submission</h3>
+                <div class="submission-details">
+                    <?php if ($latest): ?>
+                        <p>Code: <strong><?php echo htmlspecialchars($latest['referral_code']); ?></strong></p>
+                        <p>Submitted by: <strong><?php echo htmlspecialchars($latest['name']); ?></strong></p>
+                        <p>Uses: <strong><?php echo number_format($latest['use_count']); ?></strong></p>
+                    <?php else: ?>
+                        <p>No submissions yet</p>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
 
-        <div class="info-section">
-            <div>
-                <h3 class="info-title">Analytics Overview</h3>
-                <div class="analytics-grid">
-                    <div class="metric-card">
-                        <h4>Total Clicks</h4>
-                        <p><?php echo number_format($analytics['total_clicks']); ?></p>
-                    </div>
-                    <div class="metric-card">
-                        <h4>Unique Visitors</h4>
-                        <p><?php echo number_format($analytics['unique_visitors']); ?></p>
-                    </div>
-                    <div class="metric-card">
-                        <h4>Conversion Rate</h4>
-                        <p><?php echo $conversionRate; ?>%</p>
+        <div class="metrics-section">
+            <div class="info-section">
+                <div>
+                    <h3 class="info-title">Analytics Overview</h3>
+                    <div class="analytics-grid">
+                        <div class="metric-card">
+                            <h4>Total Clicks</h4>
+                            <p><?php echo number_format($analytics['total_clicks']); ?></p>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Unique Visitors</h4>
+                            <p><?php echo number_format($analytics['unique_visitors']); ?></p>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Conversion Rate</h4>
+                            <p><?php echo $conversionRate; ?>%</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div>
-                <h3 class="info-title">Top Referral Codes</h3>
-                <div class="table-container">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Code</th>
-                                <th>Uses</th>
-                                <th>Last Used</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php while ($code = $topCodesResult->fetch_assoc()): ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($code['name']); ?></td>
-                                <td><?php echo htmlspecialchars($code['referral_code']); ?></td>
-                                <td><?php echo number_format($code['use_count']); ?></td>
-                                <td><?php echo $code['last_used'] ? date('M j, Y', strtotime($code['last_used'])) : 'Never'; ?></td>
-                            </tr>
-                            <?php endwhile; ?>
-                        </tbody>
-                    </table>
+                <div>
+                    <h3 class="info-title">Top Referral Codes</h3>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Code</th>
+                                    <th>Uses</th>
+                                    <th>Last Used</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php while ($code = $topCodesResult->fetch_assoc()): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($code['name']); ?></td>
+                                    <td><?php echo htmlspecialchars($code['referral_code']); ?></td>
+                                    <td><?php echo number_format($code['use_count']); ?></td>
+                                    <td><?php echo $code['last_used'] ? date('M j, Y', strtotime($code['last_used'])) : 'Never'; ?></td>
+                                </tr>
+                                <?php endwhile; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- All Submissions -->
-        <div class="submissions-wrapper">
+        <div class="metrics-section">
             <div class="info-section">
                 <div class="full-width">
                     <h3 class="info-title">All Submissions</h3>
@@ -301,45 +305,44 @@ try {
                             <a href="?page=<?php echo $page+1; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Next</a>
                             <a href="?page=<?php echo $total_pages; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Last</a>
                         <?php endif; ?>
+                        </div>
                     </div>
-                    <?php endif; ?>
                 </div>
-                </div>
-    </main>
-
-    <script>
-    function changeEntries(value) {
-        const urlParams = new URLSearchParams(window.location.search);
-        urlParams.set('entries', value);
-        urlParams.set('page', 1);
-        if (urlParams.has('sort')) {
-            const sort = urlParams.get('sort');
-            const direction = urlParams.get('direction');
-            urlParams.set('sort', sort);
-            urlParams.set('direction', direction);
-        }
-        window.location.search = urlParams.toString();
-    }
-
-    function changeSort(column) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const currentSort = urlParams.get('sort');
-        const currentDirection = urlParams.get('direction');
+            </main>
         
-        if (currentSort === column) {
-            urlParams.set('direction', currentDirection === 'ASC' ? 'DESC' : 'ASC');
-        } else {
-            urlParams.set('sort', column);
-            urlParams.set('direction', 'ASC');
-        }
+            <script>
+            function changeEntries(value) {
+                const urlParams = new URLSearchParams(window.location.search);
+                urlParams.set('entries', value);
+                urlParams.set('page', 1);
+                if (urlParams.has('sort')) {
+                    const sort = urlParams.get('sort');
+                    const direction = urlParams.get('direction');
+                    urlParams.set('sort', sort);
+                    urlParams.set('direction', direction);
+                }
+                window.location.search = urlParams.toString();
+            }
         
-        if (urlParams.has('entries')) {
-            urlParams.set('entries', urlParams.get('entries'));
-        }
-        
-        urlParams.set('page', 1);
-        window.location.search = urlParams.toString();
-    }
-    </script>
-</body>
-</html>
+            function changeSort(column) {
+                const urlParams = new URLSearchParams(window.location.search);
+                const currentSort = urlParams.get('sort');
+                const currentDirection = urlParams.get('direction');
+                
+                if (currentSort === column) {
+                    urlParams.set('direction', currentDirection === 'ASC' ? 'DESC' : 'ASC');
+                } else {
+                    urlParams.set('sort', column);
+                    urlParams.set('direction', 'ASC');
+                }
+                
+                if (urlParams.has('entries')) {
+                    urlParams.set('entries', urlParams.get('entries'));
+                }
+                
+                urlParams.set('page', 1);
+                window.location.search = urlParams.toString();
+            }
+            </script>
+        </body>
+        </html>
