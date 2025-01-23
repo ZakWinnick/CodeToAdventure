@@ -37,7 +37,7 @@ try {
 
     if ($stmt->execute()) {
         // Send email notification
-        $to = 'your_email@example.com'; // Replace with your email address
+        $to = 'zak@codetoadventure.com'; // Replace with your email address
         $subject = 'New Referral Code Submitted';
         $message = "A new referral code has been submitted:\n\nName: $name\n\nReferral Code: $referralCode";
         $headers = "From: noreply@codetoadventure.com"; // Update with your domain
