@@ -305,44 +305,45 @@ try {
                             <a href="?page=<?php echo $page+1; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Next</a>
                             <a href="?page=<?php echo $total_pages; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Last</a>
                         <?php endif; ?>
-                        </div>
-                    </div>
+                        <?php endif; ?>
                 </div>
-            </main>
+            </div>
+        </div>
+    </main>
+
+    <script>
+    function changeEntries(value) {
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set('entries', value);
+        urlParams.set('page', 1);
+        if (urlParams.has('sort')) {
+            const sort = urlParams.get('sort');
+            const direction = urlParams.get('direction');
+            urlParams.set('sort', sort);
+            urlParams.set('direction', direction);
+        }
+        window.location.search = urlParams.toString();
+    }
+
+    function changeSort(column) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentSort = urlParams.get('sort');
+        const currentDirection = urlParams.get('direction');
         
-            <script>
-            function changeEntries(value) {
-                const urlParams = new URLSearchParams(window.location.search);
-                urlParams.set('entries', value);
-                urlParams.set('page', 1);
-                if (urlParams.has('sort')) {
-                    const sort = urlParams.get('sort');
-                    const direction = urlParams.get('direction');
-                    urlParams.set('sort', sort);
-                    urlParams.set('direction', direction);
-                }
-                window.location.search = urlParams.toString();
-            }
+        if (currentSort === column) {
+            urlParams.set('direction', currentDirection === 'ASC' ? 'DESC' : 'ASC');
+        } else {
+            urlParams.set('sort', column);
+            urlParams.set('direction', 'ASC');
+        }
         
-            function changeSort(column) {
-                const urlParams = new URLSearchParams(window.location.search);
-                const currentSort = urlParams.get('sort');
-                const currentDirection = urlParams.get('direction');
-                
-                if (currentSort === column) {
-                    urlParams.set('direction', currentDirection === 'ASC' ? 'DESC' : 'ASC');
-                } else {
-                    urlParams.set('sort', column);
-                    urlParams.set('direction', 'ASC');
-                }
-                
-                if (urlParams.has('entries')) {
-                    urlParams.set('entries', urlParams.get('entries'));
-                }
-                
-                urlParams.set('page', 1);
-                window.location.search = urlParams.toString();
-            }
-            </script>
-        </body>
-        </html>
+        if (urlParams.has('entries')) {
+            urlParams.set('entries', urlParams.get('entries'));
+        }
+        
+        urlParams.set('page', 1);
+        window.location.search = urlParams.toString();
+    }
+    </script>
+</body>
+</html>
