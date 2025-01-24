@@ -1,5 +1,6 @@
+Let me show you the complete, working main.css from scratch:
+
 ```css
-/* Base styles and variables */
 :root {
     --dark-green: #132A13;
     --hunter-green: #31572C;
@@ -13,7 +14,6 @@
     --transition-speed: 0.3s;
 }
 
-/* Reset and base styles */
 * {
     margin: 0;
     padding: 0;
@@ -28,10 +28,8 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
-/* Layout components */
 .header {
     background-color: var(--hunter-green);
     width: 100%;
@@ -46,6 +44,20 @@ body {
     text-decoration: none;
     font-size: 1.5rem;
     font-weight: bold;
+}
+
+.submit-button {
+    background-color: var(--mindaro);
+    color: var(--dark-green);
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+    font-weight: bold;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.submit-button:hover {
+    background-color: var(--moss-green);
 }
 
 .nav-container {
@@ -76,23 +88,124 @@ body {
     color: var(--dark-green);
 }
 
-/* Main Content */
 .main-content {
-    text-align: center;
-    padding: 2rem 1rem;
-    max-width: 1200px;
+    flex: 1;
+    max-width: var(--max-width);
     margin: 0 auto;
+    padding: 2rem;
     width: 100%;
+    text-align: center;
 }
 
-/* Footer */
+.hero-title {
+    font-size: 3rem;
+    color: var(--mindaro);
+    margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.referral-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background-color: var(--mindaro);
+    color: var(--dark-green);
+    text-decoration: none;
+    border-radius: var(--button-radius);
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.referral-button:hover {
+    background-color: var(--moss-green);
+}
+
+.code-container {
+    margin: 1.5rem 0;
+}
+
+.referral-code {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-right: 1rem;
+}
+
+.copy-button, .refresh-button {
+    background-color: var(--mindaro);
+    color: var(--dark-green);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.refresh-button {
+    padding: 0.75rem 1.5rem;
+    margin: 1rem 0;
+}
+
+.copy-button:hover, .refresh-button:hover {
+    background-color: var(--moss-green);
+}
+
+.refresh-text {
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+}
+
+.info-section {
+    max-width: 800px;
+    margin: 3rem auto;
+}
+
+.info-section > div {
+    margin-bottom: 2.5rem;
+}
+
+.info-title {
+    color: var(--mindaro);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.reward-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: var(--hunter-green);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.reward-icon {
+    width: 2rem;
+    height: 2rem;
+    fill: var(--mindaro);
+}
+
+.reward-text {
+    margin-bottom: 0.25rem;
+}
+
+.reward-note {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
 .footer {
     background-color: var(--hunter-green);
-    color: var(--text-white);
     padding: 1rem;
     width: 100%;
     text-align: center;
-    margin-top: auto;
 }
 
 .footer-links {
@@ -113,7 +226,6 @@ body {
     color: var(--mindaro);
 }
 
-/* Modal */
 .modal {
     display: none;
     position: fixed;
@@ -134,13 +246,6 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     text-align: center;
     margin: 2rem auto;
-    position: relative;
-}
-
-.form-container label {
-    text-align: left;
-    display: block;
-    margin-bottom: 0.5rem;
 }
 
 .form-container input {
@@ -151,6 +256,12 @@ body {
     border-radius: var(--border-radius);
     background-color: #fff;
     color: #000;
+}
+
+.form-container label {
+    display: block;
+    text-align: left;
+    margin-bottom: 0.5rem;
 }
 
 .form-container button {
@@ -177,7 +288,6 @@ body {
     color: var(--text-white) !important;
 }
 
-/* Changelog specific styles */
 .changelog {
     max-width: 800px;
     margin: 0 auto;
@@ -206,135 +316,21 @@ body {
     padding-left: 1rem;
 }
 
-/* Index page specific styles */
-.hero-title {
-    font-size: 3rem;
-    color: var(--mindaro);
-    margin-bottom: 1rem;
-}
-
-.hero-subtitle {
-    font-size: 2rem;
-    color: var(--text-white);
-    margin-bottom: 2.5rem;
-}
-
-.referral-button {
-    display: inline-block;
-    padding: 1rem 2rem;
-    background-color: var(--mindaro);
-    color: var(--dark-green);
-    text-decoration: none;
-    border-radius: var(--button-radius);
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 1.5rem;
-}
-
-.referral-button:hover {
-    background-color: var(--moss-green);
-}
-
-.code-container {
-    margin: 1.5rem 0;
-}
-
-.referral-code {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-right: 1rem;
-}
-
-.copy-button {
-    background-color: var(--mindaro);
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.copy-button:hover {
-    background-color: var(--moss-green);
-}
-
-.refresh-button {
-    background-color: var(--mindaro);
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    font-weight: bold;
-    margin: 1rem 0;
-}
-
-.refresh-button:hover {
-    background-color: var(--moss-green);
-}
-
-.refresh-text {
-    color: var(--text-white);
-    font-size: 0.9rem;
-    margin-bottom: 2rem;
-}
-
-.info-section {
-    max-width: 800px;
-    margin: 3rem auto;
-}
-
-.info-section > div {
-    margin-bottom: 2.5rem;
-}
-
-.info-title {
-    color: var(--mindaro);
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-.info-text {
-    line-height: 1.6;
-}
-
-.reward-item {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    background-color: var(--hunter-green);
-    padding: 1.5rem;
-    border-radius: var(--border-radius);
-    margin-bottom: 1rem;
-    text-align: left;
-}
-
-.reward-icon {
-    width: 2rem;
-    height: 2rem;
-    fill: var(--mindaro);
-}
-
-.reward-text {
-    margin-bottom: 0.25rem;
-}
-
-.reward-note {
-    font-size: 0.9rem;
-    opacity: 0.8;
-}
-
-/* Responsive design */
 @media (max-width: 768px) {
     .nav-content {
         flex-wrap: wrap;
         gap: 0.75rem;
     }
 
-    h1 {
+    .hero-title {
         font-size: 2rem;
     }
 
-    .modal-content {
+    .hero-subtitle {
+        font-size: 1.5rem;
+    }
+
+    .form-container {
         width: 95%;
         margin: 1rem auto;
     }
@@ -344,128 +340,4 @@ body {
         gap: 0.5rem;
     }
 }
-
-/* Main Content - Index Page */
-#main-content {
-    text-align: center;
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 2rem;
-    width: 100%;
-    background-color: var(--dark-green);
-}
-
-.hero-title {
-    font-size: 3rem;
-    color: var(--mindaro);
-    margin-bottom: 1rem;
-}
-
-.hero-subtitle {
-    font-size: 2rem;
-    color: var(--text-white);
-    margin-bottom: 2.5rem;
-}
-
-.referral-button {
-    background-color: var(--mindaro);
-    color: var(--dark-green);
-    padding: 1rem 2rem;
-    text-decoration: none;
-    border-radius: var(--button-radius);
-    font-size: 1.2rem;
-    font-weight: bold;
-    transition: background-color var(--transition-speed) ease;
-}
-
-.referral-button:hover {
-    background-color: var(--moss-green);
-}
-
-.referral-code {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-right: 1rem;
-}
-
-.copy-button {
-    background-color: var(--mindaro);
-    color: var(--dark-green);
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color var(--transition-speed) ease;
-}
-
-.copy-button:hover {
-    background-color: var(--moss-green);
-}
-
-.refresh-button {
-    background-color: var(--mindaro);
-    color: var(--dark-green);
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    font-weight: bold;
-    margin: 1rem 0;
-    transition: background-color var(--transition-speed) ease;
-}
-
-.refresh-button:hover {
-    background-color: var(--moss-green);
-}
-
-.info-section {
-    max-width: 800px;
-    margin: 3rem auto;
-}
-
-.info-title {
-    color: var(--mindaro);
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-.reward-item {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    background-color: var(--hunter-green);
-    padding: 1.5rem;
-    border-radius: var(--border-radius);
-    margin-bottom: 1rem;
-    text-align: left;
-}
-
-.reward-icon {
-    width: 2rem;
-    height: 2rem;
-    fill: var(--mindaro);
-}
-
-.reward-text {
-    margin-bottom: 0.25rem;
-}
-
-.reward-note {
-    font-size: 0.9rem;
-    opacity: 0.8;
-}
-
-.submit-button {
-    background-color: var(--mindaro);
-    color: var(--dark-green);
-    padding: 0.75rem 1.5rem;
-    text-decoration: none;
-    border-radius: var(--border-radius);
-    font-weight: bold;
-    transition: background-color var(--transition-speed) ease;
-}
-
-.submit-button:hover {
-    background-color: var(--moss-green);
-}
+```
