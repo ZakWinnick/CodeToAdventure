@@ -93,6 +93,7 @@ try {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+<?php include 'includes/head.php'; ?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -111,7 +112,12 @@ try {
     <link rel="stylesheet" href="../styles/components/_toast.css">
     <link rel="stylesheet" href="dashboard.css">
 </head>
+
 <body>
+    <?php include 'includes/header.php'; ?>
+    <?php include 'includes/nav.php'; ?>
+
+<!--<body>
     <header class="header">
         <a href="/" class="logo-container">Code To Adventure</a>
         <div class="nav-content">
@@ -120,7 +126,7 @@ try {
             <a href="../changelog.php" class="nav-link">Changelog</a>
             <a href="logout.php" class="nav-link">Logout</a>
         </div>
-    </header>
+    </header> -->
 
     <nav class="nav-container">
         <div class="nav-content">
