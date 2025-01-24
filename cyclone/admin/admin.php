@@ -100,6 +100,11 @@ try {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/main.css">
     <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="styles/base/_variables.css">
+    <link rel="stylesheet" href="styles/base/_reset.css">
+    <link rel="stylesheet" href="styles/components/_buttons.css">
+    <link rel="stylesheet" href="styles/components/_navigation.css">
+    <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
     <header class="header">
