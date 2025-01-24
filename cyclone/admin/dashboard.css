@@ -78,6 +78,19 @@
     margin-bottom: 1rem; /* Add bottom margin */
 }
 
+.info-section > div.full-width {
+    grid-column: 1 / -1;
+    width: 100%;
+    max-width: calc(var(--max-width) - 4rem);
+    margin: 0 auto;
+    margin-top: 2rem;
+}
+
+.data-table {
+    width: 100%;
+    min-width: 800px; /* Ensure table doesn't get too narrow */
+}
+
 .metrics-grid {
     margin-bottom: 3rem; /* Increase bottom margin */
 }
