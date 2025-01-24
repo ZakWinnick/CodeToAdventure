@@ -83,6 +83,55 @@ body {
     width: 100%;
 }
 
+/* Changelog specific styles */
+.changelog {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.changelog-entry {
+    background-color: var(--hunter-green);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+    border-left: 4px solid var(--moss-green);
+}
+
+.changelog-entry:nth-child(even) {
+    background-color: var(--fern-green);
+}
+
+.changelog-title {
+    color: var(--mindaro);
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.changelog-version {
+    color: var(--mindaro);
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.changelog-list {
+    list-style: none;
+}
+
+.changelog-item {
+    margin-bottom: 0.5rem;
+    padding-left: 0.75rem;
+    position: relative;
+}
+
+.changelog-item::before {
+    content: "-";
+    position: absolute;
+    left: 0;
+    margin-right: 0.25rem;
+}
+
 /* Typography */
 h1 {
     color: var(--mindaro);
@@ -161,36 +210,6 @@ input, textarea {
     border-radius: var(--border-radius);
     background-color: var(--dark-green);
     color: var(--text-white);
-}
-
-/* Changelog specific */
-.changelog-entry {
-    background-color: var(--hunter-green);
-    padding: 1.5rem;
-    border-radius: var(--border-radius);
-    margin-bottom: 1.5rem;
-    border-left: 4px solid var(--moss-green);
-}
-
-.changelog-entry:nth-child(even) {
-    background-color: var(--fern-green);
-}
-
-/* API docs specific */
-.docs-section {
-    background-color: var(--hunter-green);
-    padding: 2rem;
-    border-radius: var(--border-radius);
-    margin-bottom: 2rem;
-}
-
-.code-block {
-    background-color: var(--dark-green);
-    padding: 1rem;
-    border-radius: var(--border-radius);
-    overflow-x: auto;
-    margin: 1rem 0;
-    font-family: monospace;
 }
 
 /* Footer */
