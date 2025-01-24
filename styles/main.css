@@ -354,3 +354,39 @@ input, textarea {
     margin-bottom: 0.5rem;
     padding-left: 1rem;
 }
+.changelog-entry {
+    background-color: var(--hunter-green);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+    border-left: 4px solid var(--moss-green);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.changelog {
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.changelog-entry {
+    background-color: var(--hunter-green);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+    border-left: 4px solid var(--moss-green);
+}
+
+.changelog-entry:nth-child(even) {
+    background-color: var(--fern-green);
+}
+
+.changelog-entry h3 {
+    color: var(--mindaro);
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.changelog-entry p {
+    margin-bottom: 0.5rem;
+    padding-left: 1rem;
+}
