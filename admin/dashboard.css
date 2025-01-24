@@ -68,24 +68,35 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
-}
-
-.info-section > div.full-width {
-    grid-column: 1 / -1;
-    width: 100%;
+    margin: 2rem 0;  /* Add vertical margin */
 }
 
 .info-section > div {
     background-color: var(--hunter-green);
     padding: 2rem;
     border-radius: 12px;
-    text-align: left;
+    margin-bottom: 1rem; /* Add bottom margin */
 }
 
-.info-title {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    color: var(--mindaro);
+.info-section > div.full-width {
+    grid-column: 1 / -1;
+    width: 100%;
+    max-width: calc(var(--max-width) - 4rem);
+    margin: 0 auto;
+    margin-top: 2rem;
+}
+
+.data-table {
+    width: 100%;
+    min-width: 800px; /* Ensure table doesn't get too narrow */
+}
+
+.metrics-grid {
+    margin-bottom: 3rem; /* Increase bottom margin */
+}
+
+.latest-submission {
+    margin-bottom: 3rem; /* Add margin after latest submission */
 }
 
 /* Analytics Grid */
