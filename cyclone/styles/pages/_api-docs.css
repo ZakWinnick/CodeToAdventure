@@ -1,0 +1,104 @@
+.api-docs {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: var(--hunter-green);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.api-docs h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--mindaro);
+}
+
+.api-docs h2, 
+.api-docs h3 {
+    color: var(--mindaro);
+    font-size: 1.5rem;
+    margin: 2rem 0 1rem;
+}
+
+.api-docs p, 
+.api-docs ul {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.api-docs ul {
+    margin-left: 1.5rem;
+    list-style-type: disc;
+}
+
+.api-docs pre {
+    background-color: var(--fern-green);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    color: var(--text-white);
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.api-docs code {
+    font-family: monospace;
+    background-color: var(--fern-green);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+}
+
+.rate-limit {
+    background-color: var(--fern-green);
+    padding: 1rem;
+    border-left: 4px solid var(--moss-green);
+    margin: 20px 0;
+    border-radius: var(--border-radius);
+}
+
+.back-link {
+    display: inline-block;
+    color: var(--moss-green);
+    margin-top: 2rem;
+    text-decoration: none;
+    border: 2px solid var(--moss-green);
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    transition: all var(--transition-speed) ease;
+}
+
+.back-link:hover {
+    background-color: var(--moss-green);
+    color: var(--dark-green);
+}
+.content {
+    flex: 1;
+    max-width: var(--max-width);
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    width: 100%;
+}
+
+.api-docs {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: var(--hunter-green);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Add spacing between sections */
+.api-docs > * + * {
+    margin-top: 1.5rem;
+}
+
+/* Improve code block readability */
+.api-docs pre {
+    background-color: var(--fern-green);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    margin: 1rem 0;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
