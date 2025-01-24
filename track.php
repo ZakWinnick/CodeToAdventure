@@ -50,3 +50,7 @@ if (!empty($code)) {
     header("Location: index.php");
     exit;
 }
+
+error_log("Code: " . $code);
+error_log("IP: " . $ip);
+error_log("User Agent: " . $user_agent);

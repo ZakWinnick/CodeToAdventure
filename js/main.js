@@ -41,14 +41,12 @@ function initializeEventListeners() {
 
 // Modal Functions
 function showModal() {
-    DOM.modal.style.display = 'block';
-    DOM.modal.classList.add('animate-in');
+    DOM.modal.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
 
 function closeModal() {
-    DOM.modal.style.display = 'none';
-    DOM.modal.classList.remove('animate-in');
+    DOM.modal.classList.remove('active');
     document.body.style.overflow = 'auto';
 }
 
@@ -191,7 +189,7 @@ function updateCodeDisplay(codeData) {
     if (!DOM.codeContainer || !DOM.referralButton || !codeData) return;
 
     try {
-        DOM.referralButton.href = `https://rivian.com/configurations/list?reprCode=${encodeURIComponent(codeData.referral_code)}`;
+        DOM.referralButton.href = `track.php?code=${encodeURIComponent(codeData.referral_code)}`;
         DOM.referralButton.innerHTML = `Use ${escapeHtml(codeData.name)}'s Code`;
         
         const newHTML = `
