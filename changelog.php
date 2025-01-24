@@ -13,7 +13,7 @@ require_once 'config.php';
             <h1>Changelog</h1>
 
             <div class="entry">
-                <h3>Version 2025.3.3 - January 24, 2025</h3>
+                <h3>Version 2025.4 - January 24, 2025</h3>
                 <p>- Updated styling for all pages, including bringing the site up to modern design language standards</p>
                 <p>- Restored code tracking capabilities for admins</p>
             </div>
