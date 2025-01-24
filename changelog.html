@@ -11,11 +11,60 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/main.css">
+
+    <style>
+        .changelog {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .changelog-entry {
+            background-color: var(--hunter-green);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--moss-green);
+        }
+
+        .changelog-entry:nth-child(even) {
+            background-color: var(--fern-green);
+        }
+
+        .changelog-title {
+            color: var(--mindaro);
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .changelog-version {
+            color: var(--mindaro);
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .changelog-list {
+            list-style: none;
+        }
+
+        .changelog-item {
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .changelog-item::before {
+            content: "-";
+            position: absolute;
+            left: 0;
+        }
+    </style>
 </head>
 <body>
     <header class="header">
         <a href="/" class="logo-container">Code to Adventure</a>
-        <a href="#" class="nav-link" onclick="showModal(); return false;">Submit Code</a>
+        <a href="#" class="button" onclick="showModal(); return false;">Submit Code</a>
     </header>
 
     <nav class="nav-container">
@@ -30,88 +79,112 @@
 
     <main class="main-content">
         <div class="changelog">
-            <h1>Changelog</h1>
+            <h1 class="changelog-title">Changelog</h1>
 
             <div class="changelog-entry">
-                <h3>Version 2025.3 - January 22, 2025</h3>
-                <p>- Added referral code tracking for statistical purposes</p>
-                <p>- Minor performance and security improvements</p>
+                <h3 class="changelog-version">Version 2025.3 - January 22, 2025</h3>
+                <ul class="changelog-list">
+                    <li class="changelog-item">Added referral code tracking for statistical purposes</li>
+                    <li class="changelog-item">Minor performance and security improvements</li>
+                </ul>
             </div>
 
             <div class="changelog-entry">
-                <h3>Version 2025.2 - January 21, 2025</h3>
-                <p>- Added a "Get Another Code" button so you don't have to refresh the page to get a new code</p>
-                <p>- Changed the site infrastructure to pull out CSS and JS code and place them in their own sections</p>
-                <p>- Enhanced some visual elements, including adding icons to the rewards section</p>
+                <h3 class="changelog-version">Version 2025.2 - January 21, 2025</h3>
+                <ul class="changelog-list">
+                    <li class="changelog-item">Added a "Get Another Code" button so you don't have to refresh the page to get a new code</li>
+                    <li class="changelog-item">Changed the site infrastructure to pull out CSS and JS code and place them in their own sections</li>
+                    <li class="changelog-item">Enhanced some visual elements, including adding icons to the rewards section</li>
+                </ul>
             </div>
 
             <div class="changelog-entry">
-                <h3>Version 2025.1.1 - January 18, 2025</h3>
-                <p>- Updated formatting of the new 'Copy Code' button to match the rest of the site</p>
+                <h3 class="changelog-version">Version 2025.1.1 - January 18, 2025</h3>
+                <ul class="changelog-list">
+                    <li class="changelog-item">Updated formatting of the new 'Copy Code' button to match the rest of the site</li>
+                </ul>
             </div>
 
             <div class="changelog-entry">
-                <h3>Version 2025.1 - January 17, 2025</h3>
-                <p>- Added a "Copy Code" modal that also display's referree's code</p>
-                <p>- Changed version numbering to new methodology (Year.Version.Fix)</p>
+                <h3 class="changelog-version">Version 2025.1 - January 17, 2025</h3>
+                <ul class="changelog-list">
+                    <li class="changelog-item">Added a "Copy Code" modal that also display's referree's code</li>
+                    <li class="changelog-item">Changed version numbering to new methodology (Year.Version.Fix)</li>
+                </ul>
             </div>
 
             <div class="changelog-entry">
-                <h3>Version 2024.12.28 - December 28, 2024</h3>
-                <p>- Updated color scheme</p>
-                <p>- Added a working modal dialog for code submission</p>
-                <p>- Improved the navigation menu styling</p>
-                <p>- Made button interactions more intuitive</p>
-                <p>- Created consistent styling across all components</p>
-                <p>- Added proper mobile responsiveness</p>
-                <p>- Improved user experience with cancel/submit options</p>
-                <p>- Updated referral points to reflect program changes by Rivian</p>
+                <h3 class="changelog-version">Version 2024.12.28 - December 28, 2024</h3>
+                <ul class="changelog-list">
+                    <li class="changelog-item">Updated color scheme</li>
+                    <li class="changelog-item">Added a working modal dialog for code submission</li>
+                    <li class="changelog-item">Improved the navigation menu styling</li>
+                    <li class="changelog-item">Made button interactions more intuitive</li>
+                    <li class="changelog-item">Created consistent styling across all components</li>
+                    <li class="changelog-item">Added proper mobile responsiveness</li>
+                    <li class="changelog-item">Improved user experience with cancel/submit options</li>
+                    <li class="changelog-item">Updated referral points to reflect program changes by Rivian</li>
+                </ul>
             </div>
 
             <div class="changelog-entry">
-                <h3>Version 2024.12.24 - December 24, 2024</h3>
-                <p>- Updated Admin Portal with sortable tables and pagination</p>
+                <h3 class="changelog-version">Version 2024.12.24 - December 24, 2024</h3>
+                <ul class="changelog-list">
+                    <li class="changelog-item">Updated Admin Portal with sortable tables and pagination</li>
+                </ul>
             </div>
 
             <div class="changelog-entry">
-                <h3>Version 2024.12.18 - December 18, 2024</h3>
-                <p>- Redesigned mobile navigation with improved layout and touch interaction</p>
-                <p>- Enhanced site performance through optimized resource loading</p>
-                <p>- Implemented comprehensive responsive design improvements</p>
-                <p>- Updated API documentation to reflect all API calls</p>
+                <h3 class="changelog-version">Version 2024.12.18 - December 18, 2024</h3>
+                <ul class="changelog-list">
+                    <li class="changelog-item">Redesigned mobile navigation with improved layout and touch interaction</li>
+                    <li class="changelog-item">Enhanced site performance through optimized resource loading</li>
+                    <li class="changelog-item">Implemented comprehensive responsive design improvements</li>
+                    <li class="changelog-item">Updated API documentation to reflect all API calls</li>
+                </ul>
             </div>
 
             <div class="changelog-entry">
-                <h3>Version 2024.12.11 - December 11, 2024</h3>
-                <p>- Complete refresh of the design language for the site</p>
-                <p>- Simplified backend code for efficiency</p>
-                <p>- Revamped admin console design and added persistent login</p>
-                <p>- Removed X Username field from Submit Code page</p>
+                <h3 class="changelog-version">Version 2024.12.11 - December 11, 2024</h3>
+                <ul class="changelog-list">
+                    <li class="changelog-item">Complete refresh of the design language for the site</li>
+                    <li class="changelog-item">Simplified backend code for efficiency</li>
+                    <li class="changelog-item">Revamped admin console design and added persistent login</li>
+                    <li class="changelog-item">Removed X Username field from Submit Code page</li>
+                </ul>
             </div>
 
             <div class="changelog-entry">
-                <h3>Version 2024.12.10 - December 10, 2024</h3>
-                <p>- Added admin referral code banner</p>
+                <h3 class="changelog-version">Version 2024.12.10 - December 10, 2024</h3>
+                <ul class="changelog-list">
+                    <li class="changelog-item">Added admin referral code banner</li>
+                </ul>
             </div>
 
             <div class="changelog-entry">
-                <h3>Version 2024.11.13 - November 13, 2024</h3>
-                <p>- Created new admin dashboard for editing and deleting entries</p>
-                <p>- Added email notifications for new submissions</p>
+                <h3 class="changelog-version">Version 2024.11.13 - November 13, 2024</h3>
+                <ul class="changelog-list">
+                    <li class="changelog-item">Created new admin dashboard for editing and deleting entries</li>
+                    <li class="changelog-item">Added email notifications for new submissions</li>
+                </ul>
             </div>
 
             <div class="changelog-entry">
-                <h3>Version 2024.11.7 - November 7, 2024</h3>
-                <p>- Moved development to GitHub for version tracking</p>
-                <p>- Made Twitter handle submission optional</p>
+                <h3 class="changelog-version">Version 2024.11.7 - November 7, 2024</h3>
+                <ul class="changelog-list">
+                    <li class="changelog-item">Moved development to GitHub for version tracking</li>
+                    <li class="changelog-item">Made Twitter handle submission optional</li>
+                </ul>
             </div>
 
             <div class="changelog-entry">
-                <h3>Version 2.0 - September 29, 2024</h3>
-                <p>- Updated page titles for SEO</p>
-                <p>- Improved layout and responsiveness</p>
-                <p>- Added random header images</p>
-                <p>- Enhanced footer links and meta tags</p>
+                <h3 class="changelog-version">Version 2.0 - September 29, 2024</h3>
+                <ul class="changelog-list">
+                    <li class="changelog-item">Updated page titles for SEO</li>
+                    <li class="changelog-item">Improved layout and responsiveness</li>
+                    <li class="changelog-item">Added random header images</li>
+                    <li class="changelog-item">Enhanced footer links and meta tags</li>
+                </ul>
             </div>
         </div>
     </main>
@@ -127,7 +200,6 @@
         </div>
     </footer>
 
-    <!-- Modal Dialog -->
     <div class="modal" id="submitModal">
         <div class="modal-content">
             <h2>Submit Your Referral Code</h2>
