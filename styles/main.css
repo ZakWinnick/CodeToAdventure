@@ -390,3 +390,128 @@ input, textarea {
     margin-bottom: 0.5rem;
     padding-left: 1rem;
 }
+/* Index page specific styles */
+.hero-title {
+    font-size: 2.5rem;
+    color: var(--mindaro);
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.referral-button {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 1rem;
+    padding: 1rem 2rem;
+    background-color: var(--mindaro);
+    color: var(--dark-green);
+    text-decoration: none;
+    border-radius: var(--button-radius);
+    font-weight: bold;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.referral-button:hover {
+    background-color: var(--moss-green);
+}
+
+.code-container {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.referral-code {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-right: 1rem;
+}
+
+.copy-button, .refresh-button {
+    padding: 0.5rem 1rem;
+    background-color: var(--mindaro);
+    color: var(--dark-green);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.copy-button:hover, .refresh-button:hover {
+    background-color: var(--moss-green);
+}
+
+.refresh-button {
+    display: block;
+    margin: 1rem auto;
+}
+
+.refresh-text {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-white);
+}
+
+.info-section {
+    max-width: 800px;
+    margin: 3rem auto;
+    text-align: center;
+}
+
+.info-title {
+    color: var(--mindaro);
+    margin-bottom: 1rem;
+}
+
+.info-text {
+    margin-bottom: 2rem;
+}
+
+.reward-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    background-color: var(--hunter-green);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+}
+
+.reward-icon {
+    width: 2rem;
+    height: 2rem;
+    fill: var(--mindaro);
+    flex-shrink: 0;
+}
+
+.reward-text {
+    text-align: left;
+    margin-bottom: 0.25rem;
+}
+
+.reward-note {
+    text-align: left;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.submit-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--mindaro);
+    color: var(--dark-green);
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    font-weight: bold;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.submit-button:hover {
+    background-color: var(--moss-green);
+}
