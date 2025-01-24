@@ -12,25 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/main.css">
     
-    <style>
-        .changelog {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .changelog-entry {
-            background-color: var(--hunter-green);
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            margin-bottom: 1.5rem;
-            border-left: 4px solid var(--moss-green);
-        }
-        .changelog-entry h3 {
-            color: var(--mindaro);
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-        }
-        .changelog-entry p {
-            margin-bottom: 0.5rem;
+gin-bottom: 0.5rem;
             padding-left: 1rem;
         }
     </style>
@@ -151,22 +133,20 @@
     </footer>
 
     <div class="modal" id="submitModal">
-        <div class="modal-content">
-            <h2>Submit Your Referral Code</h2>
+        <div class="form-container">
+            <h1>Submit Your Referral Code</h1>
             <form action="store_code.php" method="POST">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
 
-                <div class="form-group">
-                    <label for="referralCode">Referral Code<br>(Just the code - ex. ZAK1452284)</label>
-                    <input type="text" id="referralCode" name="referralCode" required>
-                </div>
-
-                <button type="submit" class="button">Submit</button>
-                <button type="button" class="button" onclick="closeModal()">Cancel</button>
+                <label for="referralCode">Referral Code<br>(Just the code - ex. ZAK1452284)</label>
+                <input type="text" id="referralCode" name="referralCode" required>
+                <br>
+                <button type="submit">Submit</button>
             </form>
+            <button class="modal-close" onclick="closeModal()">Cancel</button>
         </div>
     </div>
 
