@@ -45,7 +45,7 @@
     <link rel="stylesheet" href="styles/layout/_footer.css">
     <link rel="stylesheet" href="styles/layout/_grid.css">
     <link rel="stylesheet" href="styles/pages/_api-docs.css">
-```
+    <link rel="stylesheet" href="styles/pages/_changelog.css">
 
     <!-- Schema.org markup -->
     <script type="application/ld+json">
@@ -67,5 +67,7 @@
         }
     }
     </script>
+
     <script src="https://tinylytics.app/embed/wWu5hJWSQ_r9BAxgohx8.js" defer></script>
+    
 </head>
