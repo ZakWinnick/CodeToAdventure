@@ -366,23 +366,3 @@
         grid-template-columns: 1fr;
     }
 }
-
-/* In dashboard.css */
-.header {
-    padding: 2rem;
-    background-color: var(--hunter-green);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: var(--max-width);
-    margin: 0 auto;
-    width: 100%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.nav-container {
-    background-color: var(--fern-green);
-    width: 100%;
-    padding: 0.75rem;
-    margin-bottom: 2rem;
-}
