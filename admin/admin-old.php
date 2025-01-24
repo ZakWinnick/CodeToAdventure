@@ -126,13 +126,13 @@ try {
             <a href="../changelog.php" class="nav-link">Changelog</a>
             <a href="logout.php" class="nav-link">Logout</a>
         </div>
-    </header> -->
+    </header>
 
     <nav class="nav-container">
         <div class="nav-content">
             <span class="nav-link">Admin Dashboard</span>
         </div>
-    </nav>
+    </nav> -->
 
     <main class="dashboard-content">
         <!-- Overview Cards -->
