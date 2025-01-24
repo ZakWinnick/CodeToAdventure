@@ -49,6 +49,7 @@ function closeModal() {
     DOM.modal.classList.remove('active');
     document.body.style.overflow = 'auto';
 }
+
 function handleWindowClick(event) {
     if (event.target === DOM.modal) {
         closeModal();
@@ -188,7 +189,7 @@ function updateCodeDisplay(codeData) {
     if (!DOM.codeContainer || !DOM.referralButton || !codeData) return;
 
     try {
-        DOM.referralButton.href = `https://rivian.com/configurations/list?reprCode=${encodeURIComponent(codeData.referral_code)}`;
+        DOM.referralButton.href = `track.php?code=${encodeURIComponent(codeData.referral_code)}`;
         DOM.referralButton.innerHTML = `Use ${escapeHtml(codeData.name)}'s Code`;
         
         const newHTML = `

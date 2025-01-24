@@ -22,7 +22,7 @@ ini_set('display_errors', 1);
         <h2 class="hero-subtitle">Use a referral code and get rewards!</h2>
 
         <?php if ($referral): ?>
-            <a href="https://rivian.com/configurations/list?reprCode=<?php echo htmlspecialchars($referral['referral_code']); ?>" 
+            <a href="track.php?code=<?php echo htmlspecialchars($referral['referral_code']); ?>" 
                class="referral-button" 
                target="_blank" 
                rel="noopener noreferrer">
@@ -74,14 +74,6 @@ ini_set('display_errors', 1);
    <?php include 'includes/footer.php'; ?>
     <?php include 'includes/modal.php'; ?>
     
-<script>
-  window.onload = function() {
-    if (typeof showModal === 'undefined') {
-      console.error('showModal not defined');
-    }
-  }
-</script>
-
     <script src="js/main.js"></script>
     <script src="https://tinylytics.app/embed/wWu5hJWSQ_r9BAxgohx8.js" defer></script>
 </body>
