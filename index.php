@@ -1,49 +1,17 @@
-<?php
-session_start();
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-// Security Headers
-header("Content-Security-Policy: default-src 'self'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; script-src 'self' https://tinylytics.app 'unsafe-inline'; connect-src 'self' https://tinylytics.app; img-src 'self' data:;");
-header("X-Frame-Options: DENY");
-header("X-Content-Type-Options: nosniff");
-header("Referrer-Policy: strict-origin-when-cross-origin");
-
-// CSRF Token
-if (empty($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-}
-
-// Database connection
-include 'config.php';
-
-// Get random referral code
-$sql = "SELECT * FROM codes ORDER BY RAND() LIMIT 1";
-$result = $conn->query($sql);
-$referral = $result->fetch_assoc();
-
-// Meta descriptions
-$meta_descriptions = [
-    "Get $500 in credit and 6 months free charging with Rivian referral codes.",
-    "Save on your R1T or R1S purchase with verified Rivian owner referrals.",
-    "Find instant Rivian referral codes from real owners for your purchase."
-];
-$random_description = $meta_descriptions[array_rand($meta_descriptions)];
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <?php
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Resource Hints -->
-    <link rel="preload" href="styles/main.css" as="style">
-    <link rel="preload" href="js/main.js" as="script">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style">
-    
     <!-- Primary Meta Tags -->
     <title>Code To Adventure - Random Rivian Referrals</title>
-    <meta name="description" content="<?php echo htmlspecialchars($random_description); ?>">
+    <meta name="title" content="Code To Adventure - Random Rivian Referrals">
+    <meta name="description" content="Get $500 in credit and 6 months free charging with Rivian referral codes for your R1T or R1S purchase. Find valid referral codes from real Rivian owners.">
     <meta name="keywords" content="Rivian, referral code, R1T, R1S, electric vehicles, EV rewards, electric truck, electric SUV">
     
     <!-- Open Graph / Facebook -->
@@ -63,11 +31,12 @@ $random_description = $meta_descriptions[array_rand($meta_descriptions)];
     <meta name="language" content="English">
     <link rel="canonical" href="https://codetoadventure.com/">
     
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="<?php echo $_SESSION['csrf_token']; ?>">
-    
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
     <!-- Styles -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -94,20 +63,36 @@ $random_description = $meta_descriptions[array_rand($meta_descriptions)];
         "offers": {
             "@type": "Offer",
             "description": "Get $500 in Gear Shop credit and 6 months of free charging at Rivian Adventure Network sites"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "650",
+            "bestRating": "5",
+            "worstRating": "1"
         }
     }
     </script>
 
     <!-- Toast Notification Container -->
-    <div class="toast" id="toast" role="alert" aria-hidden="true"></div>
+    <div class="toast" id="toast"></div>
 </head>
 <body>
-    <header class="header" role="banner">
+    <?php
+    include 'config.php';
+
+    // Get random referral code
+    $sql = "SELECT * FROM codes ORDER BY RAND() LIMIT 1";
+    $result = $conn->query($sql);
+    $referral = $result->fetch_assoc();
+    ?>
+
+    <header class="header">
         <a href="/" class="logo-container">Code To Adventure</a>
         <a href="#" class="submit-button" onclick="showModal(); return false;">Submit Your Code</a>
     </header>
 
-    <nav class="nav-container" role="navigation">
+    <nav class="nav-container">
         <div class="nav-content">
             <a href="index.php" class="nav-link">Home</a>
             <a href="#" class="nav-link" onclick="showModal(); return false;">Submit Code</a>
@@ -117,12 +102,12 @@ $random_description = $meta_descriptions[array_rand($meta_descriptions)];
         </div>
     </nav>
 
-    <main id="main-content" class="main-content" role="main">
+    <main class="main-content">
         <h1 class="hero-title">Buying a Rivian?</h1>
         <h2 class="hero-subtitle">Use a referral code and get rewards!</h2>
 
         <?php if ($referral): ?>
-            <a href="track.php?code=<?php echo htmlspecialchars($referral['referral_code']); ?>" 
+            <a href="https://rivian.com/configurations/list?reprCode=<?php echo htmlspecialchars($referral['referral_code']); ?>" 
                class="referral-button" 
                target="_blank" 
                rel="noopener noreferrer">
@@ -171,7 +156,7 @@ $random_description = $meta_descriptions[array_rand($meta_descriptions)];
         </div>
     </main>
 
-    <footer class="footer" role="contentinfo">
+    <footer class="footer">
         <p>&copy; <span id="currentYear"></span> 
             <a href='https://winnick.io' class="footer-link" target='_blank' rel='noopener noreferrer'>Zak Winnick</a>
         </p>
@@ -183,12 +168,10 @@ $random_description = $meta_descriptions[array_rand($meta_descriptions)];
     </footer>
 
     <!-- Modal Dialog -->
-    <div class="modal" id="submitModal" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal" id="submitModal">
         <div class="form-container">
-            <h1 id="modalTitle">Submit Your Referral Code</h1>
+            <h1>Submit Your Referral Code</h1>
             <form action="store_code.php" method="POST">
-                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-                
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" required>
 
@@ -200,5 +183,7 @@ $random_description = $meta_descriptions[array_rand($meta_descriptions)];
             <button class="modal-close" onclick="closeModal()">Cancel</button>
         </div>
     </div>
+
+
 </body>
 </html>
