@@ -13,7 +13,7 @@ try {
         throw new Exception('Name and referral code are required');
     }
 
-    // Validate referral code format (at least 3 letters and at least 7 numbers, no length limit)
+    // Validate referral code format (at least 3 letters and at least 7 numbers)
     if (!preg_match('/^(?=(?:.*[A-Za-z]){3,})(?=(?:.*\d){7,})[A-Za-z0-9]+$/', $referralCode)) {
         throw new Exception('Invalid referral code format. The code must have at least 3 letters and 7 numbers.');
     }
@@ -37,10 +37,10 @@ try {
 
     if ($stmt->execute()) {
         // Send email notification
-        $to = 'zak@codetoadventure.com'; // Replace with your email address
+        $to = 'zak@codetoadventure.com';
         $subject = 'New Referral Code Submitted';
         $message = "A new referral code has been submitted:\n\nName: $name\n\nReferral Code: $referralCode";
-        $headers = "From: noreply@codetoadventure.com"; // Update with your domain
+        $headers = "From: noreply@codetoadventure.com";
 
         if (!mail($to, $subject, $message, $headers)) {
             throw new Exception('Code saved, but email notification failed.');
