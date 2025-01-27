@@ -14,7 +14,7 @@ require_once 'config.php';
 
             <div class="entry">
                 <h3>Version 2025.4.1 - January 27, 2025</h3>
-                <p>- Fixed an issue where some referral codes were being rejected due to regex issues</p>
+                <p>- Fixed an issue where some referral codes were being rejected due to regex issues (thanks to Zach for the report!)</p>
             </div>
 
             <div class="entry">
