@@ -49,7 +49,7 @@ require_once 'config.php';
 
             <div class="entry">
                 <h3>Version 2025.1 - January 17, 2025</h3>
-                <p>- Added a "Copy Code" modal that also display's referree's code</p>
+                <p>- Added a "Copy Code" modal that also displays referree's code</p>
                 <p>- Changed version numbering to new methodology (Year.Version.Fix)</p>
             </div>
 
