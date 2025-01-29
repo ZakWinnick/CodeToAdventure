@@ -13,6 +13,11 @@ require_once 'config.php';
             <h1>Changelog</h1>
 
             <div class="entry">
+                <h3>Version 2025.4.2 - January 29, 2025</h3>
+                <p>- Updated code validation to look for 7 or more numbers to match new referral codes being issued by Rivian</p>
+            </div>
+
+            <div class="entry">
                 <h3>Version 2025.4.1 - January 27, 2025</h3>
                 <p>- Fixed an issue where some referral codes were being rejected due to regex issues (thanks to Zach for the report!)</p>
             </div>

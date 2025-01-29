@@ -14,10 +14,10 @@
                     id="referralCode" 
                     name="referralCode" 
                     placeholder="Ex: ZAK1452284"
-                    pattern="(?=(?:.*[A-Za-z]){3,})(?=(?:.*\d){7,})[A-Za-z0-9]+"
-                    title="Code must contain at least 3 letters and 7 numbers"
+                    pattern="(?=(?:.*[A-Za-z]){3})(?=(?:.*\d){7,})[A-Za-z0-9]+"
+                    title="Code must contain 3 letters and at least 7 numbers"
                     required
-                >
+                    >
             </div>
 
             <button type="submit">Submit Code</button>

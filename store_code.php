@@ -14,8 +14,8 @@ try {
     }
 
     // Validate referral code format (at least 3 letters and at least 7 numbers)
-    if (!preg_match('/^(?=(?:.*[A-Za-z]){3,})(?=(?:.*\d){7,})[A-Za-z0-9]+$/', $referralCode)) {
-        throw new Exception('Invalid referral code format. The code must have at least 3 letters and 7 numbers.');
+    if (!preg_match('/^(?=(?:.*[A-Za-z]){3})(?=(?:.*\d){7,})[A-Za-z0-9]+$/', $referralCode)) {
+        throw new Exception('Invalid referral code format. The code must have 3 letters and at least 7 numbers.');
     }
 
     // Check if code already exists
