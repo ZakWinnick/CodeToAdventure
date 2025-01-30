@@ -79,9 +79,9 @@ function validateForm(name, code) {
     }
 
     // Updated regex to accept 3 or more letters and 7 or more numbers
-    const codeRegex = /^(?=(?:.*[A-Za-z]){3,})(?=(?:.*\d){7,})[A-Za-z0-9]+$/;
+    const codeRegex = /^(?=(?:.*[A-Za-z]){2,})(?=(?:.*\d){7,})[A-Za-z0-9]+$/;
     if (!codeRegex.test(code)) {
-        showInputError(codeInput, 'Please enter a valid referral code (must contain at least 3 letters and 7 numbers)');
+        showInputError(codeInput, 'Please enter a valid referral code (must contain at least 2 letters and 7 numbers)');
         isValid = false;
     } else {
         clearInputError(codeInput);
