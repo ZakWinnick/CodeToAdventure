@@ -9,6 +9,28 @@ define('TWITTER_API_SECRET', $creds['TWITTER_API_SECRET']);
 define('TWITTER_ACCESS_TOKEN', $creds['TWITTER_ACCESS_TOKEN']);
 define('TWITTER_ACCESS_TOKEN_SECRET', $creds['TWITTER_ACCESS_TOKEN_SECRET']);
 
+// Near the top of your OAuth setup, add:
+$url = 'https://api.twitter.com/1.1/statuses/update.json';
+$oauth_nonce = time();
+$oauth_timestamp = time();
+
+$oauth_params = [
+    'oauth_consumer_key' => TWITTER_API_KEY,
+    'oauth_nonce' => $oauth_nonce,
+    'oauth_signature_method' => 'HMAC-SHA1',
+    'oauth_timestamp' => $oauth_timestamp,
+    'oauth_token' => TWITTER_ACCESS_TOKEN,
+    'oauth_version' => '1.0',
+    'status' => $tweetText
+];
+
+// Add this debugging
+echo "=== Debug Info ===\n";
+echo "API Key: " . substr(TWITTER_API_KEY, 0, 8) . "...\n";
+echo "Access Token: " . substr(TWITTER_ACCESS_TOKEN, 0, 8) . "...\n";
+echo "Nonce: " . $oauth_nonce . "\n";
+echo "Timestamp: " . $oauth_timestamp . "\n\n";
+
 // Check if we've hit the daily limit
 $today = date('Y-m-d');
 $statsQuery = "SELECT * FROM tweet_stats WHERE date = ? LIMIT 1";
