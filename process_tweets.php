@@ -24,6 +24,7 @@ require 'twitteroauth/src/Token.php';
 require 'twitteroauth/src/TwitterOAuthException.php';
 require 'twitteroauth/src/TwitterOAuth.php';
 require 'twitteroauth/src/Util.php';
+require 'twitteroauth/src/Util/JsonDecoder.php'; // Fix missing JsonDecoder class
 
 // Manually include CaBundle to fix missing class error
 if (!file_exists(__DIR__ . '/twitteroauth/vendor/composer/ca-bundle/src/CaBundle.php')) {
