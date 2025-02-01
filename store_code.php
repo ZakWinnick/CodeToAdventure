@@ -6,11 +6,14 @@ header('Content-Type: application/json');
 header('Cache-Control: no-cache, must-revalidate');
 header('X-Content-Type-Options: nosniff');
 
-// Twitter OAuth 1.0a credentials
-define('TWITTER_API_KEY', 'Rfsxc7fp74xv6veWu5Qg6ShuX');
-define('TWITTER_API_SECRET', 'KeekQIvrQh9oC5EOfU8jmLfsUpqr9wJjDqHm36L3caTU7CQIy3');
-define('TWITTER_ACCESS_TOKEN', '1885423097593135104-Ag11joEOiSlNwyqUB2S1D7waqvx31d');
-define('TWITTER_ACCESS_TOKEN_SECRET', '3RWX9XdbSUoZF3K4bVvW5YIiae5AgyMuX2HvjbvIjwfr8');
+// Load credentials from an external file
+$creds = require __DIR__ . '/credentials.php';
+
+define('TWITTER_API_KEY', $creds['TWITTER_API_KEY']);
+define('TWITTER_API_SECRET', $creds['TWITTER_API_SECRET']);
+define('TWITTER_ACCESS_TOKEN', $creds['TWITTER_ACCESS_TOKEN']);
+define('TWITTER_ACCESS_TOKEN_SECRET', $creds['TWITTER_ACCESS_TOKEN_SECRET']);
+
 
 /**
  * Generate an OAuth 1.0a signature.
