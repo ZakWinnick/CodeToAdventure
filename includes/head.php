@@ -26,7 +26,7 @@
     <link rel="canonical" href="https://codetoadventure.com/">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/favicon.png">
     
     <!-- Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
