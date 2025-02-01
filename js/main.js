@@ -118,12 +118,11 @@ async function submitForm(formData) {
     
     // Check if already submitting
     if (submitButton.disabled) {
-        console.log('Form is already being submitted');
+        showToast('Form submission in progress...');
         return;
     }
 
     try {
-        // Disable submit button and show loading state
         submitButton.disabled = true;
         submitButton.textContent = 'Submitting...';
 
@@ -131,22 +130,21 @@ async function submitForm(formData) {
             method: 'POST',
             body: formData,
             headers: {
-                'Cache-Control': 'no-cache'
+                'Cache-Control': 'no-cache',
+                'Pragma': 'no-cache'
             }
         });
 
-        let data;
-        try {
-            data = await response.json();
-        } catch (e) {
-            console.error('Error parsing JSON response:', e);
-            throw new Error('Server response was not in the expected format');
-        }
+        const data = await response.json();
 
         if (data.success) {
-            showToast('Code submitted successfully!');
+            showToast(data.message);
             closeModal();
             DOM.form.reset();
+            // Refresh the page after successful submission
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
         } else {
             showToast(data.message || 'Error submitting code. Please try again.');
         }
@@ -154,7 +152,6 @@ async function submitForm(formData) {
         console.error('Form submission error:', error);
         showToast('Error submitting code. Please try again.');
     } finally {
-        // Short delay before re-enabling the button to prevent accidental double-clicks
         setTimeout(() => {
             submitButton.disabled = false;
             submitButton.textContent = 'Submit Code';
