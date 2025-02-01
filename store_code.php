@@ -54,12 +54,12 @@ function postToTwitter($name, $referralCode) {
         // Use the v2 endpoint
         $url = 'https://api.twitter.com/2/tweets';
         
-        // Craft the tweet message (you can adjust formatting as needed)
+        // Craft the tweet message without the emoji
         $rivianShopUrl = "https://rivian.com/configurations/list?reprCode=" . urlencode($referralCode);
         $tweetText = "New Rivian referral code available!\n\n";
         $tweetText .= "Use {$name}'s code for \$500 in credit + 6 months free charging!\n\n";
-        $tweetText .= " . $rivianShopUrl . "\n\n";
-        $tweetText .= "#Rivian #R1T #R1S";"
+        $tweetText .= $rivianShopUrl . "\n\n";
+        $tweetText .= "#Rivian #R1T #R1S";
         
         // Generate OAuth parameters (body parameters are NOT included for JSON)
         $oauth_nonce = md5(uniqid(rand(), true));
@@ -163,7 +163,7 @@ if (isset($_GET['test_twitter'])) {
     // Use the v2 endpoint for testing
     $url = 'https://api.twitter.com/2/tweets';
     
-    // Craft a test tweet
+    // Craft a test tweet without emoji
     $tweetText = "Test tweet from Code To Adventure " . date('Y-m-d H:i:s');
     
     // Generate OAuth parameters (again, do NOT include body parameters in the signature)
