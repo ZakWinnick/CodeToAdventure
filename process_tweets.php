@@ -85,14 +85,14 @@ echo "Response Headers: " . json_encode($headers) . "\n";
 
 // Convert and display the correct 24-hour rate limit reset time
 if (isset($headers['x-user-limit-24hour-reset'])) {
-    $reset_timestamp = (int) $headers['x-user-limit-24hour-reset'];
-    if ($reset_timestamp > 0) {
-        $reset_time = date('Y-m-d H:i:s', $reset_timestamp);
+    $reset_timestamp = trim($headers['x-user-limit-24hour-reset']);
+    if (is_numeric($reset_timestamp)) {
+        $reset_time = date('Y-m-d H:i:s', (int) $reset_timestamp);
         echo "24-hour rate limit resets at: $reset_time\n";
         error_log("24-hour rate limit resets at: $reset_time");
     } else {
-        echo "Invalid timestamp received for reset time.\n";
-        error_log("Invalid timestamp received for reset time.");
+        echo "Invalid timestamp received for reset time: $reset_timestamp\n";
+        error_log("Invalid timestamp received for reset time: $reset_timestamp");
     }
 } else {
     echo "24-hour rate limit reset time not available from headers.\n";
