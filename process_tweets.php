@@ -13,17 +13,24 @@ if (!file_exists(__DIR__ . '/twitteroauth/src/TwitterOAuth.php')) {
     die("ERROR: TwitterOAuth.php not found!");
 }
 
-// Manually include TwitterOAuth files in correct order
+// Manually include TwitterOAuth and its dependencies
 require 'twitteroauth/src/Config.php';
 require 'twitteroauth/src/Consumer.php';
 require 'twitteroauth/src/SignatureMethod.php'; // Must be included before HmacSha1
 require 'twitteroauth/src/HmacSha1.php';
 require 'twitteroauth/src/Request.php';
 require 'twitteroauth/src/Response.php';
-require 'twitteroauth/src/Token.php'; // Added to fix missing class error
+require 'twitteroauth/src/Token.php';
 require 'twitteroauth/src/TwitterOAuthException.php';
 require 'twitteroauth/src/TwitterOAuth.php';
 require 'twitteroauth/src/Util.php';
+
+// Manually include CaBundle to fix missing class error
+if (!file_exists(__DIR__ . '/twitteroauth/vendor/composer/ca-bundle/src/CaBundle.php')) {
+    error_log("ERROR: CaBundle.php not found!");
+    die("ERROR: CaBundle.php not found! Please download and place it in twitteroauth/vendor/composer/ca-bundle/");
+}
+require 'twitteroauth/vendor/composer/ca-bundle/src/CaBundle.php';
 
 use Abraham\TwitterOAuth\TwitterOAuth;
 
