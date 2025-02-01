@@ -15,6 +15,7 @@ require_once 'config.php';
             <div class="entry">
                 <h3>Version 2025.5,1 - February 1, 2025</h3>
                 <p>- Fixed code to schedule X posts for every 4 hours to work around X API limits</p>
+                <p>- Added a new favicon to the header</p>
             </div>
 
             <div class="entry">
