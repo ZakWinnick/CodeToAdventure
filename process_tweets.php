@@ -83,9 +83,10 @@ $headers = $connection->getLastXHeaders();
 error_log("All Response Headers: " . json_encode($headers));
 echo "Response Headers: " . json_encode($headers) . "\n";
 
-// Get the correct rate limit reset time and remaining tweets
+// Convert and display the correct 24-hour rate limit reset time
 if (isset($headers['x-user-limit-24hour-reset'])) {
-    $reset_time = date('Y-m-d H:i:s', $headers['x-user-limit-24hour-reset']);
+    $reset_timestamp = (int)$headers['x-user-limit-24hour-reset'];
+    $reset_time = date('Y-m-d H:i:s', $reset_timestamp);
     echo "24-hour rate limit resets at: $reset_time\n";
     error_log("24-hour rate limit resets at: $reset_time");
 } else {
