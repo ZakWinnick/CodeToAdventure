@@ -80,6 +80,9 @@ if (isset($auth_response->errors)) {
 
 // Check Twitter API Rate Limits from headers
 $headers = $connection->getLastXHeaders();
+error_log("All Response Headers: " . json_encode($headers));
+echo "Response Headers: " . json_encode($headers) . "\n";
+
 if (isset($headers['x-rate-limit-reset'])) {
     $reset_time = date('Y-m-d H:i:s', $headers['x-rate-limit-reset']);
     echo "Rate limit resets at: $reset_time\n";
