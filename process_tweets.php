@@ -20,6 +20,7 @@ require 'twitteroauth/src/SignatureMethod.php'; // Must be included before HmacS
 require 'twitteroauth/src/HmacSha1.php';
 require 'twitteroauth/src/Request.php';
 require 'twitteroauth/src/Response.php';
+require 'twitteroauth/src/Token.php'; // Added to fix missing class error
 require 'twitteroauth/src/TwitterOAuthException.php';
 require 'twitteroauth/src/TwitterOAuth.php';
 require 'twitteroauth/src/Util.php';
