@@ -14,7 +14,7 @@ require_once 'config.php';
 
             <div class="entry">
                 <h3>Version 2025.5 - January 31, 2025</h3>
-                <p>- Added a feature where every submitted code is now available via X - <a href="https://x.com/codetoadventure" target="_blank">@CodeToAdventure</a></p>
+                <p>- Added a feature where every submitted code is now available via X - (@CodeToAdventure)</p>
             </div>
 
             <div class="entry">
