@@ -3,7 +3,18 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 include 'config.php';
-require 'twitteroauth/src/autoload.php';
+
+// Manually include TwitterOAuth files since Composer isn't available
+require 'twitteroauth/src/Config.php';
+require 'twitteroauth/src/Consumer.php';
+require 'twitteroauth/src/HmacSha1.php';
+require 'twitteroauth/src/Request.php';
+require 'twitteroauth/src/Response.php';
+require 'twitteroauth/src/SignatureMethod.php';
+require 'twitteroauth/src/TwitterOAuthException.php';
+require 'twitteroauth/src/TwitterOAuth.php';
+require 'twitteroauth/src/Util.php';
+
 use Abraham\TwitterOAuth\TwitterOAuth;
 
 // Verify database connection
@@ -80,7 +91,7 @@ $tweetText = "🚙 New Rivian Referral Codes - {$timeOfDay} Update\n\n";
 foreach ($codes as $index => $code) {
     $tweetText .= ($index + 1) . ". {$code['name']}: {$code['referral_code']}\n";
 }
-$tweetText .= "\n➡️ Visit: codetoadventure.com\n#Rivian #R1T #R1S";
+tweetText .= "\n➡️ Visit: codetoadventure.com\n#Rivian #R1T #R1S";
 
 // Post to Twitter using OAuth 1.0a
 $post_response = $connection->post("statuses/update", ["status" => $tweetText]);
