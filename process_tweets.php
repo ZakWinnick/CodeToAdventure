@@ -52,7 +52,7 @@ define('TWITTER_ACCESS_TOKEN_SECRET', $creds['TWITTER_ACCESS_TOKEN_SECRET']);
 echo "API Key: " . substr(TWITTER_API_KEY, 0, 5) . "...\n";
 echo "Access Token: " . substr(TWITTER_ACCESS_TOKEN, 0, 5) . "...\n";
 
-// Authenticate using API v2 (Fix for 404 error)
+// Authenticate using API v2
 $connection = new TwitterOAuth(
     TWITTER_API_KEY,
     TWITTER_API_SECRET,
@@ -78,8 +78,8 @@ if (isset($auth_response->errors)) {
     die("Authentication error: " . json_encode($auth_response->errors));
 }
 
-// Check Twitter API Rate Limits
-$rate_limits = $connection->get("application/rate_limit_status");
+// Check Twitter API Rate Limits before posting
+$rate_limits = $connection->get("application/rate_limit_status", ["resources" => "statuses"]);
 echo "Rate Limit Status: " . json_encode($rate_limits) . "\n";
 error_log("Rate Limit Status: " . json_encode($rate_limits));
 
@@ -125,6 +125,13 @@ $tweetText .= "\n➡️ Visit: codetoadventure.com\n#Rivian #R1T #R1S";
 
 // Post to Twitter using API v2 endpoint
 $post_response = $connection->post("tweets", ["text" => $tweetText]);
+if ($connection->getLastHttpCode() == 429) {
+    echo "Rate limit reached. Waiting 15 minutes...\n";
+    error_log("Rate limit reached. Sleeping for 900 seconds.");
+    sleep(900); // Wait for 15 minutes before retrying
+    $post_response = $connection->post("tweets", ["text" => $tweetText]);
+}
+
 echo "Post Response: " . json_encode($post_response) . "\n";
 error_log("Post Response: " . json_encode($post_response));
 
