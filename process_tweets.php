@@ -52,7 +52,7 @@ define('TWITTER_ACCESS_TOKEN_SECRET', $creds['TWITTER_ACCESS_TOKEN_SECRET']);
 echo "API Key: " . substr(TWITTER_API_KEY, 0, 5) . "...\n";
 echo "Access Token: " . substr(TWITTER_ACCESS_TOKEN, 0, 5) . "...\n";
 
-// Authenticate using OAuth 1.0a
+// Authenticate using API v2 (Fix for 404 error)
 $connection = new TwitterOAuth(
     TWITTER_API_KEY,
     TWITTER_API_SECRET,
@@ -65,8 +65,8 @@ if (!$connection) {
     die("Failed to initialize TwitterOAuth.");
 }
 
-// Test API authentication
-$auth_response = $connection->get("account/verify_credentials");
+// Use Twitter API v2 for authentication
+$auth_response = $connection->get("users/me");
 echo "Authentication Test Response: " . json_encode($auth_response) . "\n";
 error_log("Auth response: " . json_encode($auth_response));
 
@@ -123,27 +123,12 @@ foreach ($codes as $index => $code) {
 }
 $tweetText .= "\n➡️ Visit: codetoadventure.com\n#Rivian #R1T #R1S";
 
-// Post to Twitter using OAuth 1.0a
-$post_response = $connection->post("statuses/update", ["status" => $tweetText]);
+// Post to Twitter using API v2 endpoint
+$post_response = $connection->post("tweets", ["text" => $tweetText]);
 echo "Post Response: " . json_encode($post_response) . "\n";
 error_log("Post Response: " . json_encode($post_response));
 
 echo "Last HTTP Code: " . $connection->getLastHttpCode() . "\n";
 error_log("Last HTTP Code: " . $connection->getLastHttpCode());
-
-if (isset($post_response->id_str)) {
-    $tweet_id = $post_response->id_str;
-    $batch_id = uniqid();
-    foreach ($codes as $code) {
-        $updateSql = "UPDATE pending_tweets SET tweeted = 1, tweet_id = ?, batch_id = ?, last_attempt = NOW() WHERE id = ?";
-        $updateStmt = $conn->prepare($updateSql);
-        $updateStmt->bind_param('ssi', $tweet_id, $batch_id, $code['id']);
-        $updateStmt->execute();
-    }
-    $conn->query("UPDATE tweet_stats SET tweets_sent = tweets_sent + 1, last_tweet_time = NOW() WHERE date = '$today'");
-    echo "Successfully posted tweet with ID: " . $tweet_id . "\n";
-} else {
-    echo "Failed to post tweet.\n";
-}
 
 $conn->close();
