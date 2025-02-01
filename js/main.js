@@ -78,7 +78,6 @@ function validateForm(name, code) {
         clearInputError(nameInput);
     }
 
-    // Updated regex to accept 3 or more letters and 7 or more numbers
     const codeRegex = /^(?=(?:.*[A-Za-z]){2,})(?=(?:.*\d){7,})[A-Za-z0-9]+$/;
     if (!codeRegex.test(code)) {
         showInputError(codeInput, 'Please enter a valid referral code (must contain at least 2 letters and 7 numbers)');
@@ -116,6 +115,13 @@ function clearInputError(input) {
 
 async function submitForm(formData) {
     const submitButton = DOM.form.querySelector('button[type="submit"]');
+    
+    // Check if already submitting
+    if (submitButton.disabled) {
+        console.log('Form is already being submitted');
+        return;
+    }
+
     try {
         // Disable submit button and show loading state
         submitButton.disabled = true;
@@ -123,7 +129,10 @@ async function submitForm(formData) {
 
         const response = await fetch(CONFIG.API_ENDPOINTS.STORE_CODE, {
             method: 'POST',
-            body: formData
+            body: formData,
+            headers: {
+                'Cache-Control': 'no-cache'
+            }
         });
 
         let data;
@@ -145,9 +154,11 @@ async function submitForm(formData) {
         console.error('Form submission error:', error);
         showToast('Error submitting code. Please try again.');
     } finally {
-        // Re-enable submit button and restore text
-        submitButton.disabled = false;
-        submitButton.textContent = 'Submit Code';
+        // Short delay before re-enabling the button to prevent accidental double-clicks
+        setTimeout(() => {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Submit Code';
+        }, 1000);
     }
 }
 
@@ -158,7 +169,7 @@ async function copyCode(code) {
     
     try {
         await navigator.clipboard.writeText(code);
-        button.innerHTML = '<span>?</span> Copied!';
+        button.innerHTML = '<span>⧉</span> Copied!';
         showToast('Code copied to clipboard!');
         
         setTimeout(() => {
@@ -211,7 +222,7 @@ function updateCodeDisplay(codeData) {
         const newHTML = `
             <span class="referral-code">${escapeHtml(codeData.referral_code)}</span>
             <button class="copy-button" onclick="copyCode('${escapeHtml(codeData.referral_code)}')" title="Copy code">
-                <span>?</span> Copy Code
+                <span>⧉</span> Copy Code
             </button>
         `;
         
