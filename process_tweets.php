@@ -83,16 +83,21 @@ $headers = $connection->getLastXHeaders();
 error_log("All Response Headers: " . json_encode($headers));
 echo "Response Headers: " . json_encode($headers) . "\n";
 
-// Convert and display the correct 24-hour rate limit reset time
+// Debug: Log and print raw reset timestamp
 if (isset($headers['x-user-limit-24hour-reset'])) {
-    $reset_timestamp = trim($headers['x-user-limit-24hour-reset']);
-    if (is_numeric($reset_timestamp)) {
-        $reset_time = date('Y-m-d H:i:s', (int) $reset_timestamp);
+    $raw_reset_timestamp = $headers['x-user-limit-24hour-reset'];
+    echo "Raw reset timestamp: $raw_reset_timestamp\n";
+    error_log("Raw reset timestamp: $raw_reset_timestamp");
+    
+    // Ensure it's numeric before converting
+    if (is_numeric($raw_reset_timestamp)) {
+        $reset_timestamp = (int) $raw_reset_timestamp;
+        $reset_time = date('Y-m-d H:i:s', $reset_timestamp);
         echo "24-hour rate limit resets at: $reset_time\n";
         error_log("24-hour rate limit resets at: $reset_time");
     } else {
-        echo "Invalid timestamp received for reset time: $reset_timestamp\n";
-        error_log("Invalid timestamp received for reset time: $reset_timestamp");
+        echo "Invalid reset timestamp format: $raw_reset_timestamp\n";
+        error_log("Invalid reset timestamp format: $raw_reset_timestamp");
     }
 } else {
     echo "24-hour rate limit reset time not available from headers.\n";
