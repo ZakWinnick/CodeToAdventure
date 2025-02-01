@@ -104,12 +104,13 @@ if (isset($headers['x-user-limit-24hour-reset'])) {
     error_log("24-hour rate limit reset time not available from headers.");
 }
 
+// Debug: Log remaining tweet limit
 if (isset($headers['x-user-limit-24hour-remaining'])) {
     echo "Tweets remaining in 24-hour window: " . $headers['x-user-limit-24hour-remaining'] . "\n";
     error_log("Tweets remaining: " . $headers['x-user-limit-24hour-remaining']);
 }
 
-// Check if we've hit the daily limit
+// Restore daily limit check and tweet posting logic
 $today = date('Y-m-d');
 $statsQuery = "SELECT * FROM tweet_stats WHERE date = ? LIMIT 1";
 $statsStmt = $conn->prepare($statsQuery);
@@ -128,7 +129,6 @@ if ($stats['tweets_sent'] >= 17) {
     exit;
 }
 
-// Get untweeted codes (3 at a time)
 $query = "SELECT * FROM pending_tweets WHERE tweeted = 0 ORDER BY submitted_at ASC LIMIT 3";
 $result = $conn->query($query);
 
@@ -163,4 +163,6 @@ error_log("Post Response: " . json_encode($post_response));
 echo "Last HTTP Code: " . $connection->getLastHttpCode() . "\n";
 error_log("Last HTTP Code: " . $connection->getLastHttpCode());
 
+
+echo "Tweets ready for posting.\n";
 $conn->close();
