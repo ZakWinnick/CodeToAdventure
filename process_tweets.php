@@ -126,10 +126,9 @@ $tweetText .= "\n➡️ Visit: codetoadventure.com\n#Rivian #R1T #R1S";
 // Post to Twitter using API v2 endpoint
 $post_response = $connection->post("tweets", ["text" => $tweetText]);
 if ($connection->getLastHttpCode() == 429) {
-    echo "Rate limit reached. Waiting 15 minutes...\n";
-    error_log("Rate limit reached. Sleeping for 900 seconds.");
-    sleep(900); // Wait for 15 minutes before retrying
-    $post_response = $connection->post("tweets", ["text" => $tweetText]);
+    echo "Rate limit reached. Tweeting will resume later.\n";
+    error_log("Rate limit reached. Skipping tweet. Retry after Twitter's reset time.");
+    exit;
 }
 
 echo "Post Response: " . json_encode($post_response) . "\n";
