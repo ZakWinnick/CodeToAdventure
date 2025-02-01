@@ -14,7 +14,7 @@ require_once 'config.php';
 
             <div class="entry">
                 <h3>Version 2025.5 - January 31, 2025</h3>
-                <p>- Feature added where each submitted code is now posted to @CodeToAdventure</p>
+                <p>- Each newly submitted code is now posted to @CodeToAdventure</p>
             </div>
 
             <div class="entry">
