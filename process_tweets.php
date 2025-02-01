@@ -1,5 +1,7 @@
 <?php
 include 'config.php';
+require 'twitteroauth/src/TwitterOAuth.php';
+use Abraham\TwitterOAuth\TwitterOAuth;
 
 // Load Twitter credentials
 $creds = require __DIR__ . '/credentials.php';
@@ -12,19 +14,17 @@ define('TWITTER_ACCESS_TOKEN_SECRET', $creds['TWITTER_ACCESS_TOKEN_SECRET']);
 echo "API Key: " . substr(TWITTER_API_KEY, 0, 5) . "...\n";
 echo "Access Token: " . substr(TWITTER_ACCESS_TOKEN, 0, 5) . "...\n";
 
+// Authenticate using OAuth 1.0a
+$connection = new TwitterOAuth(
+    TWITTER_API_KEY,
+    TWITTER_API_SECRET,
+    TWITTER_ACCESS_TOKEN,
+    TWITTER_ACCESS_TOKEN_SECRET
+);
+
 // Test API authentication
-$ch = curl_init();
-curl_setopt_array($ch, [
-    CURLOPT_URL => "https://api.twitter.com/1.1/account/verify_credentials.json",
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_HTTPHEADER => [
-        "Authorization: Bearer " . TWITTER_ACCESS_TOKEN,
-        "Content-Type: application/json"
-    ]
-]);
-$auth_response = curl_exec($ch);
-curl_close($ch);
-echo "Authentication Test Response: " . $auth_response . "\n";
+$auth_response = $connection->get("account/verify_credentials");
+echo "Authentication Test Response: " . json_encode($auth_response) . "\n";
 
 // Check if we've hit the daily limit
 $today = date('Y-m-d');
@@ -66,25 +66,11 @@ foreach ($codes as $index => $code) {
 }
 $tweetText .= "\n➡️ Visit: codetoadventure.com\n#Rivian #R1T #R1S";
 
-// Post to Twitter
-$ch = curl_init();
-curl_setopt_array($ch, [
-    CURLOPT_URL => 'https://api.twitter.com/2/tweets',
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_POST => true,
-    CURLOPT_HTTPHEADER => [
-        'Authorization: Bearer ' . TWITTER_ACCESS_TOKEN,
-        'Content-Type: application/json'
-    ],
-    CURLOPT_POSTFIELDS => json_encode(["text" => $tweetText]),
-]);
-$response = curl_exec($ch);
-$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
+// Post to Twitter using OAuth 1.0a
+$post_response = $connection->post("statuses/update", ["status" => $tweetText]);
 
-if ($httpCode === 201) {
-    $responseData = json_decode($response, true);
-    $tweet_id = $responseData['data']['id'];
+if (isset($post_response->id_str)) {
+    $tweet_id = $post_response->id_str;
     $batch_id = uniqid();
 
     foreach ($codes as $code) {
@@ -100,8 +86,7 @@ if ($httpCode === 201) {
     foreach ($codes as $code) {
         $conn->query("UPDATE pending_tweets SET attempts = attempts + 1, last_attempt = NOW() WHERE id = {$code['id']}");
     }
-    echo "Failed to post tweet. HTTP Code: $httpCode\n";
-    echo "Response: " . $response . "\n";
+    echo "Failed to post tweet. Response: " . json_encode($post_response) . "\n";
 }
 
 $conn->close();
