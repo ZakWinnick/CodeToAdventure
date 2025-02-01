@@ -78,19 +78,15 @@ if (isset($auth_response->errors)) {
     die("Authentication error: " . json_encode($auth_response->errors));
 }
 
-// Check Twitter API Rate Limits before posting
-$rate_limits = $connection->get("application/rate_limit_status", ["resources" => "statuses"]);
-echo "Rate Limit Status: " . json_encode($rate_limits) . "\n";
-error_log("Rate Limit Status: " . json_encode($rate_limits));
-
-// Check rate limit reset time
-if (isset($rate_limits->resources->statuses->statuses_update->reset)) {
-    $reset_time = date('Y-m-d H:i:s', $rate_limits->resources->statuses->statuses_update->reset);
+// Check Twitter API Rate Limits from headers
+$headers = $connection->getLastXHeaders();
+if (isset($headers['x-rate-limit-reset'])) {
+    $reset_time = date('Y-m-d H:i:s', $headers['x-rate-limit-reset']);
     echo "Rate limit resets at: $reset_time\n";
     error_log("Rate limit resets at: $reset_time");
 } else {
-    echo "Rate limit reset time not available.\n";
-    error_log("Rate limit reset time not available.");
+    echo "Rate limit reset time not available from headers.\n";
+    error_log("Rate limit reset time not available from headers.");
 }
 
 // Check if we've hit the daily limit
