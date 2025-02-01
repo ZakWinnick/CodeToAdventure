@@ -29,7 +29,7 @@ require 'twitteroauth/src/Util/JsonDecoder.php';
 // Manually include CaBundle to fix missing class error
 if (!file_exists(__DIR__ . '/twitteroauth/vendor/composer/ca-bundle/src/CaBundle.php')) {
     error_log("ERROR: CaBundle.php not found!");
-    die("ERROR: CaBundle.php not found! Please download and place it in twitteroauth/vendor/composer/ca-bundle/");
+    die("ERROR: CaBundle.php not found!");
 }
 require 'twitteroauth/vendor/composer/ca-bundle/src/CaBundle.php';
 
@@ -52,7 +52,7 @@ define('TWITTER_ACCESS_TOKEN_SECRET', $creds['TWITTER_ACCESS_TOKEN_SECRET']);
 echo "API Key: " . substr(TWITTER_API_KEY, 0, 5) . "...\n";
 echo "Access Token: " . substr(TWITTER_ACCESS_TOKEN, 0, 5) . "...\n";
 
-// Authenticate using API v2
+// Authenticate with Twitter
 $connection = new TwitterOAuth(
     TWITTER_API_KEY,
     TWITTER_API_SECRET,
@@ -60,12 +60,14 @@ $connection = new TwitterOAuth(
     TWITTER_ACCESS_TOKEN_SECRET
 );
 
+$connection->setApiVersion('2');
+
 if (!$connection) {
     error_log("Failed to initialize TwitterOAuth.");
     die("Failed to initialize TwitterOAuth.");
 }
 
-// Use Twitter API v2 for authentication
+// Verify credentials
 $auth_response = $connection->get("users/me");
 echo "Authentication Test Response: " . json_encode($auth_response) . "\n";
 error_log("Auth response: " . json_encode($auth_response));
@@ -78,57 +80,20 @@ if (isset($auth_response->errors)) {
     die("Authentication error: " . json_encode($auth_response->errors));
 }
 
-// Check Twitter API Rate Limits from headers
+// Check rate limits
 $headers = $connection->getLastXHeaders();
-error_log("All Response Headers: " . json_encode($headers));
 echo "Response Headers: " . json_encode($headers) . "\n";
 
-// Debug: Log and print raw reset timestamp
-if (isset($headers['x-user-limit-24hour-reset'])) {
-    $raw_reset_timestamp = $headers['x-user-limit-24hour-reset'];
-    echo "Raw reset timestamp: $raw_reset_timestamp\n";
-    error_log("Raw reset timestamp: $raw_reset_timestamp");
-    
-    // Ensure it's numeric before converting
-    if (is_numeric($raw_reset_timestamp)) {
-        $reset_timestamp = (int) $raw_reset_timestamp;
-        $reset_time = date('Y-m-d H:i:s', $reset_timestamp);
-        echo "24-hour rate limit resets at: $reset_time\n";
-        error_log("24-hour rate limit resets at: $reset_time");
-    } else {
-        echo "Invalid reset timestamp format: $raw_reset_timestamp\n";
-        error_log("Invalid reset timestamp format: $raw_reset_timestamp");
-    }
-} else {
-    echo "24-hour rate limit reset time not available from headers.\n";
-    error_log("24-hour rate limit reset time not available from headers.");
-}
-
-// Debug: Log remaining tweet limit
 if (isset($headers['x-user-limit-24hour-remaining'])) {
-    echo "Tweets remaining in 24-hour window: " . $headers['x-user-limit-24hour-remaining'] . "\n";
-    error_log("Tweets remaining: " . $headers['x-user-limit-24hour-remaining']);
+    $tweets_remaining = $headers['x-user-limit-24hour-remaining'];
+    echo "Tweets remaining in 24-hour window: " . $tweets_remaining . "\n";
+    if ($tweets_remaining <= 0) {
+        echo "Daily tweet limit reached. Exiting.\n";
+        exit;
+    }
 }
 
-// Restore daily limit check and tweet posting logic
-$today = date('Y-m-d');
-$statsQuery = "SELECT * FROM tweet_stats WHERE date = ? LIMIT 1";
-$statsStmt = $conn->prepare($statsQuery);
-$statsStmt->bind_param('s', $today);
-$statsStmt->execute();
-$result = $statsStmt->get_result();
-$stats = $result->fetch_assoc();
-
-if (!$stats) {
-    $conn->query("INSERT INTO tweet_stats (date, tweets_sent) VALUES ('$today', 0)");
-    $stats = ['tweets_sent' => 0];
-}
-
-if ($stats['tweets_sent'] >= 17) {
-    echo "Daily tweet limit reached. Exiting.\n";
-    exit;
-}
-
+// Get pending tweets
 $query = "SELECT * FROM pending_tweets WHERE tweeted = 0 ORDER BY submitted_at ASC LIMIT 3";
 $result = $conn->query($query);
 
@@ -142,6 +107,7 @@ while ($row = $result->fetch_assoc()) {
     $codes[] = $row;
 }
 
+// Create tweet text
 $timeOfDay = (int)date('H') < 12 ? 'Morning' : ((int)date('H') < 17 ? 'Afternoon' : 'Evening');
 $tweetText = "🚙 New Rivian Referral Codes - {$timeOfDay} Update\n\n";
 foreach ($codes as $index => $code) {
@@ -149,20 +115,65 @@ foreach ($codes as $index => $code) {
 }
 $tweetText .= "\n➡️ Visit: codetoadventure.com\n#Rivian #R1T #R1S";
 
-// Post to Twitter using API v2 endpoint
+// Post tweet
 $post_response = $connection->post("tweets", ["text" => $tweetText]);
-if ($connection->getLastHttpCode() == 429) {
-    echo "Rate limit reached. Tweeting will resume later.\n";
-    error_log("Rate limit reached. Skipping tweet. Retry after Twitter's reset time.");
-    exit;
-}
-
 echo "Post Response: " . json_encode($post_response) . "\n";
 error_log("Post Response: " . json_encode($post_response));
 
-echo "Last HTTP Code: " . $connection->getLastHttpCode() . "\n";
-error_log("Last HTTP Code: " . $connection->getLastHttpCode());
+$httpCode = $connection->getLastHttpCode();
+echo "Last HTTP Code: " . $httpCode . "\n";
 
+if ($httpCode == 201 && isset($post_response->data->id)) {
+    $tweet_id = $post_response->data->id;
+    $batch_id = uniqid();
+    
+    // Start transaction
+    $conn->begin_transaction();
+    
+    try {
+        // Update all codes in this batch
+        foreach ($codes as $code) {
+            $updateSql = "UPDATE pending_tweets SET 
+                tweeted = 1, 
+                tweet_id = ?, 
+                batch_id = ?,
+                last_attempt = NOW() 
+                WHERE id = ?";
+            $updateStmt = $conn->prepare($updateSql);
+            $updateStmt->bind_param('ssi', $tweet_id, $batch_id, $code['id']);
+            $updateStmt->execute();
+        }
+        
+        // Update or insert daily stats
+        $today = date('Y-m-d');
+        $statsQuery = "INSERT INTO tweet_stats (date, tweets_sent, last_tweet_time) 
+                      VALUES (?, 1, NOW())
+                      ON DUPLICATE KEY UPDATE 
+                      tweets_sent = tweets_sent + 1,
+                      last_tweet_time = NOW()";
+        $statsStmt = $conn->prepare($statsQuery);
+        $statsStmt->bind_param('s', $today);
+        $statsStmt->execute();
+        
+        // Commit transaction
+        $conn->commit();
+        echo "Successfully posted tweet ID: " . $tweet_id . "\n";
+        error_log("Successfully posted tweet ID: " . $tweet_id);
+    } catch (Exception $e) {
+        $conn->rollback();
+        echo "Error updating database: " . $e->getMessage() . "\n";
+        error_log("Error updating database: " . $e->getMessage());
+    }
+} else {
+    if ($httpCode == 429) {
+        echo "Rate limit reached. Try again later.\n";
+        error_log("Rate limit reached.");
+    } else {
+        echo "Failed to post tweet. HTTP Code: " . $httpCode . "\n";
+        error_log("Failed to post tweet. HTTP Code: " . $httpCode);
+        error_log("Response: " . json_encode($post_response));
+    }
+}
 
-echo "Tweets ready for posting.\n";
+echo "Processing complete.\n";
 $conn->close();
