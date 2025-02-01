@@ -1,7 +1,7 @@
 <div class="modal" id="submitModal">
     <div class="form-container">
         <h1>Submit Your Referral Code</h1>
-        <form action="store_code.php" method="POST">
+        <form onsubmit="handleFormSubmit(event)">
             <div class="input-wrapper">
                 <label for="name">Your Name</label>
                 <input type="text" id="name" name="name" placeholder="Enter your name" required>
@@ -17,7 +17,7 @@
                     pattern="(?=(?:.*[A-Za-z]){2})(?=(?:.*\d){7,})[A-Za-z0-9]+"
                     title="Code must contain at least 2 letters and at least 7 numbers"
                     required
-                    >
+                >
             </div>
 
             <button type="submit">Submit Code</button>

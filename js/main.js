@@ -115,13 +115,24 @@ function clearInputError(input) {
 }
 
 async function submitForm(formData) {
+    const submitButton = DOM.form.querySelector('button[type="submit"]');
     try {
+        // Disable submit button and show loading state
+        submitButton.disabled = true;
+        submitButton.textContent = 'Submitting...';
+
         const response = await fetch(CONFIG.API_ENDPOINTS.STORE_CODE, {
             method: 'POST',
             body: formData
         });
 
-        const data = await response.json();
+        let data;
+        try {
+            data = await response.json();
+        } catch (e) {
+            console.error('Error parsing JSON response:', e);
+            throw new Error('Server response was not in the expected format');
+        }
 
         if (data.success) {
             showToast('Code submitted successfully!');
@@ -133,6 +144,10 @@ async function submitForm(formData) {
     } catch (error) {
         console.error('Form submission error:', error);
         showToast('Error submitting code. Please try again.');
+    } finally {
+        // Re-enable submit button and restore text
+        submitButton.disabled = false;
+        submitButton.textContent = 'Submit Code';
     }
 }
 
@@ -143,7 +158,7 @@ async function copyCode(code) {
     
     try {
         await navigator.clipboard.writeText(code);
-        button.innerHTML = '<span>✓</span> Copied!';
+        button.innerHTML = '<span>?</span> Copied!';
         showToast('Code copied to clipboard!');
         
         setTimeout(() => {
@@ -196,7 +211,7 @@ function updateCodeDisplay(codeData) {
         const newHTML = `
             <span class="referral-code">${escapeHtml(codeData.referral_code)}</span>
             <button class="copy-button" onclick="copyCode('${escapeHtml(codeData.referral_code)}')" title="Copy code">
-                <span>⧉</span> Copy Code
+                <span>?</span> Copy Code
             </button>
         `;
         

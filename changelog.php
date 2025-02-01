@@ -13,6 +13,11 @@ require_once 'config.php';
             <h1>Changelog</h1>
 
             <div class="entry">
+                <h3>Version 2025.5 - January 31, 2025</h3>
+                <p>- Added a feature where every submitted code is now available via X (<a href="https://x.com/codetoadventure" target="_blank">@CodeToAdventure</a></p>
+            </div>
+
+            <div class="entry">
                 <h3>Version 2025.4.3 - January 30, 2025</h3>
                 <p>- Fixed an issue where codes with only 2 letters before the numbers were being rejected</p>
             </div>
