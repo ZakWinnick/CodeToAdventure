@@ -30,7 +30,8 @@ function generate_oauth_signature($method, $url, $params, $oauth_token_secret) {
 
 function postToTwitter($name, $referralCode) {
     try {
-        $url = 'https://api.twitter.com/2/tweets';
+        // Use v1.1 endpoint instead of v2
+        $url = 'https://api.twitter.com/1.1/statuses/update.json';
         
         // Craft the tweet message
         $rivianShopUrl = "https://rivian.com/configurations/list?reprCode=" . urlencode($referralCode);
@@ -39,20 +40,20 @@ function postToTwitter($name, $referralCode) {
         $tweetText .= $rivianShopUrl . "\n\n";
         $tweetText .= "#Rivian #R1T #R1S";
         
-        // Generate OAuth parameters
-        $oauth_nonce = md5(uniqid(rand(), true));
+        $oauth_nonce = time();
         $oauth_timestamp = time();
         
         $oauth_params = [
-            'oauth_consumer_key'     => TWITTER_API_KEY,
-            'oauth_nonce'            => $oauth_nonce,
+            'oauth_consumer_key' => TWITTER_API_KEY,
+            'oauth_nonce' => $oauth_nonce,
             'oauth_signature_method' => 'HMAC-SHA1',
-            'oauth_timestamp'        => $oauth_timestamp,
-            'oauth_token'            => TWITTER_ACCESS_TOKEN,
-            'oauth_version'          => '1.0'
+            'oauth_timestamp' => $oauth_timestamp,
+            'oauth_token' => TWITTER_ACCESS_TOKEN,
+            'oauth_version' => '1.0',
+            'status' => $tweetText // Include status in signature for v1.1 API
         ];
         
-        // Generate the signature based solely on the OAuth parameters
+        // Generate signature
         $signature = generate_oauth_signature(
             'POST',
             $url,
@@ -60,12 +61,15 @@ function postToTwitter($name, $referralCode) {
             TWITTER_ACCESS_TOKEN_SECRET
         );
         
-        $oauth_params['oauth_signature'] = $signature;
+        // Remove status from oauth_params for header
+        $header_params = $oauth_params;
+        unset($header_params['status']);
+        $header_params['oauth_signature'] = $signature;
         
         // Create Authorization header
         $auth_header = 'OAuth ';
         $header_parts = [];
-        foreach ($oauth_params as $key => $value) {
+        foreach ($header_params as $key => $value) {
             $header_parts[] = rawurlencode($key) . '="' . rawurlencode($value) . '"';
         }
         $auth_header .= implode(', ', $header_parts);
@@ -73,18 +77,17 @@ function postToTwitter($name, $referralCode) {
         // Initialize cURL session
         $ch = curl_init();
         curl_setopt_array($ch, [
-            CURLOPT_URL            => $url,
+            CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_POST           => true,
-            CURLOPT_POSTFIELDS     => json_encode(['text' => $tweetText]),
-            CURLOPT_HTTPHEADER     => [
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => ['status' => $tweetText],
+            CURLOPT_HTTPHEADER => [
                 'Authorization: ' . $auth_header,
-                'Content-Type: application/json',
-                'User-Agent: CodeToAdventure/1.0'
+                'Content-Type: application/x-www-form-urlencoded',
+                'Expect:'
             ],
             CURLOPT_SSL_VERIFYPEER => true,
-            CURLOPT_SSL_VERIFYHOST => 2,
-            CURLOPT_VERBOSE        => true
+            CURLOPT_SSL_VERIFYHOST => 2
         ]);
 
         $response = curl_exec($ch);
@@ -99,8 +102,8 @@ function postToTwitter($name, $referralCode) {
         
         $responseData = json_decode($response, true);
         
-        // Twitter v2 returns 201 for successful tweet creation
-        return ($httpCode === 201 || $httpCode === 200) && isset($responseData['data']['id']);
+        // v1.1 API returns 200 for success and includes 'id_str' in response
+        return $httpCode === 200 && isset($responseData['id_str']);
     } catch (Exception $e) {
         return false;
     }
@@ -152,6 +155,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $conn->rollback();
                 throw new Exception('This referral code already exists');
             }
+
+            error_log("Attempting to post tweet for: " . $name . " with code: " . $referralCode);
 
             // Insert new code
             $sql = "INSERT INTO codes (name, referral_code) VALUES (?, ?)";
