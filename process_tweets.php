@@ -1,7 +1,15 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 include 'config.php';
-require 'twitteroauth/src/TwitterOAuth.php';
+require 'twitteroauth/src/autoload.php';
 use Abraham\TwitterOAuth\TwitterOAuth;
+
+// Verify database connection
+if (!$conn) {
+    die("Database connection failed: " . mysqli_connect_error());
+}
 
 // Load Twitter credentials
 $creds = require __DIR__ . '/credentials.php';
@@ -22,9 +30,17 @@ $connection = new TwitterOAuth(
     TWITTER_ACCESS_TOKEN_SECRET
 );
 
+if (!$connection) {
+    die("Failed to initialize TwitterOAuth.");
+}
+
 // Test API authentication
 $auth_response = $connection->get("account/verify_credentials");
 echo "Authentication Test Response: " . json_encode($auth_response) . "\n";
+
+if (isset($auth_response->errors)) {
+    die("Authentication error: " . json_encode($auth_response->errors));
+}
 
 // Check if we've hit the daily limit
 $today = date('Y-m-d');
