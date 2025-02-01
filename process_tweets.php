@@ -83,13 +83,19 @@ $headers = $connection->getLastXHeaders();
 error_log("All Response Headers: " . json_encode($headers));
 echo "Response Headers: " . json_encode($headers) . "\n";
 
-if (isset($headers['x-rate-limit-reset'])) {
-    $reset_time = date('Y-m-d H:i:s', $headers['x-rate-limit-reset']);
-    echo "Rate limit resets at: $reset_time\n";
-    error_log("Rate limit resets at: $reset_time");
+// Get the correct rate limit reset time and remaining tweets
+if (isset($headers['x-user-limit-24hour-reset'])) {
+    $reset_time = date('Y-m-d H:i:s', $headers['x-user-limit-24hour-reset']);
+    echo "24-hour rate limit resets at: $reset_time\n";
+    error_log("24-hour rate limit resets at: $reset_time");
 } else {
-    echo "Rate limit reset time not available from headers.\n";
-    error_log("Rate limit reset time not available from headers.");
+    echo "24-hour rate limit reset time not available from headers.\n";
+    error_log("24-hour rate limit reset time not available from headers.");
+}
+
+if (isset($headers['x-user-limit-24hour-remaining'])) {
+    echo "Tweets remaining in 24-hour window: " . $headers['x-user-limit-24hour-remaining'] . "\n";
+    error_log("Tweets remaining: " . $headers['x-user-limit-24hour-remaining']);
 }
 
 // Check if we've hit the daily limit
