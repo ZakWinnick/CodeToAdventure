@@ -13,6 +13,11 @@ require_once 'config.php';
             <h1>Changelog</h1>
 
             <div class="entry">
+                <h3>Version 2025.5,1 - February 1, 2025</h3>
+                <p>- Fixed code to schedule X posts for every 4 hours to work around X API limits</p>
+            </div>
+
+            <div class="entry">
                 <h3>Version 2025.5 - January 31, 2025</h3>
                 <p>- Each newly submitted code is now posted to @CodeToAdventure on X</p>
             </div>
