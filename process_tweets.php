@@ -13,13 +13,13 @@ if (!file_exists(__DIR__ . '/twitteroauth/src/TwitterOAuth.php')) {
     die("ERROR: TwitterOAuth.php not found!");
 }
 
-// Manually include TwitterOAuth files since Composer isn't available
+// Manually include TwitterOAuth files in correct order
 require 'twitteroauth/src/Config.php';
 require 'twitteroauth/src/Consumer.php';
+require 'twitteroauth/src/SignatureMethod.php'; // Must be included before HmacSha1
 require 'twitteroauth/src/HmacSha1.php';
 require 'twitteroauth/src/Request.php';
 require 'twitteroauth/src/Response.php';
-require 'twitteroauth/src/SignatureMethod.php';
 require 'twitteroauth/src/TwitterOAuthException.php';
 require 'twitteroauth/src/TwitterOAuth.php';
 require 'twitteroauth/src/Util.php';
