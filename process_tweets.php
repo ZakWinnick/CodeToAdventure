@@ -1,8 +1,17 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/error_log.txt');
+error_log("Script started.");
 
 include 'config.php';
+
+// Check if TwitterOAuth files exist before requiring them
+if (!file_exists(__DIR__ . '/twitteroauth/src/TwitterOAuth.php')) {
+    error_log("ERROR: TwitterOAuth.php not found!");
+    die("ERROR: TwitterOAuth.php not found!");
+}
 
 // Manually include TwitterOAuth files since Composer isn't available
 require 'twitteroauth/src/Config.php';
@@ -19,6 +28,7 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 
 // Verify database connection
 if (!$conn) {
+    error_log("Database connection failed: " . mysqli_connect_error());
     die("Database connection failed: " . mysqli_connect_error());
 }
 
@@ -42,14 +52,17 @@ $connection = new TwitterOAuth(
 );
 
 if (!$connection) {
+    error_log("Failed to initialize TwitterOAuth.");
     die("Failed to initialize TwitterOAuth.");
 }
 
 // Test API authentication
 $auth_response = $connection->get("account/verify_credentials");
 echo "Authentication Test Response: " . json_encode($auth_response) . "\n";
+error_log("Auth response: " . json_encode($auth_response));
 
 if (isset($auth_response->errors)) {
+    error_log("Authentication error: " . json_encode($auth_response->errors));
     die("Authentication error: " . json_encode($auth_response->errors));
 }
 
@@ -91,10 +104,11 @@ $tweetText = "🚙 New Rivian Referral Codes - {$timeOfDay} Update\n\n";
 foreach ($codes as $index => $code) {
     $tweetText .= ($index + 1) . ". {$code['name']}: {$code['referral_code']}\n";
 }
-tweetText .= "\n➡️ Visit: codetoadventure.com\n#Rivian #R1T #R1S";
+$tweetText .= "\n➡️ Visit: codetoadventure.com\n#Rivian #R1T #R1S";
 
 // Post to Twitter using OAuth 1.0a
 $post_response = $connection->post("statuses/update", ["status" => $tweetText]);
+error_log("Post response: " . json_encode($post_response));
 
 if (isset($post_response->id_str)) {
     $tweet_id = $post_response->id_str;
