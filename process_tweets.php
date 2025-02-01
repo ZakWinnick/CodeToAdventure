@@ -16,7 +16,7 @@ if (!file_exists(__DIR__ . '/twitteroauth/src/TwitterOAuth.php')) {
 // Manually include TwitterOAuth and its dependencies
 require 'twitteroauth/src/Config.php';
 require 'twitteroauth/src/Consumer.php';
-require 'twitteroauth/src/SignatureMethod.php'; // Must be included before HmacSha1
+require 'twitteroauth/src/SignatureMethod.php';
 require 'twitteroauth/src/HmacSha1.php';
 require 'twitteroauth/src/Request.php';
 require 'twitteroauth/src/Response.php';
@@ -24,7 +24,7 @@ require 'twitteroauth/src/Token.php';
 require 'twitteroauth/src/TwitterOAuthException.php';
 require 'twitteroauth/src/TwitterOAuth.php';
 require 'twitteroauth/src/Util.php';
-require 'twitteroauth/src/Util/JsonDecoder.php'; // Fix missing JsonDecoder class
+require 'twitteroauth/src/Util/JsonDecoder.php';
 
 // Manually include CaBundle to fix missing class error
 if (!file_exists(__DIR__ . '/twitteroauth/vendor/composer/ca-bundle/src/CaBundle.php')) {
@@ -70,10 +70,18 @@ $auth_response = $connection->get("account/verify_credentials");
 echo "Authentication Test Response: " . json_encode($auth_response) . "\n";
 error_log("Auth response: " . json_encode($auth_response));
 
+echo "Last HTTP Code: " . $connection->getLastHttpCode() . "\n";
+error_log("Last HTTP Code: " . $connection->getLastHttpCode());
+
 if (isset($auth_response->errors)) {
     error_log("Authentication error: " . json_encode($auth_response->errors));
     die("Authentication error: " . json_encode($auth_response->errors));
 }
+
+// Check Twitter API Rate Limits
+$rate_limits = $connection->get("application/rate_limit_status");
+echo "Rate Limit Status: " . json_encode($rate_limits) . "\n";
+error_log("Rate Limit Status: " . json_encode($rate_limits));
 
 // Check if we've hit the daily limit
 $today = date('Y-m-d');
@@ -117,26 +125,25 @@ $tweetText .= "\n➡️ Visit: codetoadventure.com\n#Rivian #R1T #R1S";
 
 // Post to Twitter using OAuth 1.0a
 $post_response = $connection->post("statuses/update", ["status" => $tweetText]);
-error_log("Post response: " . json_encode($post_response));
+echo "Post Response: " . json_encode($post_response) . "\n";
+error_log("Post Response: " . json_encode($post_response));
+
+echo "Last HTTP Code: " . $connection->getLastHttpCode() . "\n";
+error_log("Last HTTP Code: " . $connection->getLastHttpCode());
 
 if (isset($post_response->id_str)) {
     $tweet_id = $post_response->id_str;
     $batch_id = uniqid();
-
     foreach ($codes as $code) {
         $updateSql = "UPDATE pending_tweets SET tweeted = 1, tweet_id = ?, batch_id = ?, last_attempt = NOW() WHERE id = ?";
         $updateStmt = $conn->prepare($updateSql);
         $updateStmt->bind_param('ssi', $tweet_id, $batch_id, $code['id']);
         $updateStmt->execute();
     }
-
     $conn->query("UPDATE tweet_stats SET tweets_sent = tweets_sent + 1, last_tweet_time = NOW() WHERE date = '$today'");
     echo "Successfully posted tweet with ID: " . $tweet_id . "\n";
 } else {
-    foreach ($codes as $code) {
-        $conn->query("UPDATE pending_tweets SET attempts = attempts + 1, last_attempt = NOW() WHERE id = {$code['id']}");
-    }
-    echo "Failed to post tweet. Response: " . json_encode($post_response) . "\n";
+    echo "Failed to post tweet.\n";
 }
 
 $conn->close();
