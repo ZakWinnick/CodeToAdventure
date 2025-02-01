@@ -83,6 +83,16 @@ $rate_limits = $connection->get("application/rate_limit_status", ["resources" =>
 echo "Rate Limit Status: " . json_encode($rate_limits) . "\n";
 error_log("Rate Limit Status: " . json_encode($rate_limits));
 
+// Check rate limit reset time
+if (isset($rate_limits->resources->statuses->statuses_update->reset)) {
+    $reset_time = date('Y-m-d H:i:s', $rate_limits->resources->statuses->statuses_update->reset);
+    echo "Rate limit resets at: $reset_time\n";
+    error_log("Rate limit resets at: $reset_time");
+} else {
+    echo "Rate limit reset time not available.\n";
+    error_log("Rate limit reset time not available.");
+}
+
 // Check if we've hit the daily limit
 $today = date('Y-m-d');
 $statsQuery = "SELECT * FROM tweet_stats WHERE date = ? LIMIT 1";
