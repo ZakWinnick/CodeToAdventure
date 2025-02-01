@@ -56,10 +56,10 @@ function postToTwitter($name, $referralCode) {
         
         // Craft the tweet message (you can adjust formatting as needed)
         $rivianShopUrl = "https://rivian.com/configurations/list?reprCode=" . urlencode($referralCode);
-        $tweetText = "ðŸš€ New Rivian referral code available!\n\n";
+        $tweetText = "New Rivian referral code available!\n\n";
         $tweetText .= "Use {$name}'s code for \$500 in credit + 6 months free charging!\n\n";
-        $tweetText .= "ðŸ”— " . $rivianShopUrl . "\n\n";
-        $tweetText .= "#Rivian #R1T #R1S";
+        $tweetText .= " . $rivianShopUrl . "\n\n";
+        $tweetText .= "#Rivian #R1T #R1S";"
         
         // Generate OAuth parameters (body parameters are NOT included for JSON)
         $oauth_nonce = md5(uniqid(rand(), true));
