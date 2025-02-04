@@ -14,7 +14,7 @@ require_once 'config.php';
 
             <div class="entry">
                 <h3>Version 2025.6 - February 4, 2025</h3>
-                <p>- Updated API to v2 (see <a href="api-docs.php">API Documentation</a> for more info.</p>
+                <p>- Updated API to v2 (see <a href="api-docs.php">API Documentation</a> for more info)</p>
             </div>
 
             <div class="entry">
