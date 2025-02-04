@@ -10,68 +10,81 @@ require_once 'config.php';
 
     <div class="content">
         <div class="api-docs">
-            <h1>API Documentation</h1>
-            <p>Welcome to the Code to Adventure API! Below are the details of the available endpoints, rate limits, and usage instructions.</p>
+            <h1>API Documentation v2.0</h1>
+            
+            <section id="overview">
+                <h2>Overview</h2>
+                <p>The Code to Adventure API provides programmatic access to referral codes. All requests must use HTTPS.</p>
+                
+                <h3>Base URL</h3>
+                <code>https://codetoadventure.com/api.php</code>
+            </section>
 
-            <h2>Endpoints</h2>
+            <section id="authentication">
+                <h2>Authentication</h2>
+                <p>Currently, the API uses IP-based rate limiting without authentication.</p>
+            </section>
 
-            <h3>1. Fetch a Random Referral Code</h3>
-            <p><strong>URL:</strong> <code>GET /api.php?path=random</code></p>
-            <p><strong>Description:</strong> Returns a random referral code from the database.</p>
-            <p><strong>Example Response:</strong></p>
-            <pre><code>{
+            <section id="endpoints">
+                <h2>Endpoints</h2>
+
+                <article class="endpoint">
+                    <h3>1. Fetch Random Referral Code</h3>
+                    <p><strong>Request:</strong> <code>GET /api.php?path=random</code></p>
+                    <p><strong>Response:</strong></p>
+                    <pre><code>{
     "name": "John Doe",
     "username": "johndoe123",
     "referral_code": "ABC123",
     "link": "https://rivian.com/configurations/list?reprCode=ABC123"
 }</code></pre>
+                </article>
 
-            <h3>2. Fetch All Referral Codes</h3>
-            <p><strong>URL:</strong> <code>GET /api.php?path=codes</code></p>
-            <p><strong>Description:</strong> Returns all referral codes stored in the database.</p>
-            <p><strong>Example Response:</strong></p>
-            <pre><code>[
+                <article class="endpoint">
+                    <h3>2. Fetch All Referral Codes</h3>
+                    <p><strong>Request:</strong> <code>GET /api.php?path=codes</code></p>
+                    <p><strong>Response:</strong></p>
+                    <pre><code>[
     {
         "name": "John Doe",
         "username": "johndoe123",
         "referral_code": "ABC123",
         "link": "https://rivian.com/configurations/list?reprCode=ABC123"
-    },
-    {
-        "name": "Jane Smith",
-        "username": "janesmith456",
-        "referral_code": "XYZ456",
-        "link": "https://rivian.com/configurations/list?reprCode=XYZ456"
     }
 ]</code></pre>
+                </article>
+            </section>
 
-            <h3>3. Invalid API Path</h3>
-            <p>If an invalid endpoint is requested, the API will return the following response:</p>
-            <pre><code>{
-    "error": "Invalid API endpoint"
-}</code></pre>
+            <section id="rate-limiting">
+                <h2>Rate Limiting</h2>
+                <p>Limits: 100 requests per minute per IP address.</p>
+                <p>Response Headers:</p>
+                <pre><code>X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 95
+X-RateLimit-Reset: 1635789600</code></pre>
+            </section>
 
-            <h2>Rate Limiting</h2>
-            <div class="rate-limit">
-                <p><strong>Limit:</strong> 100 requests per minute per IP.</p>
-                <p><strong>Exceeding the limit:</strong> Returns the following response:</p>
+            <section id="errors">
+                <h2>Error Responses</h2>
                 <pre><code>{
-    "error": "Rate limit exceeded. Try again later."
+    "error": {
+        "code": "ERROR_CODE",
+        "message": "Human readable message"
+    }
 }</code></pre>
-            </div>
+                <h3>HTTP Status Codes</h3>
+                <ul>
+                    <li><strong>200</strong> - Success</li>
+                    <li><strong>404</strong> - Not Found</li>
+                    <li><strong>429</strong> - Rate Limit Exceeded</li>
+                    <li><strong>500</strong> - Server Error</li>
+                </ul>
+            </section>
 
-            <h2>Response Codes</h2>
-            <p>The API uses standard HTTP response codes:</p>
-            <ul>
-                <li><strong>200 OK:</strong> Request successful.</li>
-                <li><strong>404 Not Found:</strong> Endpoint does not exist.</li>
-                <li><strong>429 Too Many Requests:</strong> Rate limit exceeded.</li>
-                <li><strong>500 Internal Server Error:</strong> Server issue.</li>
-            </ul>
-
-            <h2>Usage Instructions</h2>
-            <p>To use the API, send a <code>GET</code> request to the specified endpoint. You can test it using a browser, tools like Postman, or integrate it into your application.</p>
-            <p>Respect the rate limit for consistent access.</p>
+            <section id="caching">
+                <h2>Caching</h2>
+                <p>Responses are cached for 5 minutes. Use the ETag header for conditional requests.</p>
+            </section>
 
             <a href="index.php" class="back-link">Back to Home</a>
         </div>

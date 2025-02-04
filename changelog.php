@@ -13,7 +13,12 @@ require_once 'config.php';
             <h1>Changelog</h1>
 
             <div class="entry">
-                <h3>Version 2025.5,1 - February 1, 2025</h3>
+                <h3>Version 2025.6 - February 4, 2025</h3>
+                <p>- Updated API to v2 (see <a href="api-docs.php">API Documentation</a> for more info.</p>
+            </div>
+
+            <div class="entry">
+                <h3>Version 2025.5.1 - February 1, 2025</h3>
                 <p>- Fixed code to schedule X posts for every 4 hours to work around X API limits</p>
                 <p>- Added a new favicon to the header</p>
             </div>
