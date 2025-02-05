@@ -30,10 +30,10 @@ ini_set('display_errors', 1);
                 </h3>
                 <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
                     <li>Updated design language of the entire site to make it look more clean</li>
-                    <li>Added light/dark mode with toggle.</li>
-                    <li>Improved mobile formatting for navigation, header, and footer.</li>
-                    <li>Completely overhauled `api-docs.php` for clarity, styling, and accuracy.</li>
-                    <li>Optimized JavaScript and CSS for better load times.</li>
+                    <li>Added light/dark mode with toggle and auto-detect state</li>
+                    <li>Improved mobile formatting for navigation, header, and footer</li>
+                    <li>Completely overhauled `api-docs.php` and `changelog.php` for clarity, styling, and accuracy</li>
+                    <li>Optimized JavaScript and CSS for better load times</li>
                 </ul>
             </div>
 
