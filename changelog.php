@@ -1,147 +1,212 @@
 <?php
 require_once 'config.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <?php include 'includes/head.php'; ?>
-<body>
+
+<body class="!bg-white dark:!bg-gray-900 transition-colors duration-200">
     <?php include 'includes/header.php'; ?>
-    <?php include 'includes/nav.php'; ?>
 
-    <div class="content">
-        <div class="api-docs">
-            <h1>Changelog</h1>
+    <main class="main-content max-w-7xl mx-auto px-4 py-8">
+        <!-- Changelog Title -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-primary dark:text-accent mb-4 transition-colors duration-200">
+                Changelog
+            </h1>
+            <h2 class="text-2xl text-gray-700 dark:text-gray-300 transition-colors duration-200">
+                Latest updates and improvements.
+            </h2>
+        </div>
 
-            <div class="entry">
-                <h3>Version 2025.6 - February 4, 2025</h3>
-                <p>- Updated API to v2 (see <a href="api-docs.php">API Documentation</a> for more info)</p>
+        <div class="max-w-4xl mx-auto space-y-8">
+            <!-- Version 2025.7 -->
+            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
+                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">
+                    Version 2025.7 - February 5, 2025
+                </h3>
+                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
+                    <li>Updated design language of the entire site to make it look more clean</li>
+                    <li>Added light/dark mode with toggle.</li>
+                    <li>Improved mobile formatting for navigation, header, and footer.</li>
+                    <li>Completely overhauled `api-docs.php` for clarity, styling, and accuracy.</li>
+                    <li>Optimized JavaScript and CSS for better load times.</li>
+                </ul>
             </div>
 
-            <div class="entry">
-                <h3>Version 2025.5.1 - February 1, 2025</h3>
-                <p>- Fixed code to schedule X posts for every 4 hours to work around X API limits</p>
-                <p>- Added a new favicon to the header</p>
+            <!-- Previous Versions -->
+            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
+                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2025.6 - February 4, 2025</h3>
+                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
+                    <li>Updated API to v2 (see API Documentation for more info)</li>
+                </ul>
             </div>
 
-            <div class="entry">
-                <h3>Version 2025.5 - January 31, 2025</h3>
-                <p>- Each newly submitted code is now posted to @CodeToAdventure on X</p>
+            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
+                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2025.5.1 - February 1, 2025</h3>
+                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
+                    <li>Fixed code to schedule X posts for every 4 hours to work around X API limits</li>
+                    <li>Added a new favicon to the header</li>
+                </ul>
             </div>
 
-            <div class="entry">
-                <h3>Version 2025.4.3 - January 30, 2025</h3>
-                <p>- Fixed an issue where codes with only 2 letters before the numbers were being rejected</p>
+            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
+                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2025.5 - January 31, 2025</h3>
+                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
+                    <li>Each newly submitted code is now posted to @CodeToAdventure on X</li>
+                </ul>
             </div>
 
-            <div class="entry">
-                <h3>Version 2025.4.2 - January 29, 2025</h3>
-                <p>- Updated code validation to look for 7 or more numbers to match new referral codes being issued by Rivian</p>
+            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
+                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2025.4.3 - January 30, 2025</h3>
+                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
+                    <li>Fixed an issue where codes with only 2 letters before the numbers were being rejected</li>
+                </ul>
             </div>
 
-            <div class="entry">
-                <h3>Version 2025.4.1 - January 27, 2025</h3>
-                <p>- Fixed an issue where some referral codes were being rejected due to regex issues (thanks to Zach for the report!)</p>
+            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
+                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2025.4.2 - January 29, 2025</h3>
+                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
+                    <li>Updated code validation to look for 7 or more numbers to match new referral codes being issued by Rivian</li>
+                </ul>
             </div>
 
-            <div class="entry">
-                <h3>Version 2025.4 - January 24, 2025</h3>
-                <p>- Updated styling for all pages, including bringing the site up to modern design language standards</p>
-                <p>- Restored code tracking capabilities for admins</p>
+            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
+                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2025.4.1 - January 27, 2025</h3>
+                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
+                    <li>Fixed an issue where some referral codes were being rejected due to regex issues (thanks to Zach for the report!)</li>
+                </ul>
             </div>
 
-            <div class="entry">
-                <h3>Version 2025.3.1 - January 23, 2025</h3>
-                <p>- Restored functionality for submission e-mails to admins</p>
-                <p>- Minor site updates for performance and stability</p>
+            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
+                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2025.4 - January 24, 2025</h3>
+                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
+                    <li>Updated styling for all pages, including bringing the site up to modern design language standards</li>
+                    <li>Restored code tracking capabilities for admins</li>
+                </ul>
             </div>
 
-            <div class="entry">
-                <h3>Version 2025.3 - January 22, 2025</h3>
-                <p>- Added referral code tracking for statistical purposes</p>
-                <p>- Minor performance and security improvements</p>
+            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
+                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2025.3.1 - January 23, 2025</h3>
+                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
+                    <li>Restored functionality for submission e-mails to admins</li>
+                    <li>Minor site updates for performance and stability</li>
+                </ul>
             </div>
 
-            <div class="entry">
-                <h3>Version 2025.2 - January 21, 2025</h3>
-                <p>- Added a "Get Another Code" button so you don't have to refresh the page to get a new code</p>
-                <p>- Changed the site infrastructure to pull out CSS and JS code and place them in their own sections</p>
-                <p>- Enhanced some visual elements, including adding icons to the rewards section</p>
+            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
+                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2025.3 - January 22, 2025</h3>
+                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
+                    <li>Added referral code tracking for statistical purposes</li>
+                    <li>Minor performance and security improvements</li>
+                </ul>
             </div>
 
-            <div class="entry">
-                <h3>Version 2025.1.1 - January 18, 2025</h3>
-                <p>- Updated formatting of the new 'Copy Code' button to match the rest of the site</p>
+            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
+                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2025.2 - January 21, 2025</h3>
+                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
+                    <li>Added a "Get Another Code" button so you don't have to refresh the page to get a new code</li>
+                    <li>Changed the site infrastructure to pull out CSS and JS code and place them in their own sections</li>
+                    <li>Enhanced some visual elements, including adding icons to the rewards section</li>
+                </ul>
             </div>
 
-            <div class="entry">
-                <h3>Version 2025.1 - January 17, 2025</h3>
-                <p>- Added a "Copy Code" modal that also displays referree's code</p>
-                <p>- Changed version numbering to new methodology (Year.Version.Fix)</p>
+            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
+                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2025.1.1 - January 18, 2025</h3>
+                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
+                    <li>Updated formatting of the new 'Copy Code' button to match the rest of the site</li>
+                </ul>
             </div>
 
-            <div class="entry">
-                <h3>Version 2024.12.28 - December 28, 2024</h3>
-                <p>- Updated color scheme</p>
-                <p>- Added a working modal dialog for code submission</p>
-                <p>- Improved the navigation menu styling</p>
-                <p>- Made button interactions more intuitive</p>
-                <p>- Created consistent styling across all components</p>
-                <p>- Added proper mobile responsiveness</p>
-                <p>- Improved user experience with cancel/submit options</p>
-                <p>- Updated referral points to reflect program changes by Rivian</p>
+            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
+                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2025.1 - January 17, 2025</h3>
+                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
+                    <li>Added a "Copy Code" modal that also displays referree's code</li>
+                    <li>Changed version numbering to new methodology (Year.Version.Fix)</li>
+                </ul>
+            </div>
+
+            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
+                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2024.12.28 - December 28, 2024</h3>
+                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
+                    <li>Updated color scheme</li>
+                    <li>Added a working modal dialog for code submission</li>
+                    <li>Improved the navigation menu styling</li>
+                    <li>Made button interactions more intuitive</li>
+                    <li>Created consistent styling across all components</li>
+                    <li>Added proper mobile responsiveness</li>
+                    <li>Improved user experience with cancel/submit options</li>
+                    <li>Updated referral points to reflect program changes by Rivian</li>
+                </ul>
+            </div>
+
+            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
+                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2024.12.24 - December 24, 2024</h3>
+                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
+                    <li>Updated Admin Portal with sortable tables and pagination</li>
+                </ul>
+            </div>
+
+            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
+                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2024.12.18 - December 18, 2024</h3>
+                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
+                    <li>Redesigned mobile navigation with improved layout and touch interaction</li>
+                    <li>Enhanced site performance through optimized resource loading</li>
+                    <li>Implemented comprehensive responsive design improvements</li>
+                    <li>Updated API documentation to reflect all API calls</li>
+                </ul>
+            </div>
+
+            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
+                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2024.12.11 - December 11, 2024</h3>
+                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
+                    <li>Complete refresh of the design language for the site</li>
+                    <li>Simplified backend code for efficiency</li>
+                    <li>Revamped admin console design, and added persistent login via browser cookies</li>
+                    <li>Removed X Username field from Submit Code page</li>
+                </ul>
+            </div>
+
+            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
+                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2024.12.10 - December 10, 2024</h3>
+                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
+                    <li>Added admin referral code banner</li>
+                </ul>
+            </div>
+
+            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
+                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2024.11.13 - November 13, 2024</h3>
+                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
+                    <li>Created new admin dashboard for editing and deleting entries</li>
+                    <li>Added email notifications for new submissions</li>
+                </ul>
             </div>
             
-            <div class="entry">
-                <h3>Version 2024.12.24 - December 24, 2024</h3>
-                <p>- Updated Admin Portal with sortable tables and pagination</p>
+            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
+                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2024.11.7 - November 7, 2024</h3>
+                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
+                    <li>Moved development to GitHub for version tracking</li>
+                    <li>Made Twitter handle submission optional</li>
+                </ul>
             </div>
 
-            <div class="entry">
-                <h3>Version 2024.12.18 - December 18, 2024</h3>
-                <p>- Redesigned mobile navigation with improved layout and touch interaction</p>
-                <p>- Enhanced site performance through optimized resource loading</p>
-                <p>- Implemented comprehensive responsive design improvements</p>
-                <p>- Updated API documentation to reflect all API calls</p>
-            </div>
-
-            <div class="entry">
-                <h3>Version 2024.12.11 - December 11, 2024</h3>
-                <p>- Complete refresh of the design language for the site</p>
-                <p>- Simplified backend code for efficiency</p>
-                <p>- Revamped admin console design, and added persistent login via browser cookies</p>
-                <p>- Removed X Username field from Submit Code page</p>
-            </div>
-
-            <div class="entry">
-                <h3>Version 2024.12.10 - December 10, 2024</h3>
-                <p>- Added admin referral code banner</p>
-            </div>
-
-            <div class="entry">
-                <h3>Version 2024.11.13 - November 13, 2024</h3>
-                <p>- Created new admin dashboard for editing and deleting entries</p>
-                <p>- Added email notifications for new submissions</p>
-            </div>
-
-            <div class="entry">
-                <h3>Version 2024.11.7 - November 7, 2024</h3>
-                <p>- Moved development to GitHub for version tracking</p>
-                <p>- Made Twitter handle submission optional</p>
-            </div>
-
-            <div class="entry">
-                <h3>Version 2.0 - September 29, 2024</h3>
-                <p>- Updated page titles for SEO</p>
-                <p>- Improved layout and responsiveness</p>
-                <p>- Added random header images</p>
-                <p>- Enhanced footer links and meta tags</p>
+            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
+                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2.0 - September 29, 2024</h3>
+                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
+                    <li>Updated page titles for SEO</li>
+                    <li>Improved layout and responsiveness</li>
+                    <li>Added random header images</li>
+                    <li>Enhanced footer links and meta tags</li>
+                </ul>
             </div>
         </div>
-    </div>
+    </main>
 
     <?php include 'includes/footer.php'; ?>
-    <?php include 'includes/modal.php'; ?>
-    
+
     <script src="js/main.js"></script>
 </body>
 </html>

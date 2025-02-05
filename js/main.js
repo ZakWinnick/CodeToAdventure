@@ -1,265 +1,306 @@
 /**
  * Main JavaScript for Code To Adventure
+ * Includes system theme detection, form handling, and UI interactions
  */
 
 const CONFIG = {
     ANIMATION_DURATION: 300,
     TOAST_DURATION: 3000,
     API_ENDPOINTS: {
-        NEW_CODE: 'get_new_code.php',
-        STORE_CODE: 'store_code.php'
+        NEW_CODE: "get_new_code.php",
+        STORE_CODE: "store_code.php"
     }
 };
 
 const DOM = {
     init() {
-        this.mainContent = document.querySelector('.main-content');
-        this.modal = document.getElementById('submitModal');
-        this.toast = document.getElementById('toast');
-        this.codeContainer = document.querySelector('.code-container');
-        this.referralButton = document.querySelector('.referral-button');
-        this.form = this.modal?.querySelector('form');
+        this.modal = document.getElementById("submitModal");
+        this.toast = document.getElementById("toast");
+        this.codeContainer = document.querySelector(".code-container");
+        this.referralButton = document.querySelector(".referral-button");
+        this.form = document.querySelector("form");
+        this.getAnotherCodeButton = document.querySelector(".get-new-code-button");
     }
 };
 
-// Initialize
-document.addEventListener('DOMContentLoaded', () => {
-    DOM.init();
-    initializeEventListeners();
-    initializeAnimations();
-    
-    // Set current year in footer
-    document.getElementById('currentYear').textContent = new Date().getFullYear();
-});
+// Theme Management System
+// Handles system preference detection, theme switching, and preference storage
+const ThemeManager = {
+    // Check if system is in dark mode
+    isSystemDarkMode() {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    },
 
-function initializeEventListeners() {
-    window.onclick = handleWindowClick;
-    if (DOM.form) {
-        DOM.form.addEventListener('submit', handleFormSubmit);
-    }
-}
+    // Set theme based on preference
+    setTheme(isDark) {
+        if (isDark) {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+        }
+        console.log(`✅ Theme set to ${isDark ? 'dark' : 'light'} mode`);
+    },
 
-// Modal Functions
-function showModal() {
-    DOM.modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
+    // Initialize theme based on stored preference or system preference
+    initializeTheme() {
+        // Check for stored preference first
+        const storedTheme = localStorage.getItem('theme');
+        
+        if (storedTheme) {
+            this.setTheme(storedTheme === 'dark');
+            console.log('✅ Using stored theme preference:', storedTheme);
+        } else {
+            // If no stored preference, use system preference
+            const systemDark = this.isSystemDarkMode();
+            this.setTheme(systemDark);
+            console.log('✅ Using system theme preference:', systemDark ? 'dark' : 'light');
+        }
 
-function closeModal() {
-    DOM.modal.classList.remove('active');
-    document.body.style.overflow = 'auto';
-}
-
-function handleWindowClick(event) {
-    if (event.target === DOM.modal) {
-        closeModal();
-    }
-}
-
-// Form Handling
-function handleFormSubmit(event) {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    if (!validateForm(formData.get('name'), formData.get('referralCode'))) {
-        return;
-    }
-    submitForm(formData);
-}
-
-function validateForm(name, code) {
-    const nameInput = document.getElementById('name');
-    const codeInput = document.getElementById('referralCode');
-    let isValid = true;
-
-    if (!name || name.trim().length < 2) {
-        showInputError(nameInput, 'Please enter a valid name (at least 2 characters)');
-        isValid = false;
-    } else {
-        clearInputError(nameInput);
-    }
-
-    const codeRegex = /^(?=(?:.*[A-Za-z]){2,})(?=(?:.*\d){7,})[A-Za-z0-9]+$/;
-    if (!codeRegex.test(code)) {
-        showInputError(codeInput, 'Please enter a valid referral code (must contain at least 2 letters and 7 numbers)');
-        isValid = false;
-    } else {
-        clearInputError(codeInput);
-    }
-
-    return isValid;
-}
-
-function showInputError(input, message) {
-    const errorDiv = input.nextElementSibling?.classList.contains('error-message') 
-        ? input.nextElementSibling 
-        : document.createElement('div');
-    
-    errorDiv.className = 'error-message';
-    errorDiv.textContent = message;
-    
-    if (!input.nextElementSibling?.classList.contains('error-message')) {
-        input.parentNode.insertBefore(errorDiv, input.nextSibling);
-    }
-    
-    input.classList.add('input-error');
-    showToast(message);
-}
-
-function clearInputError(input) {
-    const errorDiv = input.nextElementSibling;
-    if (errorDiv?.classList.contains('error-message')) {
-        errorDiv.remove();
-    }
-    input.classList.remove('input-error');
-}
-
-async function submitForm(formData) {
-    const submitButton = DOM.form.querySelector('button[type="submit"]');
-    
-    // Check if already submitting
-    if (submitButton.disabled) {
-        showToast('Form submission in progress...');
-        return;
-    }
-
-    try {
-        submitButton.disabled = true;
-        submitButton.textContent = 'Submitting...';
-
-        const response = await fetch(CONFIG.API_ENDPOINTS.STORE_CODE, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Cache-Control': 'no-cache',
-                'Pragma': 'no-cache'
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            // Only update if there's no stored preference
+            if (!localStorage.getItem('theme')) {
+                this.setTheme(e.matches);
+                console.log('✅ System theme changed:', e.matches ? 'dark' : 'light');
             }
         });
+    }
+};
 
+// Initialize Everything on Page Load
+document.addEventListener("DOMContentLoaded", () => {
+    DOM.init();
+    initializeEventListeners();
+    ThemeManager.initializeTheme();
+
+    // Set current year in footer
+    const yearElement = document.getElementById("currentYear");
+    if (yearElement) {
+        yearElement.textContent = new Date().getFullYear();
+    }
+});
+
+// Set Up Event Listeners
+function initializeEventListeners() {
+    if (DOM.form) {
+        DOM.form.addEventListener("submit", handleFormSubmit);
+    }
+    if (DOM.getAnotherCodeButton) {
+        DOM.getAnotherCodeButton.addEventListener("click", getNewCode);
+    }
+}
+
+// Theme Toggle Function
+function toggleTheme() {
+    const isDark = !document.documentElement.classList.contains("dark");
+    ThemeManager.setTheme(isDark);
+}
+
+// Show Modal
+function showModal() {
+    if (!DOM.modal) {
+        console.error("❌ Error: Modal element not found.");
+        showToast("Error: Modal not found.", "error");
+        return;
+    }
+    DOM.modal.classList.remove("hidden");
+    DOM.modal.classList.add("flex");
+    console.log("✅ Modal opened.");
+}
+
+// Close Modal
+function closeModal() {
+    if (!DOM.modal) {
+        console.error("❌ Error: Modal not found.");
+        return;
+    }
+    DOM.modal.classList.add("hidden");
+    DOM.modal.classList.remove("flex");
+    console.log("✅ Modal closed.");
+}
+
+// Copy Code Function
+function copyCode() {
+    const codeElement = document.querySelector(".referral-code");
+
+    if (!codeElement) {
+        console.error("❌ Error: Referral code element not found.");
+        showToast("Error: No referral code found.", "error");
+        return;
+    }
+
+    const code = codeElement.textContent.trim();
+    
+    // Use document.execCommand as fallback for mobile
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(code)
+            .then(() => {
+                console.log("✅ Copied code:", code);
+                showToast("Referral code copied!", "success");
+            })
+            .catch(err => {
+                console.error("❌ Copy error:", err);
+                showToast("Failed to copy code. Tap and hold to copy manually.", "error");
+            });
+    } else {
+        const tempInput = document.createElement("input");
+        tempInput.value = code;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+        console.log("✅ Copied using fallback:", code);
+        showToast("Referral code copied!", "success");
+    }
+}
+
+// Fetch New Code Function
+async function getNewCode() {
+    const codeElement = document.querySelector(".referral-code");
+    const referralButton = document.querySelector('a[href^="track.php?code="]');
+
+    if (!codeElement) {
+        console.error("❌ Error: Referral code element not found.");
+        showToast("Error: Code display missing.", "error");
+        return;
+    }
+
+    try {
+        // Prevent multiple taps
+        codeElement.innerHTML = "Fetching...";
+        if (referralButton) {
+            referralButton.innerHTML = "Fetching new code...";
+        }
+
+        // Fetch new referral code
+        const response = await fetch(`${CONFIG.API_ENDPOINTS.NEW_CODE}?current=${encodeURIComponent(codeElement.textContent.trim())}&t=${Date.now()}`);
         const data = await response.json();
+
+        console.log("✅ Raw API response:", data);
+
+        if (data.success && data.code) {
+            updateCodeDisplay(data.code);
+        } else {
+            console.error("❌ Error fetching new code:", data.message);
+            codeElement.innerHTML = '<p class="error-message text-red-600">Error fetching new code.</p>';
+        }
+    } catch (err) {
+        console.error("❌ Fetch error:", err);
+        codeElement.innerHTML = '<p class="error-message text-red-600">Error fetching new code.</p>';
+    }
+}
+
+// Update Code Display Function
+function updateCodeDisplay(codeData) {
+    setTimeout(() => {
+        const codeElement = document.querySelector(".referral-code");
+        const referralButton = document.querySelector('a[href^="track.php?code="]');
+
+        if (!codeElement || !referralButton) {
+            console.error("❌ Error: Required elements missing.");
+            return;
+        }
+
+        referralButton.href = `track.php?code=${encodeURIComponent(codeData.referral_code)}`;
+        referralButton.innerHTML = `Use ${codeData.name}'s Code`;
+        codeElement.textContent = codeData.referral_code;
+    }, 100);
+}
+
+// Handle Form Submission
+function handleFormSubmit(event) {
+    event.preventDefault();
+
+    const submitButton = document.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+    submitButton.textContent = "Submitting...";
+
+    const nameInput = document.getElementById("name");
+    const codeInput = document.getElementById("referralCode");
+
+    const name = nameInput?.value.trim();
+    const referralCode = codeInput?.value.trim();
+
+    if (!name || !referralCode) {
+        console.error("❌ Missing required fields");
+        showToast("Please enter your name and referral code.", "error");
+        submitButton.disabled = false;
+        submitButton.textContent = "Submit Code";
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("referralCode", referralCode);
+
+    fetch(CONFIG.API_ENDPOINTS.STORE_CODE, {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("🔍 Full response from store_code.php:", data);
 
         if (data.success) {
-            showToast(data.message);
+            console.log("✅ Code submitted:", data);
+            showToast("Referral code submitted successfully!", "success");
+
+            nameInput.value = "";
+            codeInput.value = "";
             closeModal();
-            DOM.form.reset();
-            // Refresh the page after successful submission
-            setTimeout(() => {
-                window.location.reload();
-            }, 2000);
+        } else if (data.message.toLowerCase().includes("duplicate")) {
+            showToast("This referral code is already in the system.", "error");
         } else {
-            showToast(data.message || 'Error submitting code. Please try again.');
+            showToast("Error submitting code: " + data.message, "error");
         }
-    } catch (error) {
-        console.error('Form submission error:', error);
-        showToast('Error submitting code. Please try again.');
-    } finally {
-        setTimeout(() => {
-            submitButton.disabled = false;
-            submitButton.textContent = 'Submit Code';
-        }, 1000);
+    })
+    .catch(error => {
+        showToast("Server error. Please try again.", "error");
+    })
+    .finally(() => {
+        submitButton.disabled = false;
+        submitButton.textContent = "Submit Code";
+    });
+}
+
+// Toggle Mobile Menu
+function toggleMobileMenu() {
+    const menu = document.getElementById("mobile-menu");
+    if (!menu) {
+        console.error("❌ Error: Mobile menu element not found.");
+        return;
     }
+    menu.classList.toggle("hidden");
+    menu.classList.toggle("flex");
+    console.log("✅ Mobile menu toggled.");
 }
 
-// Copy Function
-async function copyCode(code) {
-    const button = document.querySelector('.copy-button');
-    const originalText = button.innerHTML;
-    
-    try {
-        await navigator.clipboard.writeText(code);
-        button.innerHTML = '<span>⧉</span> Copied!';
-        showToast('Code copied to clipboard!');
-        
-        setTimeout(() => {
-            button.innerHTML = originalText;
-        }, 2000);
-    } catch (err) {
-        showToast('Failed to copy code. Please try again.');
+// Toast Notification
+function showToast(message, type = "success") {
+    const toast = document.getElementById("toast");
+
+    if (!toast) {
+        console.error("❌ Error: Toast element not found.");
+        return;
     }
-}
 
-// Code Fetching
-async function getNewCode() {
-    if (!DOM.codeContainer || !DOM.referralButton) return;
+    toast.textContent = message;
+    toast.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg transition-opacity duration-300 
+        ${type === "error" ? "bg-red-600 text-white" : "bg-green-600 text-white"}`;
 
-    const loadingHTML = '<div class="loading-spinner"></div>';
-    const currentCode = document.querySelector('.referral-code')?.textContent || '';
-    
-    try {
-        DOM.codeContainer.innerHTML = loadingHTML;
-        DOM.referralButton.style.opacity = '0.7';
-        
-        const timestamp = new Date().getTime();
-        const response = await fetch(`${CONFIG.API_ENDPOINTS.NEW_CODE}?current=${encodeURIComponent(currentCode)}&t=${timestamp}`);
-        const data = await response.json();
-        
-        if (data.success && data.code) {
-            DOM.codeContainer.classList.remove('fade-in-up');
-            updateCodeDisplay(data.code);
-            void DOM.codeContainer.offsetWidth;
-            DOM.codeContainer.classList.add('fade-in-up');
-            showToast('New code fetched successfully!');
-        } else {
-            throw new Error(data.message || 'Error fetching new code');
-        }
-    } catch (err) {
-        DOM.codeContainer.innerHTML = '<p class="error-message">Error fetching new code. Please try again.</p>';
-        showToast('Error fetching new code. Please try again.');
-    } finally {
-        DOM.referralButton.style.opacity = '1';
-    }
-}
-
-function updateCodeDisplay(codeData) {
-    if (!DOM.codeContainer || !DOM.referralButton || !codeData) return;
-
-    try {
-        DOM.referralButton.href = `track.php?code=${encodeURIComponent(codeData.referral_code)}`;
-        DOM.referralButton.innerHTML = `Use ${escapeHtml(codeData.name)}'s Code`;
-        
-        const newHTML = `
-            <span class="referral-code">${escapeHtml(codeData.referral_code)}</span>
-            <button class="copy-button" onclick="copyCode('${escapeHtml(codeData.referral_code)}')" title="Copy code">
-                <span>⧉</span> Copy Code
-            </button>
-        `;
-        
-        DOM.codeContainer.innerHTML = newHTML;
-        void DOM.codeContainer.offsetWidth;
-        
-    } catch (error) {
-        console.error('Error updating code display:', error);
-        showToast('Error updating display. Please refresh the page.');
-    }
-}
-
-function escapeHtml(unsafe) {
-    return unsafe
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-
-function showToast(message) {
-    if (!DOM.toast) return;
-
-    DOM.toast.textContent = message;
-    DOM.toast.style.display = 'block';
-
+    toast.classList.remove("hidden");
     setTimeout(() => {
-        DOM.toast.style.display = 'none';
+        toast.classList.add("hidden");
     }, CONFIG.TOAST_DURATION);
 }
 
-function initializeAnimations() {
-    if (DOM.mainContent) {
-        DOM.mainContent.classList.add('animate-in');
-    }
-}
-
-// Global functions
-window.showModal = showModal;
-window.closeModal = closeModal;
+// Expose Global Functions
+window.toggleTheme = toggleTheme;
 window.copyCode = copyCode;
 window.getNewCode = getNewCode;
+window.showModal = showModal;
+window.closeModal = closeModal;
+window.handleFormSubmit = handleFormSubmit;
+window.toggleMobileMenu = toggleMobileMenu;
