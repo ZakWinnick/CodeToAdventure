@@ -1,0 +1,220 @@
+[01-Feb-2025 10:06:47 America/Los_Angeles] Script started.
+[01-Feb-2025 10:06:47 America/Los_Angeles] PHP Fatal error:  Uncaught Error: Class "Abraham\TwitterOAuth\SignatureMethod" not found in /home/zakwinnick/codetoadventure.com/twitteroauth/src/HmacSha1.php:19
+Stack trace:
+#0 /home/zakwinnick/codetoadventure.com/process_tweets.php(19): require()
+#1 {main}
+  thrown in /home/zakwinnick/codetoadventure.com/twitteroauth/src/HmacSha1.php on line 19
+[01-Feb-2025 10:09:44 America/Los_Angeles] Script started.
+[01-Feb-2025 10:09:44 America/Los_Angeles] PHP Fatal error:  Uncaught Error: Class "Abraham\TwitterOAuth\Token" not found in /home/zakwinnick/codetoadventure.com/twitteroauth/src/TwitterOAuth.php:78
+Stack trace:
+#0 /home/zakwinnick/codetoadventure.com/twitteroauth/src/TwitterOAuth.php(63): Abraham\TwitterOAuth\TwitterOAuth->setOauthToken('188542309759313...', '9VNgvqCZ55Ctpsd...')
+#1 /home/zakwinnick/codetoadventure.com/process_tweets.php(47): Abraham\TwitterOAuth\TwitterOAuth->__construct('ENZYGMsuiFAZuFo...', 'SvgFlfoA1Wj7vXb...', '188542309759313...', '9VNgvqCZ55Ctpsd...')
+#2 {main}
+  thrown in /home/zakwinnick/codetoadventure.com/twitteroauth/src/TwitterOAuth.php on line 78
+[01-Feb-2025 10:11:58 America/Los_Angeles] Script started.
+[01-Feb-2025 10:11:58 America/Los_Angeles] PHP Fatal error:  Uncaught Error: Class "Composer\CaBundle\CaBundle" not found in /home/zakwinnick/codetoadventure.com/twitteroauth/src/TwitterOAuth.php:650
+Stack trace:
+#0 /home/zakwinnick/codetoadventure.com/twitteroauth/src/TwitterOAuth.php(698): Abraham\TwitterOAuth\TwitterOAuth->curlOptions()
+#1 /home/zakwinnick/codetoadventure.com/twitteroauth/src/TwitterOAuth.php(634): Abraham\TwitterOAuth\TwitterOAuth->request('https://api.twi...', 'GET', 'Authorization: ...', Array, Array)
+#2 /home/zakwinnick/codetoadventure.com/twitteroauth/src/TwitterOAuth.php(568): Abraham\TwitterOAuth\TwitterOAuth->oAuthRequest('https://api.twi...', 'GET', Array, Array)
+#3 /home/zakwinnick/codetoadventure.com/twitteroauth/src/TwitterOAuth.php(519): Abraham\TwitterOAuth\TwitterOAuth->makeRequests('https://api.twi...', 'GET', Array, Array)
+#4 /home/zakwinnick/codetoadventure.com/twitteroauth/src/TwitterOAuth.php(237): Abraham\TwitterOAuth\TwitterOAuth->http('GET', 'https://api.twi...', 'account/verify_...', Array, Array)
+#5 /home/zakwinnick/codetoadventure.com/process_tweets.php(61): Abraham\TwitterOAuth\TwitterOAuth->get('account/verify_...')
+#6 {main}
+  thrown in /home/zakwinnick/codetoadventure.com/twitteroauth/src/TwitterOAuth.php on line 650
+[01-Feb-2025 10:14:20 America/Los_Angeles] Script started.
+[01-Feb-2025 10:14:21 America/Los_Angeles] PHP Fatal error:  Uncaught Error: Class "Abraham\TwitterOAuth\Util\JsonDecoder" not found in /home/zakwinnick/codetoadventure.com/twitteroauth/src/TwitterOAuth.php:569
+Stack trace:
+#0 /home/zakwinnick/codetoadventure.com/twitteroauth/src/TwitterOAuth.php(519): Abraham\TwitterOAuth\TwitterOAuth->makeRequests('https://api.twi...', 'GET', Array, Array)
+#1 /home/zakwinnick/codetoadventure.com/twitteroauth/src/TwitterOAuth.php(237): Abraham\TwitterOAuth\TwitterOAuth->http('GET', 'https://api.twi...', 'account/verify_...', Array, Array)
+#2 /home/zakwinnick/codetoadventure.com/process_tweets.php(68): Abraham\TwitterOAuth\TwitterOAuth->get('account/verify_...')
+#3 {main}
+  thrown in /home/zakwinnick/codetoadventure.com/twitteroauth/src/TwitterOAuth.php on line 569
+[01-Feb-2025 10:17:30 America/Los_Angeles] Script started.
+[01-Feb-2025 10:17:30 America/Los_Angeles] Auth response: null
+[01-Feb-2025 10:17:30 America/Los_Angeles] Post response: null
+[01-Feb-2025 10:21:41 America/Los_Angeles] Script started.
+[01-Feb-2025 10:21:42 America/Los_Angeles] Auth response: null
+[01-Feb-2025 10:21:42 America/Los_Angeles] Last HTTP Code: 404
+[01-Feb-2025 10:21:42 America/Los_Angeles] Rate Limit Status: null
+[01-Feb-2025 10:21:42 America/Los_Angeles] Post Response: null
+[01-Feb-2025 10:21:42 America/Los_Angeles] Last HTTP Code: 404
+[01-Feb-2025 10:24:14 America/Los_Angeles] Script started.
+[01-Feb-2025 10:24:14 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[01-Feb-2025 10:24:14 America/Los_Angeles] Last HTTP Code: 200
+[01-Feb-2025 10:24:15 America/Los_Angeles] Rate Limit Status: null
+[01-Feb-2025 10:24:15 America/Los_Angeles] Post Response: {"title":"Too Many Requests","detail":"Too Many Requests","type":"about:blank","status":429}
+[01-Feb-2025 10:24:15 America/Los_Angeles] Last HTTP Code: 429
+[01-Feb-2025 10:26:50 America/Los_Angeles] Script started.
+[01-Feb-2025 10:26:50 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[01-Feb-2025 10:26:50 America/Los_Angeles] Last HTTP Code: 200
+[01-Feb-2025 10:26:51 America/Los_Angeles] Rate Limit Status: null
+[01-Feb-2025 10:26:51 America/Los_Angeles] Rate limit reached. Sleeping for 900 seconds.
+[01-Feb-2025 10:27:07 America/Los_Angeles] Script started.
+[01-Feb-2025 10:27:07 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[01-Feb-2025 10:27:07 America/Los_Angeles] Last HTTP Code: 200
+[01-Feb-2025 10:27:07 America/Los_Angeles] Rate Limit Status: null
+[01-Feb-2025 10:27:07 America/Los_Angeles] Rate limit reached. Sleeping for 900 seconds.
+[01-Feb-2025 10:31:56 America/Los_Angeles] Post Response: {"title":"Too Many Requests","detail":"Too Many Requests","type":"about:blank","status":429}
+[01-Feb-2025 10:31:56 America/Los_Angeles] Last HTTP Code: 429
+[01-Feb-2025 10:32:08 America/Los_Angeles] Post Response: {"title":"Too Many Requests","detail":"Too Many Requests","type":"about:blank","status":429}
+[01-Feb-2025 10:32:08 America/Los_Angeles] Last HTTP Code: 429
+[01-Feb-2025 10:33:20 America/Los_Angeles] Script started.
+[01-Feb-2025 10:33:21 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[01-Feb-2025 10:33:21 America/Los_Angeles] Last HTTP Code: 200
+[01-Feb-2025 10:33:21 America/Los_Angeles] Rate Limit Status: null
+[01-Feb-2025 10:33:21 America/Los_Angeles] Rate limit reached. Skipping tweet. Retry after Twitter's reset time.
+[01-Feb-2025 10:35:37 America/Los_Angeles] Script started.
+[01-Feb-2025 10:35:37 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[01-Feb-2025 10:35:37 America/Los_Angeles] Last HTTP Code: 200
+[01-Feb-2025 10:35:37 America/Los_Angeles] Rate Limit Status: null
+[01-Feb-2025 10:35:37 America/Los_Angeles] Rate limit reset time not available.
+[01-Feb-2025 10:35:38 America/Los_Angeles] Rate limit reached. Skipping tweet. Retry after Twitter's reset time.
+[01-Feb-2025 10:37:42 America/Los_Angeles] Script started.
+[01-Feb-2025 10:37:43 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[01-Feb-2025 10:37:43 America/Los_Angeles] Last HTTP Code: 200
+[01-Feb-2025 10:37:43 America/Los_Angeles] Rate limit reset time not available from headers.
+[01-Feb-2025 10:37:43 America/Los_Angeles] Rate limit reached. Skipping tweet. Retry after Twitter's reset time.
+[01-Feb-2025 10:40:59 America/Los_Angeles] Script started.
+[01-Feb-2025 10:40:59 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[01-Feb-2025 10:40:59 America/Los_Angeles] Last HTTP Code: 200
+[01-Feb-2025 10:40:59 America/Los_Angeles] All Response Headers: {"x_access_level":"read-write","x_frame_options":"SAMEORIGIN","x_transaction_id":"de93d3491a051a42","x_xss_protection":"0","x_rate_limit_limit":"1200000","x_rate_limit_reset":"1738436159","x_content_type_options":"nosniff","x_rate_limit_remaining":"1199999","x_user_limit_24hour_limit":"25","x_user_limit_24hour_reset":"1738520654","x_user_limit_24hour_remaining":"18","x_response_time":"35","x_connection_hash":"c9ce787cc4fae40b3b08f444a14ca70b9e58d63a9b251bc8b7e079301d6f528e"}
+[01-Feb-2025 10:40:59 America/Los_Angeles] Rate limit reset time not available from headers.
+[01-Feb-2025 10:40:59 America/Los_Angeles] Rate limit reached. Skipping tweet. Retry after Twitter's reset time.
+[01-Feb-2025 10:42:55 America/Los_Angeles] Script started.
+[01-Feb-2025 10:42:55 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[01-Feb-2025 10:42:55 America/Los_Angeles] Last HTTP Code: 200
+[01-Feb-2025 10:42:55 America/Los_Angeles] All Response Headers: {"x_access_level":"read-write","x_frame_options":"SAMEORIGIN","x_transaction_id":"cac48a730b6c0e3c","x_xss_protection":"0","x_rate_limit_limit":"1200000","x_rate_limit_reset":"1738436159","x_content_type_options":"nosniff","x_rate_limit_remaining":"1199998","x_user_limit_24hour_limit":"25","x_user_limit_24hour_reset":"1738520654","x_user_limit_24hour_remaining":"17","x_response_time":"41","x_connection_hash":"685acb03af3a8a486e79696ddfbf5d96b7990ccf21561feac397154726fd8742"}
+[01-Feb-2025 10:42:55 America/Los_Angeles] 24-hour rate limit reset time not available from headers.
+[01-Feb-2025 10:42:56 America/Los_Angeles] Rate limit reached. Skipping tweet. Retry after Twitter's reset time.
+[01-Feb-2025 10:45:11 America/Los_Angeles] Script started.
+[01-Feb-2025 10:45:12 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[01-Feb-2025 10:45:12 America/Los_Angeles] Last HTTP Code: 200
+[01-Feb-2025 10:45:12 America/Los_Angeles] All Response Headers: {"x_access_level":"read-write","x_frame_options":"SAMEORIGIN","x_transaction_id":"34913523c8f11281","x_xss_protection":"0","x_rate_limit_limit":"1200000","x_rate_limit_reset":"1738436159","x_content_type_options":"nosniff","x_rate_limit_remaining":"1199997","x_user_limit_24hour_limit":"25","x_user_limit_24hour_reset":"1738520654","x_user_limit_24hour_remaining":"16","x_response_time":"36","x_connection_hash":"3841543e2b61038dab7eeda28fb45e4ff8a3f8facf7e3716c5601d9e4adc04d8"}
+[01-Feb-2025 10:45:12 America/Los_Angeles] 24-hour rate limit reset time not available from headers.
+[01-Feb-2025 10:45:12 America/Los_Angeles] Rate limit reached. Skipping tweet. Retry after Twitter's reset time.
+[01-Feb-2025 10:45:13 America/Los_Angeles] Script started.
+[01-Feb-2025 10:45:13 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[01-Feb-2025 10:45:13 America/Los_Angeles] Last HTTP Code: 200
+[01-Feb-2025 10:45:13 America/Los_Angeles] All Response Headers: {"x_access_level":"read-write","x_frame_options":"SAMEORIGIN","x_transaction_id":"cb073892dbb41135","x_xss_protection":"0","x_rate_limit_limit":"1200000","x_rate_limit_reset":"1738436159","x_content_type_options":"nosniff","x_rate_limit_remaining":"1199996","x_user_limit_24hour_limit":"25","x_user_limit_24hour_reset":"1738520654","x_user_limit_24hour_remaining":"15","x_response_time":"35","x_connection_hash":"c7388c669352b5682f8be2ffc58e74740cb88c932672ac90ca0ab0f01ba7d69c"}
+[01-Feb-2025 10:45:13 America/Los_Angeles] 24-hour rate limit reset time not available from headers.
+[01-Feb-2025 10:45:13 America/Los_Angeles] Rate limit reached. Skipping tweet. Retry after Twitter's reset time.
+[01-Feb-2025 10:47:24 America/Los_Angeles] Script started.
+[01-Feb-2025 10:47:24 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[01-Feb-2025 10:47:24 America/Los_Angeles] Last HTTP Code: 200
+[01-Feb-2025 10:47:24 America/Los_Angeles] All Response Headers: {"x_access_level":"read-write","x_frame_options":"SAMEORIGIN","x_transaction_id":"5ca497721a6bd979","x_xss_protection":"0","x_rate_limit_limit":"1200000","x_rate_limit_reset":"1738436159","x_content_type_options":"nosniff","x_rate_limit_remaining":"1199995","x_user_limit_24hour_limit":"25","x_user_limit_24hour_reset":"1738520654","x_user_limit_24hour_remaining":"14","x_response_time":"41","x_connection_hash":"672f14962dcc26af6185e4e6ba43f419f4d5a68448954cb12b0d9265cbdba4f6"}
+[01-Feb-2025 10:47:24 America/Los_Angeles] 24-hour rate limit reset time not available from headers.
+[01-Feb-2025 10:47:24 America/Los_Angeles] Rate limit reached. Skipping tweet. Retry after Twitter's reset time.
+[01-Feb-2025 10:47:27 America/Los_Angeles] Script started.
+[01-Feb-2025 10:47:27 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[01-Feb-2025 10:47:27 America/Los_Angeles] Last HTTP Code: 200
+[01-Feb-2025 10:47:27 America/Los_Angeles] All Response Headers: {"x_access_level":"read-write","x_frame_options":"SAMEORIGIN","x_transaction_id":"6a46ea4a66d1e83b","x_xss_protection":"0","x_rate_limit_limit":"1200000","x_rate_limit_reset":"1738436159","x_content_type_options":"nosniff","x_rate_limit_remaining":"1199994","x_user_limit_24hour_limit":"25","x_user_limit_24hour_reset":"1738520654","x_user_limit_24hour_remaining":"13","x_response_time":"36","x_connection_hash":"7f1f0ce399d1e8ed43368204e44b62562e9807f2c5d475b33b697a7af135d3e4"}
+[01-Feb-2025 10:47:27 America/Los_Angeles] 24-hour rate limit reset time not available from headers.
+[01-Feb-2025 10:47:27 America/Los_Angeles] Rate limit reached. Skipping tweet. Retry after Twitter's reset time.
+[01-Feb-2025 10:51:02 America/Los_Angeles] Script started.
+[01-Feb-2025 10:51:03 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[01-Feb-2025 10:51:03 America/Los_Angeles] Last HTTP Code: 200
+[01-Feb-2025 10:51:03 America/Los_Angeles] All Response Headers: {"x_access_level":"read-write","x_frame_options":"SAMEORIGIN","x_transaction_id":"168373c889693046","x_xss_protection":"0","x_rate_limit_limit":"1200000","x_rate_limit_reset":"1738436159","x_content_type_options":"nosniff","x_rate_limit_remaining":"1199993","x_user_limit_24hour_limit":"25","x_user_limit_24hour_reset":"1738520654","x_user_limit_24hour_remaining":"12","x_response_time":"41","x_connection_hash":"a272e000247f101294026cb1648605a9314ef827b87ea423a32651852f450af7"}
+[01-Feb-2025 10:51:03 America/Los_Angeles] 24-hour rate limit reset time not available from headers.
+[01-Feb-2025 10:51:03 America/Los_Angeles] Rate limit reached. Skipping tweet. Retry after Twitter's reset time.
+[01-Feb-2025 10:51:05 America/Los_Angeles] Script started.
+[01-Feb-2025 10:51:05 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[01-Feb-2025 10:51:05 America/Los_Angeles] Last HTTP Code: 200
+[01-Feb-2025 10:51:05 America/Los_Angeles] All Response Headers: {"x_access_level":"read-write","x_frame_options":"SAMEORIGIN","x_transaction_id":"0158b0fae39dfcf4","x_xss_protection":"0","x_rate_limit_limit":"1200000","x_rate_limit_reset":"1738436159","x_content_type_options":"nosniff","x_rate_limit_remaining":"1199992","x_user_limit_24hour_limit":"25","x_user_limit_24hour_reset":"1738520654","x_user_limit_24hour_remaining":"11","x_response_time":"34","x_connection_hash":"6c08c7ee496f8a6ea35346c1255d24bd4a7c290dbb88d87ae3006902d7d591e7"}
+[01-Feb-2025 10:51:05 America/Los_Angeles] 24-hour rate limit reset time not available from headers.
+[01-Feb-2025 10:51:05 America/Los_Angeles] Rate limit reached. Skipping tweet. Retry after Twitter's reset time.
+[01-Feb-2025 10:54:04 America/Los_Angeles] Script started.
+[01-Feb-2025 10:54:04 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[01-Feb-2025 10:54:04 America/Los_Angeles] Last HTTP Code: 200
+[01-Feb-2025 10:54:04 America/Los_Angeles] All Response Headers: {"x_access_level":"read-write","x_frame_options":"SAMEORIGIN","x_transaction_id":"00073ba96156382a","x_xss_protection":"0","x_rate_limit_limit":"1200000","x_rate_limit_reset":"1738436159","x_content_type_options":"nosniff","x_rate_limit_remaining":"1199991","x_user_limit_24hour_limit":"25","x_user_limit_24hour_reset":"1738520654","x_user_limit_24hour_remaining":"10","x_response_time":"35","x_connection_hash":"0553a9106e306aff94c89eb8c7793ca75279a3881c1fcb747024f9a14b804bb2"}
+[01-Feb-2025 10:54:04 America/Los_Angeles] 24-hour rate limit reset time not available from headers.
+[01-Feb-2025 10:54:04 America/Los_Angeles] Rate limit reached. Skipping tweet. Retry after Twitter's reset time.
+[01-Feb-2025 11:20:12 America/Los_Angeles] Script started.
+[01-Feb-2025 11:20:12 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[01-Feb-2025 11:20:12 America/Los_Angeles] Last HTTP Code: 200
+[01-Feb-2025 11:20:12 America/Los_Angeles] All Response Headers: {"x_access_level":"read-write","x_frame_options":"SAMEORIGIN","x_transaction_id":"d5fcec9646829b15","x_xss_protection":"0","x_rate_limit_limit":"1200000","x_rate_limit_reset":"1738438512","x_content_type_options":"nosniff","x_rate_limit_remaining":"1199999","x_user_limit_24hour_limit":"25","x_user_limit_24hour_reset":"1738520654","x_user_limit_24hour_remaining":"9","x_response_time":"40","x_connection_hash":"a318d7fa060bfe3506cdca3c17063a8eaf1e7779ca0a5a98f718d83238443a3d"}
+[01-Feb-2025 11:20:12 America/Los_Angeles] 24-hour rate limit reset time not available from headers.
+[01-Feb-2025 11:20:12 America/Los_Angeles] Rate limit reached. Skipping tweet. Retry after Twitter's reset time.
+[01-Feb-2025 15:04:13 America/Los_Angeles] Script started.
+[01-Feb-2025 15:04:13 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[01-Feb-2025 15:04:13 America/Los_Angeles] Last HTTP Code: 200
+[01-Feb-2025 15:04:13 America/Los_Angeles] All Response Headers: {"x_access_level":"read-write","x_frame_options":"SAMEORIGIN","x_transaction_id":"99578864bebd6c9b","x_xss_protection":"0","x_rate_limit_limit":"1200000","x_rate_limit_reset":"1738451953","x_content_type_options":"nosniff","x_rate_limit_remaining":"1199999","x_user_limit_24hour_limit":"25","x_user_limit_24hour_reset":"1738520654","x_user_limit_24hour_remaining":"8","x_response_time":"40","x_connection_hash":"6a15a9c7f8d9d2b0a2ca3b8c0aef08a9d169e0392dcd4e8bec2c390a3801390f"}
+[01-Feb-2025 15:04:13 America/Los_Angeles] 24-hour rate limit reset time not available from headers.
+[01-Feb-2025 15:04:13 America/Los_Angeles] Post Response: {"data":{"text":"\ud83d\ude99 New Rivian Referral Codes - Afternoon Update\n\n1. Test Nine: TEST90123456\n\n\u27a1\ufe0f Visit: https:\/\/t.co\/Aky8nC7vyc\n#Rivian #R1T #R1S","id":"1885826518581977164","edit_history_tweet_ids":["1885826518581977164"]}}
+[01-Feb-2025 15:04:13 America/Los_Angeles] Last HTTP Code: 201
+[01-Feb-2025 15:05:59 America/Los_Angeles] Script started.
+[01-Feb-2025 15:06:00 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[01-Feb-2025 15:06:00 America/Los_Angeles] Last HTTP Code: 200
+[01-Feb-2025 15:06:00 America/Los_Angeles] Post Response: {"detail":"You are not allowed to create a Tweet with duplicate content.","type":"about:blank","title":"Forbidden","status":403}
+[01-Feb-2025 15:06:00 America/Los_Angeles] Failed to post tweet. HTTP Code: 403
+[01-Feb-2025 15:06:00 America/Los_Angeles] Response: {"detail":"You are not allowed to create a Tweet with duplicate content.","type":"about:blank","title":"Forbidden","status":403}
+[01-Feb-2025 16:07:54 America/Los_Angeles] Script started.
+[01-Feb-2025 16:07:55 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[01-Feb-2025 16:07:55 America/Los_Angeles] Last HTTP Code: 200
+[01-Feb-2025 16:08:51 America/Los_Angeles] Script started.
+[01-Feb-2025 16:08:51 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[01-Feb-2025 16:08:51 America/Los_Angeles] Last HTTP Code: 200
+[01-Feb-2025 16:08:51 America/Los_Angeles] Post Response: {"data":{"id":"1885842783870583231","edit_history_tweet_ids":["1885842783870583231"],"text":"\ud83d\ude99 New Rivian Referral Codes - Afternoon Update\n\n1. Grant W: GRANT1234567\n\n\u27a1\ufe0f Visit: https:\/\/t.co\/Aky8nC7vyc\n#Rivian #R1T #R1S"}}
+[01-Feb-2025 16:08:51 America/Los_Angeles] Successfully posted tweet ID: 1885842783870583231
+[01-Feb-2025 23:25:43 America/Los_Angeles] Script started.
+[01-Feb-2025 23:25:43 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[01-Feb-2025 23:25:43 America/Los_Angeles] Last HTTP Code: 200
+[02-Feb-2025 00:00:09 America/Los_Angeles] Script started.
+[02-Feb-2025 00:00:09 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[02-Feb-2025 00:00:09 America/Los_Angeles] Last HTTP Code: 200
+[02-Feb-2025 04:00:13 America/Los_Angeles] Script started.
+[02-Feb-2025 04:00:13 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[02-Feb-2025 04:00:13 America/Los_Angeles] Last HTTP Code: 200
+[02-Feb-2025 08:00:17 America/Los_Angeles] Script started.
+[02-Feb-2025 08:00:18 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[02-Feb-2025 08:00:18 America/Los_Angeles] Last HTTP Code: 200
+[02-Feb-2025 12:00:09 America/Los_Angeles] Script started.
+[02-Feb-2025 12:00:09 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[02-Feb-2025 12:00:09 America/Los_Angeles] Last HTTP Code: 200
+[02-Feb-2025 16:00:48 America/Los_Angeles] Script started.
+[02-Feb-2025 16:00:48 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[02-Feb-2025 16:00:48 America/Los_Angeles] Last HTTP Code: 200
+[02-Feb-2025 20:00:42 America/Los_Angeles] Script started.
+[02-Feb-2025 20:00:42 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[02-Feb-2025 20:00:42 America/Los_Angeles] Last HTTP Code: 200
+[03-Feb-2025 00:01:00 America/Los_Angeles] Script started.
+[03-Feb-2025 00:01:00 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[03-Feb-2025 00:01:00 America/Los_Angeles] Last HTTP Code: 200
+[03-Feb-2025 04:01:45 America/Los_Angeles] Script started.
+[03-Feb-2025 04:01:45 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[03-Feb-2025 04:01:45 America/Los_Angeles] Last HTTP Code: 200
+[03-Feb-2025 08:00:07 America/Los_Angeles] Script started.
+[03-Feb-2025 08:00:07 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[03-Feb-2025 08:00:07 America/Los_Angeles] Last HTTP Code: 200
+[03-Feb-2025 12:00:16 America/Los_Angeles] Script started.
+[03-Feb-2025 12:00:16 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[03-Feb-2025 12:00:16 America/Los_Angeles] Last HTTP Code: 200
+[03-Feb-2025 16:00:23 America/Los_Angeles] Script started.
+[03-Feb-2025 16:00:23 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[03-Feb-2025 16:00:23 America/Los_Angeles] Last HTTP Code: 200
+[03-Feb-2025 20:00:40 America/Los_Angeles] Script started.
+[03-Feb-2025 20:00:40 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[03-Feb-2025 20:00:40 America/Los_Angeles] Last HTTP Code: 200
+[04-Feb-2025 00:00:11 America/Los_Angeles] Script started.
+[04-Feb-2025 00:00:11 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[04-Feb-2025 00:00:11 America/Los_Angeles] Last HTTP Code: 200
+[04-Feb-2025 04:00:20 America/Los_Angeles] Script started.
+[04-Feb-2025 04:00:20 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[04-Feb-2025 04:00:20 America/Los_Angeles] Last HTTP Code: 200
+[04-Feb-2025 08:00:36 America/Los_Angeles] Script started.
+[04-Feb-2025 08:00:36 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[04-Feb-2025 08:00:36 America/Los_Angeles] Last HTTP Code: 200
+[04-Feb-2025 08:00:37 America/Los_Angeles] Post Response: {"data":{"text":"\ud83d\ude99 New Rivian Referral Codes - Morning Update\n\n1. Alex Martin: ALEX1674858\n\n\u27a1\ufe0f Visit: https:\/\/t.co\/Aky8nC7vyc\n#Rivian #R1T #R1S","id":"1886807077651157090","edit_history_tweet_ids":["1886807077651157090"]}}
+[04-Feb-2025 08:00:37 America/Los_Angeles] Successfully posted tweet ID: 1886807077651157090
+[04-Feb-2025 12:00:08 America/Los_Angeles] Script started.
+[04-Feb-2025 12:00:08 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[04-Feb-2025 12:00:08 America/Los_Angeles] Last HTTP Code: 200
+[04-Feb-2025 16:00:22 America/Los_Angeles] Script started.
+[04-Feb-2025 16:00:22 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[04-Feb-2025 16:00:22 America/Los_Angeles] Last HTTP Code: 200
+[04-Feb-2025 20:00:04 America/Los_Angeles] Script started.
+[04-Feb-2025 20:00:05 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[04-Feb-2025 20:00:05 America/Los_Angeles] Last HTTP Code: 200
+[05-Feb-2025 00:00:21 America/Los_Angeles] Script started.
+[05-Feb-2025 00:00:21 America/Los_Angeles] Auth response: {"data":{"id":"1885423097593135104","name":"CodeToAdventure","username":"CodeToAdventure"}}
+[05-Feb-2025 00:00:21 America/Los_Angeles] Last HTTP Code: 200

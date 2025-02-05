@@ -1,0 +1,46 @@
+.main-content {
+  padding: var(--spacing-xl) 0;
+}
+
+.code-section {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+  margin: var(--spacing-xl) 0;
+}
+
+.step-card {
+  background-color: var(--hunter-green);
+  padding: var(--spacing-lg);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.step-number {
+  background-color: var(--moss-green);
+  color: var(--dark-green);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--spacing-md);
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: var(--spacing-lg) 0;
+  }
+  
+  .steps-grid {
+    gap: var(--spacing-md);
+  }
+} 

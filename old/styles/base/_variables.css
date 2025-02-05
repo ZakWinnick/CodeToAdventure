@@ -1,0 +1,25 @@
+:root {
+  --dark-green: #132A13;
+  --hunter-green: #31572C;
+  --fern-green: #4F772D;
+  --moss-green: #90A955;
+  --mindaro: #ECF39E;
+  --text-white: #FFFFFF;
+  --error-red: #ff3b3b;
+  --success-green: #4CAF50;
+  --focus-outline: 3px solid #4A90E2;
+  --button-radius: 40px;
+  --max-width: 1200px;
+  --border-radius: 8px;
+  --transition-speed: 0.3s;
+  
+  /* Typography */
+  --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-size-xs: 0.875rem;
+  --font-size-sm: 1rem;
+  --font-size-md: 1.125rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 2.5rem;
+}

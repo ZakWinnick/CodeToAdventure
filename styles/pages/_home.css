@@ -1,0 +1,243 @@
+/* Hero Section */
+.hero-section {
+  background-color: var(--hunter-green);
+  padding: 4rem 2rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: var(--mindaro);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.hero-description {
+  font-size: var(--font-size-xl);
+  color: var(--text-white);
+  opacity: 0.9;
+}
+
+/* Referral Section */
+.referral-section {
+  max-width: 600px;
+  margin: 0 auto 4rem;
+}
+
+.referral-card {
+  background-color: var(--hunter-green);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.referral-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.referral-logo {
+  height: 40px;
+  width: auto;
+}
+
+.referral-label {
+  color: var(--mindaro);
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+}
+
+.code-display {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.owner-name {
+  display: block;
+  color: var(--text-white);
+  margin-bottom: 0.5rem;
+  font-size: var(--font-size-md);
+}
+
+.referral-code {
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  color: var(--mindaro);
+  letter-spacing: 0.1em;
+  margin-right: 1rem;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.primary-button {
+  flex: 2;
+  background-color: var(--mindaro);
+  color: var(--dark-green);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  transition: all var(--transition-speed) ease;
+}
+
+.secondary-button {
+  flex: 1;
+  background-color: transparent;
+  border: 2px solid var(--mindaro);
+  color: var(--mindaro);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  transition: all var(--transition-speed) ease;
+}
+
+.primary-button:hover,
+.secondary-button:hover {
+  transform: translateY(-2px);
+  background-color: var(--moss-green);
+  color: var(--dark-green);
+}
+
+.usage-note {
+  color: var(--text-white);
+  opacity: 0.8;
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
+
+/* Benefits Section */
+.benefits-section {
+  padding: 4rem 2rem;
+  background-color: var(--hunter-green);
+  border-radius: var(--border-radius);
+  margin-bottom: 4rem;
+}
+
+.section-title {
+  text-align: center;
+  color: var(--mindaro);
+  font-size: var(--font-size-2xl);
+  margin-bottom: 3rem;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.benefit-card {
+  background-color: var(--fern-green);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  text-align: center;
+}
+
+.benefit-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 1rem;
+}
+
+.benefit-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: var(--mindaro);
+}
+
+.benefit-card h3 {
+  color: var(--mindaro);
+  font-size: var(--font-size-lg);
+  margin-bottom: 1rem;
+}
+
+.benefit-card p {
+  color: var(--text-white);
+  font-size: var(--font-size-md);
+}
+
+.benefit-note {
+  display: block;
+  color: var(--text-white);
+  opacity: 0.8;
+  font-size: var(--font-size-sm);
+  margin-top: 0.5rem;
+}
+
+/* How It Works Section */
+.how-it-works {
+  padding: 4rem 2rem;
+}
+
+.steps-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.step {
+  text-align: center;
+  position: relative;
+}
+
+.step-number {
+  background-color: var(--mindaro);
+  color: var(--dark-green);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  margin: 0 auto 1rem;
+}
+
+.step h3 {
+  color: var(--mindaro);
+  font-size: var(--font-size-lg);
+  margin-bottom: 0.5rem;
+}
+
+.step p {
+  color: var(--text-white);
+  font-size: var(--font-size-md);
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 3rem 1rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .benefits-grid,
+  .steps-container {
+    grid-template-columns: 1fr;
+  }
+
+  .referral-card {
+    margin: 0 1rem;
+  }
+} 

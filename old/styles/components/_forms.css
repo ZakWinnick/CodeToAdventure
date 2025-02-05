@@ -1,0 +1,43 @@
+/* Base form styles with touch-friendly sizing */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: var(--font-size-sm);
+  color: var(--text-white);
+}
+
+.form-input {
+  width: 100%;
+  min-height: 48px; /* Touch-friendly size */
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--moss-green);
+  border-radius: 8px;
+  background: var(--dark-green);
+  color: var(--text-white);
+  font-size: var(--font-size-md);
+  transition: border-color 0.3s ease;
+}
+
+/* Touch-friendly buttons */
+.button {
+  min-height: 48px;
+  min-width: 48px; /* Minimum touch target size */
+  padding: 0.75rem 1.5rem;
+  border-radius: 24px;
+  border: none;
+  background: var(--moss-green);
+  color: var(--dark-green);
+  font-weight: 600;
+  font-size: var(--font-size-md);
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  touch-action: manipulation;
+}
+
+.button:active {
+  transform: scale(0.98);
+} 

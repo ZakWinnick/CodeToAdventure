@@ -1,0 +1,59 @@
+.content {
+    flex: 1;
+    max-width: var(--max-width);
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+.api-docs {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: var(--hunter-green);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.entry {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: var(--border-radius);
+}
+
+.entry:nth-child(odd) {
+    background-color: var(--fern-green);
+}
+
+.entry:nth-child(even) {
+    background-color: var(--hunter-green);
+}
+
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--mindaro);
+}
+
+h3 {
+    color: var(--mindaro);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+p {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+    color: var(--text-white);
+}
+
+@media (max-width: 768px) {
+    .entry {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+}

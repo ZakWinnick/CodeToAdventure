@@ -1,0 +1,10 @@
+/* styles/components/_feedback.css */
+.error-message {
+  color: var(--error-red);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.input-error {
+  border-color: var(--error-red) !important;
+}
