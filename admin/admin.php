@@ -338,9 +338,8 @@ try {
    <!-- Toast notification element -->
    <div id="toast" class="fixed hidden px-6 py-3 rounded-lg shadow-lg transition-opacity duration-300"></div>
 
-<?php include '../includes/modal.php'; ?>
-<?php include '../includes/footer.php'; ?>
-<div id="toast" class="fixed hidden"></div>
-<script src="../js/main.js"></script>
+   <?php include '../includes/modal.php'; ?>
+    <?php include '../includes/footer.php'; ?>
+    <script src="../js/main.js"></script>
 </body>
 </html>
