@@ -98,28 +98,15 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code To Adventure - Admin Dashboard</title>
     
-    <script>
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-            document.body.classList.add('dark');
-        }
-    </script>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="../styles/base/_variables.css">
-    <link rel="stylesheet" href="../styles/base/_reset.css">
-    <link rel="stylesheet" href="../styles/components/_buttons.css">
-    <link rel="stylesheet" href="../styles/components/_navigation.css">
-    <link rel="stylesheet" href="../styles/components/_modal.css">
-    <link rel="stylesheet" href="../styles/components/_toast.css">
     <link rel="stylesheet" href="dashboard.css">
 </head>
-<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+<body class="bg-white dark:bg-gray-900 transition-colors duration-200">
     <?php include '../includes/header.php'; ?>
     <?php include '../includes/modal.php'; ?>
+    <main class="dashboard-content">
 
     <main class="dashboard-content">
         <!-- Metrics Grid -->
