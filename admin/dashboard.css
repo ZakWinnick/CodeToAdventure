@@ -8,14 +8,14 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .dashboard-container {
     width: 100%;
     max-width: 1200px;
     padding: 2rem;
-    margin-left: auto;
+    margin-left: 0;
     margin-right: auto;
 }
 
@@ -116,6 +116,43 @@ table th {
 
 table tr:nth-child(even) {
     background: var(--row-alt-background);
+}
+
+/* Buttons */
+.actions {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.edit-btn {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: transform 0.2s ease;
+}
+
+.edit-btn:hover {
+    transform: translateY(-2px);
+    background-color: var(--button-hover);
+}
+
+.delete-btn {
+    background-color: #f44336;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: transform 0.2s ease;
+}
+
+.delete-btn:hover {
+    transform: translateY(-2px);
+    background-color: #d32f2f;
 }
 
 /* Mobile Responsive */
