@@ -7,6 +7,7 @@ ini_set('display_errors', 1);
 <!DOCTYPE html>
 <html lang="en">
 <?php include 'includes/head.php'; ?>
+<?php include 'includes/modal.php'; ?>
 
 <body class="!bg-white dark:!bg-gray-900 transition-colors duration-200">
     <?php include 'includes/header.php'; ?>
