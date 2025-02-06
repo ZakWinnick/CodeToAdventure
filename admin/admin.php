@@ -119,6 +119,7 @@ try {
 </head>
 <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
     <?php include '../includes/header.php'; ?>
+    <?php include '../includes/modal.php'; ?>
 
     <main class="dashboard-content">
         <!-- Metrics Grid -->
