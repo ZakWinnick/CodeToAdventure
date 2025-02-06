@@ -94,6 +94,13 @@ try {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+        // Check for dark mode
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        }
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code To Adventure - Admin Dashboard</title>
@@ -110,6 +117,7 @@ try {
     <link rel="stylesheet" href="../styles/components/_modal.css">
     <link rel="stylesheet" href="../styles/components/_toast.css">
     <link rel="stylesheet" href="dashboard.css">
+
 </head>
 <body>
     <header class="header">
