@@ -9,13 +9,14 @@ body {
     padding: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 .dashboard-container {
     width: 100%;
     max-width: 1200px;
     padding: 2rem;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Header */
