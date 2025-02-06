@@ -66,11 +66,11 @@ $countResult = $conn->query($countQuery);
 $totalCount = $countResult->fetch_assoc()['total'];
 $total_pages = ceil($totalCount / $entries_per_page);
 
-// Get all submissions with sorting, search, and pagination
+// Get all submissions
 $query = "SELECT * FROM codes" . $search_condition . " ORDER BY $sort_column $sort_direction LIMIT $entries_per_page OFFSET $offset";
 $allSubmissions = $conn->query($query);
 
-// Calculate analytics data
+// Calculate analytics
 $analyticsQuery = "SELECT 
     COUNT(*) as total_clicks,
     COUNT(DISTINCT ip_address) as unique_visitors,
@@ -94,22 +94,21 @@ try {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>
-        // Check for dark mode
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark')
-        }
-    </script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code To Adventure - Admin Dashboard</title>
+    
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            document.body.classList.add('dark');
+        }
+    </script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- CSS Files -->
     <link rel="stylesheet" href="../styles/base/_variables.css">
     <link rel="stylesheet" href="../styles/base/_reset.css">
     <link rel="stylesheet" href="../styles/components/_buttons.css">
@@ -117,27 +116,12 @@ try {
     <link rel="stylesheet" href="../styles/components/_modal.css">
     <link rel="stylesheet" href="../styles/components/_toast.css">
     <link rel="stylesheet" href="dashboard.css">
-
 </head>
-<body>
-    <header class="header">
-        <a href="/" class="logo-container">Code To Adventure</a>
-        <div class="nav-content">
-            <a href="../index.php" class="nav-link">Home</a>
-            <a href="../api-docs.php" class="nav-link">API Docs</a>
-            <a href="../changelog.php" class="nav-link">Changelog</a>
-            <a href="logout.php" class="nav-link">Logout</a>
-        </div>
-    </header>
-
-    <nav class="nav-container">
-        <div class="nav-content">
-            <span class="nav-link">Admin Dashboard</span>
-        </div>
-    </nav>
+<body class="!bg-white dark:!bg-gray-900 transition-colors duration-200">
+    <?php include '../includes/header.php'; ?>
 
     <main class="dashboard-content">
-        <!-- Overview Cards -->
+        <!-- Metrics Grid -->
         <div class="metrics-grid">
             <div class="metric-card">
                 <h3>Total Codes</h3>
@@ -233,131 +217,137 @@ try {
         </div>
 
         <!-- All Submissions -->
-        <div style="max-width: calc(var(--max-width) - 4rem); margin: 0 auto;">
-            <div class="info-section">
-                <div class="full-width">
-                    <h3 class="info-title">All Submissions</h3>
-                    <!-- Search Form -->
-                    <div class="search-container">
-                        <form action="" method="GET" class="search-form">
-                            <input type="text" 
-                                   name="search" 
-                                   value="<?php echo htmlspecialchars($search); ?>" 
-                                   placeholder="Search by name or code..."
-                                   class="search-input">
-                            <button type="submit" class="search-button">Search</button>
-                        </form>
+        <div class="info-section">
+            <div class="full-width">
+                <h3 class="info-title">All Submissions</h3>
+                
+                <!-- Search Form -->
+                <div class="search-container">
+                    <form action="" method="GET" class="search-form">
+                        <input type="text" 
+                               name="search" 
+                               value="<?php echo htmlspecialchars($search); ?>" 
+                               placeholder="Search by name or code..."
+                               class="search-input">
+                        <button type="submit" class="search-button">Search</button>
+                    </form>
+                </div>
+
+                <!-- Table Controls -->
+                <div class="table-controls">
+                    <div class="entries-selector">
+                        <label for="entries">Show entries:</label>
+                        <select id="entries" onchange="changeEntries(this.value)">
+                            <option value="25" <?php echo $entries_per_page === 25 ? 'selected' : ''; ?>>25</option>
+                            <option value="50" <?php echo $entries_per_page === 50 ? 'selected' : ''; ?>>50</option>
+                            <option value="100" <?php echo $entries_per_page === 100 ? 'selected' : ''; ?>>100</option>
+                        </select>
                     </div>
+                </div>
 
-                    <!-- Table Controls -->
-                    <div class="table-controls">
-                        <div class="entries-selector">
-                            <label for="entries">Show entries:</label>
-                            <select id="entries" onchange="changeEntries(this.value)">
-                                <option value="25" <?php echo $entries_per_page === 25 ? 'selected' : ''; ?>>25</option>
-                                <option value="50" <?php echo $entries_per_page === 50 ? 'selected' : ''; ?>>50</option>
-                                <option value="100" <?php echo $entries_per_page === 100 ? 'selected' : ''; ?>>100</option>
-                            </select>
-                        </div>
-                    </div>
+                <!-- Main Table -->
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="sortable <?php echo $sort_column === 'id' ? strtolower($sort_direction) : ''; ?>" 
+                                    onclick="changeSort('id')">ID</th>
+                                <th class="sortable <?php echo $sort_column === 'name' ? strtolower($sort_direction) : ''; ?>" 
+                                    onclick="changeSort('name')">Name</th>
+                                <th class="sortable <?php echo $sort_column === 'referral_code' ? strtolower($sort_direction) : ''; ?>" 
+                                    onclick="changeSort('referral_code')">Code</th>
+                                <th class="sortable <?php echo $sort_column === 'use_count' ? strtolower($sort_direction) : ''; ?>" 
+                                    onclick="changeSort('use_count')">Uses</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($row = $allSubmissions->fetch_assoc()): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($row['id']); ?></td>
+                                <td><?php echo htmlspecialchars($row['name']); ?></td>
+                                <td><?php echo htmlspecialchars($row['referral_code']); ?></td>
+                                <td><?php echo number_format($row['use_count'] ?? 0); ?></td>
+                                <td>
+                                    <div class="actions">
+                                        <a href="edit.php?id=<?php echo $row['id']; ?>" class="edit-btn">Edit</a>
+                                        <a href="delete.php?id=<?php echo $row['id']; ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this code?')">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                </div>
 
-                    <div class="table-container">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th class="sortable <?php echo $sort_column === 'id' ? strtolower($sort_direction) : ''; ?>" 
-                                        onclick="changeSort('id')">ID</th>
-                                    <th class="sortable <?php echo $sort_column === 'name' ? strtolower($sort_direction) : ''; ?>" 
-                                        onclick="changeSort('name')">Name</th>
-                                    <th class="sortable <?php echo $sort_column === 'referral_code' ? strtolower($sort_direction) : ''; ?>" 
-                                        onclick="changeSort('referral_code')">Code</th>
-                                    <th class="sortable <?php echo $sort_column === 'use_count' ? strtolower($sort_direction) : ''; ?>" 
-                                        onclick="changeSort('use_count')">Uses</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php while ($row = $allSubmissions->fetch_assoc()): ?>
-                                <tr>
-                                    <td><?php echo htmlspecialchars($row['id']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['name']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['referral_code']); ?></td>
-                                    <td><?php echo number_format($row['use_count'] ?? 0); ?></td>
-                                    <td>
-                                        <div class="actions">
-                                            <a href="edit.php?id=<?php echo $row['id']; ?>" class="edit-btn">Edit</a>
-                                            <a href="delete.php?id=<?php echo $row['id']; ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this code?')">Delete</a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <?php endwhile; ?>
-                            </tbody>
-                        </table>
-                    </div>
+                <!-- Pagination -->
+                <?php if ($total_pages > 1): ?>
+                <div class="pagination">
+                    <?php if ($page > 1): ?>
+                        <a href="?page=1<?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">First</a>
+                        <a href="?page=<?php echo $page-1; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Previous</a>
+                    <?php endif; ?>
 
-                    <!-- Pagination -->
-                    <?php if ($total_pages > 1): ?>
-                    <div class="pagination">
-                        <?php if ($page > 1): ?>
-                            <a href="?page=1<?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">First</a>
-                            <a href="?page=<?php echo $page-1; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Previous</a>
-                        <?php endif; ?>
+                    <?php
+                    $start = max(1, $page - 2);
+                    $end = min($total_pages, $page + 2);
+                    
+                    for ($i = $start; $i <= $end; $i++): ?>
+                        <a href="?page=<?php echo $i; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>" 
+                           class="<?php echo $i === $page ? 'current' : ''; ?>">
+                            <?php echo $i; ?>
+                        </a>
+                    <?php endfor; ?>
 
-                        <?php
-                        $start = max(1, $page - 2);
-                        $end = min($total_pages, $page + 2);
-                        
-                        for ($i = $start; $i <= $end; $i++): ?>
-                            <a href="?page=<?php echo $i; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>" 
-                               class="<?php echo $i === $page ? 'current' : ''; ?>">
-                                <?php echo $i; ?>
-                            </a>
-                        <?php endfor; ?>
-
-                        <?php if ($page < $total_pages): ?>
-                            <a href="?page=<?php echo $page+1; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Next</a>
-                            <a href="?page=<?php echo $total_pages; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Last</a>
-                        <?php endif; ?>
-                    </div>
+                    <?php if ($page < $total_pages): ?>
+                        <a href="?page=<?php echo $page+1; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Next</a>
+                        <a href="?page=<?php echo $total_pages; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Last</a>
                     <?php endif; ?>
                 </div>
-            </div>
-            </div>
-    </main>
+                <?php endif; ?>
+                </div>
+   </main>
 
-    <script>
-    function changeEntries(value) {
-        const urlParams = new URLSearchParams(window.location.search);
-        urlParams.set('entries', value);
-        urlParams.set('page', 1);
-        if (urlParams.has('sort')) {
-            const sort = urlParams.get('sort');
-            const direction = urlParams.get('direction');
-            urlParams.set('sort', sort);
-            urlParams.set('direction', direction);
-        }
-        window.location.search = urlParams.toString();
-    }
+   <?php include '../includes/modal.php'; ?>
+   <?php include '../includes/footer.php'; ?>
+   <script src="../js/main.js"></script>
 
-    function changeSort(column) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const currentSort = urlParams.get('sort');
-        const currentDirection = urlParams.get('direction');
-        
-        if (currentSort === column) {
-            urlParams.set('direction', currentDirection === 'ASC' ? 'DESC' : 'ASC');
-        } else {
-            urlParams.set('sort', column);
-            urlParams.set('direction', 'ASC');
-        }
-        
-        if (urlParams.has('entries')) {
-            urlParams.set('entries', urlParams.get('entries'));
-        }
-        
-        urlParams.set('page', 1);
-        window.location.search = urlParams.toString();
-    }
-    </script>
+   <script>
+   function changeEntries(value) {
+       const urlParams = new URLSearchParams(window.location.search);
+       urlParams.set('entries', value);
+       urlParams.set('page', 1);
+       if (urlParams.has('sort')) {
+           const sort = urlParams.get('sort');
+           const direction = urlParams.get('direction');
+           urlParams.set('sort', sort);
+           urlParams.set('direction', direction);
+       }
+       window.location.search = urlParams.toString();
+   }
+
+   function changeSort(column) {
+       const urlParams = new URLSearchParams(window.location.search);
+       const currentSort = urlParams.get('sort');
+       const currentDirection = urlParams.get('direction');
+       
+       if (currentSort === column) {
+           urlParams.set('direction', currentDirection === 'ASC' ? 'DESC' : 'ASC');
+       } else {
+           urlParams.set('sort', column);
+           urlParams.set('direction', 'ASC');
+       }
+       
+       if (urlParams.has('entries')) {
+           urlParams.set('entries', urlParams.get('entries'));
+       }
+       
+       urlParams.set('page', 1);
+       window.location.search = urlParams.toString();
+   }
+   </script>
+
+   <!-- Toast notification element -->
+   <div id="toast" class="fixed hidden px-6 py-3 rounded-lg shadow-lg transition-opacity duration-300"></div>
 </body>
 </html>
