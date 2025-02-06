@@ -104,7 +104,7 @@ try {
 <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
     <?php include '../includes/header.php'; ?>
     <?php include '../includes/modal.php'; ?>
-    
+
     <main class="max-w-7xl mx-auto px-4 py-8">
     <main class="dashboard-content">
 
@@ -339,7 +339,7 @@ try {
    <div id="toast" class="fixed hidden px-6 py-3 rounded-lg shadow-lg transition-opacity duration-300"></div>
 
    <?php include '../includes/modal.php'; ?>
-    <?php include '../includes/footer.php'; ?>
-    <script src="../js/main.js"></script>
+   <?php include '../includes/footer.php'; ?>
+   <script src="../js/main.js"></script>
 </body>
 </html>
