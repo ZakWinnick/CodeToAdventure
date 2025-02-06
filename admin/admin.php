@@ -114,21 +114,17 @@ try {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="dashboard.css">
 
+    <link rel="stylesheet" href="../styles/base/_variables.css">
+    <link rel="stylesheet" href="../styles/base/_reset.css">
     <link rel="stylesheet" href="../styles/components/_buttons.css">
+    <link rel="stylesheet" href="../styles/components/_navigation.css">
     <link rel="stylesheet" href="../styles/components/_modal.css">
     <link rel="stylesheet" href="../styles/components/_toast.css">
-    <link rel="stylesheet" href="styles/base/_variables.css">
-    <link rel="stylesheet" href="styles/base/_reset.css">
-    <link rel="stylesheet" href="styles/components/_buttons.css">
-    <link rel="stylesheet" href="styles/components/_navigation.css">
-    <link rel="stylesheet" href="styles/components/_modal.css">
-    <link rel="stylesheet" href="styles/components/_toast.css">
-    <link rel="stylesheet" href="styles/components/_feedback.css">
-    <link rel="stylesheet" href="styles/layout/_header.css">
-    <link rel="stylesheet" href="styles/layout/_footer.css">
-    <link rel="stylesheet" href="styles/layout/_grid.css">
-    <link rel="stylesheet" href="styles/pages/_api-docs.css">
-    <link rel="stylesheet" href="styles/pages/_changelog.css">
+    <link rel="stylesheet" href="../styles/components/_feedback.css">
+    <link rel="stylesheet" href="../styles/layout/_header.css">
+    <link rel="stylesheet" href="../styles/layout/_footer.css">
+    <link rel="stylesheet" href="../styles/layout/_grid.css">
+    <link rel="stylesheet" href="dashboard.css">
 </head>
 <body class="!bg-white dark:!bg-gray-900 transition-colors duration-200">
     <?php include '../includes/header.php'; ?>
