@@ -97,15 +97,15 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code To Adventure - Admin Dashboard</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/style.css">
     <link rel="stylesheet" href="dashboard.css">
 </head>
-<body class="bg-white dark:bg-gray-900 transition-colors duration-200">
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
     <?php include '../includes/header.php'; ?>
     <?php include '../includes/modal.php'; ?>
+    
+    <main class="max-w-7xl mx-auto px-4 py-8">
     <main class="dashboard-content">
 
     <main class="dashboard-content">
