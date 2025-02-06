@@ -117,7 +117,7 @@ try {
     <link rel="stylesheet" href="../styles/components/_toast.css">
     <link rel="stylesheet" href="dashboard.css">
 </head>
-<body class="!bg-white dark:!bg-gray-900 transition-colors duration-200">
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
     <?php include '../includes/header.php'; ?>
 
     <main class="dashboard-content">
@@ -349,5 +349,10 @@ try {
 
    <!-- Toast notification element -->
    <div id="toast" class="fixed hidden px-6 py-3 rounded-lg shadow-lg transition-opacity duration-300"></div>
+
+<?php include '../includes/modal.php'; ?>
+<?php include '../includes/footer.php'; ?>
+<div id="toast" class="fixed hidden"></div>
+<script src="../js/main.js"></script>
 </body>
 </html>
