@@ -116,7 +116,6 @@ try {
 </head>
 <body class="!bg-white dark:!bg-gray-900 transition-colors duration-200">
     <?php include '../includes/header.php'; ?>
-    <?php include_once('../includes/modal.php'); ?>
 
     <main class="dashboard-content">
         <!-- Metrics Grid -->
@@ -346,6 +345,7 @@ try {
     }
     </script>
 
+<?php include_once('../includes/modal.php'); ?>
 <script src="../js/main.js"></script>
 
 </body>
