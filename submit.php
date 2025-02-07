@@ -206,8 +206,8 @@
         <nav class="menu">
             <a href="index.php">Home</a>
             <a href="submit.php">Submit Code</a>
-            <a href="api-docs.html">API Docs</a>
-            <a href="changelog.html">Changelog</a>
+            <a href="api-docs.php">API Docs</a>
+            <a href="changelog.php">Changelog</a>
         </nav>
     </div>
 
