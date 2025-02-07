@@ -107,7 +107,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $message .= "Name: $name\n\n";
                 $message .= "Referral Code: $referralCode\n\n";
                 $message .= "Queue Position: $queuePosition\n";
-                $message .= "Estimated Time Until Tweet: ~$hoursUntilTweet hours";
                 $headers = "From: noreply@codetoadventure.com";
 
                 mail($to, $subject, $message, $headers);
