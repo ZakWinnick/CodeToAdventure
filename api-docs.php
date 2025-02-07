@@ -12,7 +12,7 @@ ini_set('display_errors', 1);
 <body class="!bg-white dark:!bg-gray-900 transition-colors duration-200">
     <?php include 'includes/header.php'; ?>
 
-    <main class="main-content max-w-7xl mx-auto px-4 py-8">
+    <main class="main-content max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
         <!-- Hero Section -->
         <div class="text-center mb-12">
             <h1 class="text-4xl font-bold text-primary dark:text-accent mb-4 transition-colors duration-200">
@@ -23,7 +23,7 @@ ini_set('display_errors', 1);
             </h2>
         </div>
 
-        <div class="max-w-4xl mx-auto space-y-8">
+        <div class="max-w-4xl space-y-8">
             <!-- Overview -->
             <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200">
                 <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Overview</h3>
