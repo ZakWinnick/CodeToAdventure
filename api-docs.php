@@ -23,7 +23,7 @@ ini_set('display_errors', 1);
             </h2>
         </div>
 
-        <div class="max-w-4xl space-y-8 text-left ml-0">
+        <div class="max-w-4xl mx-auto space-y-8 text-left">
             <!-- Overview -->
             <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
                 <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4 text-left">Overview</h3>
