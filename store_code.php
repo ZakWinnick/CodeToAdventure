@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 echo json_encode([
                     'success' => true,
-                    'message' => 'Code submitted successfully! It will be shared on Twitter in our next update.'
+                    'message' => 'Code submitted successfully! It will be shared on X in our next update.'
                 ]);
             } else {
                 $conn->rollback();
