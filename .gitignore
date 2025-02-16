@@ -2,3 +2,6 @@ config.php
 index-old.php
 index-older.php
 credentials.php
+.env
+vendor/
+node_modules/
