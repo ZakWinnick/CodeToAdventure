@@ -3,7 +3,9 @@
         <div class="flex justify-between items-center h-16">
             <!-- Logo -->
             <a href="/" class="text-primary dark:text-accent text-2xl font-bold transition-colors duration-200">
-                Code To Adventure
+                <img src="../header-images/logo.png" alt="Code To Adventure Logo" class="inline-block w-8 h-8 dark:hidden -mt-1">
+                <img src="../header-images/logo-dark.png" alt="Code To Adventure Logo" class="hidden dark:inline-block w-8 h-8 -mt-1">
+                Code To Adventure 
             </a>
 
             <!-- Desktop Navigation -->
