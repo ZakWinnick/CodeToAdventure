@@ -1,18 +1,7 @@
 <?php
 require_once 'config.php'; // Ensure database connection
-// Enable error reporting for debugging (remove in production)
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
-// Ensure session is started before any output
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
-// Include geolocation restriction BEFORE any output
-define('GEO_CHECK', true);
-include_once __DIR__ . '/includes/geolocation.php';
+ini_set('display_errors', 1);
 ?>
 
 <!DOCTYPE html>
