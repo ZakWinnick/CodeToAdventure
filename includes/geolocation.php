@@ -1,5 +1,8 @@
 <?php
-// Enable error reporting for debugging (Remove in production)
+// Ensure this script is only run via direct access
+header("Content-Type: application/json");
+
+// Enable error reporting (remove in production)
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -7,11 +10,6 @@ error_reporting(E_ALL);
 // Ensure session is only started if not already active
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
-}
-
-// Prevent execution if included inside an HTML page
-if (!defined('GEO_CHECK')) {
-    return;
 }
 
 // Function to check user's country via IPQualityScore API
@@ -28,39 +26,38 @@ function getUserCountry($ip) {
     $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
-    // If API request fails, return null
+    // If API request fails, return an error
     if ($http_status !== 200 || empty($response)) {
-        error_log("Geolocation API request failed for IP: $ip");
-        return null;
+        echo json_encode(["success" => false, "message" => "Geolocation API request failed."]);
+        exit;
     }
 
     $data = json_decode($response, true);
 
-    // Log access attempts for debugging
-    $logFile = __DIR__ . "/access_log.log";
-    file_put_contents($logFile, date("Y-m-d H:i:s") . " - IP: {$ip} - Country: " . ($data['country_code'] ?? "Unknown") . "\n", FILE_APPEND | LOCK_EX);
-
-    return $data['country_code'] ?? null;
+    return [
+        'country' => $data['country_code'] ?? null,
+        'blocked' => $data['vpn'] || $data['proxy'] || $data['tor'] || ($data['fraud_score'] > 75)
+    ];
 }
 
 // Get the user's IP address
 $user_ip = $_SERVER['REMOTE_ADDR'];
 $allowed_countries = ["US", "CA"];
-$user_country = getUserCountry($user_ip);
+$user_data = getUserCountry($user_ip);
 
-// Restrict access if the user's country could not be determined
-if ($user_country === null) {
-    http_response_code(500);
-    error_log("500 Error: Unable to determine user's country for IP: $user_ip");
-    echo "<h1>Service Unavailable</h1><p>We could not verify your location at this time. Please try again later.</p>";
+// Block VPN, proxies, Tor users, and high-risk IPs
+if ($user_data['blocked']) {
+    echo json_encode(["success" => false, "message" => "Access restricted due to VPN, proxy, or high-risk activity."]);
     exit;
 }
 
-// Restrict access if the user is not from the US or Canada
-if (!in_array($user_country, $allowed_countries)) {
-    http_response_code(403);
-    error_log("403 Error: User from {$user_country} blocked. IP: $user_ip");
-    echo "<h1>Access Denied</h1><p>Sorry, this website is only available in the US and Canada.</p>";
+// Block users outside US & Canada
+if (!in_array($user_data['country'], $allowed_countries)) {
+    echo json_encode(["success" => false, "message" => "Submissions are only allowed from the US and Canada."]);
     exit;
 }
+
+// Return success if the user is allowed
+echo json_encode(["success" => true, "message" => "Access granted."]);
+exit;
 ?>

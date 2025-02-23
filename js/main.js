@@ -70,24 +70,30 @@ const ThemeManager = {
 };
 
 // Initialize Everything on Page Load
-document.addEventListener("DOMContentLoaded", () => {
-    DOM.init();
-    initializeEventListeners();
-    ThemeManager.initializeTheme();
-if (DOM.modal) {
-    DOM.modal.addEventListener('click', (e) => {
-        if (e.target === DOM.modal) {
-            closeModal();
+    document.addEventListener("DOMContentLoaded", async () => {
+        DOM.init();
+        initializeEventListeners();
+        ThemeManager.initializeTheme();
+    
+        // ✅ Geolocation check on page load
+        const allowed = await checkUserLocation();
+        if (!allowed) return; // Stops execution if the user is blocked
+    
+        if (DOM.modal) {
+            DOM.modal.addEventListener('click', (e) => {
+                if (e.target === DOM.modal) {
+                    closeModal();
+                }
+            });
         }
     });
-}
-
+    
     // Set current year in footer
     const yearElement = document.getElementById("currentYear");
     if (yearElement) {
         yearElement.textContent = new Date().getFullYear();
     }
-});
+;
 
 // Set Up Event Listeners
 function initializeEventListeners() {
@@ -96,6 +102,27 @@ function initializeEventListeners() {
     }
     if (DOM.getAnotherCodeButton) {
         DOM.getAnotherCodeButton.addEventListener("click", getNewCode);
+    }
+}
+
+// ✅ Corrected Geolocation Check Function
+async function checkUserLocation() {
+    try {
+        const response = await fetch("/includes/geolocation.php");
+        const data = await response.json();
+
+        console.log("Geolocation API Response:", data);
+
+        if (!data.success) {
+            alert("Access Denied: " + data.message);
+            window.location.href = "/error-page.php"; // Redirect blocked users
+            return false;
+        }
+        return true;
+    } catch (error) {
+        console.error("Geolocation check failed:", error);
+        alert("Error verifying your location. Please try again.");
+        return false;
     }
 }
 
@@ -216,36 +243,16 @@ function updateCodeDisplay(codeData) {
     }, 100);
 }
 
-// Geofencing Function
-async function checkUserLocation() {
-    try {
-        const response = await fetch("https://ipinfo.io/json?token=d7119b65b99322");
-        const data = await response.json();
-        console.log("User Location Data:", data);
-
-        const allowedCountries = ["US", "CA"];
-        if (!allowedCountries.includes(data.country)) {
-            alert("Submissions are only allowed from the US and Canada.");
-            return false;
-        }
-
-        // Check VPN/Proxy
-        if (data.privacy?.vpn || data.privacy?.proxy) {
-            alert("VPN or proxy detected. Please disable it to submit a code.");
-            return false;
-        }
-
-        return true;
-    } catch (error) {
-        console.error("Location check failed:", error);
-        alert("Error verifying your location. Please try again.");
-        return false;
-    }
-}
-
 // Handle Form Submission
-function handleFormSubmit(event) {
+async function handleFormSubmit(event) {
     event.preventDefault();
+
+    // ✅ Check geolocation before submitting
+    const allowed = await checkUserLocation();
+    if (!allowed) {
+        alert("You are not authorized to submit a referral code.");
+        return;
+    }
 
     const submitButton = document.querySelector('button[type="submit"]');
     submitButton.disabled = true;
