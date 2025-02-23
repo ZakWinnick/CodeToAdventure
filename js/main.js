@@ -74,6 +74,13 @@ document.addEventListener("DOMContentLoaded", () => {
     DOM.init();
     initializeEventListeners();
     ThemeManager.initializeTheme();
+if (DOM.modal) {
+    DOM.modal.addEventListener('click', (e) => {
+        if (e.target === DOM.modal) {
+            closeModal();
+        }
+    });
+}
 
     // Set current year in footer
     const yearElement = document.getElementById("currentYear");
@@ -287,7 +294,7 @@ function showToast(message, type = "success") {
     }
 
     toast.textContent = message;
-    toast.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg transition-opacity duration-300 
+    toast.className = `fixed left-1/2 -translate-x-1/2 bottom-4 px-6 py-3 rounded-lg shadow-lg transition-opacity duration-300 
         ${type === "error" ? "bg-red-600 text-white" : "bg-green-600 text-white"}`;
 
     toast.classList.remove("hidden");
