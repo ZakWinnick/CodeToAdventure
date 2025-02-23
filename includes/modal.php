@@ -1,7 +1,10 @@
 <?php
+// Ensure session is only started if not already active
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+?>
+
 header("Content-Type: application/json");
 
 function getUserLocation($ip) {
