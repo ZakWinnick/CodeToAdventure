@@ -36,7 +36,7 @@ function getUserCountry($ip) {
 
     return [
         'country' => $data['country_code'] ?? null,
-        'blocked' => $data['vpn'] || $data['proxy'] || $data['tor'] || ($data['fraud_score'] > 90)
+        'blocked' => $data['vpn'] || $data['proxy'] || $data['tor'] || ($data['fraud_score'] > 100)
     ];
 }
 
