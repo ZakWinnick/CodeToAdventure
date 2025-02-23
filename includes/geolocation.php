@@ -12,7 +12,7 @@ function getUserCountry($ip) {
     $data = json_decode($response, true);
 
     // Log access attempts for debugging
-    file_put_contents("/home/zakwinnick/codetoadventure.com/access_log.log", 
+    file_put_contents(__DIR__ . "/access_log.log",
         date("Y-m-d H:i:s") . " - IP: {$ip} - Country: " . ($data['country_code'] ?? "Unknown") . "\n", 
         FILE_APPEND);
 
