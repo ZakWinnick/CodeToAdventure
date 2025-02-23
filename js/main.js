@@ -70,30 +70,17 @@ const ThemeManager = {
 };
 
 // Initialize Everything on Page Load
-    document.addEventListener("DOMContentLoaded", async () => {
-        DOM.init();
-        initializeEventListeners();
-        ThemeManager.initializeTheme();
-    
-        // ✅ Geolocation check on page load
-        const allowed = await checkUserLocation();
-        if (!allowed) return; // Stops execution if the user is blocked
-    
-        if (DOM.modal) {
-            DOM.modal.addEventListener('click', (e) => {
-                if (e.target === DOM.modal) {
-                    closeModal();
-                }
-            });
-        }
-    });
-    
+document.addEventListener("DOMContentLoaded", () => {
+    DOM.init();
+    initializeEventListeners();
+    ThemeManager.initializeTheme();
+
     // Set current year in footer
     const yearElement = document.getElementById("currentYear");
     if (yearElement) {
         yearElement.textContent = new Date().getFullYear();
     }
-;
+});
 
 // Set Up Event Listeners
 function initializeEventListeners() {
@@ -102,27 +89,6 @@ function initializeEventListeners() {
     }
     if (DOM.getAnotherCodeButton) {
         DOM.getAnotherCodeButton.addEventListener("click", getNewCode);
-    }
-}
-
-// ✅ Corrected Geolocation Check Function
-async function checkUserLocation() {
-    try {
-        const response = await fetch("/includes/geolocation.php");
-        const data = await response.json();
-
-        console.log("Geolocation API Response:", data);
-
-        if (!data.success) {
-            alert("Access Denied: " + data.message);
-            window.location.href = "/error-page.php"; // Redirect blocked users
-            return false;
-        }
-        return true;
-    } catch (error) {
-        console.error("Geolocation check failed:", error);
-        alert("Error verifying your location. Please try again.");
-        return false;
     }
 }
 
@@ -244,15 +210,8 @@ function updateCodeDisplay(codeData) {
 }
 
 // Handle Form Submission
-async function handleFormSubmit(event) {
+function handleFormSubmit(event) {
     event.preventDefault();
-
-    // ✅ Check geolocation before submitting
-    const allowed = await checkUserLocation();
-    if (!allowed) {
-        alert("You are not authorized to submit a referral code.");
-        return;
-    }
 
     const submitButton = document.querySelector('button[type="submit"]');
     submitButton.disabled = true;
@@ -328,7 +287,7 @@ function showToast(message, type = "success") {
     }
 
     toast.textContent = message;
-    toast.className = `fixed left-1/2 -translate-x-1/2 bottom-4 px-6 py-3 rounded-lg shadow-lg transition-opacity duration-300 
+    toast.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg transition-opacity duration-300 
         ${type === "error" ? "bg-red-600 text-white" : "bg-green-600 text-white"}`;
 
     toast.classList.remove("hidden");
