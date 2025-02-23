@@ -11,6 +11,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 // Include geolocation restriction BEFORE any output
+define('GEO_CHECK', true);
 include_once __DIR__ . '/includes/geolocation.php';
 ?>
 
