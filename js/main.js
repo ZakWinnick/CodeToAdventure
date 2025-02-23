@@ -216,6 +216,33 @@ function updateCodeDisplay(codeData) {
     }, 100);
 }
 
+// Geofencing Function
+async function checkUserLocation() {
+    try {
+        const response = await fetch("https://ipinfo.io/json?token=d7119b65b99322");
+        const data = await response.json();
+        console.log("User Location Data:", data);
+
+        const allowedCountries = ["US", "CA"];
+        if (!allowedCountries.includes(data.country)) {
+            alert("Submissions are only allowed from the US and Canada.");
+            return false;
+        }
+
+        // Check VPN/Proxy
+        if (data.privacy?.vpn || data.privacy?.proxy) {
+            alert("VPN or proxy detected. Please disable it to submit a code.");
+            return false;
+        }
+
+        return true;
+    } catch (error) {
+        console.error("Location check failed:", error);
+        alert("Error verifying your location. Please try again.");
+        return false;
+    }
+}
+
 // Handle Form Submission
 function handleFormSubmit(event) {
     event.preventDefault();

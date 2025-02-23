@@ -1,3 +1,68 @@
+<?php
+session_start();
+header("Content-Type: application/json");
+
+function getUserLocation($ip) {
+    $apiKey = "eNSs5rqnjmbTQlR0fgh0CA4s2QpQA2Ez"; // Your IPQualityScore API key
+    $url = "https://www.ipqualityscore.com/api/json/ip/{$apiKey}/{$ip}";
+
+    $response = file_get_contents($url);
+    $data = json_decode($response, true);
+
+    // Check for VPN, Proxy, or Tor usage
+    $isVPN = isset($data['vpn']) ? $data['vpn'] : false;
+    $isProxy = isset($data['proxy']) ? $data['proxy'] : false;
+    $isTor = isset($data['tor']) ? $data['tor'] : false;
+    $fraudScore = isset($data['fraud_score']) ? $data['fraud_score'] : 0;
+
+    // Set a fraud score threshold to block bad IPs
+    $highRisk = $fraudScore > 75; 
+
+    return [
+        'country' => $data['country_code'] ?? null,
+        'blocked' => ($isVPN || $isProxy || $isTor || $highRisk)
+    ];
+}
+
+$allowed_countries = ["US", "CA"];
+$user_ip = $_SERVER['REMOTE_ADDR'];
+$user_data = getUserLocation($user_ip);
+
+// Block VPN, proxies, Tor users, and high-risk IPs
+if ($user_data['blocked']) {
+    file_put_contents("vpn_attempts.log", date("Y-m-d H:i:s") . " - BLOCKED: {$user_ip} - Country: {$user_data['country']}\n", FILE_APPEND);
+    echo json_encode(["success" => false, "message" => "Access restricted due to VPN, proxy, or high-risk activity."]);
+    exit;
+}
+
+// Block users outside US & Canada
+if (!in_array($user_data['country'], $allowed_countries)) {
+    echo json_encode(["success" => false, "message" => "Submissions are only allowed from the US and Canada."]);
+    exit;
+}
+
+// Ensure JavaScript verification
+if (empty($_POST['js_verified']) || $_POST['js_verified'] !== 'true') {
+    echo json_encode(["success" => false, "message" => "JavaScript verification failed."]);
+    exit;
+}
+
+// Process the referral code submission
+$name = trim($_POST['name'] ?? '');
+$referralCode = trim($_POST['referralCode'] ?? '');
+
+if (empty($name) || empty($referralCode)) {
+    echo json_encode(["success" => false, "message" => "Name and referral code are required."]);
+    exit;
+}
+
+// Here, insert the referral code into your database (ensure proper DB handling).
+
+echo json_encode(["success" => true, "message" => "Referral code submitted successfully!"]);
+?>
+
+<!-- Existing Modal UI (Preserved) -->
+
 <div id="submitModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
     <div class="bg-white dark:bg-gray-800 rounded-lg p-8 max-w-md w-full mx-4 relative">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Submit Your Referral Code</h2>
