@@ -4,6 +4,10 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+// Log errors to a file
+ini_set("log_errors", 1);
+ini_set("error_log", __DIR__ . "/error_log.log");
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -23,15 +27,26 @@ function getUserCountry($ip) {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $response = curl_exec($ch);
+        $curl_error = curl_error($ch);
         curl_close($ch);
+
+        if ($curl_error) {
+            error_log("cURL Error: " . $curl_error);
+        }
     }
 
     // If both methods fail, return null
     if (empty($response)) {
+        error_log("Error: Failed to retrieve data from IPQS API.");
         return null;
     }
 
     $data = json_decode($response, true);
+
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        error_log("JSON Decode Error: " . json_last_error_msg());
+        return null;
+    }
 
     // Log access attempts for debugging
     $logFile = __DIR__ . "/access_log.log";
@@ -55,6 +70,7 @@ $user_country = getUserCountry($user_ip);
 // Restrict access if the user's country could not be determined
 if ($user_country === null) {
     http_response_code(500);
+    error_log("500 Error: Unable to determine user's country.");
     echo "<h1>Service Unavailable</h1><p>We could not verify your location at this time. Please try again later.</p>";
     exit;
 }
@@ -62,6 +78,7 @@ if ($user_country === null) {
 // Restrict access if the user is not from the US or Canada
 if (!in_array($user_country, $allowed_countries)) {
     http_response_code(403);
+    error_log("403 Error: User from {$user_country} blocked.");
     echo "<h1>Access Denied</h1><p>Sorry, this website is only available in the US and Canada.</p>";
     exit;
 }
