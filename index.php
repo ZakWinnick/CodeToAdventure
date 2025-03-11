@@ -98,7 +98,7 @@ ini_set('display_errors', 1);
     </p>
 </div>  
 
-               <!-- Charging Reward -->
+               <!-- Charging Reward
 <div>
     <p class="text-white dark:text-gray-300">
         6 months of free charging at Rivian Adventure Network sites
@@ -106,7 +106,7 @@ ini_set('display_errors', 1);
     <p class="text-gray-300 dark:text-gray-400 text-sm mt-1">
         (up to a lifetime limit of 3 years)
     </p>
-</div>
+</div> -->
             </div>
         </div>
     </main>
