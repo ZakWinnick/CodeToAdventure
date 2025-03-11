@@ -27,6 +27,15 @@ ini_set('display_errors', 1);
 
         <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
                 <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">
+                    Version 2025.7.3 - March 11, 2025
+                </h3>
+                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
+                    <li>Updated <i>Rewards</i> section to reflect changes to the program.</li>                
+                </ul>
+            </div>
+
+        <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
+                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">
                     Version 2025.7.2 - February 19, 2025
                 </h3>
                 <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
