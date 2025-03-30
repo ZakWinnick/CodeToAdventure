@@ -1,7 +1,10 @@
 /**
  * Main JavaScript for Code To Adventure
  * Includes system theme detection, form handling, and UI interactions
+ * Version 1.0.1 - Fixed duplicate toast issue on March 30, 2025
  */
+
+console.log("Code To Adventure - Form Handling Fix loaded");
 
 // Debug helper function to monitor network traffic
 function setupDebugMonitoring() {
