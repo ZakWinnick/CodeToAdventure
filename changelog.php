@@ -25,6 +25,17 @@ ini_set('display_errors', 1);
 
         <div class="max-w-4xl mx-auto space-y-8">
 
+        <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
+    <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">
+        Version 2025.9 - March 30, 2025
+    </h3>
+    <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
+        <li>Fixed issue with duplicate toast notifications appearing during code submission</li>
+        <li>Improved error handling for the code submission process</li>
+        <li>Enhanced form validation with better user feedback</li>
+        <li>Added better debugging capabilities for administrators</li>
+    </ul>
+</div>
 
         <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
                 <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">
