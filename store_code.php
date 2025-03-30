@@ -46,7 +46,10 @@ if (isset($_GET['test_twitter'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $name = isset($_POST['name']) ? trim($_POST['name']) : '';
-        $referralCode = isset($_POST['referralCode']) ? trim($_POST['referralCode']) : '';
+        $referralCode = isset($_POST['referralCode']) ? trim(strtoupper($_POST['referralCode'])) : '';
+
+        // Log the received values for debugging
+        error_log("Received submission - Name: $name, Code: $referralCode");
 
         if (empty($name) || empty($referralCode)) {
             throw new Exception('Name and referral code are required');
@@ -60,17 +63,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $conn->begin_transaction();
 
         try {
-            // Check if code exists
-            $checkSql = "SELECT COUNT(*) as count FROM codes WHERE referral_code = ? FOR UPDATE";
+            // Check if code exists - using more precise query
+            $checkSql = "SELECT referral_code FROM codes WHERE UPPER(referral_code) = ? LIMIT 1";
             $checkStmt = $conn->prepare($checkSql);
             $checkStmt->bind_param('s', $referralCode);
             $checkStmt->execute();
             $result = $checkStmt->get_result();
-            $row = $result->fetch_assoc();
-
-            if ($row['count'] > 0) {
+            
+            if ($result->num_rows > 0) {
+                $existing = $result->fetch_assoc();
+                error_log("Duplicate code detected: {$existing['referral_code']} vs submitted: $referralCode");
                 $conn->rollback();
-                throw new Exception('This referral code already exists');
+                throw new Exception('This referral code already exists in our system');
             }
 
             // Insert new code
@@ -90,6 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 // Commit the transaction
                 $conn->commit();
+                error_log("Successfully inserted code: $referralCode for $name");
                 
                 // Get position in queue
                 $queueQuery = "SELECT COUNT(*) as position FROM pending_tweets WHERE tweeted = 0 AND id <= LAST_INSERT_ID()";
@@ -117,10 +122,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ]);
             } else {
                 $conn->rollback();
-                throw new Exception('Error saving the code');
+                error_log("Database error when inserting code: " . $conn->error);
+                throw new Exception('Error saving the code: ' . $conn->error);
             }
         } catch (Exception $e) {
             $conn->rollback();
+            error_log("Exception during code submission: " . $e->getMessage());
             throw $e;
         }
 

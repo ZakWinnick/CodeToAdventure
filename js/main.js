@@ -216,7 +216,7 @@ function updateCodeDisplay(codeData) {
     }, 100);
 }
 
-// Handle Form Submission
+// Handle Form Submission - UPDATED
 function handleFormSubmit(event) {
     event.preventDefault();
 
@@ -238,17 +238,35 @@ function handleFormSubmit(event) {
         return;
     }
 
+    // Validate referral code format before submission
+    const codePattern = /(?=(?:.*[A-Za-z]){2})(?=(?:.*\d){7,})[A-Za-z0-9]+/;
+    if (!codePattern.test(referralCode)) {
+        console.error("❌ Invalid code format");
+        showToast("Invalid code format. Code must contain at least 2 letters and 7 numbers.", "error");
+        submitButton.disabled = false;
+        submitButton.textContent = "Submit Code";
+        return;
+    }
+
     const formData = new FormData();
     formData.append("name", name);
     formData.append("referralCode", referralCode);
 
-    fetch(CONFIG.API_ENDPOINTS.STORE_CODE, {
+    // Add timestamp to prevent caching issues
+    const url = `${CONFIG.API_ENDPOINTS.STORE_CODE}?t=${Date.now()}`;
+
+    fetch(url, {
         method: "POST",
         body: formData
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            console.error("❌ Server returned error status:", response.status);
+        }
+        return response.json();
+    })
     .then(data => {
-        console.log("🔍 Full response from store_code.php:", data);
+        console.log("🔍 Response from store_code.php:", data);
 
         if (data.success) {
             console.log("✅ Code submitted:", data);
@@ -257,19 +275,99 @@ function handleFormSubmit(event) {
             nameInput.value = "";
             codeInput.value = "";
             closeModal();
-        } else if (data.message.toLowerCase().includes("duplicate")) {
-            showToast("This referral code is already in the system.", "error");
         } else {
-            showToast("Error submitting code: " + data.message, "error");
+            if (data.message && data.message.toLowerCase().includes("already exists")) {
+                console.error("❌ Duplicate code detected");
+                showToast("This referral code is already in our system. Please check and try again.", "error");
+                // Highlight the code input field to draw attention
+                codeInput.classList.add("border-red-500");
+                setTimeout(() => {
+                    codeInput.classList.remove("border-red-500");
+                }, 3000);
+            } else {
+                showToast("Error: " + (data.message || "Unknown server error"), "error");
+            }
         }
     })
     .catch(error => {
-        showToast("Server error. Please try again.", "error");
+        console.error("❌ Fetch error:", error);
+        showToast("Server error. Please try again later.", "error");
     })
     .finally(() => {
         submitButton.disabled = false;
         submitButton.textContent = "Submit Code";
     });
+}
+
+// Toast Notification - UPDATED
+function showToast(message, type = "success") {
+    const toast = document.getElementById("toast");
+
+    if (!toast) {
+        console.error("❌ Error: Toast element not found.");
+        return;
+    }
+
+    // Clear any existing timeouts to prevent hiding a toast too soon
+    if (window.toastTimeout) {
+        clearTimeout(window.toastTimeout);
+    }
+
+    // Set color based on message type
+    let bgColor, textColor, borderColor;
+    switch(type) {
+        case "error":
+            bgColor = "bg-red-100";
+            textColor = "text-red-800";
+            borderColor = "border-red-500";
+            break;
+        case "warning":
+            bgColor = "bg-yellow-100";
+            textColor = "text-yellow-800";
+            borderColor = "border-yellow-500";
+            break;
+        case "success":
+        default:
+            bgColor = "bg-green-100";
+            textColor = "text-green-800";
+            borderColor = "border-green-500";
+            break;
+    }
+
+    // Add appropriate icon
+    let icon = '';
+    if (type === "error") {
+        icon = `<svg class="w-5 h-5 mr-2 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>`;
+    } else if (type === "success") {
+        icon = `<svg class="w-5 h-5 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>`;
+    }
+
+    // Create toast HTML with improved styling
+    toast.innerHTML = `
+        <div class="flex items-center ${textColor}">
+            ${icon}
+            <span>${message}</span>
+        </div>
+    `;
+
+    toast.className = `fixed bottom-4 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-lg shadow-lg transition-opacity duration-300 
+        ${bgColor} ${textColor} border ${borderColor} z-50`;
+
+    toast.classList.remove("hidden");
+    
+    // Set timeout to hide toast
+    window.toastTimeout = setTimeout(() => {
+        // Fade out
+        toast.style.opacity = '0';
+        setTimeout(() => {
+            toast.classList.add("hidden");
+            toast.style.opacity = '1';
+        }, 300);
+    }, CONFIG.TOAST_DURATION || 3000);
 }
 
 // Toggle Mobile Menu
@@ -282,25 +380,6 @@ function toggleMobileMenu() {
     menu.classList.toggle("hidden");
     menu.classList.toggle("flex");
     console.log("✅ Mobile menu toggled.");
-}
-
-// Toast Notification
-function showToast(message, type = "success") {
-    const toast = document.getElementById("toast");
-
-    if (!toast) {
-        console.error("❌ Error: Toast element not found.");
-        return;
-    }
-
-    toast.textContent = message;
-    toast.className = `fixed left-1/2 -translate-x-1/2 bottom-4 px-6 py-3 rounded-lg shadow-lg transition-opacity duration-300 
-        ${type === "error" ? "bg-red-600 text-white" : "bg-green-600 text-white"}`;
-
-    toast.classList.remove("hidden");
-    setTimeout(() => {
-        toast.classList.add("hidden");
-    }, CONFIG.TOAST_DURATION);
 }
 
 // Expose Global Functions

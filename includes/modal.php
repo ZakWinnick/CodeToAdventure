@@ -31,5 +31,5 @@
     </div>
 </div>
 
-<!-- Toast notification for feedback -->
-<div id="toast" class="fixed bottom-4 right-4 bg-gray-900 text-white px-6 py-3 rounded-lg shadow-lg hidden"></div>
+<!-- Enhanced Toast notification for feedback -->
+<div id="toast" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-lg shadow-lg hidden z-50 transition-opacity duration-300 opacity-100 border"></div>
