@@ -13,13 +13,13 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://codetoadventure.com/">
     <meta property="og:title" content="Get Rivian Referral Rewards - Code To Adventure">
-    <meta property="og:description" content="Save $500 and get 6 months free charging on your new Rivian with owner referral codes. Find valid codes instantly.">
+    <meta property="og:description" content="Save $500 on your new Rivian with owner referral codes. Find valid codes instantly.">
     
     <!-- Twitter Card Meta Tags - These control how your site appears when shared on Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://codetoadventure.com/">
     <meta property="twitter:title" content="Get Rivian Referral Rewards - Code To Adventure">
-    <meta property="twitter:description" content="Save $500 and get 6 months free charging on your new Rivian with owner referral codes. Find valid codes instantly.">
+    <meta property="twitter:description" content="Save $500 on your new Rivian with owner referral codes. Find valid codes instantly.">
     
     <!-- Additional SEO tags -->
     <meta name="robots" content="index, follow">
@@ -101,7 +101,7 @@
         },
         "offers": {
             "@type": "Offer",
-            "description": "Get $500 in Gear Shop credit and 6 months of free charging at Rivian Adventure Network sites"
+            "description": "Get $500 in Gear Shop credit!"
         }
     }
     </script>
