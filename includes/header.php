@@ -44,7 +44,7 @@
             <a href="/" class="block w-full text-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-accent transition-colors duration-200 py-2">Home</a>
             <button onclick="showModal()" class="block w-full text-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-accent transition-colors duration-200 py-2">Submit Code</button>
             <a href="/api-docs.php" class="block w-full text-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-accent transition-colors duration-200 py-2">API Docs</a>
-            <a href="/changelog.html" class="block w-full text-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-accent transition-colors duration-200 py-2">Changelog</a>
+            <a href="/changelog.php" class="block w-full text-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-accent transition-colors duration-200 py-2">Changelog</a>
             <a href="/admin" class="block w-full text-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-accent transition-colors duration-200 py-2">Admin</a>
             <button onclick="toggleTheme()" class="block w-full text-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-accent transition-colors duration-200 py-2">Toggle Dark Mode</button>
         </nav>
