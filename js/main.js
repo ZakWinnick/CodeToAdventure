@@ -3,6 +3,64 @@
  * Includes system theme detection, form handling, and UI interactions
  */
 
+// Debug helper function to monitor network traffic
+function setupDebugMonitoring() {
+    // Only run in development or when debug flag is set
+    if (!window.location.hostname.includes('localhost') && 
+        !localStorage.getItem('debug_mode')) {
+        return;
+    }
+    
+    console.log("🔍 Debug monitoring enabled");
+    
+    // Create simple debug panel
+    const debugPanel = document.createElement('div');
+    debugPanel.className = 'fixed bottom-0 right-0 bg-white dark:bg-gray-800 border p-2 m-2 rounded shadow-lg text-sm max-w-md max-h-40 overflow-auto z-50';
+    debugPanel.innerHTML = '<div class="font-bold mb-1">Debug Info:</div><div id="debug-log"></div>';
+    document.body.appendChild(debugPanel);
+    
+    const debugLog = document.getElementById('debug-log');
+    
+    // Log to debug panel
+    function logDebug(message) {
+        const entry = document.createElement('div');
+        entry.className = 'mb-1 border-t pt-1 text-xs';
+        entry.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
+        debugLog.appendChild(entry);
+        
+        // Keep only the last 5 entries
+        while (debugLog.children.length > 5) {
+            debugLog.removeChild(debugLog.firstChild);
+        }
+    }
+    
+    // Monitor fetch requests
+    const originalFetch = window.fetch;
+    window.fetch = function() {
+        const url = arguments[0];
+        logDebug(`Fetch to ${url}`);
+        return originalFetch.apply(this, arguments)
+            .then(response => {
+                logDebug(`Response from ${url}: ${response.status}`);
+                return response;
+            })
+            .catch(error => {
+                logDebug(`Error from ${url}: ${error.message}`);
+                throw error;
+            });
+    };
+    
+    // Toggle debug panel with key combo (Alt+D)
+    document.addEventListener('keydown', (e) => {
+        if (e.altKey && e.key === 'd') {
+            debugPanel.style.display = debugPanel.style.display === 'none' ? 'block' : 'none';
+        }
+    });
+    
+    // Expose debug logger
+    window.debugLog = logDebug;
+}
+
 const CONFIG = {
     ANIMATION_DURATION: 300,
     TOAST_DURATION: 3000,
@@ -71,16 +129,18 @@ const ThemeManager = {
 
 // Initialize Everything on Page Load
 document.addEventListener("DOMContentLoaded", () => {
+    setupDebugMonitoring();
     DOM.init();
     initializeEventListeners();
     ThemeManager.initializeTheme();
-if (DOM.modal) {
-    DOM.modal.addEventListener('click', (e) => {
-        if (e.target === DOM.modal) {
-            closeModal();
-        }
-    });
-}
+    
+    if (DOM.modal) {
+        DOM.modal.addEventListener('click', (e) => {
+            if (e.target === DOM.modal) {
+                closeModal();
+            }
+        });
+    }
 
     // Set current year in footer
     const yearElement = document.getElementById("currentYear");
@@ -216,10 +276,18 @@ function updateCodeDisplay(codeData) {
     }, 100);
 }
 
-// Handle Form Submission - UPDATED
+// Handle Form Submission - FIXED VERSION
 function handleFormSubmit(event) {
     event.preventDefault();
 
+    // Prevent double submission
+    if (window.isSubmitting) {
+        console.log("⚠️ Preventing double submission");
+        return;
+    }
+    
+    window.isSubmitting = true;
+    
     const submitButton = document.querySelector('button[type="submit"]');
     submitButton.disabled = true;
     submitButton.textContent = "Submitting...";
@@ -235,6 +303,7 @@ function handleFormSubmit(event) {
         showToast("Please enter your name and referral code.", "error");
         submitButton.disabled = false;
         submitButton.textContent = "Submit Code";
+        window.isSubmitting = false;
         return;
     }
 
@@ -245,6 +314,7 @@ function handleFormSubmit(event) {
         showToast("Invalid code format. Code must contain at least 2 letters and 7 numbers.", "error");
         submitButton.disabled = false;
         submitButton.textContent = "Submit Code";
+        window.isSubmitting = false;
         return;
     }
 
@@ -255,26 +325,39 @@ function handleFormSubmit(event) {
     // Add timestamp to prevent caching issues
     const url = `${CONFIG.API_ENDPOINTS.STORE_CODE}?t=${Date.now()}`;
 
+    // Debug log the start of the fetch
+    console.log("🔄 Sending form data to server:", {name, referralCode});
+
     fetch(url, {
         method: "POST",
         body: formData
     })
     .then(response => {
+        // Debug log the response status
+        console.log("📡 Server response status:", response.status);
         if (!response.ok) {
             console.error("❌ Server returned error status:", response.status);
         }
         return response.json();
     })
     .then(data => {
-        console.log("🔍 Response from store_code.php:", data);
+        console.log("🔍 Full response from store_code.php:", data);
+
+        // Clear any existing timeouts to prevent toast conflicts
+        if (window.toastTimeout) {
+            clearTimeout(window.toastTimeout);
+        }
 
         if (data.success) {
-            console.log("✅ Code submitted:", data);
+            console.log("✅ Code submitted successfully:", data);
             showToast("Referral code submitted successfully!", "success");
 
+            // Only clear and close on success
             nameInput.value = "";
             codeInput.value = "";
-            closeModal();
+            setTimeout(() => {
+                closeModal();
+            }, 1000); // Delay modal closing to ensure toast is seen
         } else {
             if (data.message && data.message.toLowerCase().includes("already exists")) {
                 console.error("❌ Duplicate code detected");
@@ -285,6 +368,7 @@ function handleFormSubmit(event) {
                     codeInput.classList.remove("border-red-500");
                 }, 3000);
             } else {
+                console.error("❌ Server error:", data.message);
                 showToast("Error: " + (data.message || "Unknown server error"), "error");
             }
         }
@@ -296,10 +380,14 @@ function handleFormSubmit(event) {
     .finally(() => {
         submitButton.disabled = false;
         submitButton.textContent = "Submit Code";
+        // Reset submission flag after a delay to prevent accidental double-clicks
+        setTimeout(() => {
+            window.isSubmitting = false;
+        }, 1000);
     });
 }
 
-// Toast Notification - UPDATED
+// Improved Toast Notification with Single Instance Control
 function showToast(message, type = "success") {
     const toast = document.getElementById("toast");
 
@@ -312,6 +400,22 @@ function showToast(message, type = "success") {
     if (window.toastTimeout) {
         clearTimeout(window.toastTimeout);
     }
+
+    // Cancel any fade-out animations in progress
+    toast.style.opacity = '1';
+    toast.classList.remove("hidden");
+
+    // Store the current toast to prevent conflicts
+    if (!window.currentToast) {
+        window.currentToast = {};
+    }
+    window.currentToast = {
+        message,
+        type,
+        timestamp: Date.now()
+    };
+
+    console.log(`🍞 Showing toast: "${message}" (${type})`);
 
     // Set color based on message type
     let bgColor, textColor, borderColor;
@@ -357,16 +461,18 @@ function showToast(message, type = "success") {
     toast.className = `fixed bottom-4 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-lg shadow-lg transition-opacity duration-300 
         ${bgColor} ${textColor} border ${borderColor} z-50`;
 
-    toast.classList.remove("hidden");
-    
     // Set timeout to hide toast
     window.toastTimeout = setTimeout(() => {
-        // Fade out
-        toast.style.opacity = '0';
-        setTimeout(() => {
-            toast.classList.add("hidden");
-            toast.style.opacity = '1';
-        }, 300);
+        // Only hide if this is still the current toast
+        if (window.currentToast && window.currentToast.timestamp && 
+            window.currentToast.message === message) {
+            // Fade out
+            toast.style.opacity = '0';
+            setTimeout(() => {
+                toast.classList.add("hidden");
+                toast.style.opacity = '1';
+            }, 300);
+        }
     }, CONFIG.TOAST_DURATION || 3000);
 }
 
