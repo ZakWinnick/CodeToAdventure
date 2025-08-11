@@ -108,17 +108,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $tweetsAhead = floor(($queuePosition - 1) / 3); // 3 codes per tweet
                 $hoursUntilTweet = $tweetsAhead * 4; // tweets every 4 hours
                 
-                // Send email notification
-                $to = 'zak@codetoadventure.com';
-                $subject = 'New Referral Code Submitted';
-                $message = "A new referral code has been submitted:\n\n";
-                $message .= "Name: $name\n\n";
-                $message .= "Referral Code: $referralCode\n\n";
-                $message .= "Queue Position: $queuePosition\n";
-                $headers = "From: noreply@codetoadventure.com";
-
-                mail($to, $subject, $message, $headers);
-
                 // Add a small delay to prevent race conditions
                 usleep(100000); // 100ms delay
                 
