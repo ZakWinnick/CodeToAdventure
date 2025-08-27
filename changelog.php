@@ -442,7 +442,8 @@ ini_set('display_errors', 1);
                 <li>Added custom logo images that adapt to theme (logo.png and logo-dark.png)</li>
                 <li>Integrated Tinylytics analytics for visitor tracking</li>
                 <li>Redesigned API documentation with better code examples</li>
-                <li>Redesigned Submit Code page with modern form styling</li>
+                <li>Redesigned Submit Code page with AJAX form submission</li>
+                <li>Added real-time feedback for code submissions without page reload</li>
                 <li>Updated changelog with improved version display</li>
                 <li>Fixed mobile navigation menu functionality with improved CSS specificity</li>
                 <li>Removed external Rivian links from footer for cleaner design</li>
@@ -576,7 +577,7 @@ ini_set('display_errors', 1);
         <div class="footer-links">
             <a href="index.php" class="footer-link">Home</a>
             <a href="api-docs.php" class="footer-link">API Documentation</a>
-            <a href="https://zak.codetoadventure.com" class="footer-link" target="_blank">Zak's Referral Code</a>
+            <a href="https://zak.codetoadventure.com" target="_blank" class="footer-link">Zak's Referral Code</a>
         </div>
         <div class="footer-copy">
             © 2024-2025 Code to Adventure. Not affiliated with Rivian.
