@@ -522,6 +522,8 @@ ini_set('display_errors', 1);
             <a href="index.php" class="footer-link">Home</a>
             <a href="api-docs.php" class="footer-link">API Documentation</a>
             <a href="changelog.php" class="footer-link">Changelog</a>
+            <a href="https://zak.codetoadventure.com" class="footer-link" target="_blank">Zak's Referral Code</a>
+
         </div>
         <div class="footer-copy">
             © 2024-2025 Code to Adventure. Not affiliated with Rivian.
