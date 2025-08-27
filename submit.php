@@ -260,10 +260,15 @@ ini_set('display_errors', 1);
             color: white;
         }
         
-        .btn-primary:hover {
+        .btn-primary:hover:not(:disabled) {
             background: var(--primary-dark);
             transform: translateY(-2px);
             box-shadow: 0 10px 20px -5px var(--shadow);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
         
         .btn-secondary {
@@ -277,6 +282,21 @@ ini_set('display_errors', 1);
         }
         
         /* Alert Messages */
+        #alert-container {
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
         .alert {
             padding: 1rem;
             border-radius: var(--radius-sm);
@@ -284,6 +304,20 @@ ini_set('display_errors', 1);
             display: flex;
             align-items: center;
             gap: 0.75rem;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+                margin-bottom: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 100px;
+                margin-bottom: 1.5rem;
+            }
         }
         
         .alert-success {
@@ -464,23 +498,11 @@ ini_set('display_errors', 1);
     <!-- Main Content -->
     <main class="container">
         <div class="form-card">
-            <!-- Display Messages -->
-            <?php if (isset($_GET['error']) && $_GET['error'] == 'duplicate'): ?>
-                <div class="alert alert-error">
-                    <span class="alert-icon">⚠️</span>
-                    <span>This referral code already exists in our database. Thank you for contributing!</span>
-                </div>
-            <?php endif; ?>
-            
-            <?php if (isset($_GET['success']) && $_GET['success'] == '1'): ?>
-                <div class="alert alert-success">
-                    <span class="alert-icon">✓</span>
-                    <span>Your referral code has been submitted successfully! Thank you for sharing.</span>
-                </div>
-            <?php endif; ?>
+            <!-- Alert Container for AJAX messages -->
+            <div id="alert-container"></div>
             
             <!-- Form -->
-            <form action="store_code.php" method="POST">
+            <form id="submitCodeForm" method="POST">
                 <div class="form-group">
                     <label for="name" class="form-label">Your Name</label>
                     <input type="text" id="name" name="name" class="form-input" required placeholder="John Doe">
@@ -492,7 +514,7 @@ ini_set('display_errors', 1);
                     <div class="form-hint">Enter just the code (e.g., ZAK1452284)</div>
                 </div>
                 
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary" id="submitBtn">
                     <span>Submit Code</span>
                     <span>→</span>
                 </button>
@@ -522,8 +544,7 @@ ini_set('display_errors', 1);
             <a href="index.php" class="footer-link">Home</a>
             <a href="api-docs.php" class="footer-link">API Documentation</a>
             <a href="changelog.php" class="footer-link">Changelog</a>
-            <a href="https://zak.codetoadventure.com" class="footer-link" target="_blank">Zak's Referral Code</a>
-
+            <a href="https://zak.codetoadventure.com" target="_blank" class="footer-link">Zak's Referral Code</a>
         </div>
         <div class="footer-copy">
             © 2024-2025 Code to Adventure. Not affiliated with Rivian.
@@ -568,6 +589,71 @@ ini_set('display_errors', 1);
         
         // Initialize theme on load
         initTheme();
+        
+        // Handle form submission with AJAX
+        document.getElementById('submitCodeForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const submitBtn = document.getElementById('submitBtn');
+            const alertContainer = document.getElementById('alert-container');
+            
+            // Disable submit button and show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span>Submitting...</span>';
+            
+            try {
+                // Send AJAX request
+                const response = await fetch('store_code.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                // Clear any existing alerts
+                alertContainer.innerHTML = '';
+                
+                if (data.success) {
+                    // Show success message
+                    alertContainer.innerHTML = `
+                        <div class="alert alert-success">
+                            <span class="alert-icon">✓</span>
+                            <span>${data.message || 'Your referral code has been submitted successfully!'}</span>
+                        </div>
+                    `;
+                    
+                    // Clear form
+                    document.getElementById('name').value = '';
+                    document.getElementById('referralCode').value = '';
+                    
+                    // Scroll to top to show message
+                    alertContainer.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    // Show error message
+                    alertContainer.innerHTML = `
+                        <div class="alert alert-error">
+                            <span class="alert-icon">⚠️</span>
+                            <span>${data.message || 'An error occurred. Please try again.'}</span>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                // Show error message for network errors
+                alertContainer.innerHTML = `
+                    <div class="alert alert-error">
+                        <span class="alert-icon">⚠️</span>
+                        <span>Failed to submit code. Please check your connection and try again.</span>
+                    </div>
+                `;
+                console.error('Submission error:', error);
+            } finally {
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span>Submit Code</span><span>→</span>';
+            }
+        });
     </script>
 </body>
 </html>
