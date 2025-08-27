@@ -77,7 +77,6 @@ ini_set('display_errors', 1);
             top: 0;
             z-index: 100;
             backdrop-filter: blur(10px);
-            background: rgba(var(--surface), 0.8);
         }
         
         .header-content {
@@ -87,6 +86,7 @@ ini_set('display_errors', 1);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
         
         .logo {
@@ -365,21 +365,7 @@ ini_set('display_errors', 1);
             color: var(--primary);
         }
         
-        /* Mobile */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .nav {
-                display: none;
-            }
-            
-            .mobile-menu-btn {
-                display: flex;
-            }
-        }
-        
+        /* Mobile Menu Button - Hidden by default */
         .mobile-menu-btn {
             display: none;
             background: var(--surface-hover);
@@ -393,13 +379,25 @@ ini_set('display_errors', 1);
             color: var(--text);
         }
         
+        /* Mobile */
         @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: flex;
+            .hero h1 {
+                font-size: 2rem;
             }
             
+            /* Hide desktop nav on mobile */
+            .nav {
+                display: none !important;
+            }
+            
+            /* Show mobile menu button */
+            .mobile-menu-btn {
+                display: flex !important;
+            }
+            
+            /* Mobile menu when open */
             .nav.mobile-open {
-                display: flex;
+                display: flex !important;
                 position: absolute;
                 top: 100%;
                 left: 0;
@@ -408,6 +406,20 @@ ini_set('display_errors', 1);
                 flex-direction: column;
                 padding: 1rem;
                 border-bottom: 1px solid var(--border);
+                box-shadow: 0 4px 6px -1px var(--shadow);
+                z-index: 999;
+            }
+            
+            .nav.mobile-open .nav-link {
+                width: 100%;
+                text-align: left;
+                padding: 0.75rem 1rem;
+            }
+            
+            .nav.mobile-open .theme-toggle {
+                width: 100%;
+                justify-content: center;
+                margin-top: 0.5rem;
             }
         }
     </style>
@@ -433,8 +445,12 @@ ini_set('display_errors', 1);
                 </button>
             </nav>
             
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                <span>☰</span>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
             </button>
         </div>
     </header>
@@ -506,7 +522,6 @@ ini_set('display_errors', 1);
             <a href="index.php" class="footer-link">Home</a>
             <a href="api-docs.php" class="footer-link">API Documentation</a>
             <a href="changelog.php" class="footer-link">Changelog</a>
-            <a href="https://rivian.com" class="footer-link" target="_blank">Rivian Official</a>
         </div>
         <div class="footer-copy">
             © 2024-2025 Code to Adventure. Not affiliated with Rivian.

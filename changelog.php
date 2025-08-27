@@ -73,7 +73,6 @@ ini_set('display_errors', 1);
             top: 0;
             z-index: 100;
             backdrop-filter: blur(10px);
-            background: rgba(var(--surface), 0.8);
         }
         
         .header-content {
@@ -83,6 +82,7 @@ ini_set('display_errors', 1);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
         
         .logo {
@@ -326,38 +326,7 @@ ini_set('display_errors', 1);
             color: var(--primary);
         }
         
-        /* Mobile */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .version-header {
-                flex-direction: column;
-                gap: 0.25rem;
-            }
-            
-            .nav {
-                display: none;
-            }
-            
-            .mobile-menu-btn {
-                display: flex;
-            }
-            
-            .nav.mobile-open {
-                display: flex;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: var(--surface);
-                flex-direction: column;
-                padding: 1rem;
-                border-bottom: 1px solid var(--border);
-            }
-        }
-        
+        /* Mobile Menu Button - Hidden by default */
         .mobile-menu-btn {
             display: none;
             background: var(--surface-hover);
@@ -369,6 +338,55 @@ ini_set('display_errors', 1);
             align-items: center;
             justify-content: center;
             color: var(--text);
+        }
+        
+        /* Mobile */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .version-header {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+            
+            /* Hide desktop nav on mobile */
+            .nav {
+                display: none !important;
+            }
+            
+            /* Show mobile menu button */
+            .mobile-menu-btn {
+                display: flex !important;
+            }
+            
+            /* Mobile menu when open */
+            .nav.mobile-open {
+                display: flex !important;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--surface);
+                flex-direction: column;
+                padding: 1rem;
+                border-bottom: 1px solid var(--border);
+                box-shadow: 0 4px 6px -1px var(--shadow);
+                z-index: 999;
+            }
+            
+            .nav.mobile-open .nav-link {
+                width: 100%;
+                text-align: left;
+                padding: 0.75rem 1rem;
+            }
+            
+            .nav.mobile-open .theme-toggle {
+                width: 100%;
+                justify-content: center;
+                margin-top: 0.5rem;
+            }
         }
     </style>
 </head>
@@ -393,8 +411,12 @@ ini_set('display_errors', 1);
                 </button>
             </nav>
             
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                <span>☰</span>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
             </button>
         </div>
     </header>
@@ -422,7 +444,8 @@ ini_set('display_errors', 1);
                 <li>Redesigned API documentation with better code examples</li>
                 <li>Redesigned Submit Code page with modern form styling</li>
                 <li>Updated changelog with improved version display</li>
-                <li>Fixed mobile navigation menu functionality across all pages</li>
+                <li>Fixed mobile navigation menu functionality with improved CSS specificity</li>
+                <li>Removed external Rivian links from footer for cleaner design</li>
                 <li>Added gradient accents and modern typography</li>
                 <li>Improved mobile responsiveness across all pages</li>
                 <li>Added smooth animations and micro-interactions</li>
@@ -553,7 +576,6 @@ ini_set('display_errors', 1);
         <div class="footer-links">
             <a href="index.php" class="footer-link">Home</a>
             <a href="api-docs.php" class="footer-link">API Documentation</a>
-            <a href="https://rivian.com" class="footer-link" target="_blank">Rivian Official</a>
         </div>
         <div class="footer-copy">
             © 2024-2025 Code to Adventure. Not affiliated with Rivian.
