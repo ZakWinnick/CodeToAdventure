@@ -16,6 +16,9 @@ ini_set('display_errors', 1);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     
+    <!-- Analytics -->
+    <script src="https://tinylytics.app/embed/wWu5hJWSQ_r9BAxgohx8.js" defer></script>
+    
     <style>
         :root {
             --primary: #2563eb;
@@ -341,6 +344,18 @@ ini_set('display_errors', 1);
             .mobile-menu-btn {
                 display: flex;
             }
+            
+            .nav.mobile-open {
+                display: flex;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--surface);
+                flex-direction: column;
+                padding: 1rem;
+                border-bottom: 1px solid var(--border);
+            }
         }
         
         .mobile-menu-btn {
@@ -354,20 +369,6 @@ ini_set('display_errors', 1);
             align-items: center;
             justify-content: center;
             color: var(--text);
-        }
-        
-        @media (max-width: 768px) {
-            .nav.mobile-open {
-                display: flex;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: var(--surface);
-                flex-direction: column;
-                padding: 1rem;
-                border-bottom: 1px solid var(--border);
-            }
         }
     </style>
 </head>
@@ -417,8 +418,11 @@ ini_set('display_errors', 1);
                 <li>Improved visual hierarchy and card-based layout</li>
                 <li>Enhanced dark/light mode with smoother transitions</li>
                 <li>Added custom logo images that adapt to theme (logo.png and logo-dark.png)</li>
+                <li>Integrated Tinylytics analytics for visitor tracking</li>
                 <li>Redesigned API documentation with better code examples</li>
+                <li>Redesigned Submit Code page with modern form styling</li>
                 <li>Updated changelog with improved version display</li>
+                <li>Fixed mobile navigation menu functionality across all pages</li>
                 <li>Added gradient accents and modern typography</li>
                 <li>Improved mobile responsiveness across all pages</li>
                 <li>Added smooth animations and micro-interactions</li>
@@ -556,7 +560,7 @@ ini_set('display_errors', 1);
         </div>
     </footer>
     
-    <?php include 'includes/modal.php'; ?>
+
     
     <script>
         // Theme Toggle

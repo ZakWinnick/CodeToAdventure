@@ -16,6 +16,9 @@ ini_set('display_errors', 1);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
+    <!-- Analytics -->
+    <script src="https://tinylytics.app/embed/wWu5hJWSQ_r9BAxgohx8.js" defer></script>
+    
     <style>
         :root {
             --primary: #2563eb;
@@ -445,25 +448,6 @@ ini_set('display_errors', 1);
             }
             
             .mobile-menu-btn {
-                display: block;
-            }
-        }
-        
-        .mobile-menu-btn {
-            display: none;
-            background: var(--surface-hover);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            align-items: center;
-            justify-content: center;
-            color: var(--text);
-        }
-        
-        @media (max-width: 768px) {
-            .mobile-menu-btn {
                 display: flex;
             }
             
@@ -478,6 +462,19 @@ ini_set('display_errors', 1);
                 padding: 1rem;
                 border-bottom: 1px solid var(--border);
             }
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: var(--surface-hover);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
         }
     </style>
 </head>
@@ -596,8 +593,7 @@ ini_set('display_errors', 1);
         <span id="toast-message">Code copied to clipboard!</span>
     </div>
     
-    <!-- Modal -->
-    <?php include 'includes/modal.php'; ?>
+
     
     <script>
         // Theme Toggle
