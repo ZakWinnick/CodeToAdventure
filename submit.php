@@ -1,240 +1,556 @@
+<?php
+require_once 'config.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Submit your Rivian referral code to Code to Adventure and share the rewards with the community.">
-    <meta name="author" content="Zak Winnick">
-    <title>Submit Your Referral Code - Code to Adventure</title>
-
-    <!-- Preload key resources -->
+    <meta name="description" content="Submit your Rivian referral code to Code to Adventure">
+    <title>Submit Code - Code to Adventure</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Analytics -->
+    <script src="https://tinylytics.app/embed/wWu5hJWSQ_r9BAxgohx8.js" defer></script>
+    
     <style>
         :root {
-            --dark-green: #132A13;
-            --hunter-green: #31572C;
-            --fern-green: #4F772D;
-            --moss-green: #90A955;
-            --mindaro: #ECF39E;
-            --text-white: #FFFFFF;
-            --button-radius: 40px;
-            --max-width: 1200px;
-            --border-radius: 8px;
-            --transition-speed: 0.3s;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --background: #ffffff;
+            --surface: #f8fafc;
+            --surface-hover: #f1f5f9;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --radius: 16px;
+            --radius-sm: 8px;
+            --success: #10b981;
+            --error: #ef4444;
         }
-
+        
+        [data-theme="dark"] {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary: #34d399;
+            --accent: #fbbf24;
+            --background: #0f172a;
+            --surface: #1e293b;
+            --surface-hover: #334155;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --success: #34d399;
+            --error: #f87171;
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background-color: var(--dark-green);
-            color: var(--text-white);
+            background: var(--background);
+            color: var(--text);
             line-height: 1.6;
+            transition: all 0.3s ease;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 1rem;
         }
-
-        .title-bar {
-            background-color: var(--hunter-green);
-            width: 100%;
+        
+        /* Header */
+        .header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: rgba(var(--surface), 0.8);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 1rem 1.5rem;
-            text-align: center;
-            color: var(--mindaro);
-        }
-
-        .title-bar h1 {
-            font-size: 2rem;
-            font-weight: bold;
-        }
-
-        .menu-bar {
-            background-color: var(--fern-green);
-            width: 100%;
-            padding: 0.75rem 1.5rem;
-        }
-
-        .menu {
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 1.5rem;
-            max-width: var(--max-width);
+        }
+        
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .nav-link {
+            padding: 0.5rem 1rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            transition: all 0.2s ease;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        
+        .nav-link:hover {
+            background: var(--surface-hover);
+            color: var(--primary);
+        }
+        
+        .nav-link.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .theme-toggle {
+            background: var(--surface-hover);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            color: var(--text);
+            margin-left: 0.5rem;
+        }
+        
+        .theme-toggle:hover {
+            background: var(--border);
+        }
+        
+        /* Hero */
+        .hero {
+            padding: 3rem 1.5rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--surface), transparent);
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            max-width: 600px;
             margin: 0 auto;
         }
-
-        .menu a {
-            color: var(--mindaro);
-            text-decoration: none;
-            font-weight: 600;
-            padding: 0.5rem 1rem;
-            transition: background-color var(--transition-speed) ease;
-            border-radius: var(--border-radius);
+        
+        /* Container */
+        .container {
+            max-width: 600px;
+            margin: -2rem auto 4rem;
+            padding: 0 1.5rem;
         }
-
-        .menu a:hover {
-            background-color: var(--moss-green);
-            color: var(--dark-green);
-        }
-
-        .form-container {
-            max-width: 400px;
-            width: 100%;
-            background-color: var(--hunter-green);
+        
+        /* Form Card */
+        .form-card {
+            background: var(--surface);
+            border-radius: var(--radius);
             padding: 2rem;
-            border-radius: var(--border-radius);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            margin-top: 2rem;
+            box-shadow: 0 20px 25px -5px var(--shadow), 0 10px 10px -5px var(--shadow);
+            border: 1px solid var(--border);
         }
-
-        h1 {
+        
+        .form-group {
             margin-bottom: 1.5rem;
-            color: var(--mindaro);
-            font-size: 1.75rem;
         }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text);
         }
-
-        label {
-            text-align: left;
-            font-size: 1rem;
-            color: var(--text-white);
+        
+        .form-hint {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
         }
-
-        input {
-            padding: 0.75rem;
-            font-size: 1rem;
-            border: none;
-            border-radius: var(--border-radius);
-            background-color: #fff;
-            color: #000;
-        }
-
-        button {
+        
+        .form-input {
             width: 100%;
-            padding: 0.75rem;
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: var(--dark-green);
-            background-color: var(--mindaro);
-            border: none;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            transition: background-color var(--transition-speed) ease;
-        }
-
-        button:hover {
-            background-color: var(--moss-green);
-        }
-
-        .message {
-            margin-bottom: 1rem;
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            text-align: center;
-        }
-
-        .error {
-            background-color: #ff4d4d;
-            color: #fff;
-        }
-
-        .success {
-            background-color: #4caf50;
-            color: #fff;
-        }
-
-        .back-link {
-            margin-top: 1rem;
-            display: inline-block;
-            background-color: var(--moss-green);
-            color: var(--dark-green);
-            padding: 0.75rem 1.5rem;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--background);
+            color: var(--text);
             font-size: 1rem;
-            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 0.875rem 1.5rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
             text-decoration: none;
-            border-radius: var(--border-radius);
-            transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
         }
-
-        .back-link:hover {
-            background-color: var(--mindaro);
-            color: var(--dark-green);
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
         }
-
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px var(--shadow);
+        }
+        
+        .btn-secondary {
+            background: var(--surface-hover);
+            color: var(--text);
+            margin-top: 1rem;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+        
+        /* Alert Messages */
+        .alert {
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+        
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--error);
+            color: var(--error);
+        }
+        
+        .alert-icon {
+            font-size: 1.25rem;
+        }
+        
+        /* Info Section */
+        .info-section {
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: var(--background);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+        }
+        
+        .info-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text);
+        }
+        
+        .info-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .info-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+        }
+        
+        .info-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s ease;
+        }
+        
+        .footer-link:hover {
+            color: var(--primary);
+        }
+        
+        /* Mobile */
         @media (max-width: 768px) {
-            .menu {
-                flex-wrap: wrap;
-                gap: 0.75rem;
+            .hero h1 {
+                font-size: 2rem;
             }
-
-            .form-container {
-                padding: 1.5rem;
-                margin-top: 1.5rem;
+            
+            .nav {
+                display: none;
             }
-
-            h1 {
-                font-size: 1.5rem;
+            
+            .mobile-menu-btn {
+                display: flex;
             }
-
-            button, .back-link {
-                font-size: 1rem;
-                padding: 0.5rem;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: var(--surface-hover);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            .nav.mobile-open {
+                display: flex;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--surface);
+                flex-direction: column;
+                padding: 1rem;
+                border-bottom: 1px solid var(--border);
             }
         }
     </style>
 </head>
 <body>
-    <div class="title-bar">
-        <h1>Code to Adventure</h1>
-    </div>
-
-    <div class="menu-bar">
-        <nav class="menu">
-            <a href="index.php">Home</a>
-            <a href="submit.php">Submit Code</a>
-            <a href="api-docs.php">API Docs</a>
-            <a href="changelog.php">Changelog</a>
-        </nav>
-    </div>
-
-    <div class="form-container">
-        <h1>Submit Your Referral Code</h1>
-
-        <!-- Display error message if there's a duplicate -->
-        <?php if (isset($_GET['error']) && $_GET['error'] == 'duplicate'): ?>
-            <div class="message error">Duplicate referral code found! Please use a different code.</div>
-        <?php endif; ?>
-
-        <!-- Display success message if submission was successful -->
-        <?php if (isset($_GET['success']) && $_GET['success'] == '1'): ?>
-            <div class="message success">Your referral code has been submitted successfully!</div>
-        <?php endif; ?>
-
-        <form action="store_code.php" method="POST">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required>
-
-            <label for="referralCode">Referral Code<br>(Just the code - ex. ZAK1452284)</label>
-            <input type="text" id="referralCode" name="referralCode" required>
-            <br>
-            <button type="submit">Submit</button>
-        </form>
-        <br>
-        <a href="index.php" class="back-link">Back to Home</a>
-    </div>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="/" class="logo">
+                <div class="logo-icon">
+                    <img src="logo.png" alt="Code to Adventure" id="logo-img">
+                </div>
+                <div class="logo-text">Code to Adventure</div>
+            </a>
+            
+            <nav class="nav" id="nav">
+                <a href="index.php" class="nav-link">Home</a>
+                <a href="submit.php" class="nav-link active">Submit Code</a>
+                <a href="api-docs.php" class="nav-link">API Docs</a>
+                <a href="changelog.php" class="nav-link">Changelog</a>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+                    <span id="theme-icon">🌙</span>
+                </button>
+            </nav>
+            
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <span>☰</span>
+            </button>
+        </div>
+    </header>
+    
+    <!-- Hero -->
+    <section class="hero">
+        <h1>Submit Your Code</h1>
+        <p>Share your Rivian referral code with the community and help others save!</p>
+    </section>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <div class="form-card">
+            <!-- Display Messages -->
+            <?php if (isset($_GET['error']) && $_GET['error'] == 'duplicate'): ?>
+                <div class="alert alert-error">
+                    <span class="alert-icon">⚠️</span>
+                    <span>This referral code already exists in our database. Thank you for contributing!</span>
+                </div>
+            <?php endif; ?>
+            
+            <?php if (isset($_GET['success']) && $_GET['success'] == '1'): ?>
+                <div class="alert alert-success">
+                    <span class="alert-icon">✓</span>
+                    <span>Your referral code has been submitted successfully! Thank you for sharing.</span>
+                </div>
+            <?php endif; ?>
+            
+            <!-- Form -->
+            <form action="store_code.php" method="POST">
+                <div class="form-group">
+                    <label for="name" class="form-label">Your Name</label>
+                    <input type="text" id="name" name="name" class="form-input" required placeholder="John Doe">
+                </div>
+                
+                <div class="form-group">
+                    <label for="referralCode" class="form-label">Referral Code</label>
+                    <input type="text" id="referralCode" name="referralCode" class="form-input" required placeholder="ZAK1452284">
+                    <div class="form-hint">Enter just the code (e.g., ZAK1452284)</div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    <span>Submit Code</span>
+                    <span>→</span>
+                </button>
+                
+                <a href="index.php" class="btn btn-secondary">
+                    <span>←</span>
+                    <span>Back to Home</span>
+                </a>
+            </form>
+            
+            <!-- Info Section -->
+            <div class="info-section">
+                <h3 class="info-title">Before You Submit</h3>
+                <ul class="info-list">
+                    <li>Make sure your code is active and valid</li>
+                    <li>Enter only the code itself, without any URLs</li>
+                    <li>Your code will be randomly displayed to visitors</li>
+                    <li>Both you and the new buyer receive rewards</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="index.php" class="footer-link">Home</a>
+            <a href="api-docs.php" class="footer-link">API Documentation</a>
+            <a href="changelog.php" class="footer-link">Changelog</a>
+            <a href="https://rivian.com" class="footer-link" target="_blank">Rivian Official</a>
+        </div>
+        <div class="footer-copy">
+            © 2024-2025 Code to Adventure. Not affiliated with Rivian.
+        </div>
+    </footer>
+    
+    <script>
+        // Theme Toggle
+        function initTheme() {
+            const saved = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = saved || (prefersDark ? 'dark' : 'light');
+            
+            document.documentElement.setAttribute('data-theme', theme);
+            updateThemeIcon(theme);
+            updateLogo(theme);
+        }
+        
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            updateThemeIcon(next);
+            updateLogo(next);
+        }
+        
+        function updateThemeIcon(theme) {
+            document.getElementById('theme-icon').textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+        
+        function updateLogo(theme) {
+            const logoImg = document.getElementById('logo-img');
+            logoImg.src = theme === 'dark' ? 'logo-dark.png' : 'logo.png';
+        }
+        
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            document.getElementById('nav').classList.toggle('mobile-open');
+        }
+        
+        // Initialize theme on load
+        initTheme();
+    </script>
 </body>
 </html>
