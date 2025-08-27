@@ -6,268 +6,596 @@ ini_set('display_errors', 1);
 
 <!DOCTYPE html>
 <html lang="en">
-<?php include 'includes/head.php'; ?>
-<?php include 'includes/modal.php'; ?>
-
-<body class="!bg-white dark:!bg-gray-900 transition-colors duration-200">
-    <?php include 'includes/header.php'; ?>
-
-    <main class="main-content max-w-7xl mx-auto px-4 py-8">
-        <!-- Changelog Title -->
-        <div class="text-center mb-12">
-            <h1 class="text-4xl font-bold text-primary dark:text-accent mb-4 transition-colors duration-200">
-                Changelog
-            </h1>
-            <h2 class="text-2xl text-gray-700 dark:text-gray-300 transition-colors duration-200">
-                Latest updates and improvements.
-            </h2>
-        </div>
-
-        <div class="max-w-4xl mx-auto space-y-8">
-        <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-    <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">
-        Version 2025.9.1 - August 11, 2025
-    </h3>
-    <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-        <li>Removed admin notification of successful code submission</li>
-        <li>Minor fixes and optimizations</li>
-    </ul>
-</div>
-
-        <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-    <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">
-        Version 2025.9 - March 30, 2025
-    </h3>
-    <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-        <li>Fixed issue with duplicate toast notifications appearing during code submission</li>
-        <li>Improved error handling for the code submission process</li>
-        <li>Enhanced form validation with better user feedback</li>
-        <li>Added better debugging capabilities for administrators</li>
-    </ul>
-</div>
-
-        <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">
-                    Version 2025.8 - March 26, 2025
-                </h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Due to changes in the Rivian Referral program, sharing of codes is no longer allowed. </li>
-                    <li>Updated the site to reflect the changes in the program.</li>                
-                </ul>
-            </div>
-
-        <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">
-                    Version 2025.7.3 - March 11, 2025
-                </h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Updated <i>Rewards</i> section to reflect changes to the program.</li>                
-                </ul>
-            </div>
-
-        <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">
-                    Version 2025.7.2 - February 19, 2025
-                </h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Introduced the new site logo, and implemented it in the header (both light and dark mode).</li>                
-                </ul>
-            </div>
-
-        <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">
-                    Version 2025.7.1 - February 6, 2025
-                </h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Fixed modal appearance on API Docs and Changelog pages</li>
-                    <li>Fixed a bug where you were not able to click/tap out of the Submit Code modal</li>
-                    <li>Centered toast notifications for better visibility</li>
-                </ul>
-            </div>
-
-            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">
-                    Version 2025.7 - February 5, 2025
-                </h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Updated design language of the entire site to make it look more clean</li>
-                    <li>Added light/dark mode with toggle and auto-detect state</li>
-                    <li>Improved mobile formatting for navigation, header, and footer</li>
-                    <li>Completely overhauled `api-docs.php` and `changelog.php` for clarity, styling, and accuracy</li>
-                    <li>Optimized JavaScript and CSS for better load times</li>
-                </ul>
-            </div>
-
-            <!-- Previous Versions -->
-            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2025.6 - February 4, 2025</h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Updated API to v2 (see API Documentation for more info)</li>
-                </ul>
-            </div>
-
-            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2025.5.1 - February 1, 2025</h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Fixed code to schedule X posts for every 4 hours to work around X API limits</li>
-                    <li>Added a new favicon to the header</li>
-                </ul>
-            </div>
-
-            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2025.5 - January 31, 2025</h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Each newly submitted code is now posted to @CodeToAdventure on X</li>
-                </ul>
-            </div>
-
-            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2025.4.3 - January 30, 2025</h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Fixed an issue where codes with only 2 letters before the numbers were being rejected</li>
-                </ul>
-            </div>
-
-            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2025.4.2 - January 29, 2025</h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Updated code validation to look for 7 or more numbers to match new referral codes being issued by Rivian</li>
-                </ul>
-            </div>
-
-            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2025.4.1 - January 27, 2025</h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Fixed an issue where some referral codes were being rejected due to regex issues (thanks to Zach for the report!)</li>
-                </ul>
-            </div>
-
-            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2025.4 - January 24, 2025</h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Updated styling for all pages, including bringing the site up to modern design language standards</li>
-                    <li>Restored code tracking capabilities for admins</li>
-                </ul>
-            </div>
-
-            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2025.3.1 - January 23, 2025</h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Restored functionality for submission e-mails to admins</li>
-                    <li>Minor site updates for performance and stability</li>
-                </ul>
-            </div>
-
-            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2025.3 - January 22, 2025</h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Added referral code tracking for statistical purposes</li>
-                    <li>Minor performance and security improvements</li>
-                </ul>
-            </div>
-
-            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2025.2 - January 21, 2025</h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Added a "Get Another Code" button so you don't have to refresh the page to get a new code</li>
-                    <li>Changed the site infrastructure to pull out CSS and JS code and place them in their own sections</li>
-                    <li>Enhanced some visual elements, including adding icons to the rewards section</li>
-                </ul>
-            </div>
-
-            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2025.1.1 - January 18, 2025</h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Updated formatting of the new 'Copy Code' button to match the rest of the site</li>
-                </ul>
-            </div>
-
-            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2025.1 - January 17, 2025</h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Added a "Copy Code" modal that also displays referree's code</li>
-                    <li>Changed version numbering to new methodology (Year.Version.Fix)</li>
-                </ul>
-            </div>
-
-            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2024.12.28 - December 28, 2024</h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Updated color scheme</li>
-                    <li>Added a working modal dialog for code submission</li>
-                    <li>Improved the navigation menu styling</li>
-                    <li>Made button interactions more intuitive</li>
-                    <li>Created consistent styling across all components</li>
-                    <li>Added proper mobile responsiveness</li>
-                    <li>Improved user experience with cancel/submit options</li>
-                    <li>Updated referral points to reflect program changes by Rivian</li>
-                </ul>
-            </div>
-
-            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2024.12.24 - December 24, 2024</h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Updated Admin Portal with sortable tables and pagination</li>
-                </ul>
-            </div>
-
-            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2024.12.18 - December 18, 2024</h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Redesigned mobile navigation with improved layout and touch interaction</li>
-                    <li>Enhanced site performance through optimized resource loading</li>
-                    <li>Implemented comprehensive responsive design improvements</li>
-                    <li>Updated API documentation to reflect all API calls</li>
-                </ul>
-            </div>
-
-            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2024.12.11 - December 11, 2024</h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Complete refresh of the design language for the site</li>
-                    <li>Simplified backend code for efficiency</li>
-                    <li>Revamped admin console design, and added persistent login via browser cookies</li>
-                    <li>Removed X Username field from Submit Code page</li>
-                </ul>
-            </div>
-
-            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2024.12.10 - December 10, 2024</h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Added admin referral code banner</li>
-                </ul>
-            </div>
-
-            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2024.11.13 - November 13, 2024</h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Created new admin dashboard for editing and deleting entries</li>
-                    <li>Added email notifications for new submissions</li>
-                </ul>
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Code to Adventure Changelog - Latest updates and improvements">
+    <title>Changelog - Code to Adventure</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --background: #ffffff;
+            --surface: #f8fafc;
+            --surface-hover: #f1f5f9;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --radius: 16px;
+            --radius-sm: 8px;
+        }
+        
+        [data-theme="dark"] {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary: #34d399;
+            --accent: #fbbf24;
+            --background: #0f172a;
+            --surface: #1e293b;
+            --surface-hover: #334155;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+            min-height: 100vh;
+        }
+        
+        /* Header */
+        .header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: rgba(var(--surface), 0.8);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .nav-link {
+            padding: 0.5rem 1rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            transition: all 0.2s ease;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        
+        .nav-link:hover {
+            background: var(--surface-hover);
+            color: var(--primary);
+        }
+        
+        .nav-link.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .theme-toggle {
+            background: var(--surface-hover);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            color: var(--text);
+            margin-left: 0.5rem;
+        }
+        
+        .theme-toggle:hover {
+            background: var(--border);
+        }
+        
+        /* Hero */
+        .hero {
+            padding: 3rem 1.5rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--surface), transparent);
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+        
+        /* Version Card */
+        .version-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .version-card:hover {
+            transform: translateX(4px);
+            box-shadow: -4px 0 20px -5px var(--shadow);
+        }
+        
+        .version-card.latest {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, var(--surface), transparent);
+        }
+        
+        .version-card.latest::before {
+            content: 'LATEST';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+        
+        .version-header {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .version-number {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .version-date {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .version-changes {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .version-changes li {
+            position: relative;
+            padding-left: 1.75rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+        }
+        
+        .version-changes li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        
+        .version-changes code {
+            background: var(--surface-hover);
+            padding: 0.125rem 0.375rem;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+        }
+        
+        /* Section Divider */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            margin: 3rem 0 2rem;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+        
+        .section-divider span {
+            padding: 0 1rem;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s ease;
+        }
+        
+        .footer-link:hover {
+            color: var(--primary);
+        }
+        
+        /* Mobile */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
             
-            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2024.11.7 - November 7, 2024</h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Moved development to GitHub for version tracking</li>
-                    <li>Made Twitter handle submission optional</li>
-                </ul>
+            .version-header {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+            
+            .nav {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: var(--surface-hover);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+        }
+        
+        @media (max-width: 768px) {
+            .nav.mobile-open {
+                display: flex;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--surface);
+                flex-direction: column;
+                padding: 1rem;
+                border-bottom: 1px solid var(--border);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="/" class="logo">
+                <div class="logo-icon">
+                    <img src="logo.png" alt="Code to Adventure" id="logo-img">
+                </div>
+                <div class="logo-text">Code to Adventure</div>
+            </a>
+            
+            <nav class="nav" id="nav">
+                <a href="index.php" class="nav-link">Home</a>
+                <a href="submit.php" class="nav-link">Submit Code</a>
+                <a href="api-docs.php" class="nav-link">API Docs</a>
+                <a href="changelog.php" class="nav-link active">Changelog</a>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+                    <span id="theme-icon">🌙</span>
+                </button>
+            </nav>
+            
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <span>☰</span>
+            </button>
+        </div>
+    </header>
+    
+    <!-- Hero -->
+    <section class="hero">
+        <h1>Changelog</h1>
+        <p>Track all updates, improvements, and new features</p>
+    </section>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Latest Version -->
+        <div class="version-card latest">
+            <div class="version-header">
+                <span class="version-number">v2025.35.0</span>
+                <span class="version-date">August 27, 2025</span>
             </div>
-
-            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 rounded-xl p-6 shadow-xl transition-colors duration-200 text-left">
-                <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400 mb-4">Version 2.0 - September 29, 2024</h3>
-                <ul class="list-disc ml-4 text-gray-900 dark:text-gray-300">
-                    <li>Updated page titles for SEO</li>
-                    <li>Improved layout and responsiveness</li>
-                    <li>Added random header images</li>
-                    <li>Enhanced footer links and meta tags</li>
-                </ul>
+            <ul class="version-changes">
+                <li>Complete redesign of the entire site with modern, clean aesthetics</li>
+                <li>Improved visual hierarchy and card-based layout</li>
+                <li>Enhanced dark/light mode with smoother transitions</li>
+                <li>Added custom logo images that adapt to theme (logo.png and logo-dark.png)</li>
+                <li>Redesigned API documentation with better code examples</li>
+                <li>Updated changelog with improved version display</li>
+                <li>Added gradient accents and modern typography</li>
+                <li>Improved mobile responsiveness across all pages</li>
+                <li>Added smooth animations and micro-interactions</li>
+                <li>Optimized performance and reduced CSS footprint</li>
+            </ul>
+        </div>
+        
+        <!-- Previous Versions -->
+        <div class="version-card">
+            <div class="version-header">
+                <span class="version-number">v2025.9.1</span>
+                <span class="version-date">August 11, 2025</span>
             </div>
+            <ul class="version-changes">
+                <li>Removed admin notification of successful code submission</li>
+                <li>Minor fixes and optimizations</li>
+            </ul>
+        </div>
+        
+        <div class="version-card">
+            <div class="version-header">
+                <span class="version-number">v2025.9</span>
+                <span class="version-date">March 30, 2025</span>
+            </div>
+            <ul class="version-changes">
+                <li>Fixed issue with duplicate toast notifications appearing during code submission</li>
+                <li>Improved error handling for the code submission process</li>
+                <li>Enhanced form validation with better user feedback</li>
+                <li>Added better debugging capabilities for administrators</li>
+            </ul>
+        </div>
+        
+        <div class="version-card">
+            <div class="version-header">
+                <span class="version-number">v2025.8</span>
+                <span class="version-date">March 26, 2025</span>
+            </div>
+            <ul class="version-changes">
+                <li>Due to changes in the Rivian Referral program, sharing of codes is no longer allowed</li>
+                <li>Updated the site to reflect the changes in the program</li>
+            </ul>
+        </div>
+        
+        <div class="version-card">
+            <div class="version-header">
+                <span class="version-number">v2025.7.3</span>
+                <span class="version-date">March 11, 2025</span>
+            </div>
+            <ul class="version-changes">
+                <li>Updated <code>Rewards</code> section to reflect changes to the program</li>
+            </ul>
+        </div>
+        
+        <div class="version-card">
+            <div class="version-header">
+                <span class="version-number">v2025.7.2</span>
+                <span class="version-date">February 19, 2025</span>
+            </div>
+            <ul class="version-changes">
+                <li>Introduced the new site logo, and implemented it in the header (both light and dark mode)</li>
+            </ul>
+        </div>
+        
+        <div class="section-divider">
+            <span>Earlier Versions</span>
+        </div>
+        
+        <div class="version-card">
+            <div class="version-header">
+                <span class="version-number">v2025.7.1</span>
+                <span class="version-date">February 6, 2025</span>
+            </div>
+            <ul class="version-changes">
+                <li>Fixed modal appearance on API Docs and Changelog pages</li>
+                <li>Fixed a bug where you were not able to click/tap out of the Submit Code modal</li>
+                <li>Centered toast notifications for better visibility</li>
+            </ul>
+        </div>
+        
+        <div class="version-card">
+            <div class="version-header">
+                <span class="version-number">v2025.7</span>
+                <span class="version-date">February 5, 2025</span>
+            </div>
+            <ul class="version-changes">
+                <li>Updated design language of the entire site to make it look more clean</li>
+                <li>Added light/dark mode with toggle and auto-detect state</li>
+                <li>Improved mobile formatting for navigation, header, and footer</li>
+                <li>Completely overhauled <code>api-docs.php</code> and <code>changelog.php</code> for clarity, styling, and accuracy</li>
+                <li>Optimized JavaScript and CSS for better load times</li>
+            </ul>
+        </div>
+        
+        <div class="version-card">
+            <div class="version-header">
+                <span class="version-number">v2025.6</span>
+                <span class="version-date">February 4, 2025</span>
+            </div>
+            <ul class="version-changes">
+                <li>Updated API to v2 (see API Documentation for more info)</li>
+            </ul>
+        </div>
+        
+        <div class="version-card">
+            <div class="version-header">
+                <span class="version-number">v2025.5.1</span>
+                <span class="version-date">February 1, 2025</span>
+            </div>
+            <ul class="version-changes">
+                <li>Fixed code to schedule X posts for every 4 hours to work around X API limits</li>
+                <li>Added a new favicon to the header</li>
+            </ul>
+        </div>
+        
+        <div class="version-card">
+            <div class="version-header">
+                <span class="version-number">v2025.5</span>
+                <span class="version-date">January 31, 2025</span>
+            </div>
+            <ul class="version-changes">
+                <li>Each newly submitted code is now posted to @CodeToAdventure on X</li>
+            </ul>
         </div>
     </main>
-
-    <?php include 'includes/footer.php'; ?>
-
-    <script src="js/main.js"></script>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="index.php" class="footer-link">Home</a>
+            <a href="api-docs.php" class="footer-link">API Documentation</a>
+            <a href="https://rivian.com" class="footer-link" target="_blank">Rivian Official</a>
+        </div>
+        <div class="footer-copy">
+            © 2024-2025 Code to Adventure. Not affiliated with Rivian.
+        </div>
+    </footer>
+    
+    <?php include 'includes/modal.php'; ?>
+    
+    <script>
+        // Theme Toggle
+        function initTheme() {
+            const saved = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = saved || (prefersDark ? 'dark' : 'light');
+            
+            document.documentElement.setAttribute('data-theme', theme);
+            updateThemeIcon(theme);
+            updateLogo(theme);
+        }
+        
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            updateThemeIcon(next);
+            updateLogo(next);
+        }
+        
+        function updateThemeIcon(theme) {
+            document.getElementById('theme-icon').textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+        
+        function updateLogo(theme) {
+            const logoImg = document.getElementById('logo-img');
+            logoImg.src = theme === 'dark' ? 'logo-dark.png' : 'logo.png';
+        }
+        
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            document.getElementById('nav').classList.toggle('mobile-open');
+        }
+        
+        // Initialize theme on load
+        initTheme();
+    </script>
 </body>
 </html>
