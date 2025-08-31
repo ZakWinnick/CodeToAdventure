@@ -94,8 +94,8 @@ ini_set('display_errors', 1);
         }
         
         .logo-icon {
-            width: 120px;
-            height: 120px;
+            width: 80px;
+            height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
