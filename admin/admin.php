@@ -882,12 +882,12 @@ try {
         </div>
 
         <!-- All Submissions -->
-        <div class="section-card">
+        <div class="section-card" id="all-submissions">
             <h3 class="section-title">All Submissions</h3>
 
             <!-- Search Form -->
             <div class="search-container">
-                <form action="" method="GET" class="search-form">
+                <form action="#all-submissions" method="GET" class="search-form">
                     <input type="text"
                            name="search"
                            value="<?php echo htmlspecialchars($search); ?>"
@@ -945,8 +945,8 @@ try {
             <?php if ($total_pages > 1): ?>
             <div class="pagination">
                 <?php if ($page > 1): ?>
-                    <a href="?page=1<?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">First</a>
-                    <a href="?page=<?php echo $page-1; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Previous</a>
+                    <a href="?page=1<?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>#all-submissions">First</a>
+                    <a href="?page=<?php echo $page-1; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>#all-submissions">Previous</a>
                 <?php endif; ?>
 
                 <?php
@@ -954,15 +954,15 @@ try {
                 $end = min($total_pages, $page + 2);
 
                 for ($i = $start; $i <= $end; $i++): ?>
-                    <a href="?page=<?php echo $i; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>"
+                    <a href="?page=<?php echo $i; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>#all-submissions"
                        class="<?php echo $i === $page ? 'current' : ''; ?>">
                         <?php echo $i; ?>
                     </a>
                 <?php endfor; ?>
 
                 <?php if ($page < $total_pages): ?>
-                    <a href="?page=<?php echo $page+1; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Next</a>
-                    <a href="?page=<?php echo $total_pages; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>">Last</a>
+                    <a href="?page=<?php echo $page+1; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>#all-submissions">Next</a>
+                    <a href="?page=<?php echo $total_pages; ?><?php echo !empty($search) ? '&search=' . urlencode($search) : ''; ?>&entries=<?php echo $entries_per_page; ?>&sort=<?php echo $sort_column; ?>&direction=<?php echo $sort_direction; ?>#all-submissions">Last</a>
                 <?php endif; ?>
             </div>
             <?php endif; ?>
@@ -1012,7 +1012,7 @@ try {
             urlParams.set('sort', sort);
             urlParams.set('direction', direction);
         }
-        window.location.search = urlParams.toString();
+        window.location.href = window.location.pathname + '?' + urlParams.toString() + '#all-submissions';
     }
 
     // Table sorting
@@ -1041,12 +1041,12 @@ try {
                     const isAsc = this.classList.contains('asc');
                     const newDirection = isAsc ? 'DESC' : 'ASC';
 
-                    // Reload page with sort parameters
+                    // Reload page with sort parameters and scroll to table
                     const urlParams = new URLSearchParams(window.location.search);
                     urlParams.set('sort', columnName);
                     urlParams.set('direction', newDirection);
                     urlParams.set('page', 1); // Reset to first page
-                    window.location.search = urlParams.toString();
+                    window.location.href = window.location.pathname + '?' + urlParams.toString() + '#all-submissions';
 
                 } else {
                     // For other tables (Top Codes, Most Displayed), use client-side sorting
