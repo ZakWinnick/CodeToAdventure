@@ -898,24 +898,74 @@ try {
         window.location.search = urlParams.toString();
     }
 
+    let currentSortColumn = '<?php echo $sort_column; ?>';
+    let currentSortDirection = '<?php echo $sort_direction; ?>';
+
     function changeSort(column) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const currentSort = urlParams.get('sort');
-        const currentDirection = urlParams.get('direction');
+        const table = document.querySelector('.data-table tbody');
+        const rows = Array.from(table.querySelectorAll('tr'));
 
-        if (currentSort === column) {
-            urlParams.set('direction', currentDirection === 'ASC' ? 'DESC' : 'ASC');
+        // Determine sort direction
+        if (currentSortColumn === column) {
+            currentSortDirection = currentSortDirection === 'ASC' ? 'DESC' : 'ASC';
         } else {
-            urlParams.set('sort', column);
-            urlParams.set('direction', 'ASC');
+            currentSortColumn = column;
+            currentSortDirection = 'ASC';
         }
 
-        if (urlParams.has('entries')) {
-            urlParams.set('entries', urlParams.get('entries'));
-        }
+        // Column index mapping
+        const columnMap = {
+            'id': 0,
+            'name': 1,
+            'referral_code': 2,
+            'display_count': 3,
+            'use_count': 4
+        };
 
-        urlParams.set('page', 1);
-        window.location.search = urlParams.toString();
+        const columnIndex = columnMap[column];
+
+        // Sort rows
+        rows.sort((a, b) => {
+            const aValue = a.cells[columnIndex].textContent.trim().replace(/,/g, '');
+            const bValue = b.cells[columnIndex].textContent.trim().replace(/,/g, '');
+
+            // Try to parse as number, otherwise compare as string
+            const aNum = parseFloat(aValue);
+            const bNum = parseFloat(bValue);
+
+            let comparison = 0;
+            if (!isNaN(aNum) && !isNaN(bNum)) {
+                comparison = aNum - bNum;
+            } else {
+                comparison = aValue.localeCompare(bValue);
+            }
+
+            return currentSortDirection === 'ASC' ? comparison : -comparison;
+        });
+
+        // Update table
+        rows.forEach(row => table.appendChild(row));
+
+        // Update header classes
+        document.querySelectorAll('.sortable').forEach(th => {
+            th.classList.remove('asc', 'desc');
+        });
+
+        const headerCells = document.querySelectorAll('.sortable');
+        headerCells.forEach(th => {
+            if (th.textContent.trim().toLowerCase().includes(column.replace('_', ' ')) ||
+                (column === 'display_count' && th.textContent.includes('Displays')) ||
+                (column === 'use_count' && th.textContent.includes('Clicks'))) {
+                th.classList.add(currentSortDirection.toLowerCase());
+            }
+        });
+
+        // Update URL without reload
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set('sort', column);
+        urlParams.set('direction', currentSortDirection);
+        const newUrl = window.location.pathname + '?' + urlParams.toString();
+        window.history.pushState({}, '', newUrl);
     }
     </script>
 </body>
