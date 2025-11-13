@@ -610,42 +610,68 @@ try {
             }
 
             .table-container {
-                margin: 0 -1.5rem;
-                border-radius: 0;
-                border-left: none;
-                border-right: none;
+                margin: 0;
+                border-radius: var(--radius-sm);
+                border: 1px solid var(--border);
             }
 
-            .data-table {
-                font-size: 0.8rem;
-                min-width: 600px;
+            /* Card-based layout for tables on mobile */
+            .data-table thead {
+                display: none;
             }
 
-            .data-table th,
+            .data-table,
+            .data-table tbody,
+            .data-table tr,
             .data-table td {
-                padding: 0.75rem 0.5rem;
-                white-space: nowrap;
+                display: block;
+                width: 100%;
             }
 
-            .data-table th:first-child,
-            .data-table td:first-child {
-                padding-left: 1rem;
+            .data-table tr {
+                margin-bottom: 1rem;
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-sm);
+                padding: 1rem;
             }
 
-            .data-table th:last-child,
+            .data-table td {
+                padding: 0.5rem 0;
+                border: none;
+                position: relative;
+                padding-left: 45%;
+                text-align: right;
+            }
+
+            .data-table td:before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 40%;
+                padding-right: 0.5rem;
+                font-weight: 600;
+                text-align: left;
+                color: var(--text);
+            }
+
             .data-table td:last-child {
-                padding-right: 1rem;
+                border-bottom: none;
+                padding-bottom: 0;
             }
 
             .actions {
+                display: flex;
                 flex-direction: column;
                 gap: 0.5rem;
+                margin-top: 0.5rem;
             }
 
             .edit-btn, .delete-btn {
                 width: 100%;
-                padding: 0.5rem;
+                padding: 0.75rem;
                 text-align: center;
+                display: block;
             }
 
             .section-card {
@@ -836,10 +862,10 @@ try {
                     <tbody>
                         <?php while ($code = $topCodesResult->fetch_assoc()): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($code['name']); ?></td>
-                            <td><?php echo htmlspecialchars($code['referral_code']); ?></td>
-                            <td><?php echo number_format($code['use_count']); ?></td>
-                            <td><?php echo $code['last_used'] ? date('M j, Y', strtotime($code['last_used'])) : 'Never'; ?></td>
+                            <td data-label="Name"><?php echo htmlspecialchars($code['name']); ?></td>
+                            <td data-label="Code"><?php echo htmlspecialchars($code['referral_code']); ?></td>
+                            <td data-label="Uses"><?php echo number_format($code['use_count']); ?></td>
+                            <td data-label="Last Used"><?php echo $code['last_used'] ? date('M j, Y', strtotime($code['last_used'])) : 'Never'; ?></td>
                         </tr>
                         <?php endwhile; ?>
                     </tbody>
@@ -864,11 +890,11 @@ try {
                     <tbody>
                         <?php while ($code = $mostDisplayedResult->fetch_assoc()): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($code['name']); ?></td>
-                            <td><?php echo htmlspecialchars($code['referral_code']); ?></td>
-                            <td><?php echo number_format($code['display_count']); ?></td>
-                            <td><?php echo number_format($code['use_count']); ?></td>
-                            <td><?php
+                            <td data-label="Name"><?php echo htmlspecialchars($code['name']); ?></td>
+                            <td data-label="Code"><?php echo htmlspecialchars($code['referral_code']); ?></td>
+                            <td data-label="Displays"><?php echo number_format($code['display_count']); ?></td>
+                            <td data-label="Clicks"><?php echo number_format($code['use_count']); ?></td>
+                            <td data-label="Click Rate"><?php
                                 $clickRate = $code['display_count'] > 0
                                     ? round(($code['use_count'] / $code['display_count']) * 100, 1)
                                     : 0;
@@ -924,12 +950,12 @@ try {
                     <tbody>
                         <?php while ($row = $allSubmissions->fetch_assoc()): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($row['id']); ?></td>
-                            <td><?php echo htmlspecialchars($row['name']); ?></td>
-                            <td><?php echo htmlspecialchars($row['referral_code']); ?></td>
-                            <td><?php echo number_format($row['display_count'] ?? 0); ?></td>
-                            <td><?php echo number_format($row['use_count'] ?? 0); ?></td>
-                            <td>
+                            <td data-label="ID"><?php echo htmlspecialchars($row['id']); ?></td>
+                            <td data-label="Name"><?php echo htmlspecialchars($row['name']); ?></td>
+                            <td data-label="Code"><?php echo htmlspecialchars($row['referral_code']); ?></td>
+                            <td data-label="Displays"><?php echo number_format($row['display_count'] ?? 0); ?></td>
+                            <td data-label="Clicks"><?php echo number_format($row['use_count'] ?? 0); ?></td>
+                            <td data-label="Actions">
                                 <div class="actions">
                                     <a href="edit.php?id=<?php echo $row['id']; ?>" class="edit-btn">Edit</a>
                                     <a href="delete.php?id=<?php echo $row['id']; ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this code?')">Delete</a>
