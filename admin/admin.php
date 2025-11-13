@@ -1017,18 +1017,25 @@ try {
 
     // Table sorting - works for all tables
     document.addEventListener('DOMContentLoaded', function() {
+        console.log('Setting up table sorting...');
+
         // Add click handlers to all sortable headers
         document.querySelectorAll('.sortable').forEach(header => {
             header.addEventListener('click', function() {
+                console.log('Clicked column:', this.textContent.trim());
+
                 const table = this.closest('table');
                 const tbody = table.querySelector('tbody');
                 const columnIndex = parseInt(this.getAttribute('data-column'));
                 const dataType = this.getAttribute('data-type');
 
+                console.log('Column index:', columnIndex, 'Data type:', dataType);
+
                 // Determine sort direction
                 const isAsc = this.classList.contains('asc');
-                const isDesc = this.classList.contains('desc');
                 const newDirection = isAsc ? 'desc' : 'asc';
+
+                console.log('Sort direction:', newDirection);
 
                 // Remove all sorting classes from this table's headers
                 table.querySelectorAll('.sortable').forEach(th => {
@@ -1041,19 +1048,41 @@ try {
                 // Get all rows
                 const rows = Array.from(tbody.querySelectorAll('tr'));
 
+                console.log('Sorting', rows.length, 'rows');
+
                 // Sort rows
                 rows.sort((a, b) => {
-                    let aValue = a.cells[columnIndex].textContent.trim();
-                    let bValue = b.cells[columnIndex].textContent.trim();
+                    // Make sure we're getting the right cell
+                    const aCell = a.cells[columnIndex];
+                    const bCell = b.cells[columnIndex];
 
-                    // Remove commas and % signs for numbers
+                    if (!aCell || !bCell) {
+                        console.error('Cell not found at index', columnIndex);
+                        return 0;
+                    }
+
+                    let aValue = aCell.textContent.trim();
+                    let bValue = bCell.textContent.trim();
+
                     if (dataType === 'number') {
-                        aValue = parseFloat(aValue.replace(/[,%]/g, '')) || 0;
-                        bValue = parseFloat(bValue.replace(/[,%]/g, '')) || 0;
+                        // Remove commas, spaces, and % signs, then parse
+                        aValue = aValue.replace(/[,\s%]/g, '');
+                        bValue = bValue.replace(/[,\s%]/g, '');
 
-                        return newDirection === 'asc' ? aValue - bValue : bValue - aValue;
+                        const aNum = parseFloat(aValue);
+                        const bNum = parseFloat(bValue);
+
+                        // Handle NaN cases
+                        if (isNaN(aNum) && isNaN(bNum)) return 0;
+                        if (isNaN(aNum)) return 1;
+                        if (isNaN(bNum)) return -1;
+
+                        return newDirection === 'asc' ? aNum - bNum : bNum - aNum;
                     } else {
-                        // String comparison
+                        // String comparison (case-insensitive)
+                        aValue = aValue.toLowerCase();
+                        bValue = bValue.toLowerCase();
+
                         const comparison = aValue.localeCompare(bValue);
                         return newDirection === 'asc' ? comparison : -comparison;
                     }
@@ -1062,16 +1091,19 @@ try {
                 // Re-append sorted rows
                 rows.forEach(row => tbody.appendChild(row));
 
+                console.log('Sorting complete');
+
                 // Update URL for main submissions table only
                 if (table.id === 'all-submissions-table') {
                     const urlParams = new URLSearchParams(window.location.search);
-                    const columnName = this.textContent.trim().toLowerCase();
                     urlParams.set('direction', newDirection.toUpperCase());
                     const newUrl = window.location.pathname + '?' + urlParams.toString();
                     window.history.pushState({}, '', newUrl);
                 }
             });
         });
+
+        console.log('Table sorting setup complete');
     });
     </script>
 </body>
