@@ -49,21 +49,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="description" content="Admin login panel for Code to Adventure.">
     <title>Login - Admin Panel</title>
 
-    <!-- Preload key resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --dark-green: #132A13;
-            --hunter-green: #31572C;
-            --fern-green: #4F772D;
-            --moss-green: #90A955;
-            --mindaro: #ECF39E;
-            --text-white: #FFFFFF;
-            --border-radius: 8px;
-            --transition-speed: 0.3s;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --background: #ffffff;
+            --surface: #f8fafc;
+            --surface-hover: #f1f5f9;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --radius: 16px;
+            --radius-sm: 8px;
+            --error: #ef4444;
+        }
+
+        [data-theme="dark"] {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary: #34d399;
+            --accent: #fbbf24;
+            --background: #0f172a;
+            --surface: #1e293b;
+            --surface-hover: #334155;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --shadow: rgba(0, 0, 0, 0.3);
         }
 
         * {
@@ -74,132 +93,216 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         body {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background-color: var(--dark-green);
-            color: var(--text-white);
+            background: linear-gradient(135deg, var(--background), var(--surface));
+            color: var(--text);
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            min-height: 100vh;
+            transition: all 0.3s ease;
         }
 
         .login-container {
-            max-width: 400px;
+            max-width: 420px;
             width: 90%;
-            background-color: var(--hunter-green);
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            background: var(--surface);
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            box-shadow: 0 20px 25px -5px var(--shadow), 0 10px 10px -5px var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .logo-section {
             text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .logo-subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
 
         .login-container h1 {
             margin-bottom: 1.5rem;
-            color: var(--mindaro);
-            font-size: 1.75rem;
+            color: var(--text);
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
         }
 
         .form-group {
-            margin-bottom: 1rem;
-            text-align: left;
+            margin-bottom: 1.25rem;
         }
 
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            color: var(--mindaro);
+            color: var(--text);
+            font-weight: 500;
+            font-size: 0.9rem;
         }
 
         .form-group input {
             width: 100%;
             padding: 0.75rem;
             font-size: 1rem;
-            border: 1px solid var(--fern-green);
-            border-radius: var(--border-radius);
-            background-color: var(--dark-green);
-            color: var(--text-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--background);
+            color: var(--text);
+            transition: all 0.2s ease;
         }
 
         .form-group input:focus {
-            border-color: var(--moss-green);
+            border-color: var(--primary);
             outline: none;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
-        .form-group .checkbox {
+        .checkbox-group {
             display: flex;
             align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
         }
 
-        .form-group .checkbox input {
-            margin-right: 0.5rem;
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            cursor: pointer;
         }
 
-        .form-group .checkbox label {
+        .checkbox-group label {
             font-size: 0.9rem;
-            color: var(--text-white);
+            color: var(--text-muted);
+            cursor: pointer;
+            margin: 0;
         }
 
         .login-button {
             width: 100%;
-            padding: 0.75rem;
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: var(--dark-green);
-            background-color: var(--mindaro);
+            padding: 0.875rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            background: var(--primary);
             border: none;
-            border-radius: var(--border-radius);
+            border-radius: var(--radius-sm);
             cursor: pointer;
-            transition: background-color var(--transition-speed) ease;
+            transition: all 0.2s ease;
         }
 
         .login-button:hover {
-            background-color: var(--moss-green);
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px var(--shadow);
         }
 
         .error-message {
-            color: #f44336;
-            font-size: 0.9rem;
+            color: var(--error);
+            font-size: 0.875rem;
             margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(239, 68, 68, 0.2);
         }
 
-        @media (max-height: 500px) {
+        .theme-toggle {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            color: var(--text);
+        }
+
+        .theme-toggle:hover {
+            background: var(--surface-hover);
+        }
+
+        @media (max-width: 480px) {
             .login-container {
-                padding: 1.5rem;
-            }
-
-            .login-button {
-                font-size: 1rem;
-                padding: 0.5rem;
-            }
-
-            .form-group input {
-                padding: 0.5rem;
-                font-size: 0.9rem;
+                padding: 2rem;
             }
         }
     </style>
 </head>
 <body>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+        <span id="theme-icon">🌙</span>
+    </button>
+
     <div class="login-container">
-        <h1>Admin Login</h1>
+        <div class="logo-section">
+            <div class="logo-text">Code to Adventure</div>
+            <div class="logo-subtitle">Admin Panel</div>
+        </div>
+
+        <h1>Sign In</h1>
+
         <?php if (!empty($error)): ?>
-            <p class="error-message"><?php echo $error; ?></p>
+            <p class="error-message"><?php echo htmlspecialchars($error); ?></p>
         <?php endif; ?>
+
         <form action="login.php" method="POST">
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
+                <input type="text" id="username" name="username" required autofocus>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <div class="form-group checkbox">
+            <div class="checkbox-group">
                 <input type="checkbox" id="remember" name="remember">
-                <label for="remember">Remember Me</label>
+                <label for="remember">Remember me for 30 days</label>
             </div>
-            <button type="submit" class="login-button">Login</button>
+            <button type="submit" class="login-button">Sign In</button>
         </form>
     </div>
+
+    <script>
+        function initTheme() {
+            const saved = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = saved || (prefersDark ? 'dark' : 'light');
+
+            document.documentElement.setAttribute('data-theme', theme);
+            updateThemeIcon(theme);
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            updateThemeIcon(next);
+        }
+
+        function updateThemeIcon(theme) {
+            document.getElementById('theme-icon').textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+
+        initTheme();
+    </script>
 </body>
 </html>
