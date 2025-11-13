@@ -707,13 +707,13 @@ try {
         <div class="section-card">
             <h3 class="section-title">Top Referral Codes (By Clicks)</h3>
             <div class="table-container">
-                <table class="data-table">
+                <table class="data-table" id="top-codes-table">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Code</th>
-                            <th>Uses</th>
-                            <th>Last Used</th>
+                            <th class="sortable" data-column="0" data-type="string">Name</th>
+                            <th class="sortable" data-column="1" data-type="string">Code</th>
+                            <th class="sortable" data-column="2" data-type="number">Uses</th>
+                            <th class="sortable" data-column="3" data-type="string">Last Used</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -734,14 +734,14 @@ try {
         <div class="section-card">
             <h3 class="section-title">Most Displayed Codes</h3>
             <div class="table-container">
-                <table class="data-table">
+                <table class="data-table" id="most-displayed-table">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Code</th>
-                            <th>Displays</th>
-                            <th>Clicks</th>
-                            <th>Click Rate</th>
+                            <th class="sortable" data-column="0" data-type="string">Name</th>
+                            <th class="sortable" data-column="1" data-type="string">Code</th>
+                            <th class="sortable" data-column="2" data-type="number">Displays</th>
+                            <th class="sortable" data-column="3" data-type="number">Clicks</th>
+                            <th class="sortable" data-column="4" data-type="number">Click Rate</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -793,19 +793,14 @@ try {
             </div>
 
             <div class="table-container">
-                <table class="data-table">
+                <table class="data-table" id="all-submissions-table">
                     <thead>
                         <tr>
-                            <th class="sortable <?php echo $sort_column === 'id' ? strtolower($sort_direction) : ''; ?>"
-                                onclick="changeSort('id')">ID</th>
-                            <th class="sortable <?php echo $sort_column === 'name' ? strtolower($sort_direction) : ''; ?>"
-                                onclick="changeSort('name')">Name</th>
-                            <th class="sortable <?php echo $sort_column === 'referral_code' ? strtolower($sort_direction) : ''; ?>"
-                                onclick="changeSort('referral_code')">Code</th>
-                            <th class="sortable <?php echo $sort_column === 'display_count' ? strtolower($sort_direction) : ''; ?>"
-                                onclick="changeSort('display_count')">Displays</th>
-                            <th class="sortable <?php echo $sort_column === 'use_count' ? strtolower($sort_direction) : ''; ?>"
-                                onclick="changeSort('use_count')">Clicks</th>
+                            <th class="sortable <?php echo $sort_column === 'id' ? strtolower($sort_direction) : ''; ?>" data-column="0" data-type="number">ID</th>
+                            <th class="sortable <?php echo $sort_column === 'name' ? strtolower($sort_direction) : ''; ?>" data-column="1" data-type="string">Name</th>
+                            <th class="sortable <?php echo $sort_column === 'referral_code' ? strtolower($sort_direction) : ''; ?>" data-column="2" data-type="string">Code</th>
+                            <th class="sortable <?php echo $sort_column === 'display_count' ? strtolower($sort_direction) : ''; ?>" data-column="3" data-type="number">Displays</th>
+                            <th class="sortable <?php echo $sort_column === 'use_count' ? strtolower($sort_direction) : ''; ?>" data-column="4" data-type="number">Clicks</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -898,75 +893,64 @@ try {
         window.location.search = urlParams.toString();
     }
 
-    let currentSortColumn = '<?php echo $sort_column; ?>';
-    let currentSortDirection = '<?php echo $sort_direction; ?>';
+    // Table sorting - works for all tables
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add click handlers to all sortable headers
+        document.querySelectorAll('.sortable').forEach(header => {
+            header.addEventListener('click', function() {
+                const table = this.closest('table');
+                const tbody = table.querySelector('tbody');
+                const columnIndex = parseInt(this.getAttribute('data-column'));
+                const dataType = this.getAttribute('data-type');
 
-    function changeSort(column) {
-        const table = document.querySelector('.data-table tbody');
-        const rows = Array.from(table.querySelectorAll('tr'));
+                // Determine sort direction
+                const isAsc = this.classList.contains('asc');
+                const isDesc = this.classList.contains('desc');
+                const newDirection = isAsc ? 'desc' : 'asc';
 
-        // Determine sort direction
-        if (currentSortColumn === column) {
-            currentSortDirection = currentSortDirection === 'ASC' ? 'DESC' : 'ASC';
-        } else {
-            currentSortColumn = column;
-            currentSortDirection = 'ASC';
-        }
+                // Remove all sorting classes from this table's headers
+                table.querySelectorAll('.sortable').forEach(th => {
+                    th.classList.remove('asc', 'desc');
+                });
 
-        // Column index mapping
-        const columnMap = {
-            'id': 0,
-            'name': 1,
-            'referral_code': 2,
-            'display_count': 3,
-            'use_count': 4
-        };
+                // Add new sorting class
+                this.classList.add(newDirection);
 
-        const columnIndex = columnMap[column];
+                // Get all rows
+                const rows = Array.from(tbody.querySelectorAll('tr'));
 
-        // Sort rows
-        rows.sort((a, b) => {
-            const aValue = a.cells[columnIndex].textContent.trim().replace(/,/g, '');
-            const bValue = b.cells[columnIndex].textContent.trim().replace(/,/g, '');
+                // Sort rows
+                rows.sort((a, b) => {
+                    let aValue = a.cells[columnIndex].textContent.trim();
+                    let bValue = b.cells[columnIndex].textContent.trim();
 
-            // Try to parse as number, otherwise compare as string
-            const aNum = parseFloat(aValue);
-            const bNum = parseFloat(bValue);
+                    // Remove commas and % signs for numbers
+                    if (dataType === 'number') {
+                        aValue = parseFloat(aValue.replace(/[,%]/g, '')) || 0;
+                        bValue = parseFloat(bValue.replace(/[,%]/g, '')) || 0;
 
-            let comparison = 0;
-            if (!isNaN(aNum) && !isNaN(bNum)) {
-                comparison = aNum - bNum;
-            } else {
-                comparison = aValue.localeCompare(bValue);
-            }
+                        return newDirection === 'asc' ? aValue - bValue : bValue - aValue;
+                    } else {
+                        // String comparison
+                        const comparison = aValue.localeCompare(bValue);
+                        return newDirection === 'asc' ? comparison : -comparison;
+                    }
+                });
 
-            return currentSortDirection === 'ASC' ? comparison : -comparison;
+                // Re-append sorted rows
+                rows.forEach(row => tbody.appendChild(row));
+
+                // Update URL for main submissions table only
+                if (table.id === 'all-submissions-table') {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const columnName = this.textContent.trim().toLowerCase();
+                    urlParams.set('direction', newDirection.toUpperCase());
+                    const newUrl = window.location.pathname + '?' + urlParams.toString();
+                    window.history.pushState({}, '', newUrl);
+                }
+            });
         });
-
-        // Update table
-        rows.forEach(row => table.appendChild(row));
-
-        // Update header classes
-        document.querySelectorAll('.sortable').forEach(th => {
-            th.classList.remove('asc', 'desc');
-        });
-
-        const headerCells = document.querySelectorAll('.sortable');
-        headerCells.forEach(th => {
-            if (th.textContent.trim().toLowerCase().includes(column.replace('_', ' ')) ||
-                (column === 'display_count' && th.textContent.includes('Displays')) ||
-                (column === 'use_count' && th.textContent.includes('Clicks'))) {
-                th.classList.add(currentSortDirection.toLowerCase());
-            }
-        });
-
-        // Update URL without reload
-        const urlParams = new URLSearchParams(window.location.search);
-        urlParams.set('sort', column);
-        urlParams.set('direction', currentSortDirection);
-        const newUrl = window.location.pathname + '?' + urlParams.toString();
-        window.history.pushState({}, '', newUrl);
-    }
+    });
     </script>
 </body>
 </html>
