@@ -432,6 +432,17 @@ ini_set('display_errors', 1);
         <!-- Latest Version -->
         <div class="version-card latest">
             <div class="version-header">
+                <span class="version-number">v2025.46</span>
+                <span class="version-date">November 12, 2025</span>
+            </div>
+            <ul class="version-changes">
+                <li>Updated rewards information to reflect new Rivian referral program structure</li>
+            </ul>
+        </div>
+
+        <!-- Previous Versions -->
+        <div class="version-card">
+            <div class="version-header">
                 <span class="version-number">v2025.35.0</span>
                 <span class="version-date">August 27, 2025</span>
             </div>
@@ -453,7 +464,7 @@ ini_set('display_errors', 1);
                 <li>Optimized performance and reduced CSS footprint</li>
             </ul>
         </div>
-        
+
         <!-- Previous Versions -->
         <div class="version-card">
             <div class="version-header">

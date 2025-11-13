@@ -580,20 +580,21 @@ ini_set('display_errors', 1);
             <div class="info-card">
                 <div class="info-icon">🚀</div>
                 <h3>How It Works</h3>
-                <p>Use an owner's referral code during checkout of a qualifying R1 Shop vehicle. When you take delivery, both you and the original owner receive rewards!</p>
+                <p>Use an owner's referral code during checkout of a qualifying R1 Shop vehicle. When an order is placed, both you and the original owner receive Rivian Rewards points plus 3 months of charging on the Rivian Adventure Network!</p>
             </div>
-            
+
             <div class="info-card">
                 <div class="info-icon">🎁</div>
                 <h3>Your Rewards</h3>
-                <span class="reward-amount">500 Points</span>
-                <p class="reward-detail">Redeemable in Gear Shop or R1 Shop<br>(1 point = $1 credit)</p>
+                <span class="reward-amount">100-500 Points</span>
+                <p class="reward-detail">500 pts: Tri or Quad<br>250 pts: Dual Large/Max battery<br>100 pts: Dual Standard<br>+ 3 months Adventure Network charging</p>
             </div>
-            
+
             <div class="info-card">
-                <div class="info-icon">🤝</div>
-                <h3>Share the Love</h3>
-                <p>Have your own Rivian? Submit your referral code to help others save while earning rewards for yourself. It's a win-win!</p>
+                <div class="info-icon">⚡</div>
+                <h3>Owner Rewards</h3>
+                <span class="reward-amount">250 Points</span>
+                <p class="reward-detail">Earned when order is placed<br>+ 3 months Adventure Network charging<br>(1 point = $1 credit)</p>
             </div>
         </div>
     </main>
