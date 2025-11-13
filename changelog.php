@@ -432,6 +432,21 @@ ini_set('display_errors', 1);
         <!-- Latest Version -->
         <div class="version-card latest">
             <div class="version-header">
+                <span class="version-number">v2025.46.1</span>
+                <span class="version-date">November 12, 2025</span>
+            </div>
+            <ul class="version-changes">
+                <li>Added display tracking to monitor how many times each code is shown on the homepage</li>
+                <li>Added "Most Displayed Codes" section to admin dashboard showing display counts and click rates</li>
+                <li>Updated admin dashboard "All Submissions" table with Displays column</li>
+                <li>Modernized admin panel design to match main site aesthetics</li>
+                <li>Added dark/light mode support to admin login and edit pages</li>
+            </ul>
+        </div>
+
+        <!-- Previous Versions -->
+        <div class="version-card">
+            <div class="version-header">
                 <span class="version-number">v2025.46</span>
                 <span class="version-date">November 12, 2025</span>
             </div>
