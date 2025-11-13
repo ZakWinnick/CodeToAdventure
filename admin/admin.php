@@ -1015,101 +1015,91 @@ try {
         window.location.search = urlParams.toString();
     }
 
-    // Table sorting - works for all tables
+    // Table sorting
     document.addEventListener('DOMContentLoaded', function() {
-        console.log('Setting up table sorting...');
-
         // Add click handlers to all sortable headers
         document.querySelectorAll('.sortable').forEach(header => {
             header.addEventListener('click', function() {
-                console.log('Clicked column:', this.textContent.trim());
-
                 const table = this.closest('table');
-                const tbody = table.querySelector('tbody');
-                const columnIndex = parseInt(this.getAttribute('data-column'));
-                const dataType = this.getAttribute('data-type');
 
-                console.log('Column index:', columnIndex, 'Data type:', dataType);
-
-                // Determine sort direction
-                const isAsc = this.classList.contains('asc');
-                const newDirection = isAsc ? 'desc' : 'asc';
-
-                console.log('Sort direction:', newDirection);
-
-                // Remove all sorting classes from this table's headers
-                table.querySelectorAll('.sortable').forEach(th => {
-                    th.classList.remove('asc', 'desc');
-                });
-
-                // Add new sorting class
-                this.classList.add(newDirection);
-
-                // Get all rows
-                const rows = Array.from(tbody.querySelectorAll('tr'));
-
-                console.log('Sorting', rows.length, 'rows');
-
-                // Sort rows
-                rows.sort((a, b) => {
-                    // Make sure we're getting the right cell
-                    const aCell = a.cells[columnIndex];
-                    const bCell = b.cells[columnIndex];
-
-                    if (!aCell || !bCell) {
-                        console.error('Cell not found at index', columnIndex);
-                        return 0;
-                    }
-
-                    let aValue = aCell.textContent.trim();
-                    let bValue = bCell.textContent.trim();
-
-                    console.log('Comparing:', aValue, 'vs', bValue, 'Type:', dataType);
-
-                    if (dataType === 'number') {
-                        // Remove commas, spaces, and % signs, then parse
-                        aValue = aValue.replace(/[,\s%]/g, '');
-                        bValue = bValue.replace(/[,\s%]/g, '');
-
-                        const aNum = parseFloat(aValue);
-                        const bNum = parseFloat(bValue);
-
-                        console.log('Parsed numbers:', aNum, 'vs', bNum);
-
-                        // Handle NaN cases
-                        if (isNaN(aNum) && isNaN(bNum)) return 0;
-                        if (isNaN(aNum)) return 1;
-                        if (isNaN(bNum)) return -1;
-
-                        const result = newDirection === 'asc' ? aNum - bNum : bNum - aNum;
-                        console.log('Result:', result);
-                        return result;
-                    } else {
-                        // String comparison (case-insensitive)
-                        aValue = aValue.toLowerCase();
-                        bValue = bValue.toLowerCase();
-
-                        const comparison = aValue.localeCompare(bValue);
-                        return newDirection === 'asc' ? comparison : -comparison;
-                    }
-                });
-
-                // Re-append sorted rows
-                rows.forEach(row => tbody.appendChild(row));
-
-                console.log('Sorting complete');
-
-                // Update URL for main submissions table only
+                // For All Submissions table, use server-side sorting (reload page)
                 if (table.id === 'all-submissions-table') {
+                    const columnIndex = parseInt(this.getAttribute('data-column'));
+
+                    // Map column index to database column name
+                    const columnMap = {
+                        0: 'id',
+                        1: 'name',
+                        2: 'referral_code',
+                        3: 'display_count',
+                        4: 'use_count'
+                    };
+
+                    const columnName = columnMap[columnIndex];
+
+                    // Determine sort direction
+                    const isAsc = this.classList.contains('asc');
+                    const newDirection = isAsc ? 'DESC' : 'ASC';
+
+                    // Reload page with sort parameters
                     const urlParams = new URLSearchParams(window.location.search);
-                    urlParams.set('direction', newDirection.toUpperCase());
-                    const newUrl = window.location.pathname + '?' + urlParams.toString();
-                    window.history.pushState({}, '', newUrl);
+                    urlParams.set('sort', columnName);
+                    urlParams.set('direction', newDirection);
+                    urlParams.set('page', 1); // Reset to first page
+                    window.location.search = urlParams.toString();
+
+                } else {
+                    // For other tables (Top Codes, Most Displayed), use client-side sorting
+                    const tbody = table.querySelector('tbody');
+                    const columnIndex = parseInt(this.getAttribute('data-column'));
+                    const dataType = this.getAttribute('data-type');
+
+                    // Determine sort direction
+                    const isAsc = this.classList.contains('asc');
+                    const newDirection = isAsc ? 'desc' : 'asc';
+
+                    // Remove all sorting classes from this table's headers
+                    table.querySelectorAll('.sortable').forEach(th => {
+                        th.classList.remove('asc', 'desc');
+                    });
+
+                    // Add new sorting class
+                    this.classList.add(newDirection);
+
+                    // Get all rows
+                    const rows = Array.from(tbody.querySelectorAll('tr'));
+
+                    // Sort rows
+                    rows.sort((a, b) => {
+                        const aCell = a.cells[columnIndex];
+                        const bCell = b.cells[columnIndex];
+
+                        if (!aCell || !bCell) return 0;
+
+                        let aValue = aCell.textContent.trim();
+                        let bValue = bCell.textContent.trim();
+
+                        if (dataType === 'number') {
+                            // Remove commas, spaces, and % signs, then parse
+                            aValue = parseFloat(aValue.replace(/[,\s%]/g, '')) || 0;
+                            bValue = parseFloat(bValue.replace(/[,\s%]/g, '')) || 0;
+
+                            return newDirection === 'asc' ? aValue - bValue : bValue - aValue;
+                        } else {
+                            // String comparison (case-insensitive)
+                            aValue = aValue.toLowerCase();
+                            bValue = bValue.toLowerCase();
+
+                            const comparison = aValue.localeCompare(bValue);
+                            return newDirection === 'asc' ? comparison : -comparison;
+                        }
+                    });
+
+                    // Re-append sorted rows
+                    rows.forEach(row => tbody.appendChild(row));
                 }
             });
         });
-
-        console.log('Table sorting setup complete');
     });
     </script>
 </body>
