@@ -1064,6 +1064,8 @@ try {
                     let aValue = aCell.textContent.trim();
                     let bValue = bCell.textContent.trim();
 
+                    console.log('Comparing:', aValue, 'vs', bValue, 'Type:', dataType);
+
                     if (dataType === 'number') {
                         // Remove commas, spaces, and % signs, then parse
                         aValue = aValue.replace(/[,\s%]/g, '');
@@ -1072,12 +1074,16 @@ try {
                         const aNum = parseFloat(aValue);
                         const bNum = parseFloat(bValue);
 
+                        console.log('Parsed numbers:', aNum, 'vs', bNum);
+
                         // Handle NaN cases
                         if (isNaN(aNum) && isNaN(bNum)) return 0;
                         if (isNaN(aNum)) return 1;
                         if (isNaN(bNum)) return -1;
 
-                        return newDirection === 'asc' ? aNum - bNum : bNum - aNum;
+                        const result = newDirection === 'asc' ? aNum - bNum : bNum - aNum;
+                        console.log('Result:', result);
+                        return result;
                     } else {
                         // String comparison (case-insensitive)
                         aValue = aValue.toLowerCase();
