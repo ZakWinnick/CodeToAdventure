@@ -539,6 +539,13 @@ ini_set('display_errors', 1);
         $sql = "SELECT * FROM codes ORDER BY RAND() LIMIT 1";
         $result = $conn->query($sql);
         $referral = $result->fetch_assoc();
+
+        // Increment display count for this code
+        if ($referral) {
+            $updateStmt = $conn->prepare("UPDATE codes SET display_count = display_count + 1 WHERE id = ?");
+            $updateStmt->bind_param("i", $referral['id']);
+            $updateStmt->execute();
+        }
         ?>
         
         <?php if ($referral): ?>

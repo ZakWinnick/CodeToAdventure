@@ -21,7 +21,7 @@ $sort_column = isset($_GET['sort']) ? $_GET['sort'] : 'id';
 $sort_direction = isset($_GET['direction']) ? $_GET['direction'] : 'DESC';
 
 // Validate sort parameters
-$allowed_columns = ['id', 'name', 'referral_code', 'use_count', 'last_used'];
+$allowed_columns = ['id', 'name', 'referral_code', 'use_count', 'display_count', 'last_used'];
 if (!in_array($sort_column, $allowed_columns)) {
     $sort_column = 'id';
 }
@@ -59,6 +59,17 @@ FROM codes
 ORDER BY use_count DESC
 LIMIT 10";
 $topCodesResult = $conn->query($topCodesQuery);
+
+// Most displayed codes
+$mostDisplayedQuery = "SELECT
+    name,
+    referral_code,
+    display_count,
+    use_count
+FROM codes
+ORDER BY display_count DESC
+LIMIT 10";
+$mostDisplayedResult = $conn->query($mostDisplayedQuery);
 
 // Get total count for pagination
 $countQuery = "SELECT COUNT(*) as total FROM codes" . $search_condition;
@@ -694,7 +705,7 @@ try {
 
         <!-- Top Referral Codes -->
         <div class="section-card">
-            <h3 class="section-title">Top Referral Codes</h3>
+            <h3 class="section-title">Top Referral Codes (By Clicks)</h3>
             <div class="table-container">
                 <table class="data-table">
                     <thead>
@@ -712,6 +723,40 @@ try {
                             <td><?php echo htmlspecialchars($code['referral_code']); ?></td>
                             <td><?php echo number_format($code['use_count']); ?></td>
                             <td><?php echo $code['last_used'] ? date('M j, Y', strtotime($code['last_used'])) : 'Never'; ?></td>
+                        </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Most Displayed Codes -->
+        <div class="section-card">
+            <h3 class="section-title">Most Displayed Codes</h3>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Code</th>
+                            <th>Displays</th>
+                            <th>Clicks</th>
+                            <th>Click Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($code = $mostDisplayedResult->fetch_assoc()): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($code['name']); ?></td>
+                            <td><?php echo htmlspecialchars($code['referral_code']); ?></td>
+                            <td><?php echo number_format($code['display_count']); ?></td>
+                            <td><?php echo number_format($code['use_count']); ?></td>
+                            <td><?php
+                                $clickRate = $code['display_count'] > 0
+                                    ? round(($code['use_count'] / $code['display_count']) * 100, 1)
+                                    : 0;
+                                echo $clickRate . '%';
+                            ?></td>
                         </tr>
                         <?php endwhile; ?>
                     </tbody>
@@ -757,8 +802,10 @@ try {
                                 onclick="changeSort('name')">Name</th>
                             <th class="sortable <?php echo $sort_column === 'referral_code' ? strtolower($sort_direction) : ''; ?>"
                                 onclick="changeSort('referral_code')">Code</th>
+                            <th class="sortable <?php echo $sort_column === 'display_count' ? strtolower($sort_direction) : ''; ?>"
+                                onclick="changeSort('display_count')">Displays</th>
                             <th class="sortable <?php echo $sort_column === 'use_count' ? strtolower($sort_direction) : ''; ?>"
-                                onclick="changeSort('use_count')">Uses</th>
+                                onclick="changeSort('use_count')">Clicks</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -768,6 +815,7 @@ try {
                             <td><?php echo htmlspecialchars($row['id']); ?></td>
                             <td><?php echo htmlspecialchars($row['name']); ?></td>
                             <td><?php echo htmlspecialchars($row['referral_code']); ?></td>
+                            <td><?php echo number_format($row['display_count'] ?? 0); ?></td>
                             <td><?php echo number_format($row['use_count'] ?? 0); ?></td>
                             <td>
                                 <div class="actions">
