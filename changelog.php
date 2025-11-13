@@ -1,7 +1,11 @@
 <?php
+session_start();
 require_once 'config.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
+// Check if user is logged in as admin
+$isAdmin = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
 ?>
 
 <!DOCTYPE html>
@@ -141,7 +145,18 @@ ini_set('display_errors', 1);
             background: var(--primary);
             color: white;
         }
-        
+
+        .nav-link.admin-link {
+            background: var(--accent);
+            color: var(--background);
+            font-weight: 600;
+        }
+
+        .nav-link.admin-link:hover {
+            background: var(--accent);
+            color: var(--background);
+        }
+
         .theme-toggle {
             background: var(--surface-hover);
             border: none;
@@ -406,6 +421,9 @@ ini_set('display_errors', 1);
                 <a href="submit.php" class="nav-link">Submit Code</a>
                 <a href="api-docs.php" class="nav-link">API Docs</a>
                 <a href="changelog.php" class="nav-link active">Changelog</a>
+                <?php if ($isAdmin): ?>
+                <a href="admin/admin.php" class="nav-link admin-link">Admin</a>
+                <?php endif; ?>
                 <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
                     <span id="theme-icon">🌙</span>
                 </button>
@@ -441,6 +459,11 @@ ini_set('display_errors', 1);
                 <li>Updated admin dashboard "All Submissions" table with Displays column</li>
                 <li>Modernized admin panel design to match main site aesthetics</li>
                 <li>Added dark/light mode support to admin login and edit pages</li>
+                <li>Implemented sortable tables with instant client-side sorting for small tables and server-side sorting for All Submissions</li>
+                <li>Added auto-scroll to All Submissions table after sorting, pagination, or search actions</li>
+                <li>Improved mobile responsiveness with card-based table layout eliminating horizontal scrolling</li>
+                <li>Added mobile hamburger menu for better navigation on small screens</li>
+                <li>Added admin session integration across all public pages with conditional Admin navigation link</li>
             </ul>
         </div>
 
