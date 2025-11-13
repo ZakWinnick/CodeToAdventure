@@ -240,7 +240,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         @media (max-width: 480px) {
             .login-container {
-                padding: 2rem;
+                padding: 2rem 1.5rem;
+                width: 95%;
+            }
+
+            .logo-text {
+                font-size: 1.25rem;
+            }
+
+            .login-container h1 {
+                font-size: 1.25rem;
+            }
+
+            .theme-toggle {
+                top: 1rem;
+                right: 1rem;
             }
         }
     </style>

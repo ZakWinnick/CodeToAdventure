@@ -277,6 +277,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border-radius: var(--radius-sm);
             border: 1px solid rgba(239, 68, 68, 0.2);
         }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+
+            .nav {
+                display: none;
+            }
+
+            .container {
+                margin: 2rem auto;
+                padding: 0 1rem;
+            }
+
+            .edit-card {
+                padding: 1.5rem;
+            }
+
+            .edit-card h1 {
+                font-size: 1.5rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>

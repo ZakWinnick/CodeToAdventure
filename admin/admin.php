@@ -587,24 +587,133 @@ try {
                 flex-direction: column;
             }
 
+            .search-input {
+                width: 100%;
+            }
+
+            .search-button {
+                width: 100%;
+            }
+
             .table-controls {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: stretch;
                 gap: 1rem;
             }
 
+            .entries-selector {
+                width: 100%;
+            }
+
+            .entries-selector select {
+                width: 100%;
+            }
+
+            .table-container {
+                margin: 0 -1.5rem;
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+            }
+
             .data-table {
-                font-size: 0.85rem;
+                font-size: 0.8rem;
+                min-width: 600px;
             }
 
             .data-table th,
             .data-table td {
                 padding: 0.75rem 0.5rem;
+                white-space: nowrap;
             }
 
+            .data-table th:first-child,
+            .data-table td:first-child {
+                padding-left: 1rem;
+            }
+
+            .data-table th:last-child,
+            .data-table td:last-child {
+                padding-right: 1rem;
+            }
+
+            .actions {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .edit-btn, .delete-btn {
+                width: 100%;
+                padding: 0.5rem;
+                text-align: center;
+            }
+
+            .section-card {
+                padding: 1.25rem;
+            }
+
+            .section-title {
+                font-size: 1.1rem;
+            }
+
+            .pagination {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .pagination a {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.875rem;
+            }
+
+            /* Mobile Navigation */
             .nav {
                 display: none;
             }
+
+            .mobile-menu-btn {
+                display: flex !important;
+            }
+
+            .nav.mobile-open {
+                display: flex !important;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--surface);
+                flex-direction: column;
+                padding: 1rem;
+                border-bottom: 1px solid var(--border);
+                box-shadow: 0 4px 6px -1px var(--shadow);
+                z-index: 999;
+            }
+
+            .nav.mobile-open .nav-link {
+                width: 100%;
+                text-align: left;
+                padding: 0.75rem 1rem;
+            }
+
+            .nav.mobile-open .theme-toggle {
+                width: 100%;
+                justify-content: center;
+                margin: 0.5rem 0 0 0;
+            }
+        }
+
+        /* Mobile menu button */
+        .mobile-menu-btn {
+            display: none;
+            background: var(--surface-hover);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
         }
     </style>
 </head>
@@ -616,7 +725,7 @@ try {
                 <div class="logo-text">Code to Adventure</div>
             </a>
 
-            <nav class="nav">
+            <nav class="nav" id="nav">
                 <a href="../index.php" class="nav-link">Home</a>
                 <a href="../api-docs.php" class="nav-link">API Docs</a>
                 <a href="../changelog.php" class="nav-link">Changelog</a>
@@ -625,6 +734,14 @@ try {
                     <span id="theme-icon">🌙</span>
                 </button>
             </nav>
+
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
         </div>
     </header>
 
@@ -878,6 +995,11 @@ try {
 
     // Initialize theme on load
     initTheme();
+
+    // Mobile Menu Toggle
+    function toggleMobileMenu() {
+        document.getElementById('nav').classList.toggle('mobile-open');
+    }
 
     // Table Functions
     function changeEntries(value) {
