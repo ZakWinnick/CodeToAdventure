@@ -340,6 +340,10 @@
     margin-bottom: 1rem;
 }
 
+.code-actions .btn {
+    flex: 1;
+}
+
 @media (max-width: 768px) {
     .code-value {
         font-size: 1.5rem;
