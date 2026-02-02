@@ -109,6 +109,11 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code To Adventure - Admin Dashboard</title>
 
+    <!-- Always dark mode -->
+    <script>
+        document.documentElement.setAttribute('data-theme', 'dark');
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -756,9 +761,6 @@ try {
                 <a href="../api-docs.php" class="nav-link">API Docs</a>
                 <a href="../changelog.php" class="nav-link">Changelog</a>
                 <a href="logout.php" class="nav-link">Logout</a>
-                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
-                    <span id="theme-icon">🌙</span>
-                </button>
             </nav>
 
             <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
@@ -996,32 +998,6 @@ try {
     </main>
 
     <script>
-    // Theme Toggle
-    function initTheme() {
-        const saved = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const theme = saved || (prefersDark ? 'dark' : 'light');
-
-        document.documentElement.setAttribute('data-theme', theme);
-        updateThemeIcon(theme);
-    }
-
-    function toggleTheme() {
-        const current = document.documentElement.getAttribute('data-theme');
-        const next = current === 'dark' ? 'light' : 'dark';
-
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('theme', next);
-        updateThemeIcon(next);
-    }
-
-    function updateThemeIcon(theme) {
-        document.getElementById('theme-icon').textContent = theme === 'dark' ? '☀️' : '🌙';
-    }
-
-    // Initialize theme on load
-    initTheme();
-
     // Mobile Menu Toggle
     function toggleMobileMenu() {
         document.getElementById('nav').classList.toggle('mobile-open');
