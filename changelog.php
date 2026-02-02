@@ -16,13 +16,25 @@ $isAdmin = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
     <meta name="description" content="Code to Adventure Changelog - Latest updates and improvements">
     <title>Changelog - Code to Adventure</title>
     
+    <!-- Dark mode initialization - Must come before CSS -->
+    <script>
+        (function() {
+            var saved = localStorage.getItem('theme');
+            var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            var theme = saved || (prefersDark ? 'dark' : 'light');
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    
+
     <!-- Analytics -->
     <script src="https://tinylytics.app/embed/wWu5hJWSQ_r9BAxgohx8.js" defer></script>
-    
+
     <style>
         :root {
             --primary: #2563eb;
@@ -683,12 +695,25 @@ $isAdmin = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
             const logoImg = document.getElementById('logo-img');
             logoImg.src = theme === 'dark' ? 'logo-dark.png' : 'logo.png';
         }
-        
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            updateThemeIcon(theme);
+            updateLogo(theme);
+        }
+
+        // Listen for system preference changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+            if (!localStorage.getItem('theme')) {
+                setTheme(e.matches ? 'dark' : 'light');
+            }
+        });
+
         // Mobile Menu Toggle
         function toggleMobileMenu() {
             document.getElementById('nav').classList.toggle('mobile-open');
         }
-        
+
         // Initialize theme on load
         initTheme();
     </script>
