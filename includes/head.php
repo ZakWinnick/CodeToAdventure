@@ -46,22 +46,33 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#31572C',     // Main green
-                        secondary: '#4F772D',   // Secondary green
-                        accent: '#90A955',      // Lighter green
-                        mindaro: '#ECF39E'      // Light yellow/green
+                        primary: {
+                            DEFAULT: '#2563eb',
+                            dark: '#1d4ed8',
+                            light: '#3b82f6'
+                        },
+                        secondary: {
+                            DEFAULT: '#10b981',
+                            dark: '#059669',
+                            light: '#34d399'
+                        },
+                        accent: {
+                            DEFAULT: '#f59e0b',
+                            dark: '#d97706',
+                            light: '#fbbf24'
+                        }
                     }
                 }
             }
         }
     </script>
-    
+
     <style>
     html, body {
-        background-color: white !important;
+        background-color: var(--bg-primary) !important;
     }
-    .dark html, .dark body {
-        background-color: #111827 !important;
+    .dark html, .dark body, [data-theme="dark"] html, [data-theme="dark"] body {
+        background-color: var(--bg-primary) !important;
     }
 </style>
 
@@ -71,9 +82,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Your existing CSS modules -->
+    <!-- CSS modules -->
     <link rel="stylesheet" href="styles/base/_variables.css">
     <link rel="stylesheet" href="styles/base/_reset.css">
+    <link rel="stylesheet" href="styles/pages/_shared.css">
     <link rel="stylesheet" href="styles/components/_buttons.css">
     <link rel="stylesheet" href="styles/components/_navigation.css">
     <link rel="stylesheet" href="styles/components/_modal.css">
@@ -82,6 +94,7 @@
     <link rel="stylesheet" href="styles/layout/_header.css">
     <link rel="stylesheet" href="styles/layout/_footer.css">
     <link rel="stylesheet" href="styles/layout/_grid.css">
+    <link rel="stylesheet" href="styles/pages/_home.css">
     <link rel="stylesheet" href="styles/pages/_api-docs.css">
     <link rel="stylesheet" href="styles/pages/_changelog.css">
 

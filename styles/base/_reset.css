@@ -8,12 +8,34 @@
 
 body {
   font-family: var(--font-primary);
-  background-color: var(--dark-green) !important;
-  color: var(--text-white);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   line-height: 1.6;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+}
+
+/* Skip link for accessibility */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--primary);
+  color: var(--text-inverse);
+  padding: var(--spacing-sm) var(--spacing-md);
+  z-index: 100;
+  transition: top var(--transition-speed) var(--transition-ease);
+}
+
+.skip-link:focus {
+  top: 0;
 }
 
 button {

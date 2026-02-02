@@ -1,25 +1,143 @@
 :root {
+  /* ==========================================================================
+     PRIMARY PALETTE (Modern Blue/Teal System)
+     ========================================================================== */
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --primary-light: #3b82f6;
+  --secondary: #10b981;
+  --secondary-dark: #059669;
+  --secondary-light: #34d399;
+  --accent: #f59e0b;
+  --accent-dark: #d97706;
+  --accent-light: #fbbf24;
+
+  /* ==========================================================================
+     BACKGROUND COLORS
+     ========================================================================== */
+  --bg-primary: #ffffff;
+  --bg-surface: #f8fafc;
+  --bg-elevated: #ffffff;
+  --bg-muted: #f1f5f9;
+
+  /* ==========================================================================
+     TEXT COLORS
+     ========================================================================== */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --text-inverse: #ffffff;
+
+  /* ==========================================================================
+     STATUS COLORS
+     ========================================================================== */
+  --success: #10b981;
+  --success-bg: #d1fae5;
+  --error: #ef4444;
+  --error-bg: #fee2e2;
+  --warning: #f59e0b;
+  --warning-bg: #fef3c7;
+  --info: #3b82f6;
+  --info-bg: #dbeafe;
+
+  /* ==========================================================================
+     BORDER & SHADOW
+     ========================================================================== */
+  --border-color: #e2e8f0;
+  --border-color-dark: #cbd5e1;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  /* ==========================================================================
+     LEGACY COLORS (Backward Compatibility)
+     ========================================================================== */
   --dark-green: #132A13;
   --hunter-green: #31572C;
   --fern-green: #4F772D;
   --moss-green: #90A955;
   --mindaro: #ECF39E;
   --text-white: #FFFFFF;
-  --error-red: #ff3b3b;
-  --success-green: #4CAF50;
-  --focus-outline: 3px solid #4A90E2;
-  --button-radius: 40px;
+  --error-red: #ef4444;
+  --success-green: #10b981;
+
+  /* ==========================================================================
+     UI TOKENS
+     ========================================================================== */
+  --focus-outline: 3px solid var(--primary);
+  --button-radius: 8px;
+  --card-radius: 12px;
   --max-width: 1200px;
   --border-radius: 8px;
-  --transition-speed: 0.3s;
-  
-  /* Typography */
+  --transition-speed: 0.2s;
+  --transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ==========================================================================
+     TYPOGRAPHY
+     ========================================================================== */
   --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-size-xs: 0.875rem;
-  --font-size-sm: 1rem;
-  --font-size-md: 1.125rem;
-  --font-size-lg: 1.25rem;
-  --font-size-xl: 1.5rem;
-  --font-size-2xl: 2rem;
-  --font-size-3xl: 2.5rem;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 2rem;
+  --font-size-4xl: 2.5rem;
+
+  /* ==========================================================================
+     SPACING
+     ========================================================================== */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+}
+
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+[data-theme="dark"],
+.dark {
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
+  --primary-light: #60a5fa;
+  --secondary: #34d399;
+  --secondary-dark: #10b981;
+  --secondary-light: #6ee7b7;
+  --accent: #fbbf24;
+  --accent-dark: #f59e0b;
+  --accent-light: #fcd34d;
+
+  --bg-primary: #0f172a;
+  --bg-surface: #1e293b;
+  --bg-elevated: #334155;
+  --bg-muted: #1e293b;
+
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #64748b;
+  --text-inverse: #0f172a;
+
+  --success-bg: rgba(16, 185, 129, 0.2);
+  --error-bg: rgba(239, 68, 68, 0.2);
+  --warning-bg: rgba(245, 158, 11, 0.2);
+  --info-bg: rgba(59, 130, 246, 0.2);
+
+  --border-color: #334155;
+  --border-color-dark: #475569;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+
+  /* Legacy dark mode overrides */
+  --dark-green: #1e293b;
+  --hunter-green: #334155;
+  --fern-green: #475569;
+  --moss-green: #34d399;
+  --mindaro: #fbbf24;
 }
