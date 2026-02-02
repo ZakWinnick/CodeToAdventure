@@ -21,10 +21,15 @@ $isAdmin = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
 
     <!-- Dark mode initialization - Must come before CSS -->
     <script>
-        if (localStorage.getItem('theme') === 'dark') {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            document.documentElement.classList.add('dark');
-        }
+        (function() {
+            var saved = localStorage.getItem('theme');
+            var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            var theme = saved || (prefersDark ? 'dark' : 'light');
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.documentElement.classList.add('dark');
+            }
+        })();
     </script>
 
     <!-- Fonts -->
@@ -116,12 +121,11 @@ $isAdmin = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
                     <span class="btn-icon">📋</span>
                     <span>Copy</span>
                 </button>
+                <button onclick="location.reload()" class="btn btn-secondary">
+                    <span class="btn-icon">🔄</span>
+                    <span>Get Another Code</span>
+                </button>
             </div>
-
-            <button onclick="location.reload()" class="btn btn-secondary" style="width: 100%;">
-                <span class="btn-icon">🔄</span>
-                <span>Get Another Code</span>
-            </button>
 
             <p class="info-text mt-2">
                 You'll be directed to Rivian's R1 Shop • Code refreshes on reload

@@ -21,10 +21,15 @@ $isAdmin = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
 
     <!-- Dark mode initialization - Must come before CSS -->
     <script>
-        if (localStorage.getItem('theme') === 'dark') {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            document.documentElement.classList.add('dark');
-        }
+        (function() {
+            var saved = localStorage.getItem('theme');
+            var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            var theme = saved || (prefersDark ? 'dark' : 'light');
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.documentElement.classList.add('dark');
+            }
+        })();
     </script>
 
     <!-- Fonts -->

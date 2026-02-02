@@ -333,21 +333,18 @@
 
 .code-actions {
     display: flex;
+    flex-direction: column;
     gap: 1rem;
     margin-bottom: 1rem;
 }
 
 .code-actions .btn {
-    flex: 1;
+    width: 100%;
 }
 
 @media (max-width: 768px) {
     .code-value {
         font-size: 1.5rem;
-    }
-
-    .code-actions {
-        flex-direction: column;
     }
 }
 
