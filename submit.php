@@ -19,17 +19,10 @@ $isAdmin = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.png">
 
-    <!-- Dark mode initialization - Must come before CSS -->
+    <!-- Always dark mode -->
     <script>
-        (function() {
-            var saved = localStorage.getItem('theme');
-            var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            var theme = saved || (prefersDark ? 'dark' : 'light');
-            if (theme === 'dark') {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                document.documentElement.classList.add('dark');
-            }
-        })();
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.documentElement.classList.add('dark');
     </script>
 
     <!-- Fonts -->
@@ -72,9 +65,6 @@ $isAdmin = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
                 <?php if ($isAdmin): ?>
                 <a href="admin/admin.php" class="nav-link admin-link">Admin</a>
                 <?php endif; ?>
-                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
-                    <span id="theme-icon">🌙</span>
-                </button>
             </nav>
 
             <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
@@ -150,66 +140,13 @@ $isAdmin = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
     </footer>
 
     <script>
-        // Theme Toggle
-        function initTheme() {
-            const saved = localStorage.getItem('theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const theme = saved || (prefersDark ? 'dark' : 'light');
-
-            document.documentElement.setAttribute('data-theme', theme);
-            if (theme === 'dark') {
-                document.documentElement.classList.add('dark');
-            }
-            updateThemeIcon(theme);
-            updateLogo(theme);
-        }
-
-        function toggleTheme() {
-            const current = document.documentElement.getAttribute('data-theme');
-            const next = current === 'dark' ? 'light' : 'dark';
-
-            document.documentElement.setAttribute('data-theme', next);
-            document.documentElement.classList.toggle('dark');
-            localStorage.setItem('theme', next);
-            updateThemeIcon(next);
-            updateLogo(next);
-        }
-
-        function updateThemeIcon(theme) {
-            document.getElementById('theme-icon').textContent = theme === 'dark' ? '☀️' : '🌙';
-        }
-
-        function updateLogo(theme) {
-            const logoImg = document.getElementById('logo-img');
-            logoImg.src = theme === 'dark' ? 'logo-dark.png' : 'logo.png';
-        }
-
-        function setTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            if (theme === 'dark') {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-            updateThemeIcon(theme);
-            updateLogo(theme);
-        }
-
-        // Listen for system preference changes
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
-            // Only auto-switch if user hasn't manually set a preference
-            if (!localStorage.getItem('theme')) {
-                setTheme(e.matches ? 'dark' : 'light');
-            }
-        });
+        // Set dark mode logo
+        document.getElementById('logo-img').src = 'logo-dark.png';
 
         // Mobile Menu Toggle
         function toggleMobileMenu() {
             document.getElementById('nav').classList.toggle('mobile-open');
         }
-
-        // Initialize theme on load
-        initTheme();
 
         // Handle form submission with AJAX
         document.getElementById('submitCodeForm').addEventListener('submit', async function(e) {

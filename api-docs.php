@@ -16,16 +16,9 @@ $isAdmin = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
     <meta name="description" content="Code to Adventure API Documentation - Access referral codes programmatically">
     <title>API Documentation - Code to Adventure</title>
     
-    <!-- Dark mode initialization - Must come before CSS -->
+    <!-- Always dark mode -->
     <script>
-        (function() {
-            var saved = localStorage.getItem('theme');
-            var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            var theme = saved || (prefersDark ? 'dark' : 'light');
-            if (theme === 'dark') {
-                document.documentElement.setAttribute('data-theme', 'dark');
-            }
-        })();
+        document.documentElement.setAttribute('data-theme', 'dark');
     </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -490,9 +483,6 @@ $isAdmin = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
                 <?php if ($isAdmin): ?>
                 <a href="admin/admin.php" class="nav-link admin-link">Admin</a>
                 <?php endif; ?>
-                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
-                    <span id="theme-icon">🌙</span>
-                </button>
             </nav>
             
             <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
@@ -692,56 +682,13 @@ X-RateLimit-Reset: 1635789600</pre>
 
     
     <script>
-        // Theme Toggle
-        function initTheme() {
-            const saved = localStorage.getItem('theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const theme = saved || (prefersDark ? 'dark' : 'light');
-            
-            document.documentElement.setAttribute('data-theme', theme);
-            updateThemeIcon(theme);
-            updateLogo(theme);
-        }
-        
-        function toggleTheme() {
-            const current = document.documentElement.getAttribute('data-theme');
-            const next = current === 'dark' ? 'light' : 'dark';
-            
-            document.documentElement.setAttribute('data-theme', next);
-            localStorage.setItem('theme', next);
-            updateThemeIcon(next);
-            updateLogo(next);
-        }
-        
-        function updateThemeIcon(theme) {
-            document.getElementById('theme-icon').textContent = theme === 'dark' ? '☀️' : '🌙';
-        }
-        
-        function updateLogo(theme) {
-            const logoImg = document.getElementById('logo-img');
-            logoImg.src = theme === 'dark' ? 'logo-dark.png' : 'logo.png';
-        }
-
-        function setTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            updateThemeIcon(theme);
-            updateLogo(theme);
-        }
-
-        // Listen for system preference changes
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
-            if (!localStorage.getItem('theme')) {
-                setTheme(e.matches ? 'dark' : 'light');
-            }
-        });
+        // Set dark mode logo
+        document.getElementById('logo-img').src = 'logo-dark.png';
 
         // Mobile Menu Toggle
         function toggleMobileMenu() {
             document.getElementById('nav').classList.toggle('mobile-open');
         }
-        
-        // Initialize theme on load
-        initTheme();
     </script>
 </body>
 </html>
