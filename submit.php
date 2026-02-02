@@ -117,6 +117,17 @@ $isAdmin = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
             document.getElementById('nav').classList.toggle('mobile-open');
         }
 
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            var nav = document.getElementById('nav');
+            var menuBtn = document.querySelector('.mobile-menu-btn');
+            if (nav.classList.contains('mobile-open') &&
+                !nav.contains(e.target) &&
+                !menuBtn.contains(e.target)) {
+                nav.classList.remove('mobile-open');
+            }
+        });
+
         // Handle form submission with AJAX
         document.getElementById('submitCodeForm').addEventListener('submit', async function(e) {
             e.preventDefault();

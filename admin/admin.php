@@ -193,6 +193,20 @@ try {
             color: var(--text);
         }
 
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
         .logo-text {
             font-size: 1.25rem;
             font-weight: 700;
@@ -981,6 +995,17 @@ try {
     function toggleMobileMenu() {
         document.getElementById('nav').classList.toggle('mobile-open');
     }
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(e) {
+        var nav = document.getElementById('nav');
+        var menuBtn = document.querySelector('.mobile-menu-btn');
+        if (nav && menuBtn && nav.classList.contains('mobile-open') &&
+            !nav.contains(e.target) &&
+            !menuBtn.contains(e.target)) {
+            nav.classList.remove('mobile-open');
+        }
+    });
 
     // Table Functions
     function changeEntries(value) {
