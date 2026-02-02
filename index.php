@@ -209,6 +209,25 @@ $isAdmin = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
             logoImg.src = theme === 'dark' ? 'logo-dark.png' : 'logo.png';
         }
 
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+            updateThemeIcon(theme);
+            updateLogo(theme);
+        }
+
+        // Listen for system preference changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+            // Only auto-switch if user hasn't manually set a preference
+            if (!localStorage.getItem('theme')) {
+                setTheme(e.matches ? 'dark' : 'light');
+            }
+        });
+
         // Copy Code Function
         function copyCode(code) {
             navigator.clipboard.writeText(code).then(() => {
