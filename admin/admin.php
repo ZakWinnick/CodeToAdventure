@@ -750,28 +750,7 @@ try {
 </head>
 <body>
     <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <a href="admin.php" class="logo">
-                <div class="logo-text">Code to Adventure</div>
-            </a>
-
-            <nav class="nav" id="nav">
-                <a href="../index.php" class="nav-link">Home</a>
-                <a href="../api-docs.php" class="nav-link">API Docs</a>
-                <a href="../changelog.php" class="nav-link">Changelog</a>
-                <a href="logout.php" class="nav-link">Logout</a>
-            </nav>
-
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-            </button>
-        </div>
-    </header>
+    <?php $currentPage = 'admin'; $basePath = '../'; $isAdminPage = true; include '../includes/header.php'; ?>
 
     <main class="container">
         <!-- Dashboard Header -->

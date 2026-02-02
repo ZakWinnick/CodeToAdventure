@@ -412,34 +412,7 @@ $isAdmin = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
 </head>
 <body>
     <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <a href="/" class="logo">
-                <div class="logo-icon">
-                    <img src="logo.png" alt="Code to Adventure" id="logo-img">
-                </div>
-                <div class="logo-text">Code to Adventure</div>
-            </a>
-            
-            <nav class="nav" id="nav">
-                <a href="index.php" class="nav-link">Home</a>
-                <a href="submit.php" class="nav-link">Submit Code</a>
-                <a href="api-docs.php" class="nav-link">API Docs</a>
-                <a href="changelog.php" class="nav-link active">Changelog</a>
-                <?php if ($isAdmin): ?>
-                <a href="admin/admin.php" class="nav-link admin-link">Admin</a>
-                <?php endif; ?>
-            </nav>
-            
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-            </button>
-        </div>
-    </header>
+    <?php $currentPage = 'changelog'; include 'includes/header.php'; ?>
     
     <!-- Hero -->
     <section class="hero">
@@ -456,13 +429,16 @@ $isAdmin = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
                 <span class="version-date">February 1, 2026</span>
             </div>
             <ul class="version-changes">
+                <li>Created shared header component for consistent navigation across all pages</li>
+                <li>Switched to permanent dark mode theme for better visual consistency</li>
+                <li>Removed theme toggle (site is now always in dark mode)</li>
+                <li>Updated header styling with 40px logo and gradient text</li>
                 <li>Optimized logo images from 1.4MB to 60KB each (96% file size reduction)</li>
                 <li>Consolidated CSS into unified external stylesheets with dark mode support</li>
                 <li>Extracted inline CSS from index.php (712 → 220 lines)</li>
                 <li>Extracted inline CSS from submit.php (677 → 240 lines)</li>
                 <li>Created reusable component library (buttons, cards, forms, alerts, navigation)</li>
                 <li>Updated color palette to modern blue/teal design system</li>
-                <li>Improved dark mode consistency across all pages</li>
                 <li>Added accessibility improvements (focus states, skip link styles)</li>
                 <li>Removed legacy backup files to clean up repository</li>
             </ul>
@@ -656,9 +632,6 @@ $isAdmin = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
 
     
     <script>
-        // Set dark mode logo
-        document.getElementById('logo-img').src = 'logo-dark.png';
-
         // Mobile Menu Toggle
         function toggleMobileMenu() {
             document.getElementById('nav').classList.toggle('mobile-open');

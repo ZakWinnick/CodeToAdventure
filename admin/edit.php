@@ -318,19 +318,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <a href="admin.php" class="logo">
-                <div class="logo-text">Code to Adventure</div>
-            </a>
-
-            <nav class="nav">
-                <a href="../index.php" class="nav-link">Home</a>
-                <a href="admin.php" class="nav-link">Dashboard</a>
-                <a href="logout.php" class="nav-link">Logout</a>
-            </nav>
-        </div>
-    </header>
+    <?php $currentPage = 'admin'; $basePath = '../'; $isAdminPage = true; include '../includes/header.php'; ?>
 
     <!-- Main Content -->
     <div class="container">
