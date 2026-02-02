@@ -450,6 +450,25 @@ $isAdmin = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
         <!-- Latest Version -->
         <div class="version-card latest">
             <div class="version-header">
+                <span class="version-number">v2026.06</span>
+                <span class="version-date">February 1, 2026</span>
+            </div>
+            <ul class="version-changes">
+                <li>Optimized logo images from 1.4MB to 60KB each (96% file size reduction)</li>
+                <li>Consolidated CSS into unified external stylesheets with dark mode support</li>
+                <li>Extracted inline CSS from index.php (712 → 220 lines)</li>
+                <li>Extracted inline CSS from submit.php (677 → 240 lines)</li>
+                <li>Created reusable component library (buttons, cards, forms, alerts, navigation)</li>
+                <li>Updated color palette to modern blue/teal design system</li>
+                <li>Improved dark mode consistency across all pages</li>
+                <li>Added accessibility improvements (focus states, skip link styles)</li>
+                <li>Removed legacy backup files to clean up repository</li>
+            </ul>
+        </div>
+
+        <!-- Previous Versions -->
+        <div class="version-card">
+            <div class="version-header">
                 <span class="version-number">v2025.46.1</span>
                 <span class="version-date">November 12, 2025</span>
             </div>
@@ -467,7 +486,6 @@ $isAdmin = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
             </ul>
         </div>
 
-        <!-- Previous Versions -->
         <div class="version-card">
             <div class="version-header">
                 <span class="version-number">v2025.46</span>
